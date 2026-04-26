@@ -9,4 +9,4 @@ Claude-specific notes:
 - Claude Code supports nested `CLAUDE.md` files, so also respect any competition-specific `AGENTS.md` files under `competitions/<slug>/` when working inside an active competition workspace.
 - Keep root-level Kaggle UI autosaved notebooks in place unless explicitly asked to copy or move one.
 - Prefer the repository helper scripts for Kaggle execution and competition workspace setup.
-
+- Use `scripts/list_kaggle_competitions.py` when listing/searching competitions, and `templates/notebooks/` when the user asks for reusable starter notebooks.

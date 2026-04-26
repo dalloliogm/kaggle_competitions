@@ -13,21 +13,23 @@ Root-level notebooks are expected because Kaggle's "Save notebook to GitHub" flo
 
 ## Initialize A Workspace
 
-When working in `/Users/giovannidallolio/workspace/kaggle_competitions`, prefer the repo script:
+When the user pastes a Kaggle competition URL, initialize directly from the URL:
 
 ```bash
-./scripts/init_competition_workspace.py "Competition title" \
-  --slug competition-slug \
-  --url https://www.kaggle.com/competitions/... \
-  --metric "metric name"
+./scripts/init_competition_workspace.py https://www.kaggle.com/competitions/competition-slug
 ```
 
-If the user provides a starter root notebook, copy it into the workspace with:
+The script derives the competition slug from the URL and attempts to fetch Kaggle pages/files into `references/`.
+
+If the user provides a starter root notebook or reusable template, copy it into the workspace with:
 
 ```bash
 ./scripts/init_competition_workspace.py "Competition title" \
   --slug competition-slug \
   --notebook root-notebook.ipynb
+
+./scripts/init_competition_workspace.py https://www.kaggle.com/competitions/competition-slug \
+  --template tabular-lightgbm-baseline
 ```
 
 The expected layout is:
@@ -53,6 +55,24 @@ Use `NOTES.md` for EDA observations, feature ideas, model ideas, leaderboard not
 
 Use workspace `AGENTS.md` for competition-specific instructions that should guide future Codex/Claude work.
 
+## Discover Competitions
+
+When the user asks to list, search, compare, or choose Kaggle competitions, use:
+
+```bash
+./scripts/list_kaggle_competitions.py --search "search terms"
+./scripts/list_kaggle_competitions.py --group entered
+./scripts/list_kaggle_competitions.py --category playground --sort-by latestDeadline
+```
+
+Use the results to offer a short list and ask which competition to initialize.
+
+## Notebook Templates
+
+Reusable starter notebooks live under `templates/notebooks/` and are tracked in `templates/notebooks/TEMPLATE_REGISTRY.md`.
+
+Use templates for repeatable patterns such as tabular LightGBM baselines, CatBoost CV, ensemble blending, NLP inference, or vision training.
+
 ## Kaggle Execution
 
 For running notebooks on Kaggle from this repo, prefer the existing helper scripts:
@@ -68,4 +88,3 @@ Preserve Kaggle compatibility in code: use `/kaggle/input/...` and `/kaggle/work
 ## When To Suggest A Separate Repo
 
 Suggest a dedicated repo only when the competition grows into a real project: reusable `src/`, configs, tests, multiple pipelines, team collaboration, or a production-style inference package.
-

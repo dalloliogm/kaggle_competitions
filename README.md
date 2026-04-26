@@ -9,14 +9,11 @@ This is my Kaggle profile: [dalloliogm](https://www.kaggle.com/dalloliogm/). Thi
 When opening a new Codex, Claude Code, or Copilot chat for an active Kaggle competition, start with something like:
 
 ```text
-Use this repository's Kaggle competition workspace workflow. Initialize a workspace for:
+Use this repository's Kaggle competition workspace workflow.
 
-Competition: <competition name>
-URL: <kaggle competition URL>
-Metric: <metric, if known>
-Starter notebook: <root notebook filename, if any>
+Competition URL: <paste Kaggle competition URL>
 
-Create/update the competition context files, preserve root-level Kaggle notebooks, and use the repo Kaggle helper scripts when running on Kaggle.
+Initialize the workspace, read the competition page for objective/rules/evaluation context, preserve root-level Kaggle notebooks, and use the repo Kaggle helper scripts when running on Kaggle.
 ```
 
 If the workspace already exists:
@@ -28,7 +25,35 @@ Use the existing workspace at competitions/<slug>. Read its COMPETITION.md, TASK
 The initializer script is:
 
 ```bash
-./scripts/init_competition_workspace.py "Competition title" --slug competition-slug
+./scripts/init_competition_workspace.py https://www.kaggle.com/competitions/<slug>
 ```
 
-See `LOCAL_KAGGLE_WORKFLOW.md`, `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`, and `.codex/skills/kaggle-competition-workspace/` for the agent-specific setup.
+To search or choose competitions from the command line:
+
+```bash
+./scripts/list_kaggle_competitions.py --search "playground"
+./scripts/list_kaggle_competitions.py --group entered
+```
+
+In a new chat, you can also ask:
+
+```text
+Use this repository's Kaggle competition discovery workflow. List active Kaggle competitions related to <topic>, show simple metadata, and help me choose one to initialize.
+```
+
+## Notebook templates
+
+Reusable starter notebooks live in `templates/notebooks/` and are tracked in `templates/notebooks/TEMPLATE_REGISTRY.md`.
+
+Good candidates for templates are notebooks you reuse across many competitions: tabular baselines, CV training loops, inference-only notebooks, ensembling/blending notebooks, and local/Kaggle path setup cells.
+
+Use a template when initializing a workspace:
+
+```bash
+./scripts/init_competition_workspace.py https://www.kaggle.com/competitions/<slug> \
+  --template tabular-lightgbm-baseline
+```
+
+Keep templates generic: put competition-specific values near the top of the notebook, avoid hardcoded `/kaggle/input/<old-competition>/` paths, and document expected columns/metric in the first markdown cell.
+
+See `LOCAL_KAGGLE_WORKFLOW.md`, `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`, and `.codex/skills/` for the agent-specific setup.

@@ -7,11 +7,10 @@ This repository intentionally keeps Kaggle-saved notebooks in the root folder, b
 Root notebooks are the Kaggle UI archive. For active competitions, create a focused workspace under `competitions/`:
 
 ```bash
-./scripts/init_competition_workspace.py "Playground Series S6E4" \
-  --slug playground-s6e4 \
-  --url https://www.kaggle.com/competitions/... \
-  --metric "RMSE"
+./scripts/init_competition_workspace.py https://www.kaggle.com/competitions/<slug>
 ```
+
+When a URL is provided, the script derives the Kaggle slug and attempts to save Kaggle description, evaluation, rules, and file-list context under `references/`.
 
 This creates:
 
@@ -40,6 +39,7 @@ CLAUDE.md
 .github/copilot-instructions.md
 .github/instructions/kaggle-competition-workspace.instructions.md
 .codex/skills/kaggle-competition-workspace/
+.codex/skills/kaggle-competition-discovery/
 ```
 
 `AGENTS.md` is the shared source of truth. The other files exist so Claude Code, GitHub Copilot, and Codex can each discover the same workflow through their native conventions.
@@ -50,6 +50,22 @@ To seed the workspace with an existing root notebook:
 ./scripts/init_competition_workspace.py "Playground Series S6E4" \
   --slug playground-s6e4 \
   --notebook root-notebook.ipynb
+```
+
+To start from a reusable template:
+
+```bash
+./scripts/init_competition_workspace.py https://www.kaggle.com/competitions/<slug> \
+  --template tabular-lightgbm-baseline
+```
+
+Reusable templates live in `templates/notebooks/`.
+
+To list/search competitions:
+
+```bash
+./scripts/list_kaggle_competitions.py --search "playground"
+./scripts/list_kaggle_competitions.py --group entered
 ```
 
 ## Authentication

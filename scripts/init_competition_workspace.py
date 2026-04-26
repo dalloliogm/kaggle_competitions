@@ -4,9 +4,15 @@
 from __future__ import annotations
 
 import argparse
+import os
 import re
 import shutil
+import subprocess
 from pathlib import Path
+from urllib.parse import urlparse
+
+
+DEFAULT_PAGES = ("description", "evaluation", "rules")
 
 
 def slugify(value: str) -> str:
@@ -16,6 +22,60 @@ def slugify(value: str) -> str:
     if not value:
         raise SystemExit("Could not derive a slug. Pass --slug explicitly.")
     return value
+
+
+def competition_slug_from_url(value: str) -> str | None:
+    parsed = urlparse(value)
+    if not parsed.scheme or "kaggle.com" not in parsed.netloc:
+        return None
+    parts = [part for part in parsed.path.split("/") if part]
+    if "competitions" not in parts:
+        return None
+    index = parts.index("competitions")
+    if index + 1 >= len(parts):
+        return None
+    return parts[index + 1]
+
+
+def title_from_slug(slug: str) -> str:
+    return " ".join(part.upper() if part in {"ai", "nlp", "llm"} else part.capitalize() for part in slug.split("-"))
+
+
+def load_kaggle_env(root: Path) -> dict[str, str]:
+    env = os.environ.copy()
+    dotenv = Path.home() / ".env"
+    if dotenv.exists():
+        for raw_line in dotenv.read_text(encoding="utf-8").splitlines():
+            line = raw_line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            if line.startswith("export "):
+                line = line.removeprefix("export ").strip()
+            key, value = line.split("=", 1)
+            key = key.strip()
+            value = value.strip().strip('"').strip("'")
+            if re.match(r"^[A-Za-z_][A-Za-z0-9_]*$", key):
+                env.setdefault(key, value)
+
+    if "KAGGLE_KEY" not in env and "KAGGLE_API_KEY" in env:
+        env["KAGGLE_KEY"] = env["KAGGLE_API_KEY"]
+    if "KAGGLE_USERNAME" not in env and "KAGGLE_API_USERNAME" in env:
+        env["KAGGLE_USERNAME"] = env["KAGGLE_API_USERNAME"]
+
+    env.setdefault("KAGGLE_CONFIG_DIR", str(root / ".kaggle_config"))
+    env["PATH"] = f"{root / '.venv' / 'bin'}:{env.get('PATH', '')}"
+    return env
+
+
+def run_kaggle(root: Path, *args: str) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        ["kaggle", *args],
+        cwd=root,
+        env=load_kaggle_env(root),
+        text=True,
+        capture_output=True,
+        check=False,
+    )
 
 
 def write_new(path: Path, content: str, force: bool) -> None:
@@ -33,6 +93,7 @@ def competition_md(args: argparse.Namespace, slug: str) -> str:
 
 - Competition: {args.url or "TBD"}
 - Kaggle workspace slug: `{slug}`
+- Kaggle CLI slug: `{args.competition_slug or slug}`
 
 ## Objective
 
@@ -123,6 +184,7 @@ Competition-specific instructions for `competitions/{slug}`.
 - Competition: {args.title}
 - Competition URL: {args.url or "TBD"}
 - Metric: {args.metric or "TBD"}
+- Kaggle CLI slug: `{args.competition_slug or slug}`
 
 ## Working Rules
 
@@ -143,9 +205,10 @@ Competition-specific instructions for `competitions/{slug}`.
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("title", help="Competition title")
+    parser.add_argument("title", nargs="?", help="Competition title or Kaggle competition URL")
     parser.add_argument("--slug", help="Folder slug. Defaults to slugified title.")
     parser.add_argument("--url", default="", help="Kaggle competition URL")
+    parser.add_argument("--competition-slug", default="", help="Kaggle competition URL suffix. Derived from URL when possible.")
     parser.add_argument("--metric", default="", help="Evaluation metric")
     parser.add_argument("--dataset-slug", default="", help="Kaggle input dataset folder name if different from workspace slug")
     parser.add_argument(
@@ -155,11 +218,26 @@ def main() -> None:
         help="External data rule summary",
     )
     parser.add_argument("--notebook", type=Path, help="Optional existing notebook to copy into notebooks/")
+    parser.add_argument("--template", help="Template notebook name from templates/notebooks/ or a notebook path to copy")
+    parser.add_argument("--no-fetch", action="store_true", help="Do not fetch Kaggle pages/files when a competition slug is known")
     parser.add_argument("--force", action="store_true", help="Overwrite existing markdown files")
     args = parser.parse_args()
 
-    slug = args.slug or slugify(args.title)
     root = Path.cwd()
+    if not args.title and not args.url:
+        raise SystemExit("Pass a competition title or Kaggle competition URL.")
+
+    positional_url_slug = competition_slug_from_url(args.title or "")
+    url_slug = competition_slug_from_url(args.url)
+    if positional_url_slug:
+        args.url = args.title
+        args.title = ""
+
+    args.competition_slug = args.competition_slug or positional_url_slug or url_slug or ""
+    if not args.title:
+        args.title = title_from_slug(args.competition_slug) if args.competition_slug else "TBD"
+
+    slug = args.slug or slugify(args.competition_slug or args.title)
     workspace = root / "competitions" / slug
 
     for subdir in ("notebooks", "submissions", "references"):
@@ -180,6 +258,42 @@ def main() -> None:
         else:
             shutil.copy2(source, destination)
             print(f"copied: {source} -> {destination}")
+
+    if args.template:
+        template = Path(args.template)
+        if not template.suffix:
+            template = root / "templates" / "notebooks" / f"{args.template}.ipynb"
+        elif not template.is_absolute():
+            template = root / template
+        if not template.exists():
+            raise SystemExit(f"Template notebook not found: {template}")
+        destination = workspace / "notebooks" / template.name
+        if destination.exists() and not args.force:
+            print(f"exists: {destination}")
+        else:
+            shutil.copy2(template, destination)
+            print(f"copied: {template} -> {destination}")
+
+    if args.competition_slug and not args.no_fetch:
+        references = workspace / "references"
+        for page_name in DEFAULT_PAGES:
+            result = run_kaggle(root, "competitions", "pages", args.competition_slug, "--content", "--page-name", page_name)
+            target = references / f"kaggle_{page_name}.md"
+            if result.returncode == 0 and result.stdout.strip():
+                write_new(target, result.stdout, args.force)
+            else:
+                print(f"warn:   could not fetch Kaggle {page_name} page")
+                if result.stderr.strip():
+                    print(result.stderr.strip())
+
+        result = run_kaggle(root, "competitions", "files", args.competition_slug)
+        target = references / "kaggle_files.txt"
+        if result.returncode == 0 and result.stdout.strip():
+            write_new(target, result.stdout, args.force)
+        else:
+            print("warn:   could not fetch Kaggle file listing")
+            if result.stderr.strip():
+                print(result.stderr.strip())
 
     print(f"\nWorkspace ready: {workspace}")
 
