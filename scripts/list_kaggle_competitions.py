@@ -5,12 +5,15 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import os
 import re
 import subprocess
 import sys
 from io import StringIO
 from pathlib import Path
+
+CACHE_VERSION = "v1"
 
 
 def load_kaggle_env(root: Path) -> dict[str, str]:
@@ -46,6 +49,28 @@ def slugify(value: str) -> str:
 
 
 def run_list(args: argparse.Namespace, root: Path) -> str:
+    cache_dir = root / ".kaggle_cache" / "competition_lists"
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    cache_key = "|".join(
+        [
+            CACHE_VERSION,
+            args.group,
+            args.category,
+            args.sort_by,
+            str(args.page_size),
+            args.search,
+        ]
+    )
+    cache_path = cache_dir / f"{hashlib.sha256(cache_key.encode('utf-8')).hexdigest()[:16]}.csv"
+    meta_path = cache_path.with_suffix(".txt")
+
+    if cache_path.exists() and not args.refresh:
+        print(f"Using cached Kaggle competition list: {cache_path}", file=sys.stderr)
+        return cache_path.read_text(encoding="utf-8")
+
+    if args.offline:
+        raise SystemExit(f"No cached result for this query: {cache_path}")
+
     command = [
         "kaggle",
         "competitions",
@@ -65,8 +90,27 @@ def run_list(args: argparse.Namespace, root: Path) -> str:
 
     result = subprocess.run(command, cwd=root, env=load_kaggle_env(root), text=True, capture_output=True, check=False)
     if result.returncode != 0:
+        if cache_path.exists():
+            print(f"warn: Kaggle API failed; using stale cache: {cache_path}", file=sys.stderr)
+            sys.stderr.write(result.stderr or result.stdout)
+            return cache_path.read_text(encoding="utf-8")
         sys.stderr.write(result.stderr or result.stdout)
         raise SystemExit(result.returncode)
+
+    cache_path.write_text(result.stdout, encoding="utf-8")
+    meta_path.write_text(
+        "\n".join(
+            [
+                f"group={args.group}",
+                f"category={args.category}",
+                f"sort_by={args.sort_by}",
+                f"page_size={args.page_size}",
+                f"search={args.search}",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
     return result.stdout
 
 
@@ -85,6 +129,8 @@ def main() -> None:
         choices=["grouped", "prize", "earliestDeadline", "latestDeadline", "numberOfTeams", "recentlyCreated"],
     )
     parser.add_argument("--page-size", type=int, default=20)
+    parser.add_argument("--refresh", action="store_true", help="Fetch fresh results instead of using the local cache")
+    parser.add_argument("--offline", action="store_true", help="Only use cached results; fail if the query is not cached")
     args = parser.parse_args()
 
     root = Path.cwd()

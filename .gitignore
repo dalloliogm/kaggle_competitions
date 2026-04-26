@@ -6,5 +6,6 @@ submission*
 __pycache__/
 .kaggle_work/
 .kaggle_config/
+.kaggle_cache/
 kaggle_outputs/
 working/

@@ -19,7 +19,9 @@ Use the repo script:
 ./scripts/list_kaggle_competitions.py --category playground --sort-by latestDeadline
 ```
 
-The script wraps `kaggle competitions list --csv` and marks whether a local workspace already exists.
+The script wraps `kaggle competitions list --csv`, marks whether a local workspace already exists, and caches results under `.kaggle_cache/competition_lists/`.
+
+By default, reuse cached results for identical queries. Use `--refresh` when the user asks for latest/current competitions. Use `--offline` when the user explicitly wants no network calls.
 
 ## Choose And Initialize
 
@@ -35,3 +37,4 @@ If the user wants a reusable starting point, add `--template <template-name>`.
 
 Keep competition summaries short: title/ref, deadline, category, reward, teams, and whether a local workspace already exists.
 
+If a cached result is used, mention that it may be stale. If freshness matters, rerun with `--refresh`.

@@ -72,6 +72,8 @@ To list/search competitions:
 ./scripts/list_kaggle_competitions.py --group entered
 ```
 
+Competition list results are cached under `.kaggle_cache/competition_lists/` to avoid repeating identical Kaggle API calls. Add `--refresh` to fetch fresh results or `--offline` to require cached results only.
+
 ## Authentication
 
 The helper scripts load `~/.env` if it exists. Kaggle's CLI expects:

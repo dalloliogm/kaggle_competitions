@@ -35,6 +35,8 @@ To search or choose competitions from the command line:
 ./scripts/list_kaggle_competitions.py --group entered
 ```
 
+Competition search/list results are cached in `.kaggle_cache/competition_lists/`. Use `--refresh` when you want fresh Kaggle results, or `--offline` to avoid network calls and use only cached results.
+
 In a new chat, you can also ask:
 
 ```text
