@@ -39,6 +39,8 @@ competitions/<slug>/
   COMPETITION.md
   TASKS.md
   NOTES.md
+  APPROACHES.md
+  LEARNINGS.md
   AGENTS.md
   notebooks/
   submissions/
@@ -53,7 +55,13 @@ Use `TASKS.md` for the current plan, open experiments, completed experiments, an
 
 Use `NOTES.md` for EDA observations, feature ideas, model ideas, leaderboard notes, and useful links.
 
+Use `APPROACHES.md` for structured experiment history: current best, tried approaches, backlog ideas, and abandoned directions.
+
+Use `LEARNINGS.md` for durable insights: data quirks, validation behavior, leakage risks, feature/model observations, and leaderboard behavior.
+
 Use workspace `AGENTS.md` for competition-specific instructions that should guide future Codex/Claude work.
+
+Before proposing or implementing a new modeling direction in an existing workspace, read `APPROACHES.md` and `LEARNINGS.md` so repeated failed experiments are avoided.
 
 ## Discover Competitions
 

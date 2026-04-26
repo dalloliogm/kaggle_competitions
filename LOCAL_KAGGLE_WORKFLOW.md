@@ -19,6 +19,8 @@ competitions/<slug>/
   COMPETITION.md
   TASKS.md
   NOTES.md
+  APPROACHES.md
+  LEARNINGS.md
   AGENTS.md
   notebooks/
   submissions/
@@ -43,6 +45,8 @@ CLAUDE.md
 ```
 
 `AGENTS.md` is the shared source of truth. The other files exist so Claude Code, GitHub Copilot, and Codex can each discover the same workflow through their native conventions.
+
+Use `APPROACHES.md` to record experiments, scores, outcomes, backlog ideas, and abandoned directions. Use `LEARNINGS.md` for durable insights about data, validation, leakage, features, models, ensembling, and leaderboard behavior.
 
 To seed the workspace with an existing root notebook:
 

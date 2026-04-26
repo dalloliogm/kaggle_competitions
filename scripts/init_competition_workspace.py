@@ -174,6 +174,76 @@ def notes_md() -> str:
 """
 
 
+def approaches_md() -> str:
+    return """# Approaches
+
+Track modeling approaches, experiments, submissions, and outcomes here. Prefer short entries with enough detail that a future chat can understand what was tried and whether it is worth revisiting.
+
+## Current Best
+
+| Date | Approach | Local CV | Public LB | Private LB | Notebook/commit | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+
+## Tried
+
+| Date | Approach | Changes | Local CV | Public LB | Outcome | Follow-up |
+| --- | --- | --- | --- | --- | --- | --- |
+| TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+
+## Backlog
+
+| Idea | Rationale | Expected impact | Cost | Priority |
+| --- | --- | --- | --- | --- |
+| TBD | TBD | TBD | TBD | TBD |
+
+## Abandoned
+
+| Approach | Why dropped | Evidence | Revisit if |
+| --- | --- | --- | --- |
+| TBD | TBD | TBD | TBD |
+"""
+
+
+def learnings_md() -> str:
+    return """# Learnings
+
+Capture durable information learned while working on this competition. This is for insights that should guide future modeling and prevent repeated mistakes.
+
+## Data
+
+- TBD
+
+## Target And Metric
+
+- TBD
+
+## Validation
+
+- TBD
+
+## Leakage And Rules
+
+- TBD
+
+## Features
+
+- TBD
+
+## Models
+
+- TBD
+
+## Ensembling And Submission Behavior
+
+- TBD
+
+## Leaderboard Notes
+
+- TBD
+"""
+
+
 def agents_md(args: argparse.Namespace, slug: str) -> str:
     return f"""# AGENTS.md
 
@@ -191,7 +261,8 @@ Competition-specific instructions for `competitions/{slug}`.
 - Preserve Kaggle compatibility: code that runs on Kaggle should use `/kaggle/input/...` and `/kaggle/working`.
 - Prefer small, auditable notebook/script edits over broad refactors.
 - Keep root-level Kaggle UI autosaved notebooks in place unless explicitly asked to copy or move one.
-- Put active competition notes in this folder: `COMPETITION.md`, `TASKS.md`, and `NOTES.md`.
+- Put active competition notes in this folder: `COMPETITION.md`, `TASKS.md`, `NOTES.md`, `APPROACHES.md`, and `LEARNINGS.md`.
+- Before suggesting a new modeling direction, review `APPROACHES.md` and `LEARNINGS.md` to avoid repeating failed experiments.
 - Put local submissions or downloaded outputs under `submissions/`; do not commit generated submission files unless explicitly requested.
 - When running on Kaggle from this repository, prefer `../../scripts/kaggle_push_notebook.sh`, `../../scripts/kaggle_status.sh`, and `../../scripts/kaggle_output.sh`.
 
@@ -246,6 +317,8 @@ def main() -> None:
     write_new(workspace / "COMPETITION.md", competition_md(args, slug), args.force)
     write_new(workspace / "TASKS.md", tasks_md(), args.force)
     write_new(workspace / "NOTES.md", notes_md(), args.force)
+    write_new(workspace / "APPROACHES.md", approaches_md(), args.force)
+    write_new(workspace / "LEARNINGS.md", learnings_md(), args.force)
     write_new(workspace / "AGENTS.md", agents_md(args, slug), args.force)
 
     if args.notebook:

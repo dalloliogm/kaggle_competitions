@@ -7,7 +7,8 @@ Use `AGENTS.md` as the shared source of truth for repository conventions. Key ru
 - Do not reorganize, move, or rename root-level Kaggle notebooks unless explicitly asked.
 - Treat notebooks as competition/experiment units; prefer small, auditable edits.
 - Notebooks are designed to run on Kaggle kernels with inputs under `/kaggle/input/...`.
-- For active competitions, use `competitions/<slug>/` workspaces with `COMPETITION.md`, `TASKS.md`, `NOTES.md`, `AGENTS.md`, `notebooks/`, `submissions/`, and `references/`.
+- For active competitions, use `competitions/<slug>/` workspaces with `COMPETITION.md`, `TASKS.md`, `NOTES.md`, `APPROACHES.md`, `LEARNINGS.md`, `AGENTS.md`, `notebooks/`, `submissions/`, and `references/`.
+- In existing competition workspaces, inspect `APPROACHES.md` and `LEARNINGS.md` before suggesting new experiments.
 - Prefer `scripts/init_competition_workspace.py` to create a competition workspace.
 - A pasted Kaggle competition URL should be enough to initialize a workspace; derive the slug from the URL and fetch/store useful Kaggle context when possible.
 - Use `scripts/list_kaggle_competitions.py` when listing, searching, or choosing competitions.

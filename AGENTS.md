@@ -45,7 +45,9 @@ For ongoing competitions, create a focused workspace with:
 
 `./scripts/init_competition_workspace.py https://www.kaggle.com/competitions/competition-slug`
 
-Each workspace should contain `COMPETITION.md`, `TASKS.md`, `NOTES.md`, `AGENTS.md`, `notebooks/`, `submissions/`, and `references/`. Use the workspace markdown files to capture competition-specific context and instructions.
+Each workspace should contain `COMPETITION.md`, `TASKS.md`, `NOTES.md`, `APPROACHES.md`, `LEARNINGS.md`, `AGENTS.md`, `notebooks/`, `submissions/`, and `references/`. Use the workspace markdown files to capture competition-specific context and instructions.
+
+Before proposing or implementing a new modeling direction in an existing workspace, read `APPROACHES.md` and `LEARNINGS.md` so previous experiments and durable insights are not lost.
 
 When listing, searching, or choosing competitions, use `./scripts/list_kaggle_competitions.py`.
 

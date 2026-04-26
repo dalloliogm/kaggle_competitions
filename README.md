@@ -19,7 +19,7 @@ Initialize the workspace, read the competition page for objective/rules/evaluati
 If the workspace already exists:
 
 ```text
-Use the existing workspace at competitions/<slug>. Read its COMPETITION.md, TASKS.md, NOTES.md, and AGENTS.md, then help me with <specific task>.
+Use the existing workspace at competitions/<slug>. Read its COMPETITION.md, TASKS.md, NOTES.md, APPROACHES.md, LEARNINGS.md, and AGENTS.md, then help me with <specific task>.
 ```
 
 The initializer script is:
@@ -55,5 +55,14 @@ Use a template when initializing a workspace:
 ```
 
 Keep templates generic: put competition-specific values near the top of the notebook, avoid hardcoded `/kaggle/input/<old-competition>/` paths, and document expected columns/metric in the first markdown cell.
+
+## Tracking progress
+
+Active competition workspaces include two files for memory across chats:
+
+- `APPROACHES.md` tracks modeling approaches tried so far, scores, outcomes, backlog ideas, and abandoned directions.
+- `LEARNINGS.md` tracks durable information learned about the data, metric, validation, leakage risks, features, models, ensembling, and leaderboard behavior.
+
+Ask agents to read both before proposing new experiments.
 
 See `LOCAL_KAGGLE_WORKFLOW.md`, `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`, and `.codex/skills/` for the agent-specific setup.
