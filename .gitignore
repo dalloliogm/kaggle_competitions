@@ -3,3 +3,7 @@ submission*
 *h5
 .env
 .venv/
+.kaggle_work/
+.kaggle_config/
+kaggle_outputs/
+working/
