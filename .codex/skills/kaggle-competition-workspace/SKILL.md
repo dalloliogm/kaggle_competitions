@@ -1,0 +1,71 @@
+---
+name: kaggle-competition-workspace
+description: Use when initializing or maintaining an active Kaggle competition workspace inside the kaggle_competitions repository, especially when the user wants a competitions/<slug>/ folder with COMPETITION.md, TASKS.md, NOTES.md, AGENTS.md, notebooks, submissions, and references while preserving root-level Kaggle UI autosaved notebooks.
+---
+
+# Kaggle Competition Workspace
+
+## Purpose
+
+Set up and maintain lightweight per-competition workspaces without reorganizing the root Kaggle notebook archive.
+
+Root-level notebooks are expected because Kaggle's "Save notebook to GitHub" flow writes there. Do not move or rename them unless the user explicitly asks.
+
+## Initialize A Workspace
+
+When working in `/Users/giovannidallolio/workspace/kaggle_competitions`, prefer the repo script:
+
+```bash
+./scripts/init_competition_workspace.py "Competition title" \
+  --slug competition-slug \
+  --url https://www.kaggle.com/competitions/... \
+  --metric "metric name"
+```
+
+If the user provides a starter root notebook, copy it into the workspace with:
+
+```bash
+./scripts/init_competition_workspace.py "Competition title" \
+  --slug competition-slug \
+  --notebook root-notebook.ipynb
+```
+
+The expected layout is:
+
+```text
+competitions/<slug>/
+  COMPETITION.md
+  TASKS.md
+  NOTES.md
+  AGENTS.md
+  notebooks/
+  submissions/
+  references/
+```
+
+## What To Capture
+
+Use `COMPETITION.md` for durable facts: URL, objective, metric, data paths, submission format, rules, and current baseline.
+
+Use `TASKS.md` for the current plan, open experiments, completed experiments, and questions.
+
+Use `NOTES.md` for EDA observations, feature ideas, model ideas, leaderboard notes, and useful links.
+
+Use workspace `AGENTS.md` for competition-specific instructions that should guide future Codex/Claude work.
+
+## Kaggle Execution
+
+For running notebooks on Kaggle from this repo, prefer the existing helper scripts:
+
+```bash
+./scripts/kaggle_push_notebook.sh NOTEBOOK.ipynb owner/kernel-slug
+./scripts/kaggle_status.sh owner/kernel-slug
+./scripts/kaggle_output.sh owner/kernel-slug
+```
+
+Preserve Kaggle compatibility in code: use `/kaggle/input/...` and `/kaggle/working` on Kaggle, with local fallbacks such as `data/` and `working/` only when useful.
+
+## When To Suggest A Separate Repo
+
+Suggest a dedicated repo only when the competition grows into a real project: reusable `src/`, configs, tests, multiple pipelines, team collaboration, or a production-style inference package.
+

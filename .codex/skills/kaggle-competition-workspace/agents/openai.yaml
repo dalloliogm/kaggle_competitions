@@ -1,0 +1,5 @@
+interface:
+  display_name: "Kaggle Competition Workspace"
+  short_description: "Initialize Kaggle competition workspaces"
+  default_prompt: "Initialize a Kaggle competition workspace for this competition."
+

@@ -1,6 +1,13 @@
 # AGENTS.md
 
-This file provides guidance to Codex (Codex.ai/code) when working with code in this repository.
+This file provides shared AI-agent guidance for Codex, Claude Code, GitHub Copilot, and similar coding agents when working with this repository.
+
+Adapter files for specific tools:
+
+- `CLAUDE.md` imports this file for Claude Code.
+- `.github/copilot-instructions.md` summarizes this file for GitHub Copilot.
+- `.github/instructions/kaggle-competition-workspace.instructions.md` adds Copilot path-specific guidance for `competitions/**`.
+- `.codex/skills/kaggle-competition-workspace/` contains the repo-local Codex skill for initializing active competition workspaces.
 
 ## Repository overview
 
@@ -40,6 +47,8 @@ For ongoing competitions, create a focused workspace with:
 Each workspace should contain `COMPETITION.md`, `TASKS.md`, `NOTES.md`, `AGENTS.md`, `notebooks/`, `submissions/`, and `references/`. Use the workspace markdown files to capture competition-specific context and instructions.
 
 When executing on Kaggle, prefer the helper scripts in `scripts/`: `kaggle_push_notebook.sh`, `kaggle_status.sh`, and `kaggle_output.sh`.
+
+The repository-local Codex skill for this workflow lives at `.codex/skills/kaggle-competition-workspace/`. Treat that copy as the versioned source of truth for the skill.
 
 ## Gitignore
 

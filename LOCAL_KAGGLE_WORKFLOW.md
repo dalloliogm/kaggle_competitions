@@ -26,6 +26,24 @@ competitions/<slug>/
   references/
 ```
 
+The Codex skill that describes this workflow is versioned in the repo at:
+
+```text
+.codex/skills/kaggle-competition-workspace/
+```
+
+Cross-agent configuration is intentionally adapter-based:
+
+```text
+AGENTS.md
+CLAUDE.md
+.github/copilot-instructions.md
+.github/instructions/kaggle-competition-workspace.instructions.md
+.codex/skills/kaggle-competition-workspace/
+```
+
+`AGENTS.md` is the shared source of truth. The other files exist so Claude Code, GitHub Copilot, and Codex can each discover the same workflow through their native conventions.
+
 To seed the workspace with an existing root notebook:
 
 ```bash
