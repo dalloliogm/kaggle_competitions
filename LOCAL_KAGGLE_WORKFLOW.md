@@ -2,6 +2,38 @@
 
 This repository intentionally keeps Kaggle-saved notebooks in the root folder, because Kaggle's "Save notebook to GitHub" button writes them that way. The local workflow below keeps that layout intact while making it easy to edit notebooks in Codex, Claude Code, VS Code, or Jupyter, then execute them on Kaggle.
 
+## Active Competition Workspaces
+
+Root notebooks are the Kaggle UI archive. For active competitions, create a focused workspace under `competitions/`:
+
+```bash
+./scripts/init_competition_workspace.py "Playground Series S6E4" \
+  --slug playground-s6e4 \
+  --url https://www.kaggle.com/competitions/... \
+  --metric "RMSE"
+```
+
+This creates:
+
+```text
+competitions/<slug>/
+  COMPETITION.md
+  TASKS.md
+  NOTES.md
+  AGENTS.md
+  notebooks/
+  submissions/
+  references/
+```
+
+To seed the workspace with an existing root notebook:
+
+```bash
+./scripts/init_competition_workspace.py "Playground Series S6E4" \
+  --slug playground-s6e4 \
+  --notebook root-notebook.ipynb
+```
+
 ## Authentication
 
 The helper scripts load `~/.env` if it exists. Kaggle's CLI expects:
@@ -103,4 +135,3 @@ submission_path = WORK_DIR / "submission.csv"
 ```
 
 This lets Codex/Claude Code edit and reason about the notebook locally while Kaggle remains the authoritative execution environment.
-
