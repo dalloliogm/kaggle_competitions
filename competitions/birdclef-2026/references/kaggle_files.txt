@@ -1,0 +1,23 @@
+Next Page Token = CfDJ8OqP5ZkTT9ZGj66XXRbxXyBnp0zQk2xFh3gQuz_OSG_NEPDF_uzEp1eagKFvX4cIZ0szr-0kiXHy4jDI0E4b4OsxaFOt-5c2LpveKlwFKDv9488OP3Yk2UuV6xch148MDBxVSBMg8uinw4Laro49jMD9XqLuyRU43yudCuPTyQ
+name                                       size  creationDate                
+-----------------------------------  ----------  --------------------------  
+recording_location.txt                      204  2026-03-09 19:23:38.482000  
+sample_submission.csv                     16708  2026-03-09 19:23:38.481000  
+taxonomy.csv                              13693  2026-03-09 19:22:13.778000  
+test_soundscapes/readme.txt                  78  2026-03-09 19:23:38.525000  
+train.csv                               6779071  2026-03-09 19:22:13.789000  
+train_audio/1161364/iNat1114648.ogg      254106  2026-03-09 19:20:21.014000  
+train_audio/1161364/iNat1216197.ogg      169832  2026-03-09 19:20:21.061000  
+train_audio/1161364/iNat1264238.ogg        7409  2026-03-09 19:20:21.086000  
+train_audio/1161364/iNat547199.ogg       159412  2026-03-09 19:20:21.086000  
+train_audio/1161364/iNat556514.ogg       692070  2026-03-09 19:20:21.119000  
+train_audio/1161364/iNat810195.ogg       737744  2026-03-09 19:20:21.358000  
+train_audio/1161364/iNat818781.ogg       576205  2026-03-09 19:20:21.042000  
+train_audio/1161364/iNat840159.ogg        46314  2026-03-09 19:20:21.008000  
+train_audio/1161364/iNat842139.ogg       121257  2026-03-09 19:20:21.047000  
+train_audio/1161364/iNat868369.ogg       300625  2026-03-09 19:20:21.067000  
+train_audio/1161364/iNat869958.ogg        64723  2026-03-09 19:20:21.052000  
+train_audio/116570/iNat1460166.ogg        78557  2026-03-09 19:21:01.821000  
+train_audio/1176823/iNat1269019.ogg      262475  2026-03-09 19:20:08.152000  
+train_audio/1176823/iNat145706.ogg       195324  2026-03-09 19:20:08.210000  
+train_audio/1176823/iNat1641731.ogg       92665  2026-03-09 19:20:08.220000  
