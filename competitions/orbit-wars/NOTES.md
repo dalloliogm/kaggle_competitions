@@ -154,6 +154,31 @@ deployed bug: the hybrid router detected player count from the all-neutral
 - Caveat: local 4P benchmarks are weak/unrepresentative (didn't match live);
   the fix rests on live evidence (producer-anchor 4/10 vs primary 1/9 in 4P).
 
+## Standing at 2026-06-23 16:50 BST (deadline 23:59 UTC)
+
+- Router fix `53963473` peaked ~1139, then it and the budget-cap fix `53969352`
+  settled/drifted to ~1105 / ~1096 as ratings converged toward true skill and the
+  field hardened near the deadline.
+- Submitted `53980317` (pa-prodweight, production-weighted targeting) as a
+  downside-protected upside swing. It validated but STALLED at 892.4 / 21 episodes
+  — team-wide daily episode quota exhausted (all our subs' public scores froze).
+  892.4 is undersampled, NOT a settled verdict.
+- Active final pair: `53980317` (pa-prodweight) + `53969352` (pa-budget ~1096
+  floor). pa-routed `53963473` aged out of the latest-two window.
+- Team "Orbitiamo": rank 579/4784 (top 12.1%), counted 1096.2. Bronze line
+  rank ~478 / score ~1115.3 → currently ~19 pts / ~100 ranks UNDER bronze.
+- Can we predict pa-prodweight's settled level from trajectory? No — at 21 episodes
+  the rating uncertainty (±100+) overlaps the floor; early ratings overshoot then
+  regress (pa-routed 1139→1105, pa-budget 1117→1096). Weak negative signal:
+  pa-prodweight (892@21ep) is climbing slower than pa-budget was (~1090@27ep). The
+  real predictor would be its actual win-rate / 4P early-elimination rate vs
+  opponent strength in those 21 games, not the rating number.
+- Verdict: borderline ~1100 team, just under bronze. Router fix was the real
+  validated gain (~+65). Medals decided by the ~2-week post-deadline re-eval (both
+  locked subs re-play from scratch), so the public snapshot is not final. HOLD —
+  episodes throttled, and pa-budget/pa-routed are near-identical so swapping buys
+  nothing.
+
 ## EDA Observations
 
 - TBD

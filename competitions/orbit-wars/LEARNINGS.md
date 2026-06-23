@@ -110,6 +110,45 @@ Capture durable information learned while working on this competition. This is f
   These are the right levers in principle, but naive fixes (commit_fraction) hurt
   expansion — needs careful, well-benchmarked tuning, not a blunt multiplier.
 
+## Agent mechanics and the two active submission strategies (2026-06-23)
+
+Shared base — "ProducerLite" flow planner. Each turn: (1) list source planets
+(ours, enough ships); (2) list targets (nearby capturable planets + own threatened
+planets for defense); (3) size one fleet per source→target pair via `safe_drain`;
+(4) score each by a "me − Σ opponents" net-ship flow over a short look-ahead horizon
+(13 turns in 4P); (5) greedily fire the few best, then regroup leftovers toward
+threatened planets. A router sends 2P→primary (duel-tuned), 4P→producer-anchor.
+Both submissions share this base and play 2P identically; they differ ONLY in 4P
+offense.
+
+`safe_drain` = max ships a planet can send NOW and still survive the horizon.
+Mechanism: project the planet's ship count each future turn under a "do-nothing"
+assumption (keeps producing; enemy fleets ALREADY in flight arrive; no NEW enemy
+attacks); take the minimum projected count over turns we still own it; cap at the
+current garrison. Sending that many lands the worst upcoming turn at exactly 0.
+Doomed planets (lost within horizon regardless) return the full garrison. BLIND
+SPOT: the do-nothing assumption ignores REACTIVE counter-attacks — the enemy seeing
+us empty a planet and launching a fresh fleet the projection never saw. That blind
+spot is the 4P boom-bust; `reinforce_size_beta` and pa-budget's cap are patches for it.
+
+Why proximity-only targeting hurt: the shortlist ranks targets nearest-first, but
+"nearest" ≠ "most valuable". Planet production is ~1-5 ships/turn and COMPOUNDS over
+100-200 turns, so a far prod-5 planet is worth far more than a near prod-1 rock.
+Grabbing the closest planets grew our planet COUNT but froze our PRODUCTION (~14-34
+in losses) while winners compounded to 50+. Caveat: the shortlist is only half the
+cause — the scorer's 13-turn horizon also under-credits long-payoff captures even
+when they are candidates; pa-prodweight fixes the shortlist half only.
+
+Active pair (final): pa-budget (53969352) and pa-prodweight (53980317).
+- pa-budget = base + reserve cap: cap a planet's TOTAL contribution across all its
+  attacks in one turn to its safe_drain, so it is never emptied by multiple waves.
+  Strategy: capture but always leave a garrison — hold what you take.
+- pa-prodweight = pa-budget + production-weighted targeting: rank offensive targets
+  by `prod_weight*production − proximity` (CONFIG_4P prod_weight=20) so high-prod
+  planets surface. Strategy: capture economically valuable planets to compound, not
+  just the nearest. The shortlist-only lever is partial; magnitude 8 was a near
+  no-op (prod is small vs distances), 20 bites consistently.
+
 ## Models
 
 - The current public meta is dominated by ProducerLite flow planning with
