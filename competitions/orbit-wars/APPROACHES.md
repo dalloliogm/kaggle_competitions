@@ -6,7 +6,8 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 
 | Date | Approach | Local CV | Public LB | Private LB | Notebook/commit | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-06-23 | Router player-count fix (4P -> producer-anchor) | Local 4P unreliable (see LEARNINGS); validated runtime-safe | `53963473` settled to **1139.0** (~bronze), up from buggy hybrid 1074 | `53963473` live; commit `8567dd3` | Active pair: `53963473` (1139) + restored primary `53956759` (1070.5). Decided to HOLD and let it settle. |
+| 2026-06-23 | Router player-count fix (4P -> producer-anchor) | Local 4P unreliable (see LEARNINGS); validated runtime-safe | `53963473` = **1134.9**; team rank **351/4767 (bronze, top 7.4%)** as "Orbitiamo" | `53963473` live; commit `8567dd3` | Counted score (better of active pair). Bronze cutoff ~rank 477/score ~1115; silver ~rank 238/score ~1155. |
+| 2026-06-23 | pa-budget submitted (anti-boom-bust) | n/a | `53969352` settled to **1090.3** (27 ep) — BELOW pa-routed | `53969352` live; commit `c9708e1` | Live result: the 4P source_budget cap did NOT help. Floor held (better-of-two = 1134.9). Active pair now {pa-budget, pa-routed}. |
 | 2026-06-22 | Player-count router plus restored primary (BUGGY) | n/a | Hybrid `53956567` 1074.1 | Superseded | Router mis-detected 4P as 2P; never used producer-anchor in 4P | Replaced by the router fix above. |
 
 ## Ready (built, not submitted)
