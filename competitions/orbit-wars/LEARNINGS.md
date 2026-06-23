@@ -59,6 +59,25 @@ Capture durable information learned while working on this competition. This is f
 - LESSON: when two code paths each re-derive the same fact, verify BOTH on real
   obs. Instrument which sub-agent actually runs; don't assume routing works.
 
+## Live validation of the router fix + remaining failure (2026-06-23)
+
+- Router fix (sub 53963473, display name now "Orbitiamo") settled to ~1139
+  (≈bronze), up from the buggy hybrid's 1074.
+- Analyzed 20 fresh LIVE replays via `kaggle competitions episodes/replay`
+  (CLI 2.2.2 has these subcommands; pull IDs with `episodes <submission_id>`,
+  download with `replay <episode_id> -p <dir>`). NOTE zsh does not word-split
+  unquoted vars — iterate IDs with `while read`, not `for e in $eps`.
+- 2P: 5/10 wins, led production by step 40 in 9/10 (we build leads, convert ~half).
+- 4P: 3/10 wins, 5/10 EARLY ELIMINATIONS, led prod by step 40 in 6/10. The
+  boom-bust persists and is now live-confirmed: lead early, then in-flight ship
+  share sits ~0.5-0.6 (half the army permanently in transit) and we get
+  counter-eliminated. Wins snowball to 22-30 planets — outcome is binary
+  (snowball-and-win vs overcommit-and-die).
+- => `pa-budget` (cap cross-wave source_budget to safe_drain) directly targets
+  this live-confirmed failure; it is the evidence-backed next submission once 1139
+  settles. Secondary levers from forensics still untested live: production-weighted
+  target scoring, 1v1-endgame consolidation (mass when 2 of 4 seats are out).
+
 ## Benchmarking pitfalls discovered (2026-06-23)
 
 - Every agent ships its own `orbit_lite` package and shared module names. Running
