@@ -6,7 +6,15 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 
 | Date | Approach | Local CV | Public LB | Private LB | Notebook/commit | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-06-22 | Player-count router plus restored primary | Router uses primary for 2P and producer anchor for 4P | Hybrid: 4/6 2P vs I'M STRONGER; zero errors; component behavior already ladder-tested | Hybrid `53956567` complete; restored primary `53956759` pending | Final active pair once validation completes | Submit nothing else unless intentionally replacing the hybrid. |
+| 2026-06-23 | Router player-count fix (4P -> producer-anchor) | Local 4P unreliable (see LEARNINGS); validated runtime-safe | `53963473` settled to **1139.0** (~bronze), up from buggy hybrid 1074 | `53963473` live; commit `8567dd3` | Active pair: `53963473` (1139) + restored primary `53956759` (1070.5). Decided to HOLD and let it settle. |
+| 2026-06-22 | Player-count router plus restored primary (BUGGY) | n/a | Hybrid `53956567` 1074.1 | Superseded | Router mis-detected 4P as 2P; never used producer-anchor in 4P | Replaced by the router fix above. |
+
+## Ready (built, not submitted)
+
+| Date | Approach | Change | Local signal | Status |
+| --- | --- | --- | --- | --- |
+| 2026-06-23 | pa-budget (anti-boom-bust) | Cap cross-wave `source_budget` to `safe_drain` so 4P planets can't be drained to ~0 across multiple waves | Non-regressing vs pa-routed; surv_frac 0.90 vs 0.85; survives 500 vs 271 steps in probe; runtime-safe | Archive ready; HOLD until 1139 settles, then submit as low-risk upside (pa-routed 1139 stays as floor) |
+| 2026-06-23 | pa-reserve / commit_fraction | Reserve floor / per-launch fraction | REGRESSED (over-throttles expansion) | Rejected |
 
 ## Tried
 
