@@ -136,6 +136,24 @@ Executed final submission order:
 No additional submission should be made without deliberately changing this
 final pair.
 
+## Router-fix submission (2026-06-23)
+
+Deep reanalysis (forensics + code audit via multi-agent workflow) uncovered a
+deployed bug: the hybrid router detected player count from the all-neutral
+`initial_planets` and routed EVERY 4P game to the 2P `primary` agent (verified:
+270 primary / 0 producer-anchor calls in a live 4P game). The intended
+"4P → producer-anchor" path never ran on the ladder.
+
+- Submitted `53963473` (pa-routed): router now counts owners from live
+  `planets`/`fleets`. 2P unchanged; 4P → producer-anchor + CONFIG_4P.
+  Validation COMPLETE, runtime-safe (full 60s overage), no errors.
+- Excluded `commit_fraction` reserve idea: regressed hard locally (0.08 win) by
+  under-expanding. See LEARNINGS.
+- Active final pair: `53963473` (pa-routed) + `53956759` (restored primary).
+  Buggy hybrid `53956567` aged out of the latest-two window.
+- Caveat: local 4P benchmarks are weak/unrepresentative (didn't match live);
+  the fix rests on live evidence (producer-anchor 4/10 vs primary 1/9 in 4P).
+
 ## EDA Observations
 
 - TBD
