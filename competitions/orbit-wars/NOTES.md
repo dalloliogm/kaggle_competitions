@@ -179,6 +179,26 @@ deployed bug: the hybrid router detected player count from the all-neutral
   episodes throttled, and pa-budget/pa-routed are near-identical so swapping buys
   nothing.
 
+## Final standing — post-deadline, 2026-06-24 09:11 UTC
+
+Deadline (2026-06-23 23:59 UTC) passed; the latest-two pair is LOCKED for the
+~2-week final evaluation. No further submissions possible.
+
+- Locked active pair: `53980317` (pa-prodweight) + `53969352` (pa-budget).
+  Counted score = better-of-two = **pa-budget 1107.2**.
+- pa-prodweight VERDICT: after settling (58 episodes, up from the stalled 21) it
+  reached **1090.3 — BELOW pa-budget (1107.2)**. The production-weighted-targeting
+  swing did NOT beat the floor; pa-budget is what counts. No harm done (better-of-
+  two protected us) — but the swing did not pay off. The earlier weak-negative
+  trajectory signal (climbing slower than pa-budget) proved correct.
+- Team "Orbitiamo": rank **487/4810 (top 10.1%)**, score **1107.2**. Bronze line
+  rank 481 / score 1107.7 → ~6 ranks / ~0.5 points UNDER bronze. Silver line
+  rank 240 / 1150.8.
+- On the knife's edge of bronze. Final medal undecided — ratings still drift during
+  the 2-week final eval, so it can tip either way. Nothing actionable (locked).
+- Net arc this run: ~rank 820 / 1059 (buggy hybrid) -> rank ~487 / 1107 at the
+  bronze boundary. Single biggest lever, by far, was the player-count router fix.
+
 ## EDA Observations
 
 - TBD

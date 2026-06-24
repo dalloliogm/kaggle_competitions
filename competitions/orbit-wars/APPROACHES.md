@@ -8,7 +8,13 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | --- | --- | --- | --- | --- | --- | --- |
 | 2026-06-23 | Router player-count fix (4P -> producer-anchor) | Local 4P unreliable (see LEARNINGS); validated runtime-safe | `53963473` = **1134.9**; team rank **351/4767 (bronze, top 7.4%)** as "Orbitiamo" | `53963473` live; commit `8567dd3` | Counted score (better of active pair). Bronze cutoff ~rank 477/score ~1115; silver ~rank 238/score ~1155. |
 | 2026-06-23 | pa-budget submitted (anti-boom-bust) | n/a | `53969352` ~1108 (converged with pa-routed) | `53969352` live; commit `c9708e1` | 4P source_budget cap ~neutral (not harmful). Both active subs settled ~1108; team slipped to rank ~512 (just under bronze ~1114). |
-| 2026-06-23 | pa-prodweight submitted (production-weighted targets) | Probe: longer 4P survival at 2/3 seeds; runtime-safe; prod_weight calibrated to 20 (8 was a near no-op) | `53980317` PENDING | `53980317` live; commit pending | Router fix + budget cap + offensive shortlist ranks by `prod_weight*prod - proximity` (CONFIG_4P prod_weight=20). Active pair {pa-prodweight, pa-budget ~1108 floor}. UNVALIDATED swing for bronze; downside protected by floor. |
+| 2026-06-23 | pa-prodweight submitted (production-weighted targets) | Probe: longer 4P survival at 2/3 seeds; runtime-safe; prod_weight calibrated to 20 (8 was a near no-op) | `53980317` settled **1090.3** (58 ep) — BELOW pa-budget floor | `53980317` live; commit `13d1d20` | Router fix + budget cap + offensive shortlist ranks by `prod_weight*prod - proximity` (CONFIG_4P prod_weight=20). Swing did NOT beat the floor; no harm (better-of-two). Locked in final pair with pa-budget (1107.2). |
+
+## Final result (post-deadline, 2026-06-24)
+
+- Locked final pair: `53980317` pa-prodweight (1090.3) + `53969352` pa-budget (1107.2). Counted = 1107.2.
+- Team "Orbitiamo": rank **487/4810 (top 10.1%)**, ~0.5 pts / 6 ranks under the bronze line (rank 481 / 1107.7). Knife's-edge; medal undecided pending the 2-week final eval.
+- Net arc: ~rank 820 / 1059 (buggy hybrid) → ~487 / 1107. Biggest lever by far: the player-count router fix (+~65). Budget cap ~neutral; production-weighting did not help.
 | 2026-06-22 | Player-count router plus restored primary (BUGGY) | n/a | Hybrid `53956567` 1074.1 | Superseded | Router mis-detected 4P as 2P; never used producer-anchor in 4P | Replaced by the router fix above. |
 
 ## Ready (built, not submitted)
