@@ -61,6 +61,11 @@
   assertions, and wrote a `235,923`-row `submission.csv`.
 - Submitted NMS `3.8 um` as `54307212`; public LB improved `0.827 -> 0.834`.
 - Leaderboard snapshot: rank `203/630`; approximate top-10% cutoff `0.856`.
+- Created validation-only `notebooks/biohub-learned-unet-ilp-validation.ipynb`.
+  It isolates artifact dependencies, runs the real pretrained U-Net/transformer/ILP
+  script, scores predicted GEFF graphs exactly, and cannot emit a submission.
+- Passed notebook JSON/Python validation and syntax validation of the embedded
+  exact-metric runner. Full execution requires the Kaggle artifact and GPU.
 
 ## Questions
 

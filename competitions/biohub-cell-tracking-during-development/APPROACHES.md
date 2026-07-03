@@ -22,7 +22,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 
 | Date | Approach | Notebook | Validation status | Next action |
 | --- | --- | --- | --- | --- |
-| 2026-07-03 | Temporal 3D U-Net + edge transformer + ILP | Validation notebook pending | Not run with exact evaluator | Gate learned pipeline on same two embryos before any test inference |
+| 2026-07-03 | Temporal 3D U-Net + edge transformer + ILP | `notebooks/biohub-learned-unet-ilp-validation.ipynb` | Local notebook and embedded-runner syntax checks passed; GPU exact run pending | Gate default learned pipeline on same two embryos before tuning or test inference |
 
 ## Backlog
 
