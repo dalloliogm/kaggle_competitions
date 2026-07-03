@@ -6,8 +6,10 @@
 
 ## Next Experiments
 
-- Run a detection threshold/physical-NMS sweep while freezing linking and gap-1
-  logic. Prioritize the low-recall `6bba` embryo without overpredicting `44b6`.
+- Build and run a dedicated `min_distance_um=3.8` candidate notebook with full
+  test inference and submission-schema checks.
+- Inspect candidate validation and test statistics before recommending a second
+  competition submission. Do not submit automatically.
 - Retrieve `validation_summary.json` when Kaggle's output endpoint stops
   returning HTTP 429.
 - Only submit the gap-2 variant if exact validation is non-inferior across
@@ -48,6 +50,8 @@
 - Created validation-only `notebooks/biohub-detector-screening.ipynb` with the
   frozen baseline plus one-factor threshold `0.030/0.060` and physical-NMS
   `2.8/3.8 um` candidates. Local syntax and config-isolation checks passed.
+- Completed the exact detector screen. NMS `3.8 um` scored `0.810458` versus
+  baseline `0.794304` (`+0.016153`) and improved both held-out embryos.
 
 ## Questions
 
@@ -55,5 +59,4 @@
 - Which public baseline is the best reproducible starting point?
 - What are the exact aggregate and per-embryo validation metrics from version 7?
   The kernel completed, but `ListKernelSessionOutput` still returns HTTP 429.
-- Which detector threshold/NMS combination improves `6bba` node recall (`0.9013`)
-  without worsening the already saturated `44b6` node recall (`1.0`) and node penalty?
+- Does the NMS `3.8 um` test submission improve public LB over `0.827`?

@@ -69,6 +69,18 @@
   small penalty. Candidate rejected; no competition submission.
 - Evidence: `references/gap2-v1-output/`.
 
+## 2026-07-03: Detector screen result
+
+- Best: physical NMS `3.8 um`, exact aggregate `0.8104577161` versus baseline
+  `0.7943044375`; delta `+0.0161532785`.
+- `44b6`: `0.941009 -> 0.942567`; edge counts unchanged `49/2/1`, nodes
+  `26,110 -> 25,684`.
+- `6bba`: `0.785884 -> 0.802713`; edges `712/61/133 -> 708/42/137`, nodes
+  `6,361 -> 6,002`. Fewer false links dominated the modest TP/recall loss.
+- Threshold `0.030` and NMS `2.8 um` increased density and reduced score. Threshold
+  `0.060` helped slightly but was materially weaker than NMS `3.8 um`.
+- Evidence: `references/detector-screen-v1-output/`.
+
 ## Feature Ideas
 
 - TBD

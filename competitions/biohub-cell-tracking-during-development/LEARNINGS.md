@@ -39,6 +39,12 @@ Capture durable information learned while working on this competition. This is f
 - Multi-scale DoG is the dominant classical detector. Refine coordinates on the
   original volume and perform NMS in physical units.
 - Per-movie detection density/count calibration is promising but unvalidated.
+- Physical NMS `3.8 um` outperformed `3.2 um` on both held-out embryos. Aggregate
+  exact validation improved `0.794304 -> 0.810458`: edge counts changed from
+  `761/63/134` to `757/44/138`, so removing false links outweighed five lost TPs.
+- Lowering the DoG threshold to `0.030` added nodes without changing edge counts.
+  Raising it to `0.060` slightly improved only the node-count adjustment; NMS was
+  the higher-impact control.
 
 ## Models
 
