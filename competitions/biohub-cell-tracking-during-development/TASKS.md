@@ -2,14 +2,15 @@
 
 ## Current Goal
 
-- Improve the `0.827` public baseline using controlled exact-metric ablations.
+- Reach medal range by testing a genuinely different learned/global-tracking
+  pipeline against the exact embryo-disjoint validation benchmark.
 
 ## Next Experiments
 
-- Manually submit the output of
-  `dalloliogm/biohub-nms-3-8-submission-candidate` and record its public LB.
-- If public LB confirms the gain, screen nearby NMS values (`3.6`, `4.0`) or move
-  to the link-gate/two-pass ablation without changing detection simultaneously.
+- Build a validation-only temporal 3D U-Net + learned edge transformer + ILP
+  notebook using `cellmot-baseline-artifacts` and a GPU kernel.
+- Score its default published configuration on the same two embryos with the
+  exact evaluator. Only tune or run test inference if it exceeds `0.810458`.
 - Retrieve `validation_summary.json` when Kaggle's output endpoint stops
   returning HTTP 429.
 - Only submit the gap-2 variant if exact validation is non-inferior across
@@ -58,6 +59,8 @@
 - Kaggle candidate version 1 completed. It reproduced exact validation
   `0.8104577161`, processed all four test movies, passed edge endpoint/schema
   assertions, and wrote a `235,923`-row `submission.csv`.
+- Submitted NMS `3.8 um` as `54307212`; public LB improved `0.827 -> 0.834`.
+- Leaderboard snapshot: rank `203/630`; approximate top-10% cutoff `0.856`.
 
 ## Questions
 
@@ -65,4 +68,5 @@
 - Which public baseline is the best reproducible starting point?
 - What are the exact aggregate and per-embryo validation metrics from version 7?
   The kernel completed, but `ListKernelSessionOutput` still returns HTTP 429.
-- Does the NMS `3.8 um` test submission improve public LB over `0.827`?
+- Does the actual pretrained U-Net/transformer/ILP pipeline beat the classical
+  `0.810458` exact validation score on the same embryo-disjoint samples?

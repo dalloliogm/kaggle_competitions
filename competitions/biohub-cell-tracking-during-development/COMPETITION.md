@@ -20,6 +20,8 @@ identify division events to reconstruct cell lineages.
   individual cells or frames.
 - Public leaderboard: first DoG/Hungarian submission scored `0.827` on
   2026-07-03 (submission `54297736`).
+- Second submission (`54307212`) with physical NMS `3.8 um` scored `0.834`.
+- Current snapshot: rank `203/630`; top-10% boundary approximately `0.856`.
 
 ## Data
 
@@ -60,4 +62,6 @@ identify division events to reconstruct cell lineages.
 - Kaggle kernel: `dalloliogm/biohub-nms-3-8-submission-candidate`
 - Exact validation: `0.8104577161` versus frozen baseline `0.7943044375`.
 - Test output: four movies, `235,923` submission rows; schema checks passed.
-- Competition status: ready for manual submission, not submitted automatically.
+- Competition status: manually submitted by the user as `54307212`.
+- Submission result: `0.834` public LB, rank `203/630` at the 2026-07-03
+  leaderboard snapshot.

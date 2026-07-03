@@ -7,7 +7,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | Date | Approach | Local CV | Public LB | Private LB | Notebook/commit | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
 | 2026-07-03 | Multi-scale DoG + Hungarian + one-frame interpolation | Exact validation completed; output retrieval pending | 0.827 | TBD | `notebooks/biohub-exact-dog-hungarian-baseline.ipynb` | Strong first submission; divisions disabled |
-| 2026-07-03 | Baseline with physical NMS 3.8 um | 0.810458 | Not submitted | TBD | `notebooks/biohub-nms38-candidate.ipynb` / `e8f4ee7` | Complete kernel; 235,923-row submission ready |
+| 2026-07-03 | Baseline with physical NMS 3.8 um | 0.810458 | 0.834 | TBD | `notebooks/biohub-nms38-candidate.ipynb` / `e8f4ee7` | Rank 203/630; ~0.022 below top-10% cutoff |
 
 ## Tried
 
@@ -16,12 +16,13 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | 2026-07-03 | Exact DoG/Hungarian baseline | Offline exact evaluator, physical NMS, centroid refinement, 8 um linking, gap-1 interpolation, pruning | Completed on Kaggle; API output throttled | 0.827 | Successful first submission | Test one conservative gap-2 recovery pass |
 | 2026-07-03 | Conservative velocity-aware gap-2 recovery | Added capped `t -> t+3` bridges with two inserted nodes | 0.793540 vs 0.794304 baseline | Not submitted | Rejected: same 761/63/134 edge counts, more nodes, delta -0.000764 | Move to detector threshold/NMS sweep |
 | 2026-07-03 | Detector one-factor screen | Threshold 0.030/0.060 and NMS 2.8/3.8 um | Best 0.810458 at NMS 3.8 vs 0.794304 baseline | Not submitted | NMS 3.8 improved both embryos; lower threshold and NMS 2.8 hurt | Build dedicated candidate kernel |
+| 2026-07-03 | NMS 3.8 submission | Stronger suppression; otherwise frozen rule-based pipeline | 0.810458 | 0.834 | Improved LB +0.007 but remains outside medal range | Pivot to learned/global tracking |
 
 ## Prepared
 
 | Date | Approach | Notebook | Validation status | Next action |
 | --- | --- | --- | --- | --- |
-| 2026-07-03 | Physical NMS 3.8 um candidate | `notebooks/biohub-nms38-candidate.ipynb` | Exact validation reproduced; all test movies and schema checks passed | Submit kernel output manually and record public LB |
+| 2026-07-03 | Temporal 3D U-Net + edge transformer + ILP | Validation notebook pending | Not run with exact evaluator | Gate learned pipeline on same two embryos before any test inference |
 
 ## Backlog
 

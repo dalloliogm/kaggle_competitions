@@ -71,3 +71,6 @@ Capture durable information learned while working on this competition. This is f
   claims were not independently verified from the pulled source snapshots.
 - Full review: `references/top-notebooks-analysis.md`.
 - First verified public score: `0.827` for submission `54297736`.
+- Physical NMS `3.8 um` improved public LB to `0.834` (submission `54307212`),
+  but the current top-10% boundary is about `0.856` across 630 teams. The `0.022`
+  gap is too large to justify continued nearby NMS tuning as the primary strategy.

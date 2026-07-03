@@ -92,6 +92,16 @@
   checks passed. Ready for manual submission; no automatic upload performed.
 - Evidence: `references/nms38-v1-output/`.
 
+## 2026-07-03: Second submission and strategy pivot
+
+- Submission `54307212` scored `0.834`, improving the first submission by `0.007`.
+- Current rank: `203/630`. Approximate top-10% score: `0.856`; gap `0.022`.
+- Nearby rule-based tuning is unlikely to close that gap alone. Next gate is the
+  genuinely learned/global pipeline in `cellmot-baseline-artifacts`: temporal 3D
+  U-Net detections, learned edge transformer, and ILP optimization.
+- Start with exact validation only. Do not inherit the public notebook's proxy
+  objective or launch a costly parameter sweep before reproducing the default.
+
 ## Feature Ideas
 
 - TBD
