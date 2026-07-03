@@ -21,7 +21,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 
 | Date | Approach | Notebook | Validation status | Next action |
 | --- | --- | --- | --- | --- |
-| 2026-07-03 | Physical NMS 3.8 um candidate | Dedicated submission notebook pending | Exact screen passed on two embryos | Run full test inference and schema checks; do not submit automatically |
+| 2026-07-03 | Physical NMS 3.8 um candidate | `notebooks/biohub-nms38-candidate.ipynb` | Local syntax/config-isolation checks passed; exact Kaggle run pending | Run full test inference and schema checks; do not submit automatically |
 
 ## Backlog
 

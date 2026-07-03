@@ -52,6 +52,9 @@
   `2.8/3.8 um` candidates. Local syntax and config-isolation checks passed.
 - Completed the exact detector screen. NMS `3.8 um` scored `0.810458` versus
   baseline `0.794304` (`+0.016153`) and improved both held-out embryos.
+- Created `notebooks/biohub-nms38-candidate.ipynb` with candidate-only delta
+  `min_distance_um=3.8`, exact validation, full test inference, and schema checks.
+  Local JSON/Python and config-isolation checks passed.
 
 ## Questions
 
