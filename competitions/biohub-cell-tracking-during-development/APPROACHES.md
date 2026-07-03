@@ -18,7 +18,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 
 | Date | Approach | Notebook | Validation status | Next action |
 | --- | --- | --- | --- | --- |
-| 2026-07-03 | Conservative velocity-aware gap-2 recovery | Planned as a separate ablation notebook | Not run | Compare against the frozen baseline on identical held-out embryos |
+| 2026-07-03 | Conservative velocity-aware gap-2 recovery | `notebooks/biohub-gap2-velocity-ablation.ipynb` | Local syntax/config/graph tests passed; exact Kaggle run pending | Compare against frozen baseline on identical detections and held-out embryos |
 
 ## Backlog
 

@@ -38,6 +38,12 @@
 - Submitted version 7 as Kaggle submission `54297736`; public score `0.827`.
 - Created and uploaded `notebooks/biohub-cell-tracking-competition-tutorial.ipynb`,
   including the expanded Hungarian-assignment explanation.
+- Created `notebooks/biohub-gap2-velocity-ablation.ipynb`. It changes only the
+  gap-2 recovery switch, shares detections between variants, compares exact
+  metrics by embryo, and automatically falls back to the frozen baseline unless
+  the candidate improves overall without a regression worse than `0.002`.
+- Passed notebook JSON/Python validation and a structural test confirming one
+  accepted `t -> t+3` bridge inserts exactly two nodes and three consecutive edges.
 
 ## Questions
 

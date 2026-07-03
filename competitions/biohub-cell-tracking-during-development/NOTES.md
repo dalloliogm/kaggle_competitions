@@ -45,6 +45,18 @@
 
 - TBD
 
+## 2026-07-03: Gap-2 ablation prepared
+
+- Candidate source: the auditable delta in the reviewed LB-0.839 public notebook,
+  not its misleading U-Net/ILP title.
+- Frozen baseline and candidate share identical detections. Candidate-only config
+  delta is `recover_gap2=True`.
+- Recovery considers only `t -> t+3` tracklet ends/starts, requires displacement
+  and local-velocity compatibility, and caps additions at `0.45%` of existing
+  edges or `180` links per movie.
+- Two interpolated nodes create three consecutive edges, matching the metric's
+  temporal structure. A direct non-consecutive edge is never emitted.
+
 ## Feature Ideas
 
 - TBD
