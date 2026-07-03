@@ -6,6 +6,7 @@
 - `APPROACHES.md`: structured log of tried approaches, scores, outcomes, backlog ideas, and abandoned paths.
 - `LEARNINGS.md`: durable insights about data, metric, validation, leakage, modeling, ensembling, and leaderboard behavior.
 - `AGENTS.md`: competition-specific Codex/Claude instructions.
-- `notebooks/`: active notebooks copied from root or created locally.
+- `notebooks/`: active notebooks copied from root or created locally, including
+  the standard `<slug>-competition-tutorial.ipynb` for every new competition.
 - `submissions/`: local submission/output artifacts, usually not committed.
 - `references/`: downloaded rules, discussions, paper notes, schema notes, or other supporting context.

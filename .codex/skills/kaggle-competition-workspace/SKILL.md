@@ -1,6 +1,6 @@
 ---
 name: kaggle-competition-workspace
-description: Use when initializing or maintaining an active Kaggle competition workspace inside the kaggle_competitions repository, especially when the user wants a competitions/<slug>/ folder with COMPETITION.md, TASKS.md, NOTES.md, AGENTS.md, notebooks, submissions, and references while preserving root-level Kaggle UI autosaved notebooks.
+description: Use when initializing or maintaining an active Kaggle competition workspace inside the kaggle_competitions repository, including creating the standard competition tutorial notebook, context files, notebooks, submissions, and references while preserving root-level Kaggle UI autosaved notebooks.
 ---
 
 # Kaggle Competition Workspace
@@ -43,9 +43,37 @@ competitions/<slug>/
   LEARNINGS.md
   AGENTS.md
   notebooks/
+    <slug>-competition-tutorial.ipynb
   submissions/
   references/
 ```
+
+## Create The Competition Tutorial
+
+For each newly initialized competition, create
+`notebooks/<slug>-competition-tutorial.ipynb` after capturing the official task,
+data, metric, validation, and submission facts. Use the `jupyter-notebook` skill
+with `--kind tutorial` and its tutorial quality checklist.
+
+Make the tutorial competition-specific and include:
+
+- audience, prerequisites, learning goals, and a short outline;
+- the prediction target and real data/submission schemas;
+- a small runnable example of the core modeling problem;
+- the official metric's practical implications and common proxy mistakes;
+- leakage-safe validation and a basic submission validator;
+- at least one exercise with an answer scaffold;
+- a progression from transparent baseline to higher-ceiling approaches.
+
+Prefer a self-contained synthetic fallback so the notebook runs locally without
+competition data. Activate optional real-data inspection on Kaggle when inputs
+are attached. Respect offline-kernel constraints and avoid installing packages
+into the live runtime when that can replace its numerical stack.
+
+Run all code cells top-to-bottom when possible. If real data is unavailable,
+execute the synthetic path and state which Kaggle-only path remains unverified.
+Record the tutorial path in `TASKS.md`. Do not upload or publish it to Kaggle
+unless the user explicitly asks.
 
 ## What To Capture
 
