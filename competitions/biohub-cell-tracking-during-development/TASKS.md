@@ -45,6 +45,9 @@
 - Completed the exact gap-2 ablation. Baseline scored `0.794304`; candidate
   `0.793540` (delta `-0.000764`). Edge counts were identical, while candidate
   nodes increased from `32,471` to `32,619`; automatic selection kept baseline.
+- Created validation-only `notebooks/biohub-detector-screening.ipynb` with the
+  frozen baseline plus one-factor threshold `0.030/0.060` and physical-NMS
+  `2.8/3.8 um` candidates. Local syntax and config-isolation checks passed.
 
 ## Questions
 

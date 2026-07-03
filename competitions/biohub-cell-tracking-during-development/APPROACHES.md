@@ -19,7 +19,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 
 | Date | Approach | Notebook | Validation status | Next action |
 | --- | --- | --- | --- | --- |
-| 2026-07-03 | Detection threshold and physical-NMS sweep | Planned validation-only notebook | Not run | Sweep one detector family while freezing linker and gap logic |
+| 2026-07-03 | Detection threshold and physical-NMS screen | `notebooks/biohub-detector-screening.ipynb` | Local syntax/config checks passed; exact Kaggle run pending | Compare five one-factor settings with frozen linker and gap logic |
 
 ## Backlog
 
