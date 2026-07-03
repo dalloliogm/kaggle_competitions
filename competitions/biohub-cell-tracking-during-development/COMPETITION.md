@@ -53,3 +53,11 @@ identify division events to reconstruct cell lineages.
 - Kaggle kernel: `dalloliogm/biohub-exact-validation-and-dog-hungarian-baseline`
 - Kernel version 7 completed successfully on 2026-07-03 and produced the first
   scored submission (`54297736`).
+
+## Current Candidate
+
+- Notebook: `notebooks/biohub-nms38-candidate.ipynb`
+- Kaggle kernel: `dalloliogm/biohub-nms-3-8-submission-candidate`
+- Exact validation: `0.8104577161` versus frozen baseline `0.7943044375`.
+- Test output: four movies, `235,923` submission rows; schema checks passed.
+- Competition status: ready for manual submission, not submitted automatically.

@@ -6,10 +6,10 @@
 
 ## Next Experiments
 
-- Build and run a dedicated `min_distance_um=3.8` candidate notebook with full
-  test inference and submission-schema checks.
-- Inspect candidate validation and test statistics before recommending a second
-  competition submission. Do not submit automatically.
+- Manually submit the output of
+  `dalloliogm/biohub-nms-3-8-submission-candidate` and record its public LB.
+- If public LB confirms the gain, screen nearby NMS values (`3.6`, `4.0`) or move
+  to the link-gate/two-pass ablation without changing detection simultaneously.
 - Retrieve `validation_summary.json` when Kaggle's output endpoint stops
   returning HTTP 429.
 - Only submit the gap-2 variant if exact validation is non-inferior across
@@ -55,6 +55,9 @@
 - Created `notebooks/biohub-nms38-candidate.ipynb` with candidate-only delta
   `min_distance_um=3.8`, exact validation, full test inference, and schema checks.
   Local JSON/Python and config-isolation checks passed.
+- Kaggle candidate version 1 completed. It reproduced exact validation
+  `0.8104577161`, processed all four test movies, passed edge endpoint/schema
+  assertions, and wrote a `235,923`-row `submission.csv`.
 
 ## Questions
 

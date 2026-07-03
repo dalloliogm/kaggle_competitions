@@ -7,7 +7,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | Date | Approach | Local CV | Public LB | Private LB | Notebook/commit | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
 | 2026-07-03 | Multi-scale DoG + Hungarian + one-frame interpolation | Exact validation completed; output retrieval pending | 0.827 | TBD | `notebooks/biohub-exact-dog-hungarian-baseline.ipynb` | Strong first submission; divisions disabled |
-| 2026-07-03 | Baseline with physical NMS 3.8 um | 0.810458 | Not submitted | TBD | Candidate notebook pending | +0.016153 exact; both embryos improved |
+| 2026-07-03 | Baseline with physical NMS 3.8 um | 0.810458 | Not submitted | TBD | `notebooks/biohub-nms38-candidate.ipynb` / `e8f4ee7` | Complete kernel; 235,923-row submission ready |
 
 ## Tried
 
@@ -21,7 +21,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 
 | Date | Approach | Notebook | Validation status | Next action |
 | --- | --- | --- | --- | --- |
-| 2026-07-03 | Physical NMS 3.8 um candidate | `notebooks/biohub-nms38-candidate.ipynb` | Local syntax/config-isolation checks passed; exact Kaggle run pending | Run full test inference and schema checks; do not submit automatically |
+| 2026-07-03 | Physical NMS 3.8 um candidate | `notebooks/biohub-nms38-candidate.ipynb` | Exact validation reproduced; all test movies and schema checks passed | Submit kernel output manually and record public LB |
 
 ## Backlog
 

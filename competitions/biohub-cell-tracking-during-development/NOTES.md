@@ -81,6 +81,17 @@
   `0.060` helped slightly but was materially weaker than NMS `3.8 um`.
 - Evidence: `references/detector-screen-v1-output/`.
 
+## 2026-07-03: NMS-3.8 candidate complete
+
+- Kernel: `dalloliogm/biohub-nms-3-8-submission-candidate`, version 1 complete.
+- Candidate-only change confirmed: `min_distance_um=3.8`.
+- Exact validation reproduced `0.8104577161` with edge TP/FP/FN `757/44/138`.
+- Test graph rows: `25,684/24,710`, `28,601/25,692`, `6,002/5,646`, and
+  `61,355/58,233` nodes/edges across the four movies.
+- Final `submission.csv`: `235,923` rows; node uniqueness and all edge endpoint
+  checks passed. Ready for manual submission; no automatic upload performed.
+- Evidence: `references/nms38-v1-output/`.
+
 ## Feature Ideas
 
 - TBD
