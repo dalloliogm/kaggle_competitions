@@ -13,12 +13,13 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | Date | Approach | Changes | Local CV | Public LB | Outcome | Follow-up |
 | --- | --- | --- | --- | --- | --- | --- |
 | 2026-07-03 | Exact DoG/Hungarian baseline | Offline exact evaluator, physical NMS, centroid refinement, 8 um linking, gap-1 interpolation, pruning | Completed on Kaggle; API output throttled | 0.827 | Successful first submission | Test one conservative gap-2 recovery pass |
+| 2026-07-03 | Conservative velocity-aware gap-2 recovery | Added capped `t -> t+3` bridges with two inserted nodes | 0.793540 vs 0.794304 baseline | Not submitted | Rejected: same 761/63/134 edge counts, more nodes, delta -0.000764 | Move to detector threshold/NMS sweep |
 
 ## Prepared
 
 | Date | Approach | Notebook | Validation status | Next action |
 | --- | --- | --- | --- | --- |
-| 2026-07-03 | Conservative velocity-aware gap-2 recovery | `notebooks/biohub-gap2-velocity-ablation.ipynb` | Local syntax/config/graph tests passed; exact Kaggle run pending | Compare against frozen baseline on identical detections and held-out embryos |
+| 2026-07-03 | Detection threshold and physical-NMS sweep | Planned validation-only notebook | Not run | Sweep one detector family while freezing linker and gap logic |
 
 ## Backlog
 
@@ -38,4 +39,4 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 
 | Approach | Why dropped | Evidence | Revisit if |
 | --- | --- | --- | --- |
-| TBD | TBD | TBD | TBD |
+| Conservative velocity-aware gap-2 recovery | Added nodes but recovered no annotated edges; exact score fell | Two embryos: edge TP/FP/FN unchanged at 761/63/134; nodes increased 32,471 to 32,619; score 0.794304 -> 0.793540 | Only if a detector change creates demonstrable two-frame misses that recover edge TPs |

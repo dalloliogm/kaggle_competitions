@@ -53,6 +53,10 @@ Capture durable information learned while working on this competition. This is f
   a direct edge across missing frames is not equivalent under the metric.
 - Divisions should be conservative because their final weight is only 0.1 and a
   wrong daughter edge can hurt both metric components.
+- Conservative velocity-aware gap-2 recovery did not recover any annotated edge
+  on the two held-out embryos. It added 148 nodes, left aggregate edge TP/FP/FN
+  unchanged at `761/63/134`, and reduced adjusted edge Jaccard by `0.000764`.
+  Do not add interpolated nodes unless validation shows corresponding edge gains.
 
 ## Leaderboard Notes
 
@@ -60,3 +64,4 @@ Capture durable information learned while working on this competition. This is f
   for classical baselines to 0.835-0.839 for newer rule-based variants, but these
   claims were not independently verified from the pulled source snapshots.
 - Full review: `references/top-notebooks-analysis.md`.
+- First verified public score: `0.827` for submission `54297736`.

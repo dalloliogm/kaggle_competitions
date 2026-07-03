@@ -57,6 +57,18 @@
 - Two interpolated nodes create three consecutive edges, matching the metric's
   temporal structure. A direct non-consecutive edge is never emitted.
 
+## 2026-07-03: Gap-2 ablation result
+
+- Exact aggregate baseline: `0.7943044375`; gap-2: `0.7935401013`; delta
+  `-0.0007643362`.
+- Aggregate edge TP/FP/FN stayed exactly `761/63/134`.
+- `44b6`: 38 bridges added 84 nodes; score `0.941009 -> 0.940702`.
+- `6bba`: 26 bridges added 64 nodes; score `0.785884 -> 0.785094`.
+- The recovery pass found plausible geometric continuity but no additional
+  annotated edges. The node-count adjustment converted every addition into a
+  small penalty. Candidate rejected; no competition submission.
+- Evidence: `references/gap2-v1-output/`.
+
 ## Feature Ideas
 
 - TBD

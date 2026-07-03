@@ -6,10 +6,8 @@
 
 ## Next Experiments
 
-- Add a tightly capped velocity-aware `t -> t+3` recovery pass that inserts two
-  consecutive interpolated nodes, without changing detection or normal linking.
-- Compare frozen baseline and gap-2 variant on the same embryo-disjoint
-  validation videos using the exact evaluator.
+- Run a detection threshold/physical-NMS sweep while freezing linking and gap-1
+  logic. Prioritize the low-recall `6bba` embryo without overpredicting `44b6`.
 - Retrieve `validation_summary.json` when Kaggle's output endpoint stops
   returning HTTP 429.
 - Only submit the gap-2 variant if exact validation is non-inferior across
@@ -44,6 +42,9 @@
   the candidate improves overall without a regression worse than `0.002`.
 - Passed notebook JSON/Python validation and a structural test confirming one
   accepted `t -> t+3` bridge inserts exactly two nodes and three consecutive edges.
+- Completed the exact gap-2 ablation. Baseline scored `0.794304`; candidate
+  `0.793540` (delta `-0.000764`). Edge counts were identical, while candidate
+  nodes increased from `32,471` to `32,619`; automatic selection kept baseline.
 
 ## Questions
 
@@ -51,5 +52,5 @@
 - Which public baseline is the best reproducible starting point?
 - What are the exact aggregate and per-embryo validation metrics from version 7?
   The kernel completed, but `ListKernelSessionOutput` still returns HTTP 429.
-- Does conservative gap-2 recovery improve exact validation consistently enough
-  to justify a second leaderboard submission?
+- Which detector threshold/NMS combination improves `6bba` node recall (`0.9013`)
+  without worsening the already saturated `44b6` node recall (`1.0`) and node penalty?
