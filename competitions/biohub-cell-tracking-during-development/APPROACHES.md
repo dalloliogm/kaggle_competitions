@@ -17,12 +17,13 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | 2026-07-03 | Conservative velocity-aware gap-2 recovery | Added capped `t -> t+3` bridges with two inserted nodes | 0.793540 vs 0.794304 baseline | Not submitted | Rejected: same 761/63/134 edge counts, more nodes, delta -0.000764 | Move to detector threshold/NMS sweep |
 | 2026-07-03 | Detector one-factor screen | Threshold 0.030/0.060 and NMS 2.8/3.8 um | Best 0.810458 at NMS 3.8 vs 0.794304 baseline | Not submitted | NMS 3.8 improved both embryos; lower threshold and NMS 2.8 hurt | Build dedicated candidate kernel |
 | 2026-07-03 | NMS 3.8 submission | Stronger suppression; otherwise frozen rule-based pipeline | 0.810458 | 0.834 | Improved LB +0.007 but remains outside medal range | Pivot to learned/global tracking |
+| 2026-07-04 | Default pretrained U-Net + transformer + ILP | Real learned detections/edges and global ILP; det 0.99, division weight 1.0 | 0.839409 | Not submitted | Beats classical CV by +0.028951; 815/58/80 edges | Build locked full-test candidate |
 
 ## Prepared
 
 | Date | Approach | Notebook | Validation status | Next action |
 | --- | --- | --- | --- | --- |
-| 2026-07-03 | Temporal 3D U-Net + edge transformer + ILP | `notebooks/biohub-learned-unet-ilp-validation.ipynb` | Local notebook and embedded-runner syntax checks passed; GPU exact run pending | Gate default learned pipeline on same two embryos before tuning or test inference |
+| 2026-07-04 | Default learned U-Net + transformer + ILP candidate | Submission notebook pending | Exact GPU validation passed at 0.839409 | Run locked parameters on all test movies and validate submission schema |
 
 ## Backlog
 

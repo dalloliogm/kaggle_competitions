@@ -102,6 +102,21 @@
 - Start with exact validation only. Do not inherit the public notebook's proxy
   objective or launch a costly parameter sweep before reproducing the default.
 
+## 2026-07-04: Learned pipeline exact validation
+
+- Version 1 failed on a Tesla P100 because PyTorch 2.10 supports `sm_70+`, not
+  P100 `sm_60`. Pinning `machine_shape=NvidiaTeslaT4` fixed execution.
+- Default learned parameters: detection threshold `0.99`, ILP edge weight `-1.0`,
+  appearance/disappearance `0.1`, division weight `1.0`, split `0`.
+- Exact aggregate: `0.8394088969`, delta `+0.0289511808` versus classical
+  `0.8104577161`; edge TP/FP/FN `815/58/80`.
+- `44b6`: `0.883791`, edges `46/2/4`, 25,995 nodes, 3 predicted divisions.
+- `6bba`: `0.836847`, edges `769/56/76`, 7,603 nodes, 1 predicted division,
+  node recall `0.9849`, node overprediction `19.5%`.
+- Training labels selected contain no scored divisions, so division Jaccard is
+  undefined; leaderboard behavior remains necessary evidence.
+- Evidence: `references/learned-v1-output/` and `references/learned-v2-output/`.
+
 ## Feature Ideas
 
 - TBD

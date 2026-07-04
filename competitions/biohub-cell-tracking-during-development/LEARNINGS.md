@@ -52,6 +52,14 @@ Capture durable information learned while working on this competition. This is f
   interpolation -> isolated-node pruning.
 - Ceiling-raising family: temporal 3D U-Net + learned edge model/transformer + ILP.
 - Several notebooks labeled U-Net/ILP actually execute only the rule-based path.
+- The actual pretrained `unet_transformer` + ILP pipeline scored `0.839409` exact
+  validation versus `0.810458` for the best classical model. Aggregate edges
+  improved from `757/44/138` to `815/58/80` (TP/FP/FN).
+- Learned validation strongly improved `6bba` node recall (`0.8815 -> 0.9849`)
+  but overpredicted its node estimate by `19.5%`; threshold calibration above
+  `0.99` may be useful after obtaining the default test baseline.
+- Kaggle's current PyTorch build does not support P100 `sm_60`. Learned kernels
+  must request `machine_shape: NvidiaTeslaT4`.
 
 ## Ensembling And Submission Behavior
 
