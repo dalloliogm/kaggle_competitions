@@ -23,7 +23,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 
 | Date | Approach | Notebook | Validation status | Next action |
 | --- | --- | --- | --- | --- |
-| 2026-07-04 | Default learned U-Net + transformer + ILP candidate | Submission notebook pending | Exact GPU validation passed at 0.839409 | Run locked parameters on all test movies and validate submission schema |
+| 2026-07-04 | Default learned U-Net + transformer + ILP candidate | `notebooks/biohub-learned-unet-ilp-candidate.ipynb` | Local notebook and embedded-writer syntax checks passed; T4 run pending | Run locked parameters on all test movies and validate submission schema |
 
 ## Backlog
 

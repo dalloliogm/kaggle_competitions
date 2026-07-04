@@ -71,6 +71,9 @@
   with PyTorch 2.10 (`sm_60` unsupported). Version 2 pinned a Tesla T4 and passed.
 - Default learned exact score: `0.8394088969`, delta `+0.0289511808` versus the
   NMS-3.8 classical benchmark; aggregate edge TP/FP/FN `815/58/80`.
+- Created `notebooks/biohub-learned-unet-ilp-candidate.ipynb` with locked learned
+  parameters, isolated GEFF-to-CSV conversion, full dataset/schema assertions,
+  and no automatic submission. Notebook and embedded writer compile locally.
 
 ## Questions
 
