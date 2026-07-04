@@ -7,9 +7,10 @@
 
 ## Next Experiments
 
-- Manually submit learned candidate version 1 and record its public LB score.
-- After the default learned LB is known, test thresholds above `0.99` to reduce
-  the `6bba` node overprediction without sacrificing its edge-recall gain.
+- Run the prefix-aware hybrid candidate on Kaggle and validate its composed
+  output. Do not submit automatically.
+- If the hybrid fails to beat `0.834`, run a `6bba`-only learned threshold screen
+  above `0.99` before generating another full-test candidate.
 - Retrieve `validation_summary.json` when Kaggle's output endpoint stops
   returning HTTP 429.
 - Only submit the gap-2 variant if exact validation is non-inferior across
@@ -78,6 +79,12 @@
   Independent validation confirmed exact columns, unique IDs, no missing values,
   valid endpoints, consecutive-frame edges, and lineage degrees of at most two
   outgoing and one incoming edge. No competition submission was created.
+- Learned submission `54323397` scored `0.810`, below NMS-3.8's `0.834`; the
+  exact aggregate validation gain did not transfer to the public leaderboard.
+- Built `notebooks/biohub-prefix-hybrid-candidate.ipynb`, selecting classical
+  `44b6` and learned `6bba` rows based on per-embryo exact validation. The hybrid
+  exact score is `0.842616`; local top-to-bottom composition produced `260,287`
+  structurally valid rows.
 
 ## Questions
 
@@ -85,4 +92,4 @@
 - Which public baseline is the best reproducible starting point?
 - What are the exact aggregate and per-embryo validation metrics from version 7?
   The kernel completed, but `ListKernelSessionOutput` still returns HTTP 429.
-- What public LB does the default learned U-Net/transformer/ILP pipeline achieve?
+- What public LB does the prefix-aware hybrid achieve?

@@ -21,6 +21,7 @@ identify division events to reconstruct cell lineages.
 - Public leaderboard: first DoG/Hungarian submission scored `0.827` on
   2026-07-03 (submission `54297736`).
 - Second submission (`54307212`) with physical NMS `3.8 um` scored `0.834`.
+- Learned U-Net/transformer/ILP submission (`54323397`) scored `0.810`.
 - Current snapshot: rank `203/630`; top-10% boundary approximately `0.856`.
 
 ## Data
@@ -58,11 +59,10 @@ identify division events to reconstruct cell lineages.
 
 ## Current Candidate
 
-- Notebook: `notebooks/biohub-learned-unet-ilp-candidate.ipynb`
-- Kaggle kernel: `dalloliogm/biohub-learned-unet-ilp-candidate`, version 1.
-- Exact validation: `0.8394088969` versus classical NMS-3.8 `0.8104577161`.
-- Test output: all four movies, `304,792` rows (`164,682` nodes and `140,110`
-  edges), with 12 conservative division events.
-- Validation: exact columns, global IDs, no missing values, per-dataset node
-  IDs, edge endpoints, consecutive-frame edges, and graph degrees all passed.
-- Competition status: ready for manual submission; public LB not yet known.
+- Notebook: `notebooks/biohub-prefix-hybrid-candidate.ipynb`
+- Strategy: NMS-3.8 classical rows for `44b6`; learned U-Net/ILP rows for `6bba`.
+- Exact validation: `0.8426160044`, versus learned-only `0.8394088969` and
+  classical-only `0.8104577161`.
+- Local test composition: all four movies, `260,287` rows (`137,648` nodes and
+  `122,639` edges), with seven divisions; all structural checks passed.
+- Competition status: Kaggle execution pending; do not submit automatically.

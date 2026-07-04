@@ -8,7 +8,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | --- | --- | --- | --- | --- | --- | --- |
 | 2026-07-03 | Multi-scale DoG + Hungarian + one-frame interpolation | Exact validation completed; output retrieval pending | 0.827 | TBD | `notebooks/biohub-exact-dog-hungarian-baseline.ipynb` | Strong first submission; divisions disabled |
 | 2026-07-03 | Baseline with physical NMS 3.8 um | 0.810458 | 0.834 | TBD | `notebooks/biohub-nms38-candidate.ipynb` / `e8f4ee7` | Rank 203/630; ~0.022 below top-10% cutoff |
-| 2026-07-04 | Pretrained U-Net + transformer + ILP | 0.839409 | Pending | TBD | `notebooks/biohub-learned-unet-ilp-candidate.ipynb` | Candidate v1 complete and schema-validated; ready for manual submission |
+| 2026-07-04 | Pretrained U-Net + transformer + ILP | 0.839409 | 0.810 | TBD | `notebooks/biohub-learned-unet-ilp-candidate.ipynb` | Validation gain did not transfer; worse than classical LB by 0.024 |
 
 ## Tried
 
@@ -18,13 +18,13 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | 2026-07-03 | Conservative velocity-aware gap-2 recovery | Added capped `t -> t+3` bridges with two inserted nodes | 0.793540 vs 0.794304 baseline | Not submitted | Rejected: same 761/63/134 edge counts, more nodes, delta -0.000764 | Move to detector threshold/NMS sweep |
 | 2026-07-03 | Detector one-factor screen | Threshold 0.030/0.060 and NMS 2.8/3.8 um | Best 0.810458 at NMS 3.8 vs 0.794304 baseline | Not submitted | NMS 3.8 improved both embryos; lower threshold and NMS 2.8 hurt | Build dedicated candidate kernel |
 | 2026-07-03 | NMS 3.8 submission | Stronger suppression; otherwise frozen rule-based pipeline | 0.810458 | 0.834 | Improved LB +0.007 but remains outside medal range | Pivot to learned/global tracking |
-| 2026-07-04 | Default pretrained U-Net + transformer + ILP | Real learned detections/edges and global ILP; det 0.99, division weight 1.0 | 0.839409 | Not submitted | Beats classical CV by +0.028951; candidate v1 produced 304,792 validated rows | Submit v1 manually and record LB |
+| 2026-07-04 | Default pretrained U-Net + transformer + ILP | Real learned detections/edges and global ILP; det 0.99, division weight 1.0 | 0.839409 | 0.810 | Rejected as full replacement: LB -0.024 versus NMS-3.8 | Retain learned pipeline only for `6bba` |
 
 ## Prepared
 
 | Date | Approach | Notebook | Validation status | Next action |
 | --- | --- | --- | --- | --- |
-| 2026-07-04 | Default learned U-Net + transformer + ILP candidate | `notebooks/biohub-learned-unet-ilp-candidate.ipynb` | T4 version 1 complete; all four graphs and 304,792 submission rows validated | Manually submit Kaggle notebook version 1 |
+| 2026-07-04 | Prefix-aware classical/learned hybrid | `notebooks/biohub-prefix-hybrid-candidate.ipynb` | Exact hybrid 0.842616; local 260,287-row composition passed all checks | Run lightweight merge kernel and inspect output |
 
 ## Backlog
 

@@ -131,6 +131,17 @@
 - Ready for manual submission. No automatic competition submission was made.
 - Evidence: `references/learned-candidate-v1-output/`.
 
+## 2026-07-04: Learned LB failure and prefix-aware hybrid
+
+- Learned submission `54323397` scored `0.810`, down `0.024` from NMS-3.8.
+- The held-out split explains a safer composition: classical wins `44b6`
+  (`0.942567` vs `0.883791`), while learned wins `6bba` (`0.836847` vs
+  `0.802713`). Their weighted exact hybrid score is `0.842616`.
+- A lightweight merge of the two completed test outputs produced `260,287`
+  rows, `137,648` nodes, `122,639` edges, and seven divisions. All schema and
+  graph checks passed locally.
+- Next gate: execute the merge on Kaggle, inspect artifacts, then submit manually.
+
 ## Feature Ideas
 
 - TBD

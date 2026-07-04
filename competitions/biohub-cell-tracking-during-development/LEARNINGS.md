@@ -55,6 +55,9 @@ Capture durable information learned while working on this competition. This is f
 - The actual pretrained `unet_transformer` + ILP pipeline scored `0.839409` exact
   validation versus `0.810458` for the best classical model. Aggregate edges
   improved from `757/44/138` to `815/58/80` (TP/FP/FN).
+- The aggregate learned gain hid opposite embryo effects: learned was worse on
+  `44b6` (`0.883791` vs classical `0.942567`) but better on `6bba` (`0.836847`
+  vs `0.802713`). Prefix-aware model selection gives exact validation `0.842616`.
 - Learned validation strongly improved `6bba` node recall (`0.8815 -> 0.9849`)
   but overpredicted its node estimate by `19.5%`; threshold calibration above
   `0.99` may be useful after obtaining the default test baseline.
@@ -88,5 +91,7 @@ Capture durable information learned while working on this competition. This is f
 - Physical NMS `3.8 um` improved public LB to `0.834` (submission `54307212`),
   but the current top-10% boundary is about `0.856` across 630 teams. The `0.022`
   gap is too large to justify continued nearby NMS tuning as the primary strategy.
-- Learned candidate version 1 is complete and structurally valid but not yet
-  submitted; its public leaderboard score remains the next decision gate.
+- Learned-only submission `54323397` scored `0.810`, materially below the
+  classical NMS-3.8 score `0.834`. Aggregate validation alone was misleading;
+  preserve the classical model on `44b6` and test learned tracking only on the
+  embryo prefix where its held-out edge recall improved.
