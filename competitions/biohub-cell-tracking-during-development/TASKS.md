@@ -7,8 +7,7 @@
 
 ## Next Experiments
 
-- Run the prefix-aware hybrid candidate on Kaggle and validate its composed
-  output. Do not submit automatically.
+- Manually submit prefix-aware hybrid version 2 and record its public LB score.
 - If the hybrid fails to beat `0.834`, run a `6bba`-only learned threshold screen
   above `0.99` before generating another full-test candidate.
 - Retrieve `validation_summary.json` when Kaggle's output endpoint stops
@@ -85,6 +84,11 @@
   `44b6` and learned `6bba` rows based on per-embryo exact validation. The hybrid
   exact score is `0.842616`; local top-to-bottom composition produced `260,287`
   structurally valid rows.
+- Hybrid kernel version 1 failed because private notebook outputs mount under
+  `/kaggle/input/notebooks/<owner>/<slug>/`, not the assumed direct slug path.
+  Version 2 discovers both files by exact row-count fingerprints and completed.
+- Kaggle version 2 produced the same `260,287`-row CSV as the local execution;
+  both files have SHA-256 `abbbb913fa188f505e314a7c6c4a5846e6c6377c0788025d6ba799f0b9d968b0`.
 
 ## Questions
 
@@ -92,4 +96,4 @@
 - Which public baseline is the best reproducible starting point?
 - What are the exact aggregate and per-embryo validation metrics from version 7?
   The kernel completed, but `ListKernelSessionOutput` still returns HTTP 429.
-- What public LB does the prefix-aware hybrid achieve?
+- What public LB does prefix-aware hybrid version 2 achieve?

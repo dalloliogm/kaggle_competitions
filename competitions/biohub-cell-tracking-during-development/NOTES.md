@@ -141,6 +141,11 @@
   rows, `137,648` nodes, `122,639` edges, and seven divisions. All schema and
   graph checks passed locally.
 - Next gate: execute the merge on Kaggle, inspect artifacts, then submit manually.
+- Kaggle version 1 failed on fixed attachment paths. Version 2 discovered both
+  private outputs under `/kaggle/input/notebooks/` and completed successfully.
+- Kaggle and local `submission.csv` outputs have identical SHA-256
+  `abbbb913fa188f505e314a7c6c4a5846e6c6377c0788025d6ba799f0b9d968b0`.
+- Version 2 is ready for manual submission. Evidence: `references/hybrid-v2-output/`.
 
 ## Feature Ideas
 

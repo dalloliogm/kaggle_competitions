@@ -24,7 +24,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 
 | Date | Approach | Notebook | Validation status | Next action |
 | --- | --- | --- | --- | --- |
-| 2026-07-04 | Prefix-aware classical/learned hybrid | `notebooks/biohub-prefix-hybrid-candidate.ipynb` | Exact hybrid 0.842616; local 260,287-row composition passed all checks | Run lightweight merge kernel and inspect output |
+| 2026-07-04 | Prefix-aware classical/learned hybrid | `notebooks/biohub-prefix-hybrid-candidate.ipynb` | Exact hybrid 0.842616; Kaggle v2 completed with a validated 260,287-row output identical to local | Manually submit version 2 and record LB |
 
 ## Backlog
 

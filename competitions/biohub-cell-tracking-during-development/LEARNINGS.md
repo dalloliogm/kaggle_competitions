@@ -95,3 +95,6 @@ Capture durable information learned while working on this competition. This is f
   classical NMS-3.8 score `0.834`. Aggregate validation alone was misleading;
   preserve the classical model on `44b6` and test learned tracking only on the
   embryo prefix where its held-out edge recall improved.
+- Private Kaggle notebook outputs are mounted under
+  `/kaggle/input/notebooks/<owner>/<slug>/`. For composition kernels, discover
+  expected files defensively and verify source identity before merging.

@@ -60,9 +60,11 @@ identify division events to reconstruct cell lineages.
 ## Current Candidate
 
 - Notebook: `notebooks/biohub-prefix-hybrid-candidate.ipynb`
+- Kaggle kernel: `dalloliogm/biohub-prefix-aware-hybrid-candidate`, version 2.
 - Strategy: NMS-3.8 classical rows for `44b6`; learned U-Net/ILP rows for `6bba`.
 - Exact validation: `0.8426160044`, versus learned-only `0.8394088969` and
   classical-only `0.8104577161`.
 - Local test composition: all four movies, `260,287` rows (`137,648` nodes and
   `122,639` edges), with seven divisions; all structural checks passed.
-- Competition status: Kaggle execution pending; do not submit automatically.
+- Competition status: Kaggle output complete and validated; ready for manual
+  submission. Public LB not yet known.
