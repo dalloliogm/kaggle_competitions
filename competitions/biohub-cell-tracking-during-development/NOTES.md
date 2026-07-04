@@ -117,6 +117,20 @@
   undefined; leaderboard behavior remains necessary evidence.
 - Evidence: `references/learned-v1-output/` and `references/learned-v2-output/`.
 
+## 2026-07-04: Learned full-test candidate complete
+
+- Kernel: `dalloliogm/biohub-learned-unet-ilp-candidate`, version 1, Tesla T4.
+- Prediction completed in `398.04` seconds; full kernel runtime was about 472
+  seconds including isolated dependency setup and notebook export.
+- All four 100-frame test movies were processed. Submission totals: `304,792`
+  rows, `164,682` nodes, `140,110` edges, and 12 divisions.
+- Per-movie nodes/edges/divisions: `25,995/23,538/3`, `55,324/44,335/2`,
+  `7,603/6,899/1`, and `75,760/65,338/6`.
+- Independent local validation passed exact schema, unique IDs, no missing
+  values, node endpoint membership, consecutive-frame edges, and degree limits.
+- Ready for manual submission. No automatic competition submission was made.
+- Evidence: `references/learned-candidate-v1-output/`.
+
 ## Feature Ideas
 
 - TBD

@@ -7,9 +7,7 @@
 
 ## Next Experiments
 
-- Build a locked learned full-test candidate using det threshold `0.99`, division
-  weight `1.0`, split `0`, and a T4 GPU.
-- Validate all four test graphs and submission rows. Do not submit automatically.
+- Manually submit learned candidate version 1 and record its public LB score.
 - After the default learned LB is known, test thresholds above `0.99` to reduce
   the `6bba` node overprediction without sacrificing its edge-recall gain.
 - Retrieve `validation_summary.json` when Kaggle's output endpoint stops
@@ -74,6 +72,12 @@
 - Created `notebooks/biohub-learned-unet-ilp-candidate.ipynb` with locked learned
   parameters, isolated GEFF-to-CSV conversion, full dataset/schema assertions,
   and no automatic submission. Notebook and embedded writer compile locally.
+- Uploaded learned candidate version 1 with a Tesla T4. The kernel completed in
+  472 seconds and processed all four 100-frame test movies.
+- Generated `304,792` rows: `164,682` nodes, `140,110` edges, and 12 divisions.
+  Independent validation confirmed exact columns, unique IDs, no missing values,
+  valid endpoints, consecutive-frame edges, and lineage degrees of at most two
+  outgoing and one incoming edge. No competition submission was created.
 
 ## Questions
 

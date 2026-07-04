@@ -1,0 +1,14 @@
+{
+  "method": "unet_transformer",
+  "split": "split_0",
+  "checkpoint": "weights/unet_transformer/split_0/edge_predictor_best.pth",
+  "det_threshold": 0.99,
+  "ilp_edge_weight": -1.0,
+  "ilp_appearance_weight": 0.1,
+  "ilp_disappearance_weight": 0.1,
+  "ilp_division_weight": 1.0,
+  "prediction_runtime_seconds": 398.04,
+  "submission_rows": 304792,
+  "submission_nodes": 164682,
+  "submission_edges": 140110
+}

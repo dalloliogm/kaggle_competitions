@@ -58,10 +58,11 @@ identify division events to reconstruct cell lineages.
 
 ## Current Candidate
 
-- Notebook: `notebooks/biohub-nms38-candidate.ipynb`
-- Kaggle kernel: `dalloliogm/biohub-nms-3-8-submission-candidate`
-- Exact validation: `0.8104577161` versus frozen baseline `0.7943044375`.
-- Test output: four movies, `235,923` submission rows; schema checks passed.
-- Competition status: manually submitted by the user as `54307212`.
-- Submission result: `0.834` public LB, rank `203/630` at the 2026-07-03
-  leaderboard snapshot.
+- Notebook: `notebooks/biohub-learned-unet-ilp-candidate.ipynb`
+- Kaggle kernel: `dalloliogm/biohub-learned-unet-ilp-candidate`, version 1.
+- Exact validation: `0.8394088969` versus classical NMS-3.8 `0.8104577161`.
+- Test output: all four movies, `304,792` rows (`164,682` nodes and `140,110`
+  edges), with 12 conservative division events.
+- Validation: exact columns, global IDs, no missing values, per-dataset node
+  IDs, edge endpoints, consecutive-frame edges, and graph degrees all passed.
+- Competition status: ready for manual submission; public LB not yet known.

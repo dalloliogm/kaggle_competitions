@@ -58,6 +58,12 @@ Capture durable information learned while working on this competition. This is f
 - Learned validation strongly improved `6bba` node recall (`0.8815 -> 0.9849`)
   but overpredicted its node estimate by `19.5%`; threshold calibration above
   `0.99` may be useful after obtaining the default test baseline.
+- The locked learned model processed all four test movies in `398.04` prediction
+  seconds on a Tesla T4. It produced `164,682` nodes, `140,110` edges, and 12
+  divisions across `304,792` submission rows; all structural checks passed.
+- Test detection density varies sharply by movie (`76.03` to `757.60` nodes per
+  frame). Any threshold calibration should be embryo- or density-aware and must
+  be validated before replacing the global `0.99` threshold.
 - Kaggle's current PyTorch build does not support P100 `sm_60`. Learned kernels
   must request `machine_shape: NvidiaTeslaT4`.
 
@@ -82,3 +88,5 @@ Capture durable information learned while working on this competition. This is f
 - Physical NMS `3.8 um` improved public LB to `0.834` (submission `54307212`),
   but the current top-10% boundary is about `0.856` across 630 teams. The `0.022`
   gap is too large to justify continued nearby NMS tuning as the primary strategy.
+- Learned candidate version 1 is complete and structurally valid but not yet
+  submitted; its public leaderboard score remains the next decision gate.
