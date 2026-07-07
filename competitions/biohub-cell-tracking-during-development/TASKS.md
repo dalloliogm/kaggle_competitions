@@ -103,7 +103,9 @@
 - Uploaded `dalloliogm/biohub-lb893-validation-ablation`. Version 1 failed on a
   bad validation train path; the error log is preserved in
   `references/lb893-validation-v1-output/`. Version 2 fixes the path and is
-  currently running on Kaggle.
+  completed prediction/metric scoring but failed while writing the summary due a
+  bad `CONFIG` reference. The v2 error log is preserved in
+  `references/lb893-validation-v2-output/`; version 3 patches summary writing.
 
 ## Questions
 

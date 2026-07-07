@@ -172,6 +172,15 @@
 - Local syntax checks pass. Local top-to-bottom execution of the controller was
   blocked only because no `python3` Jupyter kernelspec is installed; the runner
   itself requires Kaggle T4, competition data, and the 50-epoch support pack.
+- Kaggle validation runner version 1 failed before prediction because the train
+  path missed the `/competitions/` mount segment. Version 2 fixed the path and
+  completed prediction/post-processing for `44b6_0113de3b` and `6bba_05b6850b`,
+  but failed while writing `validation_summary.json` due a bad `CONFIG`
+  reference. The useful exact metric lines were printed before that failure:
+  `44b6` adjusted edge score `0.941693`, edge `49/2/1`, divisions `0/0/0`;
+  `6bba` adjusted edge score `0.955590`, edge `831/20/14`, divisions `0/4/0`.
+  Weighted adjusted edge score is approximately `0.954802`; division Jaccard is
+  `0.0` on this selected split. Version 3 patches summary writing.
 
 ## Feature Ideas
 
