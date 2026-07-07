@@ -147,6 +147,32 @@
   `abbbb913fa188f505e314a7c6c4a5846e6c6377c0788025d6ba799f0b9d968b0`.
 - Version 2 is ready for manual submission. Evidence: `references/hybrid-v2-output/`.
 
+## 2026-07-07: LB893 source import and ablation setup
+
+- Copied public notebook
+  `dalloliogm/lb893-learned-graph-tracker-micro-safe-divisi` into
+  `notebooks/biohub-lb893-safe-divisions-source.ipynb`.
+- Confirmed Kaggle submission `54397298` scored `0.893`, superseding the
+  classical, learned-only, and prefix-aware hybrid branches.
+- Preserved output evidence in `references/lb893-v1-output/`. The tracked
+  `run_stats.csv` reports `262,359` rows: `134,238` nodes, `128,121` edges, and
+  `381` division-like sources.
+- LB893 is a learned model plus heavy graph repair, not just a U-Net/ILP rerun:
+  motion relink replaced `118,984` raw edges with `122,937` relinked edges,
+  one-frame gap close added `2,100` nodes, gap-2 recovery added `402` nodes, and
+  safe-division insertion added `381` edges.
+- Created `notebooks/biohub-lb893-validation-ablation.ipynb`. It defaults to
+  `BIOHUB_VALIDATION_MODE=1`, selects one labeled training movie per embryo, and
+  writes `validation_metrics.csv` and `validation_summary.json` after running the
+  LB893 post-processor.
+- Created `notebooks/biohub-lb893-postprocessing-ablation.ipynb` and
+  `references/lb893-v1-output/ablation_plan.json` to define one-factor ablations:
+  `no_motion_relink`, `no_safe_divisions`, `no_gap_close`, `no_gap2`, and
+  `no_linefit`.
+- Local syntax checks pass. Local top-to-bottom execution of the controller was
+  blocked only because no `python3` Jupyter kernelspec is installed; the runner
+  itself requires Kaggle T4, competition data, and the 50-epoch support pack.
+
 ## Feature Ideas
 
 - TBD

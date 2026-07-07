@@ -69,6 +69,23 @@ Capture durable information learned while working on this competition. This is f
   be validated before replacing the global `0.99` threshold.
 - Kaggle's current PyTorch build does not support P100 `sm_60`. Learned kernels
   must request `machine_shape: NvidiaTeslaT4`.
+- The LB893 public notebook is not just the earlier learned pipeline. It uses a
+  different support pack (`pilkwang/biohub-tracking-support-pack-50ep-v1`) and a
+  score-oriented post-processor on top of learned U-Net/transformer/ILP outputs.
+  Its public submission `54397298` scored `0.893`.
+- LB893 output is much more biologically constrained than our learned-only output:
+  `134,238` nodes, `128,121` edges, and `381` division-like sources versus
+  `164,682` nodes, `140,110` edges, and 12 divisions for our learned candidate.
+- The largest LB893 graph change is motion relinking: it replaced `118,984` raw
+  learned edges with `122,937` motion-relinked edges, mostly under a tight
+  `6.2 um` gate plus a relaxed `10.4 um` pass. Treat the learned model as a
+  detector/edge-probability generator, not as the final graph.
+- Gap repair should be re-tested in the LB893 context. Classical gap-2 recovery
+  was harmful, but LB893 added `2,100` one-frame gap nodes and `402` gap-2 nodes
+  after motion relinking.
+- Conservative safe-division insertion is now a credible improvement axis:
+  LB893 added `381` safe divisions with tight parent/sister caps and achieved the
+  best public score so far.
 
 ## Ensembling And Submission Behavior
 
@@ -95,6 +112,9 @@ Capture durable information learned while working on this competition. This is f
   classical NMS-3.8 score `0.834`. Aggregate validation alone was misleading;
   preserve the classical model on `44b6` and test learned tracking only on the
   embryo prefix where its held-out edge recall improved.
+- Copied public LB893 submission `54397298` scored `0.893`, superseding the
+  prefix-aware hybrid as the working baseline. Future changes should ablate and
+  improve LB893 rather than continue tuning the older classical/learned branch.
 - Private Kaggle notebook outputs are mounted under
   `/kaggle/input/notebooks/<owner>/<slug>/`. For composition kernels, discover
   expected files defensively and verify source identity before merging.

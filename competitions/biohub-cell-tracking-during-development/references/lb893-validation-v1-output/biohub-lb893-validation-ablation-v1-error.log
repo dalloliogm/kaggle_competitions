@@ -1,0 +1,140 @@
+[{"stream_name":"stderr","time":14.362904454,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":14.362996111,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":14.363003415,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":14.363009735,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":15.311170653,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":15.311215861,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":15.311221325,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":15.31122446,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":18.513019634,"data":"Thanks to the original and best public Biohub kernels. This fork keeps only code, removes visual overhead, and focuses on stable score-oriented post-processing.\n"}
+,{"stream_name":"stdout","time":18.513082179,"data":"Biohub learned UNet + node-transformer + ILP submission\n"}
+,{"stream_name":"stdout","time":18.513088872,"data":"COMP_DIR: /kaggle/input/competitions/biohub-cell-tracking-during-development exists: True\n"}
+,{"stream_name":"stdout","time":18.513094898,"data":"TEST_DIR: /kaggle/input/biohub-cell-tracking-during-development/train exists: False\n"}
+,{"stream_name":"stdout","time":18.513099375,"data":"{\n"}
+,{"stream_name":"stdout","time":18.513103604,"data":"  \"allow_artifact_fallback\": false,\n"}
+,{"stream_name":"stdout","time":18.513107789,"data":"  \"allow_pip_install\": false,\n"}
+,{"stream_name":"stdout","time":18.513111891,"data":"  \"det_threshold\": 0.99,\n"}
+,{"stream_name":"stdout","time":18.513116347,"data":"  \"div_drop_to_single_if_bad\": true,\n"}
+,{"stream_name":"stdout","time":18.513120783,"data":"  \"div_parent_max_um\": 10.5,\n"}
+,{"stream_name":"stdout","time":18.513125109,"data":"  \"div_sister_max_um\": 8.0,\n"}
+,{"stream_name":"stdout","time":18.513129609,"data":"  \"experiment_tag\": \"050_lb891_safe_div_precision_final_submit\",\n"}
+,{"stream_name":"stdout","time":18.513134635,"data":"  \"gap2_frame_frac_cap\": 0.0045,\n"}
+,{"stream_name":"stdout","time":18.513139344,"data":"  \"gap2_max_links_abs\": 140,\n"}
+,{"stream_name":"stdout","time":18.513143681,"data":"  \"gap2_max_links_frac\": 0.0032,\n"}
+,{"stream_name":"stdout","time":18.513148289,"data":"  \"gap2_max_step_um\": 4.05,\n"}
+,{"stream_name":"stdout","time":18.513152889,"data":"  \"gap2_max_total_um\": 9.7,\n"}
+,{"stream_name":"stdout","time":18.513157157,"data":"  \"gap2_require_context\": true,\n"}
+,{"stream_name":"stdout","time":18.513161682,"data":"  \"gap_close_effective_max_gap\": 1,\n"}
+,{"stream_name":"stdout","time":18.513166478,"data":"  \"gap_close_max_added_abs\": 2200,\n"}
+,{"stream_name":"stdout","time":18.513171503,"data":"  \"gap_close_max_added_frac\": 0.052,\n"}
+,{"stream_name":"stdout","time":18.513176204,"data":"  \"gap_close_max_gap\": 1,\n"}
+,{"stream_name":"stdout","time":18.513181429,"data":"  \"gap_close_reuse_existing\": true,\n"}
+,{"stream_name":"stdout","time":18.513186087,"data":"  \"gap_close_reuse_um\": 3.4,\n"}
+,{"stream_name":"stdout","time":18.513191247,"data":"  \"gap_close_um\": 6.2,\n"}
+,{"stream_name":"stdout","time":18.513195792,"data":"  \"gap_refine_max_shift_um\": 3.1,\n"}
+,{"stream_name":"stdout","time":18.513220997,"data":"  \"gap_refine_synthetic\": true,\n"}
+,{"stream_name":"stdout","time":18.513226172,"data":"  \"gap_refine_win_yx\": 3,\n"}
+,{"stream_name":"stdout","time":18.513231336,"data":"  \"gap_refine_win_z\": 1,\n"}
+,{"stream_name":"stdout","time":18.513235996,"data":"  \"ilp_appearance_weight\": 0.1,\n"}
+,{"stream_name":"stdout","time":18.513240532,"data":"  \"ilp_disappearance_weight\": 0.1,\n"}
+,{"stream_name":"stdout","time":18.513245267,"data":"  \"ilp_division_weight\": 1.0,\n"}
+,{"stream_name":"stdout","time":18.513249881,"data":"  \"ilp_edge_weight\": -1.0,\n"}
+,{"stream_name":"stdout","time":18.513254461,"data":"  \"method\": \"unet_transformer\",\n"}
+,{"stream_name":"stdout","time":18.513258615,"data":"  \"motion_relink_learned_bonus\": 0.78,\n"}
+,{"stream_name":"stdout","time":18.513262705,"data":"  \"motion_relink_max_frame_nodes\": 2800,\n"}
+,{"stream_name":"stdout","time":18.513266749,"data":"  \"motion_relink_relaxed_um\": 10.4,\n"}
+,{"stream_name":"stdout","time":18.513270776,"data":"  \"motion_relink_tight_um\": 6.2,\n"}
+,{"stream_name":"stdout","time":18.513274776,"data":"  \"motion_relink_velocity_weight\": 0.52,\n"}
+,{"stream_name":"stdout","time":18.513278938,"data":"  \"output_division_geometry_filter\": false,\n"}
+,{"stream_name":"stdout","time":18.513282798,"data":"  \"output_edge_max_um\": 14.5,\n"}
+,{"stream_name":"stdout","time":18.513287248,"data":"  \"output_enforce_next_frame\": true,\n"}
+,{"stream_name":"stdout","time":18.51329184,"data":"  \"output_filter_short_tracks\": false,\n"}
+,{"stream_name":"stdout","time":18.513296136,"data":"  \"output_gap2_recovery\": true,\n"}
+,{"stream_name":"stdout","time":18.513300665,"data":"  \"output_gap_close\": true,\n"}
+,{"stream_name":"stdout","time":18.513313253,"data":"  \"output_keep_division_components\": true,\n"}
+,{"stream_name":"stdout","time":18.513317446,"data":"  \"output_linefit_smooth\": true,\n"}
+,{"stream_name":"stdout","time":18.513321455,"data":"  \"output_linefit_weight\": 0.72,\n"}
+,{"stream_name":"stdout","time":18.513325508,"data":"  \"output_linefit_window\": 2,\n"}
+,{"stream_name":"stdout","time":18.513329483,"data":"  \"output_min_track_len\": 4,\n"}
+,{"stream_name":"stdout","time":18.513333522,"data":"  \"output_motion_relink\": true,\n"}
+,{"stream_name":"stdout","time":18.513337322,"data":"  \"output_prune_isolated\": true,\n"}
+,{"stream_name":"stdout","time":18.513343132,"data":"  \"output_safe_divisions\": true,\n"}
+,{"stream_name":"stdout","time":18.513351644,"data":"  \"output_single_child_repair\": false,\n"}
+,{"stream_name":"stdout","time":18.513357311,"data":"  \"output_single_parent_repair\": true,\n"}
+,{"stream_name":"stdout","time":18.513359931,"data":"  \"preset\": \"safe_div_precision_050\",\n"}
+,{"stream_name":"stdout","time":18.513362738,"data":"  \"primary_artifact_manifest\": \"/kaggle/input/datasets/pilkwang/biohub-tracking-support-pack-50ep-v1/ARTIFACT_MANIFEST.json\",\n"}
+,{"stream_name":"stdout","time":18.513365669,"data":"  \"run_visual_eda\": false,\n"}
+,{"stream_name":"stdout","time":18.513369129,"data":"  \"safe_div_existing_child_max_um\": 7.45,\n"}
+,{"stream_name":"stdout","time":18.513393155,"data":"  \"safe_div_frame_frac_cap\": 0.0072,\n"}
+,{"stream_name":"stdout","time":18.513397919,"data":"  \"safe_div_global_frac_cap\": 0.00375,\n"}
+,{"stream_name":"stdout","time":18.513402769,"data":"  \"safe_div_max_um\": 4.7,\n"}
+,{"stream_name":"stdout","time":18.513407621,"data":"  \"safe_div_sister_max_um\": 6.85,\n"}
+,{"stream_name":"stdout","time":18.513412381,"data":"  \"slice\": \"\",\n"}
+,{"stream_name":"stdout","time":18.513422265,"data":"  \"target_artifact_slug\": \"biohub-tracking-support-pack-50ep-v1\",\n"}
+,{"stream_name":"stdout","time":18.513426687,"data":"  \"unet_batch_size\": 4,\n"}
+,{"stream_name":"stdout","time":18.513430616,"data":"  \"use_ilp\": true,\n"}
+,{"stream_name":"stdout","time":18.513434548,"data":"  \"validation_max_embryos\": 2,\n"}
+,{"stream_name":"stdout","time":18.513438722,"data":"  \"validation_mode\": true,\n"}
+,{"stream_name":"stdout","time":18.513442692,"data":"  \"weights\": \"weights/unet_transformer/split_0/edge_predictor_best.pth\"\n"}
+,{"stream_name":"stdout","time":18.513447023,"data":"}\n"}
+,{"stream_name":"stdout","time":18.790929781,"data":"ARTIFACTS: /kaggle/input/datasets/pilkwang/biohub-tracking-support-pack-50ep-v1\n"}
+,{"stream_name":"stdout","time":18.790973893,"data":"Has offline wheels: True\n"}
+,{"stream_name":"stdout","time":18.790978077,"data":"Artifact name: biohub-tracking-support-pack-300ep-snapshot-v1\n"}
+,{"stream_name":"stdout","time":18.790981275,"data":"Weight sha256: 12b5d32ad8982e4736f74c41bc54403094917fe75f5a9f78b1b5aad41de26877\n"}
+,{"stream_name":"stdout","time":18.79098447,"data":"Weight path: weights/unet_transformer/split_0/edge_predictor_best.pth\n"}
+,{"stream_name":"stdout","time":19.871972797,"data":"Installing missing packages from offline package dirs: ['polars']\n"}
+,{"stream_name":"stdout","time":19.872036746,"data":"Dependency resolver is disabled with --no-deps to avoid replacing Kaggle numpy/scipy in a live kernel.\n"}
+,{"stream_name":"stdout","time":19.872043025,"data":"Offline package dirs: ['/kaggle/input/datasets/pilkwang/biohub-tracking-support-pack-50ep-v1/wheels']\n"}
+,{"stream_name":"stdout","time":28.682757746,"data":"Offline dependency install succeeded.\n"}
+,{"stream_name":"stdout","time":28.682833941,"data":"Installing missing packages from offline package dirs: ['tracksdata', 'zarr', 'pyscipopt', 'geff', 'geff_spec', 'ilpy', 'imagecodecs', 'rustworkx', 'numcodecs', 'donfig', 'bidict']\n"}
+,{"stream_name":"stdout","time":28.682845919000002,"data":"Dependency resolver is disabled with --no-deps to avoid replacing Kaggle numpy/scipy in a live kernel.\n"}
+,{"stream_name":"stdout","time":28.682851704,"data":"Offline package dirs: ['/kaggle/input/datasets/pilkwang/biohub-tracking-support-pack-50ep-v1/wheels']\n"}
+,{"stream_name":"stdout","time":83.361684777,"data":"Offline dependency install succeeded.\n"}
+,{"stream_name":"stderr","time":95.170410024,"data":"/usr/local/lib/python3.12/dist-packages/dask/array/image.py:7: FutureWarning: `find_available_plugins` is deprecated since version 0.25 and will be removed in version 0.27. The plugin infrastructure of `skimage.io` is deprecated. Instead, use `imageio` or other I/O packages directly.\n"}
+,{"stream_name":"stderr","time":95.170463966,"data":"  from skimage.io import imread as sk_imread\n"}
+,{"stream_name":"stderr","time":95.170471154,"data":"/usr/lib/python3.12/importlib/__init__.py:90: FutureWarning: `reset_plugins` is deprecated since version 0.25 and will be removed in version 0.27. The plugin infrastructure of `skimage.io` is deprecated. Instead, use `imageio` or other I/O packages directly.\n"}
+,{"stream_name":"stderr","time":95.170477828,"data":"  return _bootstrap._gcd_import(name[level:], package, level)\n"}
+,{"stream_name":"stderr","time":95.170483101,"data":"\n"}
+,{"stream_name":"stderr","time":95.170488233,"data":"/usr/local/lib/python3.12/dist-packages/dask/array/image.py:7: FutureWarning: `find_available_plugins` is deprecated since version 0.25 and will be removed in version 0.27. The plugin infrastructure of `skimage.io` is deprecated. Instead, use `imageio` or other I/O packages directly.\n"}
+,{"stream_name":"stderr","time":95.170494512,"data":"  from skimage.io import imread as sk_imread\n"}
+,{"stream_name":"stderr","time":95.170534725,"data":"/usr/lib/python3.12/importlib/__init__.py:90: FutureWarning: `reset_plugins` is deprecated since version 0.25 and will be removed in version 0.27. The plugin infrastructure of `skimage.io` is deprecated. Instead, use `imageio` or other I/O packages directly.\n"}
+,{"stream_name":"stderr","time":95.1705414,"data":"  return _bootstrap._gcd_import(name[level:], package, level)\n"}
+,{"stream_name":"stdout","time":95.435959396,"data":"Required graph/Zarr/ILP packages import successfully.\n"}
+,{"stream_name":"stdout","time":95.435999863,"data":"Inference repo: /kaggle/working/tracking_repo\n"}
+,{"stream_name":"stdout","time":95.436004446,"data":"Weights: /kaggle/working/tracking_repo/weights/unet_transformer/split_0/edge_predictor_best.pth\n"}
+,{"stream_name":"stderr","time":98.804918579,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":98.804955075,"data":"  File \"\u003cstring\u003e\", line 1, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":98.804961673,"data":"  File \"/usr/local/lib/python3.12/dist-packages/papermill/execute.py\", line 131, in execute_notebook\n"}
+,{"stream_name":"stderr","time":98.805061284,"data":"    raise_for_execution_errors(nb, output_path)\n"}
+,{"stream_name":"stderr","time":98.805109849,"data":"  File \"/usr/local/lib/python3.12/dist-packages/papermill/execute.py\", line 251, in raise_for_execution_errors\n"}
+,{"stream_name":"stderr","time":98.805406904,"data":"    raise error\n"}
+,{"stream_name":"stderr","time":98.805530315,"data":"papermill.exceptions.PapermillExecutionError: \n"}
+,{"stream_name":"stderr","time":98.805557238,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":98.805563038,"data":"Exception encountered at \"In [3]\":\n"}
+,{"stream_name":"stderr","time":98.80556732,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":98.805571118,"data":"FileNotFoundError                         Traceback (most recent call last)\n"}
+,{"stream_name":"stderr","time":98.805575205,"data":"/tmp/ipykernel_23/1756254347.py in \u003ccell line: 0\u003e()\n"}
+,{"stream_name":"stderr","time":98.805580025,"data":"     68 \n"}
+,{"stream_name":"stderr","time":98.805584276,"data":"     69 \n"}
+,{"stream_name":"stderr","time":98.805588638,"data":"---\u003e 70 test_stems = list_test_stems()\n"}
+,{"stream_name":"stderr","time":98.805592864,"data":"     71 print(f\"Found {len(test_stems)} test videos\")\n"}
+,{"stream_name":"stderr","time":98.80559742,"data":"     72 print(\"Test stems:\", test_stems[:10])\n"}
+,{"stream_name":"stderr","time":98.80560201,"data":"\n"}
+,{"stream_name":"stderr","time":98.805606106,"data":"/tmp/ipykernel_23/1756254347.py in list_test_stems()\n"}
+,{"stream_name":"stderr","time":98.805610665,"data":"      1 def list_test_stems() -\u003e list[str]:\n"}
+,{"stream_name":"stderr","time":98.805614711,"data":"      2     if not TEST_DIR.exists():\n"}
+,{"stream_name":"stderr","time":98.805619325,"data":"----\u003e 3         raise FileNotFoundError(f\"Data directory does not exist: {TEST_DIR}\")\n"}
+,{"stream_name":"stderr","time":98.805623734,"data":"      4     stems = sorted(path.name[:-5] for path in TEST_DIR.iterdir() if path.name.endswith(\".zarr\"))\n"}
+,{"stream_name":"stderr","time":98.805628165,"data":"      5     if not stems:\n"}
+,{"stream_name":"stderr","time":98.805632082,"data":"\n"}
+,{"stream_name":"stderr","time":98.805636023,"data":"FileNotFoundError: Data directory does not exist: /kaggle/input/biohub-cell-tracking-during-development/train\n"}
+,{"stream_name":"stderr","time":98.80565128,"data":"\n"}
+,{"stream_name":"stderr","time":101.651430451,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":101.651483211,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":101.845934943,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":101.845975852,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":102.739568502,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":103.142205143,"data":"[NbConvertApp] Writing 131052 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":106.162060614,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":107.589588848,"data":"[NbConvertApp] Writing 735735 bytes to __results__.html\n"}
+]

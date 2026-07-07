@@ -2,18 +2,20 @@
 
 ## Current Goal
 
-- Reach medal range by testing a genuinely different learned/global-tracking
-  pipeline against the exact embryo-disjoint validation benchmark.
+- Improve from the copied LB893 public baseline (`0.893`) by exact-validating the
+  post-processing components before creating another test submission.
 
 ## Next Experiments
 
-- Manually submit prefix-aware hybrid version 2 and record its public LB score.
-- If the hybrid fails to beat `0.834`, run a `6bba`-only learned threshold screen
-  above `0.99` before generating another full-test candidate.
-- Retrieve `validation_summary.json` when Kaggle's output endpoint stops
-  returning HTTP 429.
-- Only submit the gap-2 variant if exact validation is non-inferior across
-  embryos; otherwise move to the detector-density/NMS sweep.
+- Upload/run `notebooks/biohub-lb893-validation-ablation.ipynb` on Kaggle T4
+  with `pilkwang/biohub-tracking-support-pack-50ep-v1` attached.
+- First run `full_lb893` in validation mode to establish the exact
+  one-movie-per-embryo benchmark.
+- Run one-factor ablations from `references/lb893-v1-output/ablation_plan.json`,
+  prioritizing `no_motion_relink`, `no_safe_divisions`, `no_gap_close`,
+  `no_gap2`, and `no_linefit`.
+- Only create a new test-submission notebook after an ablation or tuned variant
+  beats `full_lb893` on exact validation.
 
 ## Done
 
@@ -89,11 +91,24 @@
   Version 2 discovers both files by exact row-count fingerprints and completed.
 - Kaggle version 2 produced the same `260,287`-row CSV as the local execution;
   both files have SHA-256 `abbbb913fa188f505e314a7c6c4a5846e6c6377c0788025d6ba799f0b9d968b0`.
+- Copied LB893 source into
+  `notebooks/biohub-lb893-safe-divisions-source.ipynb` and preserved its Kaggle
+  metadata under `references/top_notebooks/lb893-safe-divisions/`.
+- Copied LB893 run evidence into `references/lb893-v1-output/`: kernel log,
+  `run_stats.csv`, and `ablation_plan.json`. The large `submission.csv` remains
+  ignored.
+- Created `notebooks/biohub-lb893-postprocessing-ablation.ipynb` as a lightweight
+  local controller and `notebooks/biohub-lb893-validation-ablation.ipynb` as the
+  Kaggle GPU exact-validation runner. All code cells parse locally.
+- Uploaded `dalloliogm/biohub-lb893-validation-ablation`. Version 1 failed on a
+  bad validation train path; the error log is preserved in
+  `references/lb893-validation-v1-output/`. Version 2 fixes the path and is
+  currently running on Kaggle.
 
 ## Questions
 
 - What are the notebook runtime and accelerator limits?
-- Which public baseline is the best reproducible starting point?
+- Which LB893 post-processing components are actually positive under exact
+  embryo-disjoint validation?
 - What are the exact aggregate and per-embryo validation metrics from version 7?
   The kernel completed, but `ListKernelSessionOutput` still returns HTTP 429.
-- What public LB does prefix-aware hybrid version 2 achieve?

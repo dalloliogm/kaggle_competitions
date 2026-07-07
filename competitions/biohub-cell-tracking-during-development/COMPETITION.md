@@ -22,7 +22,7 @@ identify division events to reconstruct cell lineages.
   2026-07-03 (submission `54297736`).
 - Second submission (`54307212`) with physical NMS `3.8 um` scored `0.834`.
 - Learned U-Net/transformer/ILP submission (`54323397`) scored `0.810`.
-- Current snapshot: rank `203/630`; top-10% boundary approximately `0.856`.
+- Copied LB893 learned graph tracker submission (`54397298`) scored `0.893`.
 
 ## Data
 
@@ -59,12 +59,15 @@ identify division events to reconstruct cell lineages.
 
 ## Current Candidate
 
-- Notebook: `notebooks/biohub-prefix-hybrid-candidate.ipynb`
-- Kaggle kernel: `dalloliogm/biohub-prefix-aware-hybrid-candidate`, version 2.
-- Strategy: NMS-3.8 classical rows for `44b6`; learned U-Net/ILP rows for `6bba`.
-- Exact validation: `0.8426160044`, versus learned-only `0.8394088969` and
-  classical-only `0.8104577161`.
-- Local test composition: all four movies, `260,287` rows (`137,648` nodes and
-  `122,639` edges), with seven divisions; all structural checks passed.
-- Competition status: Kaggle output complete and validated; ready for manual
-  submission. Public LB not yet known.
+- Notebook: `notebooks/biohub-lb893-safe-divisions-source.ipynb`
+- Kaggle kernel: `dalloliogm/lb893-learned-graph-tracker-micro-safe-divisi`.
+- Strategy: learned U-Net/transformer/ILP backbone from
+  `pilkwang/biohub-tracking-support-pack-50ep-v1`, followed by motion relinking,
+  gap repair, line-fit smoothing, pruning, and conservative safe-division
+  insertion.
+- Public LB: `0.893` from submission `54397298`.
+- Test output: all four movies, `262,359` rows (`134,238` nodes and `128,121`
+  edges), with `381` division-like sources.
+- Next validation artifact:
+  `notebooks/biohub-lb893-validation-ablation.ipynb`, which defaults to labeled
+  train movies and emits `validation_metrics.csv` plus `validation_summary.json`.
