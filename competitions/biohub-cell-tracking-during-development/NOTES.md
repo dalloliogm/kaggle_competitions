@@ -208,6 +208,26 @@
   No automatic competition submission has been made.
 - Evidence: `references/lb893-no-safe-divisions-v1-output/`.
 
+## 2026-07-08: LB893 no-safe-divisions full-test candidate
+
+- Kernel: `dalloliogm/biohub-lb893-no-safe-divisions-candidate`, version 1,
+  Tesla T4, no internet, with `pilkwang/biohub-tracking-support-pack-50ep-v1`.
+- Completed successfully and wrote `submission.csv` with SHA-256
+  `8bb5c53b2a76053452dddc565c6863628d8882d36438763d3cd0ddd298c7b827`.
+- Output rows: `283,092` total = `145,034` nodes + `138,058` edges. There are no
+  division-like sources because `BIOHUB_OUTPUT_SAFE_DIVISIONS=0`.
+- Per-dataset rows: `44b6_0113de3b=50,070`, `44b6_0b24845f=79,527`,
+  `6bba_05b6850b=12,412`, `6bba_05db0fb1=141,083`.
+- Structural checks passed locally: unique contiguous `id`, no missing values,
+  no duplicate node keys, all edge endpoints present, all edges consecutive in
+  time, max indegree `1`, max outdegree `1`.
+- The output is larger than the copied LB893 public notebook output
+  (`262,359` rows), mainly because the current rerun produced more raw detections
+  and relinked edges for `44b6_0b24845f`. Treat public LB as the deciding
+  evidence.
+- Ready for manual competition submission. No automatic submission was made.
+- Evidence: `references/lb893-no-safe-divisions-candidate-v1-output/`.
+
 ## Feature Ideas
 
 - TBD

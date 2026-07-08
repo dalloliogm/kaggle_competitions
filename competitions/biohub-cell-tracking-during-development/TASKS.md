@@ -2,16 +2,14 @@
 
 ## Current Goal
 
-- Run and inspect the LB893 no-safe-divisions test candidate. It is justified by
-  exact validation `0.9606407955` versus full LB893 `0.9548016411`; do not submit
-  automatically.
+- Manually submit the completed LB893 no-safe-divisions candidate and record its
+  public LB. Do not auto-submit from Codex unless explicitly requested.
 
 ## Next Experiments
 
-- Upload/run `notebooks/biohub-lb893-no-safe-divisions-candidate.ipynb` on
-  Kaggle T4 with `pilkwang/biohub-tracking-support-pack-50ep-v1` attached.
-- Inspect the candidate `submission.csv` and `run_stats.csv`; if structurally
-  valid, ask for or wait for manual competition submission.
+- Submit Kaggle kernel version 1 of
+  `dalloliogm/biohub-lb893-no-safe-divisions-candidate` manually, then record the
+  public leaderboard score.
 - Run one-factor ablations from `references/lb893-v1-output/ablation_plan.json`,
   continuing with `no_motion_relink`, `no_gap_close`, `no_gap2`, and
   `no_linefit`.
@@ -120,6 +118,14 @@
   real test set. It forces `BIOHUB_VALIDATION_MODE=0`,
   `BIOHUB_TEST_DIR=/kaggle/input/competitions/biohub-cell-tracking-during-development/test`,
   and `BIOHUB_OUTPUT_SAFE_DIVISIONS=0`.
+- Uploaded `dalloliogm/biohub-lb893-no-safe-divisions-candidate`; version 1
+  completed on Kaggle T4. It produced `283,092` rows: `145,034` nodes and
+  `138,058` edges, with zero division-like sources and zero safe divisions.
+  Local structural checks passed: unique contiguous ids, no missing values, no
+  duplicate node keys, all edge endpoints present, and no nonconsecutive edges.
+  Evidence is preserved under
+  `references/lb893-no-safe-divisions-candidate-v1-output/`. No automatic
+  competition submission was made.
 
 ## Questions
 
