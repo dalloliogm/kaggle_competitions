@@ -232,6 +232,21 @@
   though the selected validation split penalized them.
 - Evidence: `references/lb893-no-safe-divisions-candidate-v1-output/`.
 
+## 2026-07-08: Conservative safe-divisions candidate
+
+- Goal: create an original single-pipeline submission, not a per-dataset blend.
+- Rationale: full LB893 safe divisions scored `0.893`; no-safe-divisions scored
+  `0.886`. Public LB rewards some division recovery, but validation showed the
+  default heuristic can add false positives. The next candidate keeps divisions
+  but tightens their gates.
+- Notebook: `notebooks/biohub-lb893-conservative-safe-divisions-candidate.ipynb`.
+- Only intentional changes versus full LB893: `SAFE_DIV_MAX_UM 4.7 -> 4.25`,
+  `SAFE_DIV_SISTER_MAX_UM 6.85 -> 6.2`, `SAFE_DIV_EXISTING_CHILD_MAX_UM
+  7.45 -> 6.8`, `SAFE_DIV_FRAME_FRAC_CAP 0.0072 -> 0.0055`, and
+  `SAFE_DIV_GLOBAL_FRAC_CAP 0.00375 -> 0.0028`.
+- Expected behavior: safe-division count between full LB893 (`381`) and no-safe
+  (`0`), with fewer borderline division edges.
+
 ## Feature Ideas
 
 - TBD

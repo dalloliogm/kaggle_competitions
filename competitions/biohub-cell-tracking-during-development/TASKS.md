@@ -10,6 +10,11 @@
 
 - Tune safe divisions instead of deleting them: try tighter parent/sister
   distance caps and lower global fraction caps.
+- Run `notebooks/biohub-lb893-conservative-safe-divisions-candidate.ipynb`.
+  It keeps safe divisions enabled but tightens `SAFE_DIV_MAX_UM` to `4.25`,
+  `SAFE_DIV_SISTER_MAX_UM` to `6.2`, `SAFE_DIV_EXISTING_CHILD_MAX_UM` to `6.8`,
+  `SAFE_DIV_FRAME_FRAC_CAP` to `0.0055`, and `SAFE_DIV_GLOBAL_FRAC_CAP` to
+  `0.0028`.
 - Run one-factor ablations from `references/lb893-v1-output/ablation_plan.json`,
   continuing with `no_motion_relink`, `no_gap_close`, `no_gap2`, and
   `no_linefit`.
@@ -130,6 +135,9 @@
 - Submitted no-safe-divisions candidate; public LB was `0.886`. This is below
   the copied LB893 public baseline `0.893`, so complete removal of safe divisions
   is rejected as a replacement.
+- Created `notebooks/biohub-lb893-conservative-safe-divisions-candidate.ipynb`
+  as the next original candidate. It keeps the LB893 graph pipeline intact and
+  only tightens safe-division gates/caps.
 
 ## Questions
 
