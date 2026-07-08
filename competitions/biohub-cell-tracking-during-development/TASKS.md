@@ -106,6 +106,10 @@
   completed prediction/metric scoring but failed while writing the summary due a
   bad `CONFIG` reference. The v2 error log is preserved in
   `references/lb893-validation-v2-output/`; version 3 patches summary writing.
+- Version 3 completed successfully. Exact validation artifacts are preserved in
+  `references/lb893-validation-v3-output/`. Full LB893 validation score on the
+  selected two train movies is `0.9548016411`; the next step is not submission,
+  but one-factor validation ablations against this baseline.
 
 ## Questions
 

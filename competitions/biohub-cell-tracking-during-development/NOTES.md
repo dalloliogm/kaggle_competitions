@@ -181,6 +181,11 @@
   `6bba` adjusted edge score `0.955590`, edge `831/20/14`, divisions `0/4/0`.
   Weighted adjusted edge score is approximately `0.954802`; division Jaccard is
   `0.0` on this selected split. Version 3 patches summary writing.
+- Version 3 completed and wrote formal validation artifacts. Summary:
+  `score=0.9548016411`, `adj_edge_jaccard=0.9548016411`,
+  `edge_jaccard=0.9596510360`, `node_recall=0.9982578397`,
+  `division_jaccard=0.0` (`division_tp/fp/fn = 0/4/0`). Evidence:
+  `references/lb893-validation-v3-output/`.
 
 ## Feature Ideas
 
