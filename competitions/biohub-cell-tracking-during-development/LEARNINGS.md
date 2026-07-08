@@ -83,9 +83,13 @@ Capture durable information learned while working on this competition. This is f
 - Gap repair should be re-tested in the LB893 context. Classical gap-2 recovery
   was harmful, but LB893 added `2,100` one-frame gap nodes and `402` gap-2 nodes
   after motion relinking.
-- Conservative safe-division insertion is now a credible improvement axis:
-  LB893 added `381` safe divisions with tight parent/sister caps and achieved the
-  best public score so far.
+- Safe-division insertion is risky. Full LB893 validation scored `0.9548016411`
+  on the selected two labeled movies with division counts `0/4/0`. Disabling only
+  safe divisions improved exact validation to `0.9606407955`, removed all four
+  division false positives, and slightly improved edge Jaccard (`0.9596510360 ->
+  0.9606557377`). This split has no true scored divisions, so the learning is not
+  "divisions are always bad"; it is that the current safe-division heuristic must
+  prove itself before being used.
 
 ## Ensembling And Submission Behavior
 

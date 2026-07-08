@@ -187,6 +187,27 @@
   `division_jaccard=0.0` (`division_tp/fp/fn = 0/4/0`). Evidence:
   `references/lb893-validation-v3-output/`.
 
+## 2026-07-08: LB893 no-safe-divisions ablation
+
+- Ablation definition: keep LB893 learned U-Net/transformer/ILP, motion relink,
+  one-frame gap close, gap-2 recovery, pruning, and linefit smoothing unchanged;
+  disable only `BIOHUB_OUTPUT_SAFE_DIVISIONS`.
+- Exact validation improved from full LB893 `0.9548016411` to `0.9606407955`
+  (`+0.0058391544`) on the selected two labeled train movies.
+- Edge Jaccard slightly improved from `0.9596510360` to `0.9606557377`; node
+  recall improved from `0.9982578397` to `0.9994192799`.
+- The main change is division risk: full LB893 had division counts `0/4/0`,
+  while no-safe-divisions had `0/0/0`. The split contains no true scored
+  divisions, so this does not prove divisions are globally harmful; it proves the
+  current safe-division heuristic is not safe on this validation slice.
+- Per-sample summary: `44b6_0113de3b` adjusted edge `0.943299`, edge `49/2/1`,
+  divisions `0/0/0`; `6bba_05b6850b` adjusted edge `0.961686`, edge `830/18/15`,
+  divisions `0/0/0`.
+- Created `notebooks/biohub-lb893-no-safe-divisions-candidate.ipynb` for the
+  real test set. It explicitly forces test mode and the competition test path.
+  No automatic competition submission has been made.
+- Evidence: `references/lb893-no-safe-divisions-v1-output/`.
+
 ## Feature Ideas
 
 - TBD

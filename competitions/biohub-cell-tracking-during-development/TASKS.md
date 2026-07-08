@@ -2,20 +2,21 @@
 
 ## Current Goal
 
-- Improve from the copied LB893 public baseline (`0.893`) by exact-validating the
-  post-processing components before creating another test submission.
+- Run and inspect the LB893 no-safe-divisions test candidate. It is justified by
+  exact validation `0.9606407955` versus full LB893 `0.9548016411`; do not submit
+  automatically.
 
 ## Next Experiments
 
-- Upload/run `notebooks/biohub-lb893-validation-ablation.ipynb` on Kaggle T4
-  with `pilkwang/biohub-tracking-support-pack-50ep-v1` attached.
-- First run `full_lb893` in validation mode to establish the exact
-  one-movie-per-embryo benchmark.
+- Upload/run `notebooks/biohub-lb893-no-safe-divisions-candidate.ipynb` on
+  Kaggle T4 with `pilkwang/biohub-tracking-support-pack-50ep-v1` attached.
+- Inspect the candidate `submission.csv` and `run_stats.csv`; if structurally
+  valid, ask for or wait for manual competition submission.
 - Run one-factor ablations from `references/lb893-v1-output/ablation_plan.json`,
-  prioritizing `no_motion_relink`, `no_safe_divisions`, `no_gap_close`,
-  `no_gap2`, and `no_linefit`.
-- Only create a new test-submission notebook after an ablation or tuned variant
-  beats `full_lb893` on exact validation.
+  continuing with `no_motion_relink`, `no_gap_close`, `no_gap2`, and
+  `no_linefit`.
+- If no-safe-divisions improves public LB, use it as the new baseline for the
+  remaining post-processing ablations.
 
 ## Done
 
@@ -110,6 +111,15 @@
   `references/lb893-validation-v3-output/`. Full LB893 validation score on the
   selected two train movies is `0.9548016411`; the next step is not submission,
   but one-factor validation ablations against this baseline.
+- Created and ran
+  `notebooks/biohub-lb893-no-safe-divisions-validation.ipynb`. Disabling only
+  safe-division insertion improved exact validation to `0.9606407955`, removed
+  division false positives (`0/4/0 -> 0/0/0`), and preserved evidence under
+  `references/lb893-no-safe-divisions-v1-output/`.
+- Created `notebooks/biohub-lb893-no-safe-divisions-candidate.ipynb` for the
+  real test set. It forces `BIOHUB_VALIDATION_MODE=0`,
+  `BIOHUB_TEST_DIR=/kaggle/input/competitions/biohub-cell-tracking-during-development/test`,
+  and `BIOHUB_OUTPUT_SAFE_DIVISIONS=0`.
 
 ## Questions
 
