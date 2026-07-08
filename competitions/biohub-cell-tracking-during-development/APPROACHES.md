@@ -10,7 +10,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | 2026-07-03 | Baseline with physical NMS 3.8 um | 0.810458 | 0.834 | TBD | `notebooks/biohub-nms38-candidate.ipynb` / `e8f4ee7` | Rank 203/630; ~0.022 below top-10% cutoff |
 | 2026-07-04 | Pretrained U-Net + transformer + ILP | 0.839409 | 0.810 | TBD | `notebooks/biohub-learned-unet-ilp-candidate.ipynb` | Validation gain did not transfer; worse than classical LB by 0.024 |
 | 2026-07-06 | LB893 learned graph tracker with motion relink, gap repair, line fit, and safe divisions | Exact validation pending in workspace runner | 0.893 | TBD | `notebooks/biohub-lb893-safe-divisions-source.ipynb` | New working baseline; copied public notebook output dominates previous approaches |
-| 2026-07-08 | LB893 minus safe-division insertion | 0.960641 on selected exact split | Ready for manual submission | TBD | `notebooks/biohub-lb893-no-safe-divisions-candidate.ipynb` | First LB893 ablation that beats full LB893 validation by +0.005839 |
+| 2026-07-08 | LB893 minus safe-division insertion | 0.960641 on selected exact split | 0.886 | TBD | `notebooks/biohub-lb893-no-safe-divisions-candidate.ipynb` | Novel variant, but public LB -0.007 versus copied LB893; selected validation split underweights true divisions |
 
 ## Tried
 
@@ -23,7 +23,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | 2026-07-04 | Default pretrained U-Net + transformer + ILP | Real learned detections/edges and global ILP; det 0.99, division weight 1.0 | 0.839409 | 0.810 | Rejected as full replacement: LB -0.024 versus NMS-3.8 | Retain learned pipeline only for `6bba` |
 | 2026-07-07 | LB893 source import and ablation harness | Preserved source notebook, output stats/log, and created validation-ablation runner | Syntax checked; local GPU run not possible | 0.893 from submission `54397298` | Adopt as baseline for further work | Run exact validation ablations on Kaggle T4 |
 | 2026-07-08 | LB893 exact-validation baseline | Full LB893 with motion relink, gap close, gap2, linefit, and safe divisions | 0.954802 | 0.893 from copied submission | Established validation reference; division FP = 4 on selected split | Compare one-factor ablations against this score |
-| 2026-07-08 | No-safe-divisions LB893 ablation | Same as full LB893, but `BIOHUB_OUTPUT_SAFE_DIVISIONS=0` | 0.960641 | Ready for manual submission | Accepted as next test candidate; improved validation +0.005839 and removed 4 division FPs | Submit version 1 manually, then record public LB |
+| 2026-07-08 | No-safe-divisions LB893 ablation | Same as full LB893, but `BIOHUB_OUTPUT_SAFE_DIVISIONS=0` | 0.960641 | 0.886 | Useful negative/diagnostic result: local validation misled because it had no true scored divisions | Tune safe divisions rather than deleting them |
 
 ## Prepared
 
@@ -31,7 +31,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | --- | --- | --- | --- | --- |
 | 2026-07-04 | Prefix-aware classical/learned hybrid | `notebooks/biohub-prefix-hybrid-candidate.ipynb` | Exact hybrid 0.842616; Kaggle v2 completed with a validated 260,287-row output identical to local | Manually submit version 2 and record LB |
 | 2026-07-07 | LB893 exact-validation ablation runner | `notebooks/biohub-lb893-validation-ablation.ipynb` | JSON/Python syntax checked locally; requires Kaggle T4 plus `biohub-tracking-support-pack-50ep-v1` | Upload/run `full_lb893` validation, then one-factor ablations |
-| 2026-07-08 | LB893 no-safe-divisions test candidate | `notebooks/biohub-lb893-no-safe-divisions-candidate.ipynb` | Kaggle v1 completed; 283,092-row output passed structural checks | Manually submit version 1 and record public LB |
+| 2026-07-08 | LB893 no-safe-divisions test candidate | `notebooks/biohub-lb893-no-safe-divisions-candidate.ipynb` | Kaggle v1 completed; 283,092-row output passed structural checks; public LB 0.886 | Superseded by copied LB893 0.893; use as negative control for division tuning |
 
 ## Backlog
 

@@ -90,6 +90,10 @@ Capture durable information learned while working on this competition. This is f
   0.9606557377`). This split has no true scored divisions, so the learning is not
   "divisions are always bad"; it is that the current safe-division heuristic must
   prove itself before being used.
+- Public LB corrected that interpretation: no-safe-divisions scored `0.886`,
+  below the copied LB893 score `0.893`. The hidden/public test set rewards at
+  least some safe divisions. The next promising axis is not removing divisions
+  completely, but tuning their precision/coverage.
 
 ## Ensembling And Submission Behavior
 
@@ -119,6 +123,9 @@ Capture durable information learned while working on this competition. This is f
 - Copied public LB893 submission `54397298` scored `0.893`, superseding the
   prefix-aware hybrid as the working baseline. Future changes should ablate and
   improve LB893 rather than continue tuning the older classical/learned branch.
+- No-safe-divisions scored `0.886`. This is competitive and novel, but it is not
+  the new best. It indicates that the selected exact validation split is not
+  representative for division tuning.
 - Private Kaggle notebook outputs are mounted under
   `/kaggle/input/notebooks/<owner>/<slug>/`. For composition kernels, discover
   expected files defensively and verify source identity before merging.

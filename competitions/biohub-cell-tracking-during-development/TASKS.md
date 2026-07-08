@@ -2,19 +2,20 @@
 
 ## Current Goal
 
-- Manually submit the completed LB893 no-safe-divisions candidate and record its
-  public LB. Do not auto-submit from Codex unless explicitly requested.
+- Improve beyond copied LB893 public LB `0.893`. The no-safe-divisions variant
+  scored `0.886`, so use it as a diagnostic negative control rather than the new
+  baseline.
 
 ## Next Experiments
 
-- Submit Kaggle kernel version 1 of
-  `dalloliogm/biohub-lb893-no-safe-divisions-candidate` manually, then record the
-  public leaderboard score.
+- Tune safe divisions instead of deleting them: try tighter parent/sister
+  distance caps and lower global fraction caps.
 - Run one-factor ablations from `references/lb893-v1-output/ablation_plan.json`,
   continuing with `no_motion_relink`, `no_gap_close`, `no_gap2`, and
   `no_linefit`.
-- If no-safe-divisions improves public LB, use it as the new baseline for the
-  remaining post-processing ablations.
+- Prioritize `no_gap2` and `no_gap_close` after safe-division tuning; these
+  components add many synthetic nodes/edges and may be easier to improve without
+  relying on division-heavy validation.
 
 ## Done
 
@@ -126,6 +127,9 @@
   Evidence is preserved under
   `references/lb893-no-safe-divisions-candidate-v1-output/`. No automatic
   competition submission was made.
+- Submitted no-safe-divisions candidate; public LB was `0.886`. This is below
+  the copied LB893 public baseline `0.893`, so complete removal of safe divisions
+  is rejected as a replacement.
 
 ## Questions
 

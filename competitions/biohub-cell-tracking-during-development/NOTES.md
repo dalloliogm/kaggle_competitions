@@ -226,6 +226,10 @@
   and relinked edges for `44b6_0b24845f`. Treat public LB as the deciding
   evidence.
 - Ready for manual competition submission. No automatic submission was made.
+- Manual submission scored public LB `0.886`, below copied LB893 `0.893`. This
+  rejects complete safe-division removal as the next baseline, but it remains a
+  useful negative control: public test appears to reward some safe divisions even
+  though the selected validation split penalized them.
 - Evidence: `references/lb893-no-safe-divisions-candidate-v1-output/`.
 
 ## Feature Ideas
