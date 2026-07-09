@@ -91,6 +91,23 @@ Use workspace `AGENTS.md` for competition-specific instructions that should guid
 
 Before proposing or implementing a new modeling direction in an existing workspace, read `APPROACHES.md` and `LEARNINGS.md` so repeated failed experiments are avoided.
 
+## Simulation / Agent Competitions
+
+For Kaggle Environments or other simulation competitions where submissions play
+episodes, use `docs/kaggle-simulation-competition-playbook.md` from the repo
+root early in the workspace setup.
+
+Before spending substantial time on heuristic tuning, check whether public
+episode replays, replay datasets, or Meta Kaggle rating data are available. If
+they are, add replay mining, behavior cloning, action-space analysis, and local
+arena work to `TASKS.md` and capture findings in `LEARNINGS.md`.
+
+Prioritize extracting the empirical action distribution from strong players:
+no-op rate, all-in/partial-send rate, launch distance or ETA, source/target
+patterns, player-count-specific behavior, and failure modes. Use these findings
+to choose the simplest viable action abstraction before building a learned policy
+or deep heuristic stack.
+
 ## Discover Competitions
 
 When the user asks to list, search, compare, or choose Kaggle competitions, use:
