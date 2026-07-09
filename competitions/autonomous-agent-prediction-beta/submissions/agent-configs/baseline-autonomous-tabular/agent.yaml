@@ -1,0 +1,18 @@
+name: baseline_autonomous_tabular
+model: gemini-3.5-flash
+instruction: !include prompts/system.md
+tools:
+  - run_command
+  - write_file
+  - edit_file
+  - submit_predictions
+  - select_submission
+  - get_status
+skills:
+  - skills/feature-engineer
+generate_content_config:
+  temperature: 0.05
+  max_output_tokens: 8192
+  thinking_config:
+    thinking_budget: 1024
+    include_thoughts: true
