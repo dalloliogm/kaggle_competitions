@@ -1,0 +1,23 @@
+Next Page Token = CfDJ8EgiEKLz2SFKpKvT-xxAYKImSKoohu7ah2-IkjASW8coBnoFmTJ7Fu4IMEAg8vKE9mJo8_6DWV4ugIV18r8761WRv2g3b-6fcc8DEXvuP2o8Ggy5mm6ZxlXPyvVwg1fstN74XkndcNr9UubwszVvGyQUNg
+name                                       size  creationDate                
+-----------------------------------  ----------  --------------------------  
+.env.example                               1293  2026-07-06 20:10:33.945000  
+data/train_01/DATA.md                       788  2026-07-06 20:10:33.648000  
+data/train_01/sample_submission.csv      180014  2026-07-06 20:10:33.608000  
+data/train_01/solution.csv               255020  2026-07-06 20:10:33.630000  
+data/train_01/test.csv                  1707184  2026-07-06 20:10:33.624000  
+data/train_01/train.csv                 2586259  2026-07-06 20:10:33.640000  
+data/train_02/DATA.md                      1218  2026-07-06 20:10:33.940000  
+data/train_02/sample_submission.csv      180014  2026-07-06 20:10:34.029000  
+data/train_02/solution.csv               255020  2026-07-06 20:10:33.949000  
+data/train_02/test.csv                  4399383  2026-07-06 20:10:34.117000  
+data/train_02/train.csv                 6599054  2026-07-06 20:10:33.999000  
+data/train_03/DATA.md                       948  2026-07-06 20:10:33.626000  
+data/train_03/sample_submission.csv      180014  2026-07-06 20:10:33.601000  
+data/train_03/solution.csv               255020  2026-07-06 20:10:33.608000  
+data/train_03/test.csv                  1290110  2026-07-06 20:10:33.601000  
+data/train_03/train.csv                  459435  2026-07-06 20:10:33.614000  
+data/train_04/DATA.md                       772  2026-07-06 20:10:33.337000  
+data/train_04/sample_submission.csv      180014  2026-07-06 20:10:33.434000  
+data/train_04/solution.csv               255020  2026-07-06 20:10:33.387000  
+data/train_04/test.csv                  2190357  2026-07-06 20:10:33.422000  
