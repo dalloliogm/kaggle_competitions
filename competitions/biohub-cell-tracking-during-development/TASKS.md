@@ -10,11 +10,9 @@
 
 - Tune safe divisions instead of deleting them: try tighter parent/sister
   distance caps and lower global fraction caps.
-- Run `notebooks/biohub-lb893-conservative-safe-divisions-candidate.ipynb`.
-  It keeps safe divisions enabled but tightens `SAFE_DIV_MAX_UM` to `4.25`,
-  `SAFE_DIV_SISTER_MAX_UM` to `6.2`, `SAFE_DIV_EXISTING_CHILD_MAX_UM` to `6.8`,
-  `SAFE_DIV_FRAME_FRAC_CAP` to `0.0055`, and `SAFE_DIV_GLOBAL_FRAC_CAP` to
-  `0.0028`.
+- Manually submit Kaggle version 1 of
+  `dalloliogm/biohub-lb893-conservative-safe-divisions-candidate` and record the
+  public LB before further safe-division tuning.
 - Run one-factor ablations from `references/lb893-v1-output/ablation_plan.json`,
   continuing with `no_motion_relink`, `no_gap_close`, `no_gap2`, and
   `no_linefit`.
@@ -138,6 +136,14 @@
 - Created `notebooks/biohub-lb893-conservative-safe-divisions-candidate.ipynb`
   as the next original candidate. It keeps the LB893 graph pipeline intact and
   only tightens safe-division gates/caps.
+- Uploaded `dalloliogm/biohub-lb893-conservative-safe-divisions-candidate`;
+  version 1 completed on Kaggle T4. It produced `283,385` rows: `145,040` nodes
+  and `138,345` edges, with `287` safe divisions. Local structural checks passed:
+  unique contiguous ids, no missing values, no duplicate node keys, all edge
+  endpoints present, no nonconsecutive edges, max indegree `1`, and max outdegree
+  `2`. Evidence is preserved under
+  `references/lb893-conservative-safe-divisions-candidate-v1-output/`. No
+  automatic competition submission was made.
 
 ## Questions
 

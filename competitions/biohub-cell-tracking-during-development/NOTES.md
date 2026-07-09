@@ -246,6 +246,21 @@
   `SAFE_DIV_GLOBAL_FRAC_CAP 0.00375 -> 0.0028`.
 - Expected behavior: safe-division count between full LB893 (`381`) and no-safe
   (`0`), with fewer borderline division edges.
+- Kernel: `dalloliogm/biohub-lb893-conservative-safe-divisions-candidate`,
+  version 1, Tesla T4, no internet, with
+  `pilkwang/biohub-tracking-support-pack-50ep-v1`.
+- Completed successfully and wrote `submission.csv` with SHA-256
+  `c263415fba0dac685e67e2a5785c8c7668dca7d5344650605a64f2e856d4a36a`.
+- Output rows: `283,385` total = `145,040` nodes + `138,345` edges.
+- Safe divisions: `287` total, between full LB893 (`381`) and no-safe (`0`), as
+  intended. Per dataset: `14`, `107`, `16`, and `150`.
+- Per-dataset rows: `44b6_0113de3b=50,084`, `44b6_0b24845f=79,639`,
+  `6bba_05b6850b=12,428`, `6bba_05db0fb1=141,234`.
+- Structural checks passed locally: unique contiguous `id`, no missing values,
+  no duplicate node keys, all edge endpoints present, all edges consecutive in
+  time, max indegree `1`, max outdegree `2`.
+- Ready for manual competition submission. No automatic submission was made.
+- Evidence: `references/lb893-conservative-safe-divisions-candidate-v1-output/`.
 
 ## Feature Ideas
 
