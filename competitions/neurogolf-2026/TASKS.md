@@ -27,6 +27,12 @@
 - Built `submissions/color-map-baseline/submission.zip` with four validated
   ONNX files at archive root: `task016.onnx`, `task276.onnx`, `task309.onnx`,
   and `task337.onnx`.
+- Created and locally executed the tutorial notebook
+  `notebooks/neurogolf-2026-competition-tutorial.ipynb`; it builds and validates
+  the same four-task ONNX baseline and writes a reviewable `submission.zip`.
+- Uploaded the tutorial notebook to Kaggle as private kernel version 1:
+  https://www.kaggle.com/code/dalloliogm/neurogolf-2026-first-onnx-submission-tutorial
+  Initial Kaggle status after upload: `KernelWorkerStatus.RUNNING`.
 
 ## Questions
 
