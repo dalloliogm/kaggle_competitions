@@ -6,13 +6,13 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 
 | Date | Approach | Local CV | Public LB | Private LB | Notebook/commit | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-07-10 | Color-map 1x1 convolution baseline | 4 task networks pass all provided examples | Not submitted | Unknown | `scripts/build_color_map_submission.py` | Generates `submission.zip` for `task016`, `task276`, `task309`, and `task337`; conservative manual-submission anchor. |
+| 2026-07-10 | Color-map 1x1 convolution baseline | 4 task networks pass all provided examples | 81.57, submission ref `54528731` | Unknown | `scripts/build_color_map_submission.py` | Generates `submission.zip` for `task016`, `task276`, `task309`, and `task337`; useful mechanics anchor, not final-worthy. |
 
 ## Tried
 
 | Date | Approach | Changes | Local CV | Public LB | Outcome | Follow-up |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-07-10 | Pure color-map task scan | Scanned all 400 JSON files for same-shape tasks where output is a consistent per-color mapping across train/test/arc-gen. | Found and validated 4 tasks. | Not submitted | Successful local package. | Expand scan to affine/geometric/local-neighborhood transforms. |
+| 2026-07-10 | Pure color-map task scan | Scanned all 400 JSON files for same-shape tasks where output is a consistent per-color mapping across train/test/arc-gen. | Found and validated 4 tasks. | 81.57, submission ref `54528731` | Completed and scored, but far below existing account score `7267.32`. | Expand to affine/geometric/local-neighborhood transforms; do not rely on four-task package. |
 
 ## Backlog
 

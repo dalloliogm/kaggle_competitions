@@ -57,5 +57,9 @@ Capture durable information learned while working on this competition. This is f
 
 ## Leaderboard Notes
 
-- Not submitted yet. Treat Kaggle acceptance/rejection text as authoritative
-  once the first package is uploaded.
+- First local color-map anchor submission `54528731` completed with public score
+  `81.57`. This proves the zip/mechanics path works, but it is not
+  final-worthy.
+- Existing account submissions shown by Kaggle include a much stronger public
+  score `7267.32` for submission `54487100`, so future work should improve from
+  that baseline rather than the four-task color-map package.

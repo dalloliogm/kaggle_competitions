@@ -35,10 +35,15 @@
 - Version 1 failed on Kaggle because the offline notebook image has `onnx` but
   not `onnxruntime`; patched the notebook to validate color-map rules directly
   while still generating the same ONNX files. Uploaded corrected version 2.
+- Submitted `submissions/color-map-baseline/submission.zip` to Kaggle with
+  message `color-map baseline: 4 validated ONNX tasks`. Kaggle submission ref:
+  `54528731`; upload accepted on `2026-07-10 13:24:51.423000`; final status
+  `SubmissionStatus.COMPLETE`; public score `81.57`.
 
 ## Questions
 
 - Is Kaggle's displayed deadline timezone UTC? The CLI reports
   `2026-07-15 23:59:00` without an explicit timezone.
-- Should we use one of today's 5 submission slots on the small anchor package,
-  or first add a few more obvious low-risk tasks?
+- Existing account submissions still show a much stronger public score
+  (`7267.32` from submission `54487100`), so the four-task color-map package
+  should not be selected as a final submission.
