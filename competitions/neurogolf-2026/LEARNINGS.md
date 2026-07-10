@@ -70,3 +70,8 @@ Capture durable information learned while working on this competition. This is f
   `7267.19` as submission `54529022`, even though it was smaller and passed
   provided examples. Public-kernel ONNX replacements must be isolated before
   adoption; provided examples are not enough to prove hidden correctness.
+- Follow-up split tests from the same public source also failed to beat the
+  account baseline: five-task lower-risk `54529420` scored `7267.27`, A3
+  `54529552` scored `7267.29`, and B2 `54529559` scored `7267.29`. The
+  `ryosuke-7266-48` smaller ONNX files are not a useful direct graft path at
+  the group level.

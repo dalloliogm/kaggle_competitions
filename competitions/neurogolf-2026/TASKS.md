@@ -17,6 +17,9 @@
   patterns and current leaderboard tactics before deeper implementation.
 - Isolate candidate public-kernel grafts one task or small group at a time
   before replacing the existing `7267.32` account baseline.
+- Move on from the `ryosuke-7266-48` smaller-file graft family unless there is
+  a reason to spend single-task submissions; all tested groups scored below the
+  existing account best.
 - If submitting, immediately inspect Kaggle's accepted/rejected message and
   record the exact result here.
 
@@ -51,6 +54,11 @@
   provided examples using the helper's 30x30 one-hot semantics. Submitted the
   candidate as Kaggle ref `54529022`; final status `SubmissionStatus.COMPLETE`;
   public score `7267.19`, below the existing account best `7267.32`.
+- Submitted isolated lower-risk splits from the same `ryosuke-7266-48` source:
+  five-task `task005/task008/task107/task310/task370` graft `54529420` scored
+  `7267.27`; A3 split `task005/task008/task107` graft `54529552` scored
+  `7267.29`; B2 split `task310/task370` graft `54529559` scored `7267.29`.
+  None beats the account best `7267.32`.
 
 ## Questions
 
@@ -58,5 +66,5 @@
   `2026-07-15 23:59:00` without an explicit timezone.
 - Existing account submissions still show a much stronger public score
   (`7267.32` from submission `54487100`), so the four-task color-map package
-  and the seven-task graft `54529022` should not be selected as final
+  and the tested `ryosuke-7266-48` grafts should not be selected as final
   submissions.
