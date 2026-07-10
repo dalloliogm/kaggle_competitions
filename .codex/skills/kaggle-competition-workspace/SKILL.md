@@ -108,6 +108,18 @@ patterns, player-count-specific behavior, and failure modes. Use these findings
 to choose the simplest viable action abstraction before building a learned policy
 or deep heuristic stack.
 
+## Agent-Config Competitions
+
+If the evaluation page asks for an autonomous agent package such as
+`submission.zip` with `agent.yaml` at the archive root, use
+`references/agent-config-competitions.md` in this skill.
+
+In those workspaces, capture the agent config schema, allowed tools, prompt and
+skill layout, and zip-validation requirements. Create `submissions/agent-configs/`
+for source folders and validate both the folder and final zip before any upload.
+Prioritize a first valid `submit_predictions` call in the agent prompt before
+optional EDA or improvement loops.
+
 ## Discover Competitions
 
 When the user asks to list, search, compare, or choose Kaggle competitions, use:
