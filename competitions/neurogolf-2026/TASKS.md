@@ -32,7 +32,9 @@
   the same four-task ONNX baseline and writes a reviewable `submission.zip`.
 - Uploaded the tutorial notebook to Kaggle as private kernel version 1:
   https://www.kaggle.com/code/dalloliogm/neurogolf-2026-first-onnx-submission-tutorial
-  Initial Kaggle status after upload: `KernelWorkerStatus.RUNNING`.
+- Version 1 failed on Kaggle because the offline notebook image has `onnx` but
+  not `onnxruntime`; patched the notebook to validate color-map rules directly
+  while still generating the same ONNX files. Uploaded corrected version 2.
 
 ## Questions
 
