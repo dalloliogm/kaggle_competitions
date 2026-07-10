@@ -15,6 +15,8 @@
   transforms with fixed ONNX reshape/matmul/gather graphs.
 - Search public NeuroGolf notebooks/discussions for accepted ONNX construction
   patterns and current leaderboard tactics before deeper implementation.
+- Isolate candidate public-kernel grafts one task or small group at a time
+  before replacing the existing `7267.32` account baseline.
 - If submitting, immediately inspect Kaggle's accepted/rejected message and
   record the exact result here.
 
@@ -39,6 +41,16 @@
   message `color-map baseline: 4 validated ONNX tasks`. Kaggle submission ref:
   `54528731`; upload accepted on `2026-07-10 13:24:51.423000`; final status
   `SubmissionStatus.COMPLETE`; public score `81.57`.
+- Pulled the account's stronger Kaggle kernel output and public reference
+  outputs for comparison. Built
+  `submissions/own7267-plus-ryosuke-7/submission.zip` by starting from the
+  account `7267.32` artifact and replacing seven smaller ONNX files from the
+  close public `ryosuke-7266-48` output: `task005`, `task008`, `task107`,
+  `task233`, `task310`, `task366`, and `task370`.
+- Locally validated those seven replacements against all official-valid
+  provided examples using the helper's 30x30 one-hot semantics. Submitted the
+  candidate as Kaggle ref `54529022`; final status `SubmissionStatus.COMPLETE`;
+  public score `7267.19`, below the existing account best `7267.32`.
 
 ## Questions
 
@@ -46,4 +58,5 @@
   `2026-07-15 23:59:00` without an explicit timezone.
 - Existing account submissions still show a much stronger public score
   (`7267.32` from submission `54487100`), so the four-task color-map package
-  should not be selected as a final submission.
+  and the seven-task graft `54529022` should not be selected as final
+  submissions.

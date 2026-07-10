@@ -54,6 +54,9 @@ Capture durable information learned while working on this competition. This is f
 - Current manual package is
   `submissions/color-map-baseline/submission.zip` and contains four root-level
   ONNX files.
+- Generated submissions and downloaded reference kernel outputs are local
+  artifacts only; keep them ignored unless a small metadata manifest is worth
+  preserving.
 
 ## Leaderboard Notes
 
@@ -63,3 +66,7 @@ Capture durable information learned while working on this competition. This is f
 - Existing account submissions shown by Kaggle include a much stronger public
   score `7267.32` for submission `54487100`, so future work should improve from
   that baseline rather than the four-task color-map package.
+- A conservative seven-task graft from public kernel `ryosuke-7266-48` scored
+  `7267.19` as submission `54529022`, even though it was smaller and passed
+  provided examples. Public-kernel ONNX replacements must be isolated before
+  adoption; provided examples are not enough to prove hidden correctness.
