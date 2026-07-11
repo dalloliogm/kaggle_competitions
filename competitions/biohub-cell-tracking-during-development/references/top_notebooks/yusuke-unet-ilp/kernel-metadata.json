@@ -1,0 +1,23 @@
+{
+  "id": "yusuketogashi/lb839-artifact-safe-unet-ilp-baseline",
+  "id_no": 125346155,
+  "title": "\ud83e\uddecLB839  Artifact-Safe UNet + ILP Baseline",
+  "code_file": "lb839-artifact-safe-unet-ilp-baseline.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [],
+  "dataset_sources": [
+    "thibautgoldsborough/cellmot-baseline-artifacts"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "model_sources": [],
+  "docker_image": "gcr.io/kaggle-private-byod/python@sha256:57e612b484cf3df5026ee4dcc3cb176974b22b2bc0937fb1e16132a8be4cb13c",
+  "machine_shape": "NvidiaTeslaT4"
+}

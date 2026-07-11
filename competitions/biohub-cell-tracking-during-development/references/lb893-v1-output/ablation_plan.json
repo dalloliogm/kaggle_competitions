@@ -1,0 +1,42 @@
+[
+  {
+    "name": "full_lb893",
+    "rationale": "Reproduce public LB 0.893 baseline on exact train validation.",
+    "env": {}
+  },
+  {
+    "name": "no_safe_divisions",
+    "rationale": "Measure whether the 381 added division edges are net positive under the exact division metric.",
+    "env": {
+      "BIOHUB_OUTPUT_SAFE_DIVISIONS": "0"
+    }
+  },
+  {
+    "name": "no_gap2",
+    "rationale": "Re-test gap-2 only in the learned/motion-relinked context, where it may work despite failing classically.",
+    "env": {
+      "BIOHUB_OUTPUT_GAP2_RECOVERY": "0"
+    }
+  },
+  {
+    "name": "no_gap_close",
+    "rationale": "Quantify the one-frame synthetic/reused gap nodes and their edge contribution.",
+    "env": {
+      "BIOHUB_OUTPUT_GAP_CLOSE": "0"
+    }
+  },
+  {
+    "name": "no_linefit",
+    "rationale": "Check whether smoothing improves 7 um endpoint matching or only changes geometry cosmetically.",
+    "env": {
+      "BIOHUB_OUTPUT_LINEFIT_SMOOTH": "0"
+    }
+  },
+  {
+    "name": "no_motion_relink",
+    "rationale": "Most important ablation: compare raw learned/ILP edges against the motion-relinked graph.",
+    "env": {
+      "BIOHUB_OUTPUT_MOTION_RELINK": "0"
+    }
+  }
+]

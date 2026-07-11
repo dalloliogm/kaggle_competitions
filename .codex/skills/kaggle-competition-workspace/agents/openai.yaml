@@ -1,0 +1,4 @@
+interface:
+  display_name: "Kaggle Competition Workspace"
+  short_description: "Build Kaggle workspaces and tutorials"
+  default_prompt: "Use $kaggle-competition-workspace to initialize this competition and create its practical tutorial notebook."

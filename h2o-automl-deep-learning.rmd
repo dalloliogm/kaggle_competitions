@@ -1,0 +1,159 @@
+# %% [code]
+
+---
+title: 'Predict Podcast Listening Time_H2O_AutoML'
+date: '`r Sys.Date()`'
+output:
+  html_document:
+    number_sections: true
+    toc: true
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+    echo = TRUE,
+    dpi = 300,
+    fig.align = "center",
+    message = FALSE,
+    warning = FALSE
+    )
+```
+
+# Load libraries
+
+```{r }
+library(tidyverse)
+library(tidymodels)
+library(h2o)
+library(summarytools)
+library(knitr)
+library(DataExplorer)
+```
+# Load dataset and EDA
+
+```{r }
+
+
+train_tbl <- read_csv("/kaggle/input/playground-series-s5e4/train.csv")
+
+train_tbl %>%
+    select(-id) %>%
+    dfSummary(
+        plain.ascii  = FALSE,
+          style        = "grid",
+          graph.magnif = 0.75,
+          method       = "render"
+    )%>%
+    select(-text.graph) %>%
+    knitr::kable(align = "c")
+
+## Comprehensive EDA report. This report can be found in Output file area.
+
+train_tbl%>% 
+    select(-id) %>% 
+    mutate(across(where(is_character),as.factor))%>% 
+    mutate(Number_of_Ads=as.factor(Number_of_Ads)) %>% 
+    create_report(
+        output_file = "Predict Podcast Listening Time.html",
+        report_title = "Predict Podcast Listening Time",
+        output_dir = getwd(),
+        y = "Listening_Time_minutes"
+        
+    )
+
+
+
+## Conclusions from EDA
+
+# Episode_Length_minutes is lineally,positively correlated to Listening_Time_minutes
+# 10 exceptional digital values and 1 NA in column Number_of_Ads. To make it simple, change all exceptional values to 1
+
+```
+# Feature Engineering
+```{r }
+
+train_tbl <- train_tbl %>%  
+    mutate(Number_of_Ads = ifelse(!(Number_of_Ads %in% c(0, 1, 2, 3)), 1, Number_of_Ads))
+
+recipe_basic <- recipe(Listening_Time_minutes ~ ., data = train_tbl) %>%
+    step_rm(id) %>%
+    step_mutate(across(where(is_character),as.factor))%>% 
+    step_mutate(Number_of_Ads=as.factor(Number_of_Ads)) %>% 
+    step_dummy(all_nominal(),one_hot=TRUE) %>%
+    step_impute_mean(Episode_Length_minutes,Guest_Popularity_percentage) %>% 
+    step_normalize(all_numeric_predictors())
+
+recipe_basic%>% prep() %>% juice() %>% glimpse()
+
+
+recipe_prep <- prep(recipe_basic)
+
+baked_train_tbl <- bake(recipe_prep, new_data = train_tbl)
+
+test_tbl <- read_csv("/kaggle/input/playground-series-s5e4/test.csv") %>% 
+    mutate(Number_of_Ads = ifelse(!(Number_of_Ads %in% c(0, 1, 2, 3)), 1, Number_of_Ads))
+
+baked_test_tbl <-  bake(recipe_prep, new_data = test_tbl)
+
+
+```
+# Estimate with H2O autoML
+```{r }
+
+h2o.init()
+
+y <- "Listening_Time_minutes"
+x <- setdiff(names(baked_train_tbl), y)
+
+## H2O AutoML does multiple folds of validation and choose best model based on specified sort_metric
+
+
+h2o_automl_models <- h2o.automl(
+    x = x,
+    y = y,
+    training_frame   = as.h2o(baked_train_tbl),
+    nfolds           = 10,
+    include_algos = c("DeepLearning"),
+    stopping_metric = "RMSE",
+    sort_metric = "RMSE",
+    max_runtime_secs = 7200
+)
+
+h2o_automl_models@leaderboard
+
+## Use the leading model to do prediction
+
+predictions <- h2o.predict(h2o_automl_models@leader, newdata = as.h2o(baked_test_tbl))
+
+
+## Join Column Id with predicted price and change column name to SalePrice
+
+predictions_tbl <- predictions %>% 
+    as_tibble() %>% 
+    mutate(id = test_tbl$id) %>% 
+    rename(Listening_Time_minutes = predict) %>% 
+    select(id,Listening_Time_minutes)
+
+## RMSE 
+
+performance_h2o <- h2o.performance(h2o_automl_models@leader, 
+                                   newdata = as.h2o(baked_test_tbl %>% 
+                                                        mutate(Listening_Time_minutes = predictions_tbl$Listening_Time_minutes)))
+
+performance_h2o@metrics$RMSE
+
+
+## Get list of 10 most important variables to influence prediction
+
+h2o.permutation_importance_plot(h2o_automl_models@leader,newdata=as.h2o(baked_test_tbl %>% 
+                                                                            mutate(Listening_Time_minutes = predictions_tbl$Listening_Time_minutes)))
+
+## Write to CSV file
+
+predictions_tbl %>% 
+    write_csv("H2O_AutoML_20250404_01.csv") 
+
+
+
+```

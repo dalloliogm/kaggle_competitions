@@ -1,0 +1,154 @@
+# Tasks
+
+## Current Goal
+
+- Improve beyond copied LB893 public LB `0.893`. The no-safe-divisions variant
+  scored `0.886`, so use it as a diagnostic negative control rather than the new
+  baseline.
+
+## Next Experiments
+
+- Tune safe divisions instead of deleting them: try tighter parent/sister
+  distance caps and lower global fraction caps.
+- Manually submit Kaggle version 1 of
+  `dalloliogm/biohub-lb893-conservative-safe-divisions-candidate` and record the
+  public LB before further safe-division tuning.
+- Run one-factor ablations from `references/lb893-v1-output/ablation_plan.json`,
+  continuing with `no_motion_relink`, `no_gap_close`, `no_gap2`, and
+  `no_linefit`.
+- Prioritize `no_gap2` and `no_gap_close` after safe-division tuning; these
+  components add many synthetic nodes/edges and may be easier to improve without
+  relying on division-heavy validation.
+
+## Done
+
+- Initialized the competition workspace and downloaded Kaggle overview,
+  evaluation, rules, and file-list references.
+- Queried the top public notebooks by votes/hotness, downloaded nine
+  representative sources, and recorded the source-level comparison in
+  `references/top-notebooks-analysis.md`.
+- Created `notebooks/biohub-exact-dog-hungarian-baseline.ipynb` with the frozen
+  official metric implementation, an exact-metric smoke test, one-video-per-embryo
+  validation, full test inference, and submission-schema checks.
+- Passed notebook JSON/Python syntax validation and synthetic tests for DoG
+  detection, Hungarian linking, interpolated one-frame gap closure, and pruning.
+- Prepared Kaggle kernel metadata with the competition and
+  `thibautgoldsborough/cellmot-baseline-artifacts` attached.
+- Uploaded private Kaggle kernel version 4 as
+  `dalloliogm/biohub-exact-validation-and-dog-hungarian-baseline`. Version 4
+  passed the exact-metric toy test, then finished with error before producing a
+  real validation result. Versions 1 and 3 exposed dependency setup failures;
+  version 2 lacked attached inputs and was superseded immediately.
+- Fixed offline GEFF/Zarr evaluation in version 7, which completed successfully.
+- Submitted version 7 as Kaggle submission `54297736`; public score `0.827`.
+- Created and uploaded `notebooks/biohub-cell-tracking-competition-tutorial.ipynb`,
+  including the expanded Hungarian-assignment explanation.
+- Created `notebooks/biohub-gap2-velocity-ablation.ipynb`. It changes only the
+  gap-2 recovery switch, shares detections between variants, compares exact
+  metrics by embryo, and automatically falls back to the frozen baseline unless
+  the candidate improves overall without a regression worse than `0.002`.
+- Passed notebook JSON/Python validation and a structural test confirming one
+  accepted `t -> t+3` bridge inserts exactly two nodes and three consecutive edges.
+- Completed the exact gap-2 ablation. Baseline scored `0.794304`; candidate
+  `0.793540` (delta `-0.000764`). Edge counts were identical, while candidate
+  nodes increased from `32,471` to `32,619`; automatic selection kept baseline.
+- Created validation-only `notebooks/biohub-detector-screening.ipynb` with the
+  frozen baseline plus one-factor threshold `0.030/0.060` and physical-NMS
+  `2.8/3.8 um` candidates. Local syntax and config-isolation checks passed.
+- Completed the exact detector screen. NMS `3.8 um` scored `0.810458` versus
+  baseline `0.794304` (`+0.016153`) and improved both held-out embryos.
+- Created `notebooks/biohub-nms38-candidate.ipynb` with candidate-only delta
+  `min_distance_um=3.8`, exact validation, full test inference, and schema checks.
+  Local JSON/Python and config-isolation checks passed.
+- Kaggle candidate version 1 completed. It reproduced exact validation
+  `0.8104577161`, processed all four test movies, passed edge endpoint/schema
+  assertions, and wrote a `235,923`-row `submission.csv`.
+- Submitted NMS `3.8 um` as `54307212`; public LB improved `0.827 -> 0.834`.
+- Leaderboard snapshot: rank `203/630`; approximate top-10% cutoff `0.856`.
+- Created validation-only `notebooks/biohub-learned-unet-ilp-validation.ipynb`.
+  It isolates artifact dependencies, runs the real pretrained U-Net/transformer/ILP
+  script, scores predicted GEFF graphs exactly, and cannot emit a submission.
+- Passed notebook JSON/Python validation and syntax validation of the embedded
+  exact-metric runner. Full execution requires the Kaggle artifact and GPU.
+- Learned validation version 1 failed because Kaggle assigned a P100 incompatible
+  with PyTorch 2.10 (`sm_60` unsupported). Version 2 pinned a Tesla T4 and passed.
+- Default learned exact score: `0.8394088969`, delta `+0.0289511808` versus the
+  NMS-3.8 classical benchmark; aggregate edge TP/FP/FN `815/58/80`.
+- Created `notebooks/biohub-learned-unet-ilp-candidate.ipynb` with locked learned
+  parameters, isolated GEFF-to-CSV conversion, full dataset/schema assertions,
+  and no automatic submission. Notebook and embedded writer compile locally.
+- Uploaded learned candidate version 1 with a Tesla T4. The kernel completed in
+  472 seconds and processed all four 100-frame test movies.
+- Generated `304,792` rows: `164,682` nodes, `140,110` edges, and 12 divisions.
+  Independent validation confirmed exact columns, unique IDs, no missing values,
+  valid endpoints, consecutive-frame edges, and lineage degrees of at most two
+  outgoing and one incoming edge. No competition submission was created.
+- Learned submission `54323397` scored `0.810`, below NMS-3.8's `0.834`; the
+  exact aggregate validation gain did not transfer to the public leaderboard.
+- Built `notebooks/biohub-prefix-hybrid-candidate.ipynb`, selecting classical
+  `44b6` and learned `6bba` rows based on per-embryo exact validation. The hybrid
+  exact score is `0.842616`; local top-to-bottom composition produced `260,287`
+  structurally valid rows.
+- Hybrid kernel version 1 failed because private notebook outputs mount under
+  `/kaggle/input/notebooks/<owner>/<slug>/`, not the assumed direct slug path.
+  Version 2 discovers both files by exact row-count fingerprints and completed.
+- Kaggle version 2 produced the same `260,287`-row CSV as the local execution;
+  both files have SHA-256 `abbbb913fa188f505e314a7c6c4a5846e6c6377c0788025d6ba799f0b9d968b0`.
+- Copied LB893 source into
+  `notebooks/biohub-lb893-safe-divisions-source.ipynb` and preserved its Kaggle
+  metadata under `references/top_notebooks/lb893-safe-divisions/`.
+- Copied LB893 run evidence into `references/lb893-v1-output/`: kernel log,
+  `run_stats.csv`, and `ablation_plan.json`. The large `submission.csv` remains
+  ignored.
+- Created `notebooks/biohub-lb893-postprocessing-ablation.ipynb` as a lightweight
+  local controller and `notebooks/biohub-lb893-validation-ablation.ipynb` as the
+  Kaggle GPU exact-validation runner. All code cells parse locally.
+- Uploaded `dalloliogm/biohub-lb893-validation-ablation`. Version 1 failed on a
+  bad validation train path; the error log is preserved in
+  `references/lb893-validation-v1-output/`. Version 2 fixes the path and is
+  completed prediction/metric scoring but failed while writing the summary due a
+  bad `CONFIG` reference. The v2 error log is preserved in
+  `references/lb893-validation-v2-output/`; version 3 patches summary writing.
+- Version 3 completed successfully. Exact validation artifacts are preserved in
+  `references/lb893-validation-v3-output/`. Full LB893 validation score on the
+  selected two train movies is `0.9548016411`; the next step is not submission,
+  but one-factor validation ablations against this baseline.
+- Created and ran
+  `notebooks/biohub-lb893-no-safe-divisions-validation.ipynb`. Disabling only
+  safe-division insertion improved exact validation to `0.9606407955`, removed
+  division false positives (`0/4/0 -> 0/0/0`), and preserved evidence under
+  `references/lb893-no-safe-divisions-v1-output/`.
+- Created `notebooks/biohub-lb893-no-safe-divisions-candidate.ipynb` for the
+  real test set. It forces `BIOHUB_VALIDATION_MODE=0`,
+  `BIOHUB_TEST_DIR=/kaggle/input/competitions/biohub-cell-tracking-during-development/test`,
+  and `BIOHUB_OUTPUT_SAFE_DIVISIONS=0`.
+- Uploaded `dalloliogm/biohub-lb893-no-safe-divisions-candidate`; version 1
+  completed on Kaggle T4. It produced `283,092` rows: `145,034` nodes and
+  `138,058` edges, with zero division-like sources and zero safe divisions.
+  Local structural checks passed: unique contiguous ids, no missing values, no
+  duplicate node keys, all edge endpoints present, and no nonconsecutive edges.
+  Evidence is preserved under
+  `references/lb893-no-safe-divisions-candidate-v1-output/`. No automatic
+  competition submission was made.
+- Submitted no-safe-divisions candidate; public LB was `0.886`. This is below
+  the copied LB893 public baseline `0.893`, so complete removal of safe divisions
+  is rejected as a replacement.
+- Created `notebooks/biohub-lb893-conservative-safe-divisions-candidate.ipynb`
+  as the next original candidate. It keeps the LB893 graph pipeline intact and
+  only tightens safe-division gates/caps.
+- Uploaded `dalloliogm/biohub-lb893-conservative-safe-divisions-candidate`;
+  version 1 completed on Kaggle T4. It produced `283,385` rows: `145,040` nodes
+  and `138,345` edges, with `287` safe divisions. Local structural checks passed:
+  unique contiguous ids, no missing values, no duplicate node keys, all edge
+  endpoints present, no nonconsecutive edges, max indegree `1`, and max outdegree
+  `2`. Evidence is preserved under
+  `references/lb893-conservative-safe-divisions-candidate-v1-output/`. No
+  automatic competition submission was made.
+
+## Questions
+
+- What are the notebook runtime and accelerator limits?
+- Which LB893 post-processing components are actually positive under exact
+  embryo-disjoint validation?
+- What are the exact aggregate and per-embryo validation metrics from version 7?
+  The kernel completed, but `ListKernelSessionOutput` still returns HTTP 429.

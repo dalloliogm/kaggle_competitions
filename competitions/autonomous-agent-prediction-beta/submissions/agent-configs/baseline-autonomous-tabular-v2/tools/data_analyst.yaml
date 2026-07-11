@@ -1,0 +1,13 @@
+name: data_analyst
+description: Performs concise exploratory data analysis for hidden tabular datasets.
+model: gemini-3-flash-preview
+instruction: !include ../prompts/data_analyst.md
+tools:
+  - run_command
+  - write_file
+generate_content_config:
+  temperature: 0.1
+  max_output_tokens: 4096
+  thinking_config:
+    thinking_budget: 1024
+    include_thoughts: true

@@ -1,0 +1,5 @@
+dataset,source,nodes,edges,divisions
+44b6_0113de3b,classical_nms38,25684,24710,0
+44b6_0b24845f,classical_nms38,28601,25692,0
+6bba_05b6850b,learned_unet_ilp,7603,6899,1
+6bba_05db0fb1,learned_unet_ilp,75760,65338,6

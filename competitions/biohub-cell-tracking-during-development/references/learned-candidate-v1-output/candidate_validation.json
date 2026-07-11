@@ -1,0 +1,48 @@
+{
+  "rows": 304792,
+  "columns_exact": true,
+  "global_id_unique": true,
+  "no_missing_values": true,
+  "datasets": {
+    "44b6_0113de3b": {
+      "nodes": 25995,
+      "edges": 23538,
+      "frames": 100,
+      "t_min": 0,
+      "t_max": 99,
+      "divisions": 3
+    },
+    "44b6_0b24845f": {
+      "nodes": 55324,
+      "edges": 44335,
+      "frames": 100,
+      "t_min": 0,
+      "t_max": 99,
+      "divisions": 2
+    },
+    "6bba_05b6850b": {
+      "nodes": 7603,
+      "edges": 6899,
+      "frames": 100,
+      "t_min": 0,
+      "t_max": 99,
+      "divisions": 1
+    },
+    "6bba_05db0fb1": {
+      "nodes": 75760,
+      "edges": 65338,
+      "frames": 100,
+      "t_min": 0,
+      "t_max": 99,
+      "divisions": 6
+    }
+  },
+  "total_nodes": 164682,
+  "total_edges": 140110,
+  "total_divisions": 12,
+  "node_ids_unique_per_dataset": true,
+  "edge_endpoints_exist": true,
+  "all_edges_consecutive": true,
+  "max_out_degree": 2,
+  "max_in_degree": 1
+}

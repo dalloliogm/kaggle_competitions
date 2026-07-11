@@ -1,3 +1,11 @@
 .qodo
 submission*
 *h5
+.env
+.venv/
+__pycache__/
+.kaggle_work/
+.kaggle_config/
+.kaggle_cache/
+kaggle_outputs/
+working/
