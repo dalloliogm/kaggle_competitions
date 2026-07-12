@@ -19,6 +19,17 @@
 - Prioritize `no_gap2` and `no_gap_close` after safe-division tuning; these
   components add many synthetic nodes/edges and may be easier to improve without
   relying on division-heavy validation.
+- Push and run `notebooks/biohub-graph-consensus-ensemble.ipynb`. Attach the
+  three diverse candidate outputs (LB893 `0.893` anchor, classical NMS-3.8
+  `0.834`, learned U-Net/ILP `0.810`), verify the pairwise-agreement matrix shows
+  real diversity, submit the consensus `submission.csv`, and record public LB.
+- Optionally run the notebook's discovery layer once with `DISCOVER_PUBLIC=1`
+  (internet ON + Kaggle/OpenRouter secrets) to auto-pull ORIGINAL public
+  tracking pipelines as extra sources; then re-run internet-off to submit. Sanity
+  check the LLM keep/drop decisions before trusting them.
+- Then tune the ensemble `TAU_NODE_FRAC`/`TAU_EDGE_FRAC`/`TAU_DIV_FRAC` with
+  `VALIDATION_MODE=1` on labeled train movies (needs per-source train submissions
+  + support pack) before further submissions.
 
 ## Done
 

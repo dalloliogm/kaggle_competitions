@@ -32,7 +32,8 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | 2026-07-04 | Prefix-aware classical/learned hybrid | `notebooks/biohub-prefix-hybrid-candidate.ipynb` | Exact hybrid 0.842616; Kaggle v2 completed with a validated 260,287-row output identical to local | Manually submit version 2 and record LB |
 | 2026-07-07 | LB893 exact-validation ablation runner | `notebooks/biohub-lb893-validation-ablation.ipynb` | JSON/Python syntax checked locally; requires Kaggle T4 plus `biohub-tracking-support-pack-50ep-v1` | Upload/run `full_lb893` validation, then one-factor ablations |
 | 2026-07-08 | LB893 no-safe-divisions test candidate | `notebooks/biohub-lb893-no-safe-divisions-candidate.ipynb` | Kaggle v1 completed; 283,092-row output passed structural checks; public LB 0.886 | Superseded by copied LB893 0.893; use as negative control for division tuning |
-| 2026-07-08 | LB893 conservative safe-divisions candidate | `notebooks/biohub-lb893-conservative-safe-divisions-candidate.ipynb` | Kaggle v1 completed; 283,385 rows and 287 safe divisions; structural checks passed | Ready for manual submission; record public LB before further tuning |
+| 2026-07-08 | LB893 conservative safe-divisions candidate | `notebooks/biohub-lb893-conservative-safe-divisions-candidate.ipynb` | Kaggle v1 completed; 283,385 rows and 287 safe divisions; structural checks passed | Submitted 2026-07-09 (`54490638`/`54490358`): public LB `0.889`, below copied LB893 `0.893`. Tightening divisions did not beat the baseline. |
+| 2026-07-12 | Graph-aware consensus ensemble | `notebooks/biohub-graph-consensus-ensemble.ipynb` | Core + end-to-end cells verified locally (merge/prune/division/anchor/degree tests, ~12 s at scale, valid schema output) | Push kernel, attach the 3 diverse candidate outputs, run; then tune `TAU_*` via `VALIDATION_MODE` |
 
 ## Backlog
 

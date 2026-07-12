@@ -262,6 +262,70 @@
 - Ready for manual competition submission. No automatic submission was made.
 - Evidence: `references/lb893-conservative-safe-divisions-candidate-v1-output/`.
 
+## 2026-07-12: Graph-aware consensus ensembler
+
+- Context: the top LB is dominated by ensembles, but the public "automated public
+  ensemble" notebooks (e.g. the forked `ps6e7-automated-public-ensemble-v2`)
+  rank/mean-blend a single tabular prediction column. That is invalid here:
+  submissions are tracking graphs (node + edge rows), not a prediction column.
+- Built `notebooks/biohub-graph-consensus-ensemble.ipynb`: a CPU-only,
+  no-internet, no-artifact notebook that ensembles graphs directly.
+  1. Cluster detections across submissions in physical µm per `(dataset, t)`
+     (`VOXEL_SCALE_UM=(1.625,0.40625,0.40625)`, `NODE_MERGE_UM=3.0`), at most one
+     node per source per cluster.
+  2. Keep a consensus node when weighted support >= `TAU_NODE_FRAC` of total
+     weight, or it belongs to an `anchor` submission.
+  3. Weighted edge voting mapped onto consensus node pairs; keep edges >=
+     `TAU_EDGE_FRAC`; greedy selection under in-degree <=1 / out-degree <=2, with
+     the 2nd child (division) gated harder at `TAU_DIV_FRAC`.
+  4. Prune isolated consensus nodes to control the node-count penalty.
+- Core logic verified locally: synthetic multi-source tests (node merge, majority
+  pruning of hallucinations, division gate, anchor retention, degree limits) pass;
+  perf ~12 s for 4 sources x ~306k rows; end-to-end cell run writes a
+  schema-valid `submission.csv` and reports a pairwise node-agreement (diversity)
+  matrix. Fixed one bug (empty-output DataFrame reindex).
+- Pre-filled `SOURCES` with the three most *diverse* candidates as sources:
+  LB893 `0.893` (anchor, weight 3), classical NMS-3.8 `0.834`, learned U-Net/ILP
+  `0.810`. Metadata attaches those three kernel outputs + support pack.
+- Optional `VALIDATION_MODE` reuses the official `biohub_tracking.metrics.evaluate`
+  on labeled train movies (needs support pack + per-source train submissions) so
+  `TAU_*` can be tuned on the exact metric, not a proxy.
+- Caveat to watch: the LB893 variants are near-identical, so real ensemble gain
+  depends on including the genuinely different classical/learned models; the
+  agreement matrix in the notebook quantifies this before submitting.
+- Added an optional auto-discovery layer (ported from the `ps6e7` automated
+  public ensemble and adapted to tracking): when `DISCOVER_PUBLIC=1` it scans the
+  competition's top public notebooks (`kaggle kernels list`), uses an LLM
+  (OpenRouter) to keep only ORIGINAL detection+tracking pipelines and drop
+  blends/ensembles/blends-of-blends, downloads each kept `submission.csv`,
+  validates the tracking schema, de-duplicates near-identical graphs via physical
+  node-agreement (>= `DEDUP_AGREEMENT`), and overwrites `SOURCES` (anchor =
+  rank-0 kept, since Kaggle already sorts by score; title-parsed LB is a display
+  hint only because titles are not trustworthy). Requires internet ON + Kaggle
+  Secrets (`KAGGLE_USERNAME`/`KAGGLE_KEY`/`OPENROUTER_API_KEY`); default False so
+  a pushed version stays internet-off and submission-ready on manual `SOURCES`.
+- Verified offline: `extract_score_from_title` (handles `LB893`/`lb-0-73`/`0.835`),
+  `is_blend_by_name`, `parse_llm_json_response` (bare/fenced/garbage), tracking-
+  schema validation, and `dedup_by_agreement` all pass; full manual E2E still
+  writes a valid submission.
+
+## 2026-07-12: Live leaderboard snapshot (via Kaggle CLI)
+
+- Auth note: the Kaggle token is the new `KGAT_` style; it must be set as
+  `KAGGLE_API_TOKEN` (not `KAGGLE_KEY`) and used with the **latest** kaggle CLI
+  (unpinned `uvx kaggle`), not the classic `1.6.17`. The classic CLI rejects the
+  new token format with 401.
+- Submission history pulled live:
+  - `54397298` (2026-07-06) `0.893` — copied LB893; still the best.
+  - `54455695` (2026-07-08) `0.886` — no-safe-divisions.
+  - `54490638` / `54490358` (2026-07-09) `0.889` — conservative safe-divisions
+    candidate. Below `0.893`: tightening the safe-division gates did NOT beat the
+    copied LB893 baseline. Division precision/coverage tuning remains open but
+    this specific parameterization is rejected as a replacement.
+  - `54605513` (2026-07-12) PENDING at snapshot time — score not yet recorded.
+- Follow-up: record `54605513`'s score once it completes and identify which
+  candidate it was.
+
 ## Feature Ideas
 
 - TBD
