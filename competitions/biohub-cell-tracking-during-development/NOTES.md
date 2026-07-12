@@ -322,9 +322,15 @@
     candidate. Below `0.893`: tightening the safe-division gates did NOT beat the
     copied LB893 baseline. Division precision/coverage tuning remains open but
     this specific parameterization is rejected as a replacement.
-  - `54605513` (2026-07-12) PENDING at snapshot time — score not yet recorded.
-- Follow-up: record `54605513`'s score once it completes and identify which
-  candidate it was.
+  - `54605513` (2026-07-12) `0.889` COMPLETE — ties the two 2026-07-09
+    conservative safe-divisions submissions; still below copied LB893 `0.893`.
+- Identity of `54605513`: kernel-run timing indicates a re-submission of the
+  conservative safe-divisions candidate output, NOT the automated ensemble. The
+  `fork-of-ps6e7-automated-public-ensemble-v2` kernel first ran later the same
+  day (12:56 vs the 11:07 submission) and, as an unadapted tabular blender,
+  would not emit a valid tracking-graph submission. The new
+  `biohub-graph-consensus-ensemble` notebook was never submitted (built
+  locally this session, never pushed to Kaggle).
 
 ## Feature Ideas
 
