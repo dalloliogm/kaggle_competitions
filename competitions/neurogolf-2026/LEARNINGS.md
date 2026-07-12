@@ -75,3 +75,11 @@ Capture durable information learned while working on this competition. This is f
   `54529552` scored `7267.29`, and B2 `54529559` scored `7267.29`. The
   `ryosuke-7266-48` smaller ONNX files are not a useful direct graft path at
   the group level.
+- A single-task `task074` byte-reduction probe from Frank's public `7245.63`
+  artifact scored only `7267.24` as submission `54619246`, despite passing all
+  267 provided examples. This reinforces that local public-example validation
+  does not prove hidden correctness.
+- The newer public notebook `poby7722/7268-neurogolf-best-score`, downloaded on
+  `2026-07-12`, scored `7268.00` as submission `54619344` and is the current
+  best account submission observed in this workspace. Checking current public
+  notebooks can be higher leverage than continuing older graft families.

@@ -20,6 +20,9 @@
 - Move on from the `ryosuke-7266-48` smaller-file graft family unless there is
   a reason to spend single-task submissions; all tested groups scored below the
   existing account best.
+- Use Kaggle's recent public notebook list before further grafting; newer
+  public artifacts can supersede older local/public sources quickly near the
+  deadline.
 - If submitting, immediately inspect Kaggle's accepted/rejected message and
   record the exact result here.
 
@@ -59,6 +62,17 @@
   `7267.27`; A3 split `task005/task008/task107` graft `54529552` scored
   `7267.29`; B2 split `task310/task370` graft `54529559` scored `7267.29`.
   None beats the account best `7267.32`.
+- Submitted a different single-task probe from Frank's public `7245.63` output:
+  `task074` shrank from `8001` to `708` bytes and passed all 267 provided
+  examples, but Kaggle ref `54619246` scored `7267.24`, below the account best.
+- Downloaded newer public notebook output
+  `poby7722/7268-neurogolf-best-score` from Kaggle on `2026-07-12`. Its
+  `submission.zip` had 400 root-level ONNX files, `445478` zip bytes,
+  `1522819` total uncompressed bytes, and SHA-256
+  `be56d01a2a5eaf82af76582105c55dba62885889379ce154ae7264573db93e66`.
+  Submitted it as Kaggle ref `54619344`; final status
+  `SubmissionStatus.COMPLETE`; public score `7268.00`, now the best account
+  submission seen in this workspace.
 
 ## Questions
 
@@ -68,3 +82,5 @@
   (`7267.32` from submission `54487100`), so the four-task color-map package
   and the tested `ryosuke-7266-48` grafts should not be selected as final
   submissions.
+- Current account best is now the public Poby artifact submission `54619344`
+  with public score `7268.00`.
