@@ -23,6 +23,8 @@
 - Use Kaggle's recent public notebook list before further grafting; newer
   public artifacts can supersede older local/public sources quickly near the
   deadline.
+- Do not roll back Poby's six larger task files as a group; the grouped
+  rollback lost public score despite reducing artifact size.
 - If submitting, immediately inspect Kaggle's accepted/rejected message and
   record the exact result here.
 
@@ -73,6 +75,12 @@
   Submitted it as Kaggle ref `54619344`; final status
   `SubmissionStatus.COMPLETE`; public score `7268.00`, now the best account
   submission seen in this workspace.
+- Built `submissions/poby7268-rollback-six-larger-tasks/submission.zip` by
+  starting from Poby `54619344` and rolling back the six tasks where Poby is
+  larger than the old `7267.32` baseline: `task008`, `task035`, `task044`,
+  `task074`, `task085`, and `task363`. The candidate was `9820` uncompressed
+  bytes smaller than Poby, but Kaggle ref `54638892` scored `7267.90`, below
+  Poby's `7268.00`.
 
 ## Questions
 
@@ -84,3 +92,4 @@
   submissions.
 - Current account best is now the public Poby artifact submission `54619344`
   with public score `7268.00`.
+- The grouped six-task rollback `54638892` should not be selected as final.

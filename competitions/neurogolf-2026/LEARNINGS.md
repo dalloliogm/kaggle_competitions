@@ -83,3 +83,7 @@ Capture durable information learned while working on this competition. This is f
   `2026-07-12`, scored `7268.00` as submission `54619344` and is the current
   best account submission observed in this workspace. Checking current public
   notebooks can be higher leverage than continuing older graft families.
+- Rolling back the six tasks where Poby's ONNX files were larger than the old
+  `7267.32` baseline reduced uncompressed bytes by `9820`, but scored only
+  `7267.90` as submission `54638892`. Larger files can encode hidden-value
+  fixes; size-only rollback is not reliable.
