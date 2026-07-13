@@ -92,3 +92,8 @@ Capture durable information learned while working on this competition. This is f
   best account submission observed in this workspace. The notebook audit claims
   it starts from a `7269.56` anchor and applies exact rewrites to `task205` and
   `task368`.
+- A local six-task graft from Kaiwalya onto Lucifer Circuit Forge scored
+  `7269.61` as submission `54646591`, improving Lucifer by `+0.01`. The grafted
+  tasks were `task018`, `task090`, `task105`, `task133`, `task174`, and
+  `task355`; `task205` was deliberately left as Lucifer's version because
+  Lucifer's audit reports a stronger scorer-cost rewrite for that task.

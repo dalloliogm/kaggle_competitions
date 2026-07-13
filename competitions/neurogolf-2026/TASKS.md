@@ -25,8 +25,10 @@
   deadline.
 - Do not roll back Poby's six larger task files as a group; the grouped
   rollback lost public score despite reducing artifact size.
-- Current best source is now `lucifer19/neurogolf-agi-circuit-forge`; use it as
-  the baseline before any further grafting.
+- Current best source is now the `lucifer-plus-kaiwalya-six-no205` graft:
+  Lucifer Circuit Forge plus Kaiwalya `task018`, `task090`, `task105`,
+  `task133`, `task174`, and `task355`, while intentionally leaving Lucifer's
+  `task205` in place.
 - If submitting, immediately inspect Kaggle's accepted/rejected message and
   record the exact result here.
 
@@ -91,6 +93,15 @@
   Submitted the emitted `submission.zip` as Kaggle ref `54645666`; final status
   `SubmissionStatus.COMPLETE`; public score `7269.60`, now the best account
   submission seen in this workspace.
+- Built
+  `submissions/lucifer-plus-kaiwalya-six-no205/submission.zip` by starting from
+  Lucifer Circuit Forge and replacing only Kaiwalya tasks `task018`, `task090`,
+  `task105`, `task133`, `task174`, and `task355`. The archive has 400 root
+  ONNX files, SHA-256
+  `e547ca18dfecca166236a0ef86f9ec42d530a0288877a58640c0db538ae63894`, and was
+  submitted as Kaggle ref `54646591` on `2026-07-13`; final status
+  `SubmissionStatus.COMPLETE`; public score `7269.61`, now the best account
+  submission seen in this workspace.
 
 ## Questions
 
@@ -101,5 +112,10 @@
   and the tested `ryosuke-7266-48` grafts should not be selected as final
   submissions.
 - The grouped six-task rollback `54638892` should not be selected as final.
-- Current account best is now the public Lucifer artifact submission `54645666`
-  with public score `7269.60`.
+- Current account best is now the Lucifer plus Kaiwalya six-task graft
+  submission `54646591` with public score `7269.61`.
+- Prepared but unsubmitted fallback archives exist under
+  `submissions/lucifer-plus-kaiwalya-task355/`,
+  `submissions/lucifer-plus-kaiwalya-no205-no174/`, and
+  `submissions/lucifer-plus-kaiwalya-task174/`; use these only if isolating
+  which Kaiwalya task was responsible for the small gain becomes useful.
