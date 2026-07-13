@@ -87,3 +87,8 @@ Capture durable information learned while working on this competition. This is f
   `7267.32` baseline reduced uncompressed bytes by `9820`, but scored only
   `7267.90` as submission `54638892`. Larger files can encode hidden-value
   fixes; size-only rollback is not reliable.
+- The public notebook `lucifer19/neurogolf-agi-circuit-forge`, downloaded on
+  `2026-07-13`, scored `7269.60` as submission `54645666` and is the current
+  best account submission observed in this workspace. The notebook audit claims
+  it starts from a `7269.56` anchor and applies exact rewrites to `task205` and
+  `task368`.

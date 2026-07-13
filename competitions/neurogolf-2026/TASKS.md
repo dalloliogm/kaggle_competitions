@@ -25,6 +25,8 @@
   deadline.
 - Do not roll back Poby's six larger task files as a group; the grouped
   rollback lost public score despite reducing artifact size.
+- Current best source is now `lucifer19/neurogolf-agi-circuit-forge`; use it as
+  the baseline before any further grafting.
 - If submitting, immediately inspect Kaggle's accepted/rejected message and
   record the exact result here.
 
@@ -81,6 +83,14 @@
   `task074`, `task085`, and `task363`. The candidate was `9820` uncompressed
   bytes smaller than Poby, but Kaggle ref `54638892` scored `7267.90`, below
   Poby's `7268.00`.
+- Downloaded newer public notebook output
+  `lucifer19/neurogolf-agi-circuit-forge` from Kaggle on `2026-07-13`. Its
+  notebook log reported a confirmed anchor public score `7269.56`, accepted
+  exact rewrites on `task205` and `task368`, `400/400` ONNX checker pass, and
+  SHA-256 `644938043f8b9d729235e66dfeaef7ed586a69ca9cc4c198cb5164f81b3b3ad0`.
+  Submitted the emitted `submission.zip` as Kaggle ref `54645666`; final status
+  `SubmissionStatus.COMPLETE`; public score `7269.60`, now the best account
+  submission seen in this workspace.
 
 ## Questions
 
@@ -90,6 +100,6 @@
   (`7267.32` from submission `54487100`), so the four-task color-map package
   and the tested `ryosuke-7266-48` grafts should not be selected as final
   submissions.
-- Current account best is now the public Poby artifact submission `54619344`
-  with public score `7268.00`.
 - The grouped six-task rollback `54638892` should not be selected as final.
+- Current account best is now the public Lucifer artifact submission `54645666`
+  with public score `7269.60`.
