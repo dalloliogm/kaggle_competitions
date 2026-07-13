@@ -25,10 +25,9 @@
   deadline.
 - Do not roll back Poby's six larger task files as a group; the grouped
   rollback lost public score despite reducing artifact size.
-- Current best source is now the `lucifer-plus-kaiwalya-six-no205` graft:
-  Lucifer Circuit Forge plus Kaiwalya `task018`, `task090`, `task105`,
-  `task133`, `task174`, and `task355`, while intentionally leaving Lucifer's
-  `task205` in place.
+- Current best source is now `exact-rewrite-pass-v1`: the
+  `lucifer-plus-kaiwalya-six-no205` graft plus exact stale-value-info cleanup
+  on `task085`, `task105`, `task237`, `task355`, `task370`, and `task396`.
 - Do not graft Anas `task054` onto the current best; both the isolated
   `task054` probe and the three-task Anas explicit bundle scored `7269.59`.
 - Do not graft Jonathan's explicit `task197`/`task264` pair onto the current
@@ -124,6 +123,18 @@
   best: `task197` and `task264` from
   `jonathanncoletti/neurogolf-7242-task-graft-with-explainations`. Kaggle ref
   `54647351` completed with public score `7269.54`, below the current best.
+- Built `scripts/exact_rewrite_toolchain.py`, a local ONNX rewrite scanner that
+  profiles the current best bundle, removes conservative no-op graph structure
+  or stale scoring metadata, validates candidate outputs against the base on
+  local examples, and accepts only official-style cost reductions.
+- Ran the exact rewrite pass against all 400 tasks. It accepted stale
+  value-info cleanup on `task085`, `task105`, `task237`, `task355`, `task370`,
+  and `task396`, with estimated local cost delta `-192` and point delta
+  `+0.134907`. Candidate zip SHA-256:
+  `a497085e3d462908302ca44e72220b157398d2c49f3c93474380beb7af61a2de`.
+- Submitted `submissions/exact-rewrite-pass-v1/submission.zip` to Kaggle as
+  ref `54652438`; final status `SubmissionStatus.COMPLETE`; public score
+  `7269.74`, now the best account submission seen in this workspace.
 
 ## Questions
 
@@ -134,8 +145,8 @@
   and the tested `ryosuke-7266-48` grafts should not be selected as final
   submissions.
 - The grouped six-task rollback `54638892` should not be selected as final.
-- Current account best is now the Lucifer plus Kaiwalya six-task graft
-  submission `54646591` with public score `7269.61`.
+- Current account best is now exact-rewrite pass v1 submission `54652438` with
+  public score `7269.74`.
 - Prepared but unsubmitted fallback archives exist under
   `submissions/lucifer-plus-kaiwalya-task355/`,
   `submissions/lucifer-plus-kaiwalya-no205-no174/`, and

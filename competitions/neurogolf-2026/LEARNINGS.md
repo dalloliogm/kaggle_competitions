@@ -116,3 +116,11 @@ Capture durable information learned while working on this competition. This is f
   paired with exact proof on the current base. Several smaller variants shared
   by many public sources are precisely the variants replaced by the stronger
   Lucifer/Kaiwalya line.
+- Building a current-base exact rewrite scanner was productive. The first pass
+  removed stale `value_info` entries that inflated the official-style memory
+  cost without changing computation. Accepted tasks were `task085`, `task105`,
+  `task237`, `task355`, `task370`, and `task396`, with local cost delta `-192`
+  and estimated point delta `+0.134907`.
+- Exact rewrite pass v1 scored `7269.74` as submission `54652438`, improving
+  the previous best `54646591` by `+0.13`. This validates direct scorer-aware
+  cleanup on the current base as a better path than lower-score public grafts.
