@@ -19,6 +19,14 @@
 - Prioritize `no_gap2` and `no_gap_close` after safe-division tuning; these
   components add many synthetic nodes/edges and may be easier to improve without
   relying on division-heavy validation.
+- PREPARED: `notebooks/biohub-lb893-nogap2-candidate.ipynb` and
+  `notebooks/biohub-lb893-nogapclose-candidate.ipynb`. Each = the conservative
+  candidate's proven machinery on the default `safe_div_precision_050` preset
+  (the full LB893 `0.893` baseline) with exactly one flag flipped
+  (`BIOHUB_OUTPUT_GAP2_RECOVERY=0` / `BIOHUB_OUTPUT_GAP_CLOSE=0`) and no safe-div
+  tightening. Run each with `VALIDATE_FIRST=True` first, compare exact score to
+  the full_lb893 baseline `0.954802`, and only submit the winner
+  (`VALIDATE_FIRST=False`).
 - Push and run `notebooks/biohub-graph-consensus-ensemble.ipynb`. Attach the
   three diverse candidate outputs (LB893 `0.893` anchor, classical NMS-3.8
   `0.834`, learned U-Net/ILP `0.810`), verify the pairwise-agreement matrix shows
