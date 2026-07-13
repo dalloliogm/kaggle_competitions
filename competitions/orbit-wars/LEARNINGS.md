@@ -2,6 +2,14 @@
 
 Capture durable information learned while working on this competition. This is for insights that should guide future modeling and prevent repeated mistakes.
 
+## Post-competition result and top-solution lessons (2026-07-09)
+
+- Final result: bronze medal, rank 394 / 4730, score 1102.3. See `POSTMORTEM.md`.
+- The winner used a 200M-parameter transformer trained for 15B self-play PPO steps; second place used a 4.3M ModernBERT/1D-CNN model trained with imitation learning and PPO/self-play. Gold was dominated by scaled RL, not by shallow heuristic forks.
+- A major top-solution insight: strong play often reduces to `no-op` or near all-in launches from a small number of sources. The hard part is source/target/timing, not arbitrary fractional fleet sizing.
+- The strongest rule-based write-up reached top-50/top-100 territory by adding what our ProducerLite-derived bots lacked: early-game search, 20-30 step planet forecasting, target-wise multi-source planning, delayed execution, reinforcement chains, and source-vulnerability scoring.
+- Bronze-level heuristic patching fixed local bugs and overcommitment symptoms. Silver/gold required either a fast RL pipeline or a deeper planning stack with coherent opening search and future-state evaluation.
+
 ## Data
 
 - This is an environment-agent competition, not a tabular prediction task.
