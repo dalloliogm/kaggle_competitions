@@ -97,3 +97,22 @@ Capture durable information learned while working on this competition. This is f
   tasks were `task018`, `task090`, `task105`, `task133`, `task174`, and
   `task355`; `task205` was deliberately left as Lucifer's version because
   Lucifer's audit reports a stronger scorer-cost rewrite for that task.
+- Downloaded public leaderboard snapshot
+  `neurogolf-2026-publicleaderboard-2026-07-13T12:52:33.csv` showed
+  `7269.61` at rank `523` out of `3017` teams. The top 10% cutoff was
+  `7373.05`, so the medal gap was roughly `+103.44` public LB points at that
+  snapshot; small byte-graft improvements are not a realistic medal path by
+  themselves.
+- Anas explicit rewrites do not transfer to the current Lucifer/Kaiwalya base:
+  the three-task `task054/task101/task396` graft scored `7269.59` as
+  submission `54647024`, and isolated `task054` also scored `7269.59` as
+  submission `54647140`.
+- Late Jonathan workbench outputs were not stronger bases. The latest
+  `jonathanncoletti/neurogolf-merged91-workbench` log reported
+  `base_local_score=7266.56`; the two named grafts from the `7242` explanation
+  notebook, `task197` and `task264`, scored only `7269.54` when grafted onto
+  the current best as submission `54647351`.
+- Consensus among lower-scoring public notebooks is negative evidence unless
+  paired with exact proof on the current base. Several smaller variants shared
+  by many public sources are precisely the variants replaced by the stronger
+  Lucifer/Kaiwalya line.

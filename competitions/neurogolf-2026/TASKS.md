@@ -29,6 +29,15 @@
   Lucifer Circuit Forge plus Kaiwalya `task018`, `task090`, `task105`,
   `task133`, `task174`, and `task355`, while intentionally leaving Lucifer's
   `task205` in place.
+- Do not graft Anas `task054` onto the current best; both the isolated
+  `task054` probe and the three-task Anas explicit bundle scored `7269.59`.
+- Do not graft Jonathan's explicit `task197`/`task264` pair onto the current
+  best; it scored `7269.54`.
+- Public notebook byte-smaller consensus is not enough evidence. The live
+  leaderboard repeatedly penalized smaller variants from lower-scoring bases.
+- Current medal gap is large: downloaded public leaderboard snapshot from
+  `2026-07-13T12:52:33` puts `7269.61` at rank `523`; top 10% cutoff is
+  `7373.05`, a gap of `+103.44`.
 - If submitting, immediately inspect Kaggle's accepted/rejected message and
   record the exact result here.
 
@@ -102,6 +111,19 @@
   submitted as Kaggle ref `54646591` on `2026-07-13`; final status
   `SubmissionStatus.COMPLETE`; public score `7269.61`, now the best account
   submission seen in this workspace.
+- Submitted an Anas explicit-rewrite graft on top of current best:
+  `task054`, `task101`, and `task396`. Kaggle ref `54647024` completed with
+  public score `7269.59`, below the current best.
+- Submitted the isolated Anas `task054` rewrite on top of current best. Kaggle
+  ref `54647140` completed with public score `7269.59`, confirming the Anas
+  regression is driven by `task054` and not rescued by `task101`/`task396`.
+- Downloaded and audited late Jonathan public workbench outputs. The latest
+  `jonathanncoletti/neurogolf-merged91-workbench` artifact reported
+  `base_local_score=7266.56`, so it is not a stronger base.
+- Submitted the two named Jonathan explicit grafts that differed from current
+  best: `task197` and `task264` from
+  `jonathanncoletti/neurogolf-7242-task-graft-with-explainations`. Kaggle ref
+  `54647351` completed with public score `7269.54`, below the current best.
 
 ## Questions
 
