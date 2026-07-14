@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Find exact ONNX graph cleanups for the current NeuroGolf best bundle."""
+"""Find exact scorer-aware ONNX cleanups for the current NeuroGolf best bundle."""
 
 from __future__ import annotations
 
@@ -22,11 +22,89 @@ from onnx import numpy_helper
 
 WORKSPACE = pathlib.Path(__file__).resolve().parents[1]
 DATA_DIR = WORKSPACE / "data"
-DEFAULT_BASE_ZIP = WORKSPACE / "submissions" / "lucifer-plus-kaiwalya-six-no205" / "submission.zip"
-DEFAULT_OUT_DIR = WORKSPACE / "submissions" / "exact-rewrite-pass-v1"
+DEFAULT_BASE_ZIP = WORKSPACE / "submissions" / "exact-rewrite-pass-v1" / "submission.zip"
+DEFAULT_OUT_DIR = WORKSPACE / "submissions" / "exact-rewrite-pass-v2"
 GRID_SHAPE = (1, 10, 30, 30)
 EXCLUDED_OP_TYPES = {"LOOP", "SCAN", "NONZERO", "UNIQUE", "SCRIPT", "FUNCTION", "COMPRESS"}
 FILESIZE_LIMIT_IN_BYTES = 1.44 * 1024 * 1024
+DATA_MOVEMENT_OPS = {
+    "Expand",
+    "Flatten",
+    "Gather",
+    "GatherElements",
+    "GatherND",
+    "Reshape",
+    "Slice",
+    "Squeeze",
+    "Transpose",
+    "Unsqueeze",
+}
+SAFE_CSE_OPS = {
+    "Abs",
+    "Add",
+    "And",
+    "ArgMax",
+    "ArgMin",
+    "AveragePool",
+    "BitShift",
+    "BitwiseAnd",
+    "BitwiseNot",
+    "BitwiseOr",
+    "BitwiseXor",
+    "Cast",
+    "Ceil",
+    "Clip",
+    "Concat",
+    "Conv",
+    "Div",
+    "Einsum",
+    "Equal",
+    "Expand",
+    "Flatten",
+    "Floor",
+    "Gather",
+    "GatherElements",
+    "GatherND",
+    "Greater",
+    "GreaterOrEqual",
+    "Less",
+    "LessOrEqual",
+    "MatMul",
+    "Max",
+    "MaxPool",
+    "Min",
+    "Mod",
+    "Mul",
+    "Neg",
+    "Not",
+    "Or",
+    "Pow",
+    "QLinearConv",
+    "ReduceMax",
+    "ReduceMin",
+    "ReduceProd",
+    "ReduceSum",
+    "Relu",
+    "Reshape",
+    "Shape",
+    "Sign",
+    "Slice",
+    "Squeeze",
+    "Sub",
+    "Transpose",
+    "Unsqueeze",
+    "Where",
+    "Xor",
+}
+COMMUTATIVE_CSE_OPS = {
+    "And",
+    "BitwiseAnd",
+    "BitwiseOr",
+    "BitwiseXor",
+    "Equal",
+    "Or",
+    "Xor",
+}
 
 
 @dataclass
@@ -116,6 +194,21 @@ def examples_for_task(task: int) -> list[dict[str, np.ndarray]]:
     return converted
 
 
+def random_inputs_for_task(task: int, count: int) -> list[np.ndarray]:
+    rng = np.random.default_rng(20260713 + task)
+    inputs = []
+    for _ in range(count):
+        height = int(rng.integers(1, 31))
+        width = int(rng.integers(1, 31))
+        colors = rng.integers(0, 10, size=(height, width))
+        arr = np.zeros(GRID_SHAPE, dtype=np.float32)
+        rows = np.arange(height)[:, None]
+        cols = np.arange(width)[None, :]
+        arr[0, colors, rows, cols] = 1.0
+        inputs.append(arr)
+    return inputs
+
+
 def tensor_dtype_and_shape(model: onnx.ModelProto) -> tuple[dict[str, int], dict[str, tuple[int, ...]]]:
     dtypes: dict[str, int] = {}
     shapes: dict[str, tuple[int, ...]] = {}
@@ -134,9 +227,14 @@ def tensor_dtype_and_shape(model: onnx.ModelProto) -> tuple[dict[str, int], dict
                     return
             shapes[value_info.name] = tuple(dims)
 
-    for item in list(model.graph.input) + list(model.graph.value_info) + list(model.graph.output):
+    try:
+        graph = onnx.shape_inference.infer_shapes(model, strict_mode=False).graph
+    except Exception:
+        graph = model.graph
+
+    for item in list(graph.input) + list(graph.value_info) + list(graph.output):
         add_value_info(item)
-    for init in model.graph.initializer:
+    for init in graph.initializer:
         dtypes[init.name] = init.data_type
         shapes[init.name] = tuple(init.dims)
     return dtypes, shapes
@@ -175,6 +273,276 @@ def replace_tensor_uses(model: onnx.ModelProto, old: str, new: str) -> None:
         for i, item in enumerate(node.input):
             if item == old:
                 node.input[i] = new
+
+
+def producer_map(model: onnx.ModelProto) -> dict[str, tuple[int, onnx.NodeProto]]:
+    return {
+        output: (index, node)
+        for index, node in enumerate(model.graph.node)
+        for output in node.output
+        if output
+    }
+
+
+def consumer_map(model: onnx.ModelProto) -> dict[str, list[int]]:
+    consumers: dict[str, list[int]] = {}
+    for index, node in enumerate(model.graph.node):
+        for item in node.input:
+            if item:
+                consumers.setdefault(item, []).append(index)
+    return consumers
+
+
+def unique_tensor_name(model: onnx.ModelProto, stem: str) -> str:
+    names = {item.name for item in model.graph.input}
+    names.update(item.name for item in model.graph.output)
+    names.update(item.name for item in model.graph.value_info)
+    names.update(init.name for init in model.graph.initializer)
+    names.update(output for node in model.graph.node for output in node.output if output)
+    candidate = stem
+    suffix = 1
+    while candidate in names:
+        candidate = f"{stem}_{suffix}"
+        suffix += 1
+    return candidate
+
+
+def cast_target(node: onnx.NodeProto) -> int | None:
+    if node.op_type != "Cast":
+        return None
+    for attr in node.attribute:
+        if attr.name == "to":
+            return attr.i
+    return None
+
+
+def arrays_equal(arrays: dict[str, np.ndarray], left: str, right: str) -> bool:
+    left_arr = arrays.get(left)
+    right_arr = arrays.get(right)
+    if left_arr is None or right_arr is None:
+        return False
+    return left_arr.dtype == right_arr.dtype and left_arr.shape == right_arr.shape and bool(
+        np.array_equal(left_arr, right_arr, equal_nan=True)
+    )
+
+
+def deduplicate_initializers(model: onnx.ModelProto) -> int:
+    outputs = graph_output_names(model)
+    canonical: dict[tuple[str, tuple[int, ...], bytes], str] = {}
+    kept = []
+    removed = 0
+    for init in model.graph.initializer:
+        try:
+            arr = numpy_helper.to_array(init)
+        except Exception:
+            kept.append(copy.deepcopy(init))
+            continue
+        if arr.dtype.hasobject or init.name in outputs:
+            kept.append(copy.deepcopy(init))
+            continue
+        key = (arr.dtype.str, tuple(arr.shape), arr.tobytes())
+        if key not in canonical:
+            canonical[key] = init.name
+            kept.append(copy.deepcopy(init))
+            continue
+        replace_tensor_uses(model, init.name, canonical[key])
+        removed += 1
+    if removed:
+        del model.graph.initializer[:]
+        model.graph.initializer.extend(kept)
+    return removed
+
+
+def eliminate_duplicate_nodes(model: onnx.ModelProto) -> int:
+    outputs = graph_output_names(model)
+    canonical: dict[tuple[object, ...], str] = {}
+    kept = []
+    removed = 0
+    for node in model.graph.node:
+        if len(node.output) != 1 or node.output[0] in outputs or node.op_type not in SAFE_CSE_OPS:
+            kept.append(copy.deepcopy(node))
+            continue
+        node_inputs = tuple(node.input)
+        if node.op_type in COMMUTATIVE_CSE_OPS and len(node_inputs) == 2:
+            node_inputs = tuple(sorted(node_inputs))
+        key = (
+            node.domain,
+            node.op_type,
+            node_inputs,
+            tuple(attr.SerializeToString() for attr in node.attribute),
+        )
+        if key not in canonical:
+            canonical[key] = node.output[0]
+            kept.append(copy.deepcopy(node))
+            continue
+        replace_tensor_uses(model, node.output[0], canonical[key])
+        removed += 1
+    if removed:
+        del model.graph.node[:]
+        model.graph.node.extend(kept)
+    return removed
+
+
+def push_cast_through_data_movement(model: onnx.ModelProto) -> str | None:
+    producers = producer_map(model)
+    consumers = consumer_map(model)
+    outputs = graph_output_names(model)
+    for movement_index, movement in enumerate(model.graph.node):
+        if movement.op_type not in DATA_MOVEMENT_OPS or not movement.input or len(movement.output) != 1:
+            continue
+        cast_info = producers.get(movement.input[0])
+        if cast_info is None:
+            continue
+        cast_index, cast = cast_info
+        if cast.op_type != "Cast" or len(cast.input) != 1 or len(cast.output) != 1:
+            continue
+        if cast.output[0] in outputs or consumers.get(cast.output[0]) != [movement_index]:
+            continue
+        target_type = cast_target(cast)
+        if target_type is None:
+            continue
+
+        old_output = movement.output[0]
+        precast_output = unique_tensor_name(model, f"{old_output}__precast")
+        rewritten_movement = copy.deepcopy(movement)
+        rewritten_movement.input[0] = cast.input[0]
+        rewritten_movement.output[0] = precast_output
+        rewritten_cast = onnx.helper.make_node(
+            "Cast",
+            [precast_output],
+            [old_output],
+            name=f"{old_output}__cast_after_{movement.op_type.lower()}",
+            to=target_type,
+        )
+        rewritten_nodes = []
+        for index, node in enumerate(model.graph.node):
+            if index == cast_index:
+                continue
+            if index == movement_index:
+                rewritten_nodes.extend([rewritten_movement, rewritten_cast])
+            else:
+                rewritten_nodes.append(copy.deepcopy(node))
+        del model.graph.node[:]
+        model.graph.node.extend(rewritten_nodes)
+        return f"cast_after_{movement.op_type.lower()}"
+    return None
+
+
+def push_cast_through_concat(model: onnx.ModelProto) -> str | None:
+    producers = producer_map(model)
+    consumers = consumer_map(model)
+    outputs = graph_output_names(model)
+    dtypes, _ = tensor_dtype_and_shape(model)
+    initializers = {init.name: init for init in model.graph.initializer}
+    for concat_index, concat in enumerate(model.graph.node):
+        if concat.op_type != "Concat" or len(concat.input) < 2 or len(concat.output) != 1:
+            continue
+        cast_inputs: list[tuple[int, onnx.NodeProto]] = []
+        for item in concat.input:
+            producer = producers.get(item)
+            if producer is not None and producer[1].op_type == "Cast":
+                cast_inputs.append(producer)
+        if not cast_inputs:
+            continue
+        first_cast = cast_inputs[0][1]
+        target_type = cast_target(first_cast)
+        source_type = dtypes.get(first_cast.input[0]) if first_cast.input else None
+        if target_type is None or source_type is None:
+            continue
+
+        rewritten_inputs: list[str] = []
+        converted_initializers: list[onnx.TensorProto] = []
+        removable_cast_indices: set[int] = set()
+        valid = True
+        source_np_dtype = np.dtype(onnx.helper.tensor_dtype_to_np_dtype(source_type))
+        target_np_dtype = np.dtype(onnx.helper.tensor_dtype_to_np_dtype(target_type))
+        for item in concat.input:
+            producer = producers.get(item)
+            if producer is not None and producer[1].op_type == "Cast":
+                cast_index, cast = producer
+                if (
+                    len(cast.input) != 1
+                    or len(cast.output) != 1
+                    or cast_target(cast) != target_type
+                    or dtypes.get(cast.input[0]) != source_type
+                    or cast.output[0] in outputs
+                    or consumers.get(cast.output[0]) != [concat_index]
+                ):
+                    valid = False
+                    break
+                rewritten_inputs.append(cast.input[0])
+                removable_cast_indices.add(cast_index)
+                continue
+            if dtypes.get(item) == source_type:
+                rewritten_inputs.append(item)
+                continue
+            init = initializers.get(item)
+            if init is None or dtypes.get(item) != target_type:
+                valid = False
+                break
+            arr = numpy_helper.to_array(init)
+            converted = arr.astype(source_np_dtype)
+            restored = converted.astype(target_np_dtype)
+            if not np.array_equal(restored, arr, equal_nan=True):
+                valid = False
+                break
+            new_name = unique_tensor_name(model, f"{item}__as_{source_type}")
+            converted_initializers.append(numpy_helper.from_array(converted, new_name))
+            rewritten_inputs.append(new_name)
+        if not valid:
+            continue
+
+        old_output = concat.output[0]
+        precast_output = unique_tensor_name(model, f"{old_output}__precast")
+        rewritten_concat = copy.deepcopy(concat)
+        del rewritten_concat.input[:]
+        rewritten_concat.input.extend(rewritten_inputs)
+        rewritten_concat.output[0] = precast_output
+        rewritten_cast = onnx.helper.make_node(
+            "Cast",
+            [precast_output],
+            [old_output],
+            name=f"{old_output}__cast_after_concat",
+            to=target_type,
+        )
+        rewritten_nodes = []
+        for index, node in enumerate(model.graph.node):
+            if index in removable_cast_indices:
+                continue
+            if index == concat_index:
+                rewritten_nodes.extend([rewritten_concat, rewritten_cast])
+            else:
+                rewritten_nodes.append(copy.deepcopy(node))
+        del model.graph.node[:]
+        model.graph.node.extend(rewritten_nodes)
+        model.graph.initializer.extend(converted_initializers)
+        return "cast_after_concat"
+    return None
+
+
+def collapse_reshape_chain(model: onnx.ModelProto) -> int:
+    producers = producer_map(model)
+    consumers = consumer_map(model)
+    arrays = constant_arrays(model)
+    outputs = graph_output_names(model)
+    for node_index, node in enumerate(model.graph.node):
+        if node.op_type != "Reshape" or len(node.input) < 2 or len(node.output) != 1:
+            continue
+        producer_info = producers.get(node.input[0])
+        if producer_info is None:
+            continue
+        producer_index, producer = producer_info
+        if producer.op_type != "Reshape" or len(producer.input) < 1 or len(producer.output) != 1:
+            continue
+        target_shape = arrays.get(node.input[1])
+        if target_shape is None or np.any(target_shape == 0):
+            continue
+        if producer.output[0] in outputs or consumers.get(producer.output[0]) != [node_index]:
+            continue
+        node.input[0] = producer.input[0]
+        remove_node_by_index(model, producer_index)
+        return 1
+    return 0
 
 
 def graph_output_names(model: onnx.ModelProto) -> set[str]:
@@ -273,9 +641,20 @@ def eliminate_passthrough_nodes(model: onnx.ModelProto) -> list[str]:
             if perm is not None and in_shape and perm == list(range(len(in_shape))):
                 replacement = node.input[0]
                 reason = "noop_transpose"
-        elif node.op_type == "Where" and len(node.input) == 3 and node.input[1] == node.input[2]:
-            replacement = node.input[1]
-            reason = "same_branch_where"
+        elif node.op_type == "Where" and len(node.input) == 3:
+            condition = arrays.get(node.input[0])
+            if node.input[1] == node.input[2] or arrays_equal(arrays, node.input[1], node.input[2]):
+                replacement = node.input[1]
+                reason = "same_branch_where"
+            elif condition is not None and condition.dtype == np.bool_ and bool(np.all(condition)):
+                replacement = node.input[1]
+                reason = "constant_true_where"
+            elif condition is not None and condition.dtype == np.bool_ and bool(np.all(~condition)):
+                replacement = node.input[2]
+                reason = "constant_false_where"
+        elif node.op_type == "Concat" and len(node.input) == 1:
+            replacement = node.input[0]
+            reason = "single_input_concat"
         elif node.op_type in {"Add", "Mul"} and len(node.input) == 2:
             identity = 0 if node.op_type == "Add" else 1
             if array_is_value(arrays, node.input[0], identity):
@@ -299,15 +678,94 @@ def eliminate_passthrough_nodes(model: onnx.ModelProto) -> list[str]:
     return rewrites
 
 
+def eliminate_bitwise_identities(model: onnx.ModelProto) -> list[str]:
+    """Apply shape-preserving idempotence and absorption identities."""
+    rewrites: list[str] = []
+    outputs = graph_output_names(model)
+    _, shapes = tensor_dtype_and_shape(model)
+    identity_ops = {
+        "And": "Or",
+        "BitwiseAnd": "BitwiseOr",
+        "Or": "And",
+        "BitwiseOr": "BitwiseAnd",
+    }
+    i = 0
+    while i < len(model.graph.node):
+        node = model.graph.node[i]
+        if (
+            node.op_type not in identity_ops
+            or len(node.input) != 2
+            or len(node.output) != 1
+            or node.output[0] in outputs
+        ):
+            i += 1
+            continue
+        out = node.output[0]
+        replacement = None
+        reason = None
+        if node.input[0] == node.input[1] and shapes.get(node.input[0]) == shapes.get(out):
+            replacement = node.input[0]
+            reason = f"{node.op_type.lower()}_idempotent"
+        else:
+            producers = producer_map(model)
+            opposite_op = identity_ops[node.op_type]
+            for direct_input, nested_input in ((node.input[0], node.input[1]), (node.input[1], node.input[0])):
+                producer_info = producers.get(nested_input)
+                if producer_info is None:
+                    continue
+                nested = producer_info[1]
+                if (
+                    nested.op_type == opposite_op
+                    and len(nested.input) == 2
+                    and direct_input in nested.input
+                    and shapes.get(direct_input) == shapes.get(out)
+                    and shapes.get(nested_input) == shapes.get(out)
+                ):
+                    replacement = direct_input
+                    reason = f"{node.op_type.lower()}_absorption"
+                    break
+        if replacement:
+            replace_tensor_uses(model, out, replacement)
+            remove_node_by_index(model, i)
+            rewrites.append(reason or "bitwise_identity")
+        else:
+            i += 1
+    return rewrites
+
+
 def apply_rewrites(model: onnx.ModelProto) -> tuple[onnx.ModelProto, list[str]]:
     candidate = copy.deepcopy(model)
     rewrites: list[str] = []
     changed = True
     while changed:
         changed = False
+        duplicate_initializers = deduplicate_initializers(candidate)
+        if duplicate_initializers:
+            rewrites.append(f"duplicate_initializers:{duplicate_initializers}")
+            changed = True
+        concat_cast = push_cast_through_concat(candidate)
+        if concat_cast:
+            rewrites.append(concat_cast)
+            changed = True
+        movement_cast = push_cast_through_data_movement(candidate)
+        if movement_cast:
+            rewrites.append(movement_cast)
+            changed = True
+        reshape_chains = collapse_reshape_chain(candidate)
+        if reshape_chains:
+            rewrites.append(f"reshape_chain:{reshape_chains}")
+            changed = True
         pass_rewrites = eliminate_passthrough_nodes(candidate)
         if pass_rewrites:
             rewrites.extend(pass_rewrites)
+            changed = True
+        bitwise_rewrites = eliminate_bitwise_identities(candidate)
+        if bitwise_rewrites:
+            rewrites.extend(bitwise_rewrites)
+            changed = True
+        duplicate_nodes = eliminate_duplicate_nodes(candidate)
+        if duplicate_nodes:
+            rewrites.append(f"duplicate_nodes:{duplicate_nodes}")
             changed = True
         dead = eliminate_dead_nodes(candidate)
         if dead:
@@ -497,7 +955,7 @@ def run_outputs(model: onnx.ModelProto, examples: list[dict[str, np.ndarray]], p
     outputs = []
     for example in examples:
         result = session.run(["output"], {"input": example["input"]})
-        outputs.append((result[0] > 0.0).astype(float))
+        outputs.append(result[0])
     return outputs, None, session
 
 
@@ -518,25 +976,59 @@ def score_model(model: onnx.ModelProto, examples: list[dict[str, np.ndarray]], t
     return Score(memory=memory, params=params)
 
 
-def validate_candidate(base_model: onnx.ModelProto, candidate: onnx.ModelProto, examples: list[dict[str, np.ndarray]], tmp_dir: pathlib.Path, task_name: str) -> tuple[bool, str, Score | None, Score | None]:
+def validate_candidate(
+    base_model: onnx.ModelProto,
+    candidate: onnx.ModelProto,
+    examples: list[dict[str, np.ndarray]],
+    tmp_dir: pathlib.Path,
+    task_name: str,
+    random_trials: int,
+) -> tuple[bool, str, Score | None, Score | None]:
     sanitized_base = sanitize_model(base_model)
     sanitized_candidate = sanitize_model(candidate)
     if sanitized_base is None or sanitized_candidate is None:
         return False, "sanitize failed", None, None
     try:
-        base_outputs, _, _ = run_outputs(sanitized_base, examples)
-        candidate_outputs, _, _ = run_outputs(sanitized_candidate, examples)
+        # Tensor shapes are static under the competition schema, so one profiled
+        # example is sufficient before the exhaustive output comparison.
+        profile_examples = examples[:1]
+        base_score = score_model(base_model, profile_examples, tmp_dir, f"{task_name}_base")
+        candidate_score = score_model(candidate, profile_examples, tmp_dir, f"{task_name}_candidate")
+    except Exception as exc:
+        return False, f"scoring failed: {exc}", None, None
+    if candidate_score.cost >= base_score.cost:
+        return False, "no cost improvement", base_score, candidate_score
+    try:
+        base_outputs, _, base_session = run_outputs(sanitized_base, examples)
+        candidate_outputs, _, candidate_session = run_outputs(sanitized_candidate, examples)
     except Exception as exc:
         return False, f"runtime failed: {exc}", None, None
     for left, right in zip(base_outputs, candidate_outputs, strict=True):
         if not np.array_equal(left, right):
             return False, "candidate output differs from base on examples", None, None
-    try:
-        base_score = score_model(base_model, examples, tmp_dir, f"{task_name}_base")
-        candidate_score = score_model(candidate, examples, tmp_dir, f"{task_name}_candidate")
-    except Exception as exc:
-        return False, f"scoring failed: {exc}", None, None
-    return True, "ok", base_score, candidate_score
+
+    random_exact = 0
+    symmetric_failures = 0
+    for random_input in random_inputs_for_task(task_num(task_name), random_trials):
+        base_result = candidate_result = None
+        base_error = candidate_error = None
+        try:
+            base_result = base_session.run(["output"], {"input": random_input})[0]
+        except Exception as exc:
+            base_error = exc
+        try:
+            candidate_result = candidate_session.run(["output"], {"input": random_input})[0]
+        except Exception as exc:
+            candidate_error = exc
+        if base_error is not None or candidate_error is not None:
+            if base_error is not None and candidate_error is not None:
+                symmetric_failures += 1
+                continue
+            return False, "candidate and base differ on random-input runtime behavior", None, None
+        if not np.array_equal(base_result, candidate_result):
+            return False, "candidate output differs from base on random inputs", None, None
+        random_exact += 1
+    return True, f"random_exact={random_exact};symmetric_failures={symmetric_failures}", base_score, candidate_score
 
 
 def deterministic_zip_write(zip_path: pathlib.Path, payloads: dict[str, bytes]) -> None:
@@ -552,7 +1044,7 @@ def model_bytes(model: onnx.ModelProto) -> bytes:
     return model.SerializeToString()
 
 
-def process_task(name: str, raw: bytes, tmp_dir: pathlib.Path) -> tuple[TaskResult, bytes]:
+def process_task(name: str, raw: bytes, tmp_dir: pathlib.Path, random_trials: int) -> tuple[TaskResult, bytes]:
     result = TaskResult(task=name, status="unchanged", base_bytes=len(raw))
     try:
         base_model = onnx.load_from_string(raw)
@@ -572,7 +1064,14 @@ def process_task(name: str, raw: bytes, tmp_dir: pathlib.Path) -> tuple[TaskResu
         result.message = "candidate exceeds filesize limit"
         return result, raw
     examples = examples_for_task(task_num(name))
-    ok, message, base_score, candidate_score = validate_candidate(base_model, candidate, examples, tmp_dir, name.removesuffix(".onnx"))
+    ok, message, base_score, candidate_score = validate_candidate(
+        base_model,
+        candidate,
+        examples,
+        tmp_dir,
+        name.removesuffix(".onnx"),
+        random_trials,
+    )
     result.base_score = base_score
     result.candidate_score = candidate_score
     if not ok:
@@ -585,7 +1084,7 @@ def process_task(name: str, raw: bytes, tmp_dir: pathlib.Path) -> tuple[TaskResu
         return result, raw
     if candidate_score.cost < base_score.cost:
         result.status = "accepted"
-        result.message = "cost improved"
+        result.message = f"cost improved;{message}"
         return result, candidate_raw
     result.status = "rejected"
     result.message = "no cost improvement"
@@ -609,6 +1108,7 @@ def main() -> int:
     parser.add_argument("--base-zip", type=pathlib.Path, default=DEFAULT_BASE_ZIP)
     parser.add_argument("--out-dir", type=pathlib.Path, default=DEFAULT_OUT_DIR)
     parser.add_argument("--tasks", nargs="*", help="Optional task numbers or taskNNN.onnx names.")
+    parser.add_argument("--random-trials", type=int, default=16)
     args = parser.parse_args()
 
     selected_tasks = parse_tasks(args.tasks)
@@ -631,7 +1131,7 @@ def main() -> int:
             if selected_tasks is not None and name not in selected_tasks:
                 continue
             print(f"[scan] {name}", flush=True)
-            result, chosen_raw = process_task(name, payloads[name], tmp_dir)
+            result, chosen_raw = process_task(name, payloads[name], tmp_dir, args.random_trials)
             results.append(result)
             improved_payloads[name] = chosen_raw
             if result.status == "accepted":

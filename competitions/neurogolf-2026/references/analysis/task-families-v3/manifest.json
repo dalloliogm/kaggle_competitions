@@ -1,0 +1,23 @@
+{
+  "base_zip": "/Users/giovannidallolio/workspace/kaggle_competitions/competitions/neurogolf-2026/submissions/exact-rewrite-pass-v3-validated/submission.zip",
+  "task_count": 400,
+  "repeated_family_count": 58,
+  "top_targets": [
+    "task233",
+    "task366",
+    "task286",
+    "task054",
+    "task133",
+    "task285",
+    "task187",
+    "task349",
+    "task002",
+    "task367"
+  ],
+  "outputs": [
+    "tasks.csv",
+    "families.csv",
+    "neighbors.csv",
+    "REPORT.md"
+  ]
+}

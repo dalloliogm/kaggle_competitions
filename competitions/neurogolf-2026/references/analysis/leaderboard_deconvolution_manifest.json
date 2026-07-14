@@ -1,0 +1,19 @@
+{
+  "reference": "exact_rewrite_v1",
+  "reference_score": 7269.74,
+  "labeled_archive_count": 14,
+  "fit_archive_count": 13,
+  "feature_count": 107,
+  "ridge": 0.0001,
+  "fit_rmse": 0.0013867527268981974,
+  "leave_one_out_rmse": 0.05711340568426678,
+  "pair_constraints": 151,
+  "exact_single_task_constraints": 2,
+  "candidate_variant_count": 625,
+  "outputs": {
+    "candidates": "/Users/giovannidallolio/workspace/kaggle_competitions/competitions/neurogolf-2026/references/analysis/leaderboard_deconvolution_candidates.csv",
+    "pairs": "/Users/giovannidallolio/workspace/kaggle_competitions/competitions/neurogolf-2026/references/analysis/leaderboard_deconvolution_pairs.csv",
+    "fit": "/Users/giovannidallolio/workspace/kaggle_competitions/competitions/neurogolf-2026/references/analysis/leaderboard_deconvolution_fit.csv"
+  },
+  "warning": "Ridge attribution is underdetermined and ranks audits; only exact single-task constraints identify a variant effect directly."
+}

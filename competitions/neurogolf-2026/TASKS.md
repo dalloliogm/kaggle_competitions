@@ -28,6 +28,10 @@
 - Current best source is now `exact-rewrite-pass-v1`: the
   `lucifer-plus-kaiwalya-six-no205` graft plus exact stale-value-info cleanup
   on `task085`, `task105`, `task237`, `task355`, `task370`, and `task396`.
+- Current best source is now
+  `submissions/v9-fresh-gen-graft-v1/submission.zip`. It grafts 17 public v9
+  variants that each passed 1,024 fresh ARC-GEN examples onto scored v3 and
+  scored `7299.68` as submission `54660934`.
 - Do not graft Anas `task054` onto the current best; both the isolated
   `task054` probe and the three-task Anas explicit bundle scored `7269.59`.
 - Do not graft Jonathan's explicit `task197`/`task264` pair onto the current
@@ -35,13 +39,41 @@
 - Public notebook byte-smaller consensus is not enough evidence. The live
   leaderboard repeatedly penalized smaller variants from lower-scoring bases.
 - Current medal gap is large: downloaded public leaderboard snapshot from
-  `2026-07-13T12:52:33` puts `7269.61` at rank `523`; top 10% cutoff is
-  `7373.05`, a gap of `+103.44`.
+  `2026-07-13T16:52:28` puts v3 `7269.80` at rank `540/3021`; the top-10%
+  cutoff is `7373.94`, a gap of `+104.14`.
+- Stop broad public recombination unless a genuinely newer top artifact
+  appears. Biohack's 43 differences and the task-level release's 76 unseen
+  variants yielded no scorer-positive validated replacement; ChatGPTLoop had
+  no unseen task variant.
+- Start a typed ARC-to-ONNX resynthesis branch. First targets by current scorer
+  cost are `task233`, `task366`, `task286`, `task054`, and `task133`; require
+  exact agreement across all available examples before building a candidate.
+- Keep the validated `task243` carry rewrite in the current best package. On a
+  matched 1,024-case fresh control it reduced the scored base's failure set
+  from three cases to two without adding a failure.
+- Fresh-generate and audit the remaining v9 cost-positive variants, then graft
+  only models that survive the same task-domain gate onto scored `54660934`.
+- Use `submissions/ryosuke-7281-positive-screen/submission.zip` as the current
+  scored donor base. It scored `7329.90` as submission `54673405` after adding
+  74 fresh-validated Ryosuke `7281.18` task variants to the `7320.02` package.
+- Use `submissions/exact-rewrite-7329-v1/submission.zip` as the current scored
+  exact-rewrite base. Twelve exact rewrites added `+0.07`, scoring `7329.97`
+  as submission `54673593`; the live change matched the `+0.067639` local
+  projection.
+- Use `submissions/udit22-nine-stress/submission.zip` as the current scored
+  base. Its nine fresh-validated targeted grafts scored `7330.16` as submission
+  `54673781`, matching the `7330.160293` projection at displayed precision.
 - If submitting, immediately inspect Kaggle's accepted/rejected message and
   record the exact result here.
 
 ## Done
 
+- Submitted the nine-task Udit22 survivor package as Kaggle ref `54673781`;
+  it completed at `7330.16`, improving the exact-rewrite base by `+0.19`.
+- Rejected Udit22 `task205` and `task233` after fresh-generation failures;
+  neither model is present in the scored package.
+- Submitted the 12-task exact rewrite stack as Kaggle ref `54673593`; it
+  completed at `7329.97`, improving the Ryosuke graft by `+0.07`.
 - Initialized `competitions/neurogolf-2026/` from the Kaggle URL.
 - Downloaded and unpacked the official task JSONs and `neurogolf_utils.py`.
 - Verified via Kaggle CLI that the account has entered the competition
@@ -135,6 +167,105 @@
 - Submitted `submissions/exact-rewrite-pass-v1/submission.zip` to Kaggle as
   ref `54652438`; final status `SubmissionStatus.COMPLETE`; public score
   `7269.74`, now the best account submission seen in this workspace.
+- Extended `scripts/exact_rewrite_toolchain.py` with scorer-aware Cast
+  pushdown, global Concat/Cast fusion, initializer/node deduplication,
+  reshape-chain cleanup, constant identities, commutative CSE, and bitwise
+  absorption. Full scans accepted exact improvements on `task206`, `task208`,
+  `task222`, and `task243`, reducing cumulative cost by `160` for local point
+  delta `+0.054862` over scored v1.
+- Built `scripts/leaderboard_variant_deconvolution.py` and fit 13 scored
+  archive comparisons. The fit is useful for audit ordering but too
+  underdetermined for direct task attribution: leave-one-out RMSE `0.05711`.
+- Built `scripts/audit_public_variants.py` and rejected byte-smaller public
+  alternatives for `task243`, `task286`, `task366`, `task090`, `task165`, and
+  `task368` because their scorer cost was neutral or worse. `task018` and
+  `task240` remain held because local ONNX shape inference rejects their
+  negative padding.
+- Validated `submissions/exact-rewrite-pass-v3-validated/submission.zip`:
+  400 root ONNX files, clean zip CRC, 400/400 ONNX checker pass, exactly four
+  changed tasks versus scored v1, SHA-256
+  `5a6cffc666895ac0cd79922fcd31db0e11cf1d0fa2fed3d115b27aa6f062c866`.
+- Submitted exact rewrite pass v3 to Kaggle as ref `54654005`; final status
+  `SubmissionStatus.COMPLETE`; public score `7269.80`, improving the prior
+  account best by `+0.06` and closely matching the local `+0.054862` estimate.
+- Refreshed the current public-kernel list and audited three previously unused
+  families. Biohack had 43 differences, the task-level release had 76 unseen
+  variants, and ChatGPTLoop had no unseen variants; no candidate passed both
+  functional and lower-scorer-cost gates.
+- Added stable hashed report names to `scripts/audit_public_variants.py` so
+  large multi-task audits do not exceed filesystem filename limits.
+- Inventoried dtype memory and checked deeper bitwise equivalences. The broad
+  dtype ceiling is materially larger than metadata cleanup but mostly blocked
+  by ONNX type constraints; no additional safe bitwise rewrite was found.
+- Built `scripts/task_family_inventory.py` and indexed all 400 tasks into 58
+  repeated coarse semantic signatures with ONNX cost/operator metadata under
+  `references/analysis/task-families-v3/`.
+- Built `scripts/task243_floodfill_pruner.py`, identified `task243` as packed
+  seeded flood fill, rejected unsafe pass cutoffs, and produced the conservative
+  carry-closure candidate. It reduces task cost `10690 -> 9602`, projects
+  `+0.107337`, passes all 265 provided examples plus 10,000 ordinary random
+  grids, and passed the 400-model archive gate.
+- Audited discussion `704942` and recovered the official public ARC-GEN source
+  used by NeuroGolf. Added `scripts/validate_arc_gen_fresh.py` so public or local
+  task models can be checked against unseen generator seeds.
+- Downloaded the public `haonanzhengh/neurogolf-v9-models` archive and audited
+  its top 20 scorer-positive variants. Fresh generation rejected `task188`,
+  `task161`, and `task079`, while the other 17 passed 1,024/1,024 fresh cases.
+- Added `scripts/build_task_graft_bundle.py` and built the conservative 17-task
+  v9 graft on scored v3. The archive has 400 canonical root ONNX files, clean
+  CRC, 441,213 zip bytes, a largest model of 118,088 bytes, and SHA-256
+  `fba281ad3d9a5719834467a4c6b23a99575127b8d487ed14be745107ca0a8950`.
+- Submitted the 17-task fresh-ARC-GEN v9 graft as Kaggle ref `54660934`. It
+  completed successfully with public score `7299.68`, improving the previous
+  best by `+29.88` and becoming the current scored base.
+- Added `scripts/rank_bundle_variants.py` and ranked all 400 v9 task models
+  against the scored `7299.68` bundle. The second-wave queue contained 53
+  locally positive variants plus nine base-unscorable alternatives.
+- Screened all 62 second-wave variants on 128 fresh ARC-GEN cases, rejecting
+  seven, then ran 896 independent cases for each survivor and rejected
+  `task246`, `task377`, and `task382` as rare failures.
+- Built `submissions/v9-fresh-gen-graft-v2/submission.zip` from the 52 final
+  survivors. It differs from scored v1 on exactly those tasks, has 400
+  canonical root models, clean CRC, 433,757 zip bytes, standard ONNX checker
+  pass, and SHA-256
+  `62ec43744d8ecea00a2db70c1cf9efaba1198c4b655df89e7abb28bcdc8032ce`.
+- Submitted the second-wave v9 graft as Kaggle ref `54661618`. It completed
+  successfully with public score `7319.89`, improving `54660934` by `+20.21`
+  and becoming the scored base for the next audit.
+- Added `scripts/rank_cross_source_variants.py` and scored 699 unique task
+  variants from 21 canonical public archives against `7319.89`. Seven variants
+  were cost-positive; fresh generation rejected `task191` and `task233`.
+- Added `scripts/build_ranked_graft_bundle.py`. The surviving `task044`,
+  `task046`, `task200`, `task364`, and `task382` variants each passed 128 plus
+  896 independent ARC-GEN cases and projected `+0.014643` in total.
+- Audited 23 equal-cost task alternatives. None improved fresh correctness;
+  `task193` regressed from 128/128 to 124/128, so no neutral variant was kept.
+- Stacked the `task243` carry rewrite. On a matched 1,024-example ARC-GEN block,
+  the base failed indices `[11, 910, 964]` and carry failed only `[11, 964]`.
+- Built and verified
+  `submissions/cross-source-five-task243-final/submission.zip`. It changes six
+  tasks, has 400 canonical root models, clean CRC, 400/400 standard checker
+  pass, full checks on all changed tasks, and SHA-256
+  `f8f03cb1b0d13ac787d0875d638ee20b00957ffd86b560104de2ad85f37d9537`.
+- Submitted the final six-task package as Kaggle ref `54661951`. It completed
+  with public score `7320.02`, improving `54661618` by `+0.13` and closely
+  matching the local `+0.121980` projection.
+- Refreshed public kernels on 2026-07-14 and downloaded the full Ryosuke
+  `7281.18` archive plus the partial Auto-Golfer output. Auto-Golfer contained
+  only 262 dynamic fallback models and was rejected as incomplete and locally
+  unscorable under the official-style memory metric.
+- Ranked Ryosuke `7281.18` against scored `7320.02`. Seventy-four replacements
+  were locally cost-positive with combined projection `+9.884902`.
+- All 74 replacements passed independent 128- and 896-request ARC-GEN blocks:
+  75,763/75,763 generated in-bounds examples correct. Thirteen oversized
+  `task055` examples were skipped by the fixed 30x30 competition conversion.
+- Built and verified `submissions/ryosuke-7281-positive-screen/submission.zip`:
+  400 canonical root models, clean CRC, 400/400 standard checker pass, full
+  checks on all 74 changed tasks, and SHA-256
+  `7fc66b3cb949ca501077fa4971b60a21ec299291b3e71db5969427f06a3d148a`.
+- Submitted the 74-task graft as Kaggle ref `54673405`. It completed with public
+  score `7329.90`, improving `54661951` by `+9.88` and matching the local
+  `7329.904902` projection at displayed precision.
 
 ## Questions
 
@@ -145,8 +276,8 @@
   and the tested `ryosuke-7266-48` grafts should not be selected as final
   submissions.
 - The grouped six-task rollback `54638892` should not be selected as final.
-- Current account best is now exact-rewrite pass v1 submission `54652438` with
-  public score `7269.74`.
+- Current account best is the fresh-validated Ryosuke graft submission
+  `54673405` with public score `7329.90`.
 - Prepared but unsubmitted fallback archives exist under
   `submissions/lucifer-plus-kaiwalya-task355/`,
   `submissions/lucifer-plus-kaiwalya-no205-no174/`, and
