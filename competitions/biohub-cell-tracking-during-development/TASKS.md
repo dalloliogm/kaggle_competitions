@@ -215,6 +215,10 @@
   Structural checks passed, but output is byte-identical to Exp090. Bridge branch
   checked 87 candidates, 61 passed context, 0 passed motion, and 0 were selected.
   Do not submit Exp096 unless the bridge gates are changed.
+- Submitted Exp090 density-adaptive gap as competition submission `54768948`;
+  status pending at submit time.
+- Submitted Exp084 threshold as competition submission `54768957`; status pending
+  at submit time.
 
 ## Questions
 
