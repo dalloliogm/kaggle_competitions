@@ -5,6 +5,7 @@ submission*
 .venv/
 .venv-onnx/
 __pycache__/
+.DS_Store
 .kaggle_work/
 .kaggle_config/
 .kaggle_cache/

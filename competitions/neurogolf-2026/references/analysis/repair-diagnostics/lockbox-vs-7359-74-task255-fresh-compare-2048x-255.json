@@ -1,0 +1,22 @@
+[
+  {
+    "task": "task255",
+    "arc_id": "a64e4611",
+    "requested": 2048,
+    "generated": 2048,
+    "both_correct": 1851,
+    "base_only": 45,
+    "donor_only": 58,
+    "both_wrong_same": 87,
+    "both_wrong_diff": 7,
+    "base_runtime": 0,
+    "donor_runtime": 0,
+    "both_runtime": 0,
+    "oversize_skipped": 0,
+    "generator_failures": 0,
+    "net_correct": 13,
+    "classification": "net-positive-risk",
+    "first_issue": "example 22: both wrong same, differ by 38 cells",
+    "issue_indices": "[22, 41, 46, 65, 67, 71, 81, 91, 109, 169, 178, 183, 190, 192, 200, 205, 225, 231, 266, 281, 307, 326, 335, 351, 367, 377, 401, 414, 415, 425, 438, 452, 477, 494, 500, 507, 519, 526, 528, 541, 557, 573, 588, 590, 598, 618, 623, 626, 653, 660]"
+  }
+]

@@ -1,0 +1,5 @@
+task,arc_id,requested,generated,both_correct,base_only,donor_only,both_wrong_same,both_wrong_diff,base_runtime,donor_runtime,both_runtime,oversize_skipped,generator_failures,net_correct,classification,first_issue,issue_indices
+task005,045e512c,1024,1024,1019,5,0,0,0,0,0,0,0,0,-5,net-negative-risk,"example 62: base-only correct, donor differs by 58 cells","[62, 123, 159, 504, 642]"
+task018,0e206a2e,1024,1024,1009,0,0,15,0,0,0,0,0,0,0,no-regression,"example 56: both wrong same, differ by 14 cells","[56, 76, 115, 133, 204, 263, 338, 611, 629, 652, 684, 709, 720, 799, 865]"
+task127,54d9e175,1024,1024,1024,0,0,0,0,0,0,0,0,0,0,no-regression,,[]
+task174,72ca375d,1024,1024,1024,0,0,0,0,0,0,0,0,0,0,no-regression,,[]

@@ -65,9 +65,196 @@
   `54673781`, matching the `7330.160293` projection at displayed precision.
 - If submitting, immediately inspect Kaggle's accepted/rejected message and
   record the exact result here.
+- Current completed best is `submissions/exact-rewrite-7359-v1/submission.zip`,
+  Kaggle ref `54722313`, public LB `7359.71`.
+- Submission `54723158`
+  (`submissions/exact-7359-plus-chimera-173-219-366/submission.zip`) errored
+  before scoring despite local checks. Treat `task366` as the most likely
+  rollback suspect from that package until isolated.
+- Submission `54724599`
+  `submissions/exact-7359-plus-chimera-173-219/submission.zip`, a Chimera donor
+  graft for `task173` and `task219` only on the `7359.71` base, errored before
+  scoring despite passing local checks.
+- Submission `54726396` is
+  `submissions/exact-7359-plus-chimera-173/submission.zip`, an isolated
+  Chimera donor graft for `task173` only on the `7359.71` base; it errored
+  before scoring despite all local checks.
+- Current completed best is
+  `submissions/hail-mary-late-public-top-scorepositive-no-known-processor-fails/submission.zip`,
+  Kaggle ref `54740683`, public LB `7369.55`.
+- Current completed best is
+  `submissions/final-7372-51-plus-task162-364/submission.zip`, Kaggle ref
+  `54741759`, public LB `7373.00`. It stacks the eight released-example-exact
+  negative-padding substitutions (`task046`, `task064`, `task089`, `task091`,
+  `task200`, `task249`, `task263`, `task368`) with independently positive
+  `task118`, `task135`, `task162`, and `task364` probes.
+- The final mixed-precision sweep scanned all 400 tasks with conservative and
+  aggressive float16 conversion under disabled ONNX Runtime optimization and
+  accepted zero score-positive models. Do not repeat this conversion unchanged.
+- Pending submission `54739665` is
+  `submissions/exact-rewrite-7360-52-v1/submission.zip`, an exact `task191`
+  cleanup on the `7360.52` base. It reduced `task191` local scorer cost
+  `10811 -> 10794`, projected `+0.0016`, and passed zip CRC/root layout,
+  400/400 ONNX checker, and 400/400 official `check_network`.
+- Submission `54739851` is
+  `submissions/exact-7360-52-plus-chimera-task285/submission.zip`, an isolated
+  Chimera `task285` runtime-risk scorer probe on the `7360.52` base. It
+  errored before scoring: Kaggle reported invalid ONNX processing for
+  `task285`. The local archive had reduced scorer cost `18674 -> 16450`,
+  projected `+0.1268`, and passed zip CRC/root layout, 400/400 ONNX checker,
+  and 400/400 official `check_network`. Matched fresh 1,024-case control
+  against the exact `7360.52` base: 1,015 both-correct, 7 both-wrong-same,
+  0 base-only, 0 donor-only, 0 donor-only runtime, 2 both-runtime;
+  classification `runtime-or-empty`.
+- Reranked late public outputs downloaded on `2026-07-15` from NCT, JackGong,
+  and Roman against the `7360.52` base:
+  `references/analysis/cross-source-rankings/2026-07-15-late-vs-7360-52-cross-source-vs-base.csv`.
+  Most cost-positive tasks were already known bad. JackGong `task366` projected
+  `+3.4335` but failed matched fresh validation catastrophically: 962
+  base-only vs 0 donor-only over 972 generated cases, so do not submit it.
+- Submission `54740200` is
+  `submissions/exact-7360-52-plus-jackgong-base-unscorable-171-354/submission.zip`,
+  a JackGong replacement for base-unscorable negative-padding tasks `task171`
+  and `task354`. Local score impact is unknown because the base graphs are not
+  locally shape-inference-scoreable, but the donor graphs are locally scoreable.
+  Fresh matched stress: both tasks were 4,096/4,096 no-regression against the
+  exact `7360.52` base. Archive passed zip CRC/root layout, 400/400 ONNX
+  checker, and 400/400 official `check_network`. It completed at public LB
+  `7360.64`, a live `+0.12` improvement.
+- Submission `54740339` is
+  `submissions/exact-7360-52-plus-jackgong-both-unscorable-018-127-174/submission.zip`,
+  a JackGong no-regression probe for both-unscorable tasks `task018`,
+  `task127`, and `task174`. It passed 4,096 fresh generated cases per task
+  with zero base-only or donor-only differences. `task005` was tested and
+  rejected: 5 base-only regressions over 1,024 examples. It completed at public
+  LB `7360.27`, below the `7360.52` base, so do not use these tasks as a group.
+- Submission `54740366` is
+  `submissions/exact-7360-52-plus-jackgong-unscorable-clean5/submission.zip`,
+  the stacked JackGong clean unscorable probe for `task018`, `task127`,
+  `task171`, `task174`, and `task354`. It completed at public LB `7360.39`,
+  below the `7360.64` `task171`/`task354` pair.
+- Submission `54740397` is
+  `submissions/exact-7360-52-plus-jackgong-shrink-clean-127-171/submission.zip`,
+  a shrink-only no-regression probe for `task127` and `task171`. It completed
+  at public LB `7360.39`, below the `7360.52` base.
+- Submissions `54740511` and `54740513` isolated JackGong `task171` and
+  `task354`, respectively. They completed at public LB `7360.57` and
+  `7360.59`, while the pair `54740200` remains better at `7360.64`.
+- Submission `54740487`, the full NCT public artifact discovery shot,
+  completed at public LB `7302.22`; it is not a stronger base.
+- Submission `54740683` is a high-risk late public Hail Mary bundle on the
+  `7360.64` base. It grafts top local score-positive public variants while
+  excluding known Kaggle-processing failures `task308`, `task316`, `task361`,
+  `task397`, Chimera `task285`, and fresh-catastrophic JackGong `task366`.
+  Local scorer-only projection is `+8.9094`; archive validation passed zip
+  CRC/root layout, 400/400 ONNX checker, and 400/400 official `check_network`.
+  It completed at public LB `7369.55`, a live `+8.91` gain over `54740200`.
+- Exact rewrite scan on the `7369.55` base produced no accepted changes:
+  `submissions/exact-rewrite-7369-55-v1/rewrite_report.csv`,
+  `accepted_count=0`.
+- Reranked late public sources against the `7369.55` base:
+  `references/analysis/cross-source-rankings/2026-07-15-late-vs-7369-55-cross-source-vs-base.csv`.
+  Only `task316` and `task366` remain cost-positive. `task316` belongs to the
+  known Kaggle-processing-failure family from the 2026-07-14 refresh, and
+  JackGong `task366` already failed fresh validation catastrophically, so there
+  is no clean remaining late-public graft.
+- Submission `54739101` is
+  `submissions/exact-7359-97-plus-lockbox-task157-risk-probe/submission.zip`,
+  a risky lockbox `task157` probe on the `7359.97` base. It scored
+  `7360.49`, a live `+0.52` improvement.
+- Exact rewrite scan on the `7360.49` base produced no accepted changes:
+  `submissions/exact-rewrite-7360-49-v1/rewrite_report.csv`, `accepted_count=0`.
+- Reranked refreshed public sources against the `7360.49` base:
+  `references/analysis/cross-source-rankings/2026-07-15-vs-7360-49-cross-source-vs-base.csv`.
+- Submission `54739406` is
+  `submissions/exact-7360-49-plus-lockbox-task191/submission.zip`, a lockbox
+  `task191` no-regression micro-graft on the `7360.49` base. It scored
+  `7360.52`, a live `+0.03` improvement. It passed zip CRC/root layout,
+  400/400 ONNX checker, and 400/400 official `check_network`. Matched fresh
+  1,024-case control: 1,013 both-correct, 11 both-wrong-same, 0 base-only,
+  0 donor-only, 0 runtime; projected scorer gain `+0.0248`.
+- Exact rewrite scan on the `7359.97` base produced no accepted changes:
+  `submissions/exact-rewrite-7359-97-v1/rewrite_report.csv`, `accepted_count=0`.
+- Reranked refreshed public sources against the `7359.97` base:
+  `references/analysis/cross-source-rankings/2026-07-15-vs-7359-97-cross-source-vs-base.csv`.
+- Submission `54739101` is
+  `submissions/exact-7359-97-plus-lockbox-task157-risk-probe/submission.zip`, a
+  risky lockbox `task157` probe on the `7359.97` base. It scored `7360.49`,
+  a live `+0.52` improvement. It passed zip
+  CRC/root layout, 400/400 ONNX checker, and 400/400 official `check_network`.
+  Two independent 256-case matched fresh blocks each showed 243 both-correct,
+  11 donor-only, 0 base-only, 1 both-wrong-diff, and 1 base-runtime/0
+  donor-runtime; projected scorer gain `+0.5237`.
+- Exact rewrite scan on the `7359.74` base produced no accepted changes:
+  `submissions/exact-rewrite-7359-74-v1/rewrite_report.csv`, `accepted_count=0`.
+- Submission `54726909` is
+  `submissions/exact-7359-plus-chimera-219/submission.zip`, an isolated
+  Chimera donor graft for `task219` only on the `7359.71` base. It scored
+  `7359.74`, matching the small projected gain at displayed precision.
+- Reranked refreshed public sources against the `7359.74` base:
+  `references/analysis/cross-source-rankings/2026-07-15-vs-7359-74-cross-source-vs-base.csv`.
+- Submission `54738494` is
+  `submissions/exact-7359-74-plus-lockbox-task255-risk-probe/submission.zip`, a
+  risky lockbox `task255` probe on the `7359.74` base. It scored `7359.97`,
+  a live `+0.23` improvement. It passed zip
+  CRC/root layout, 400/400 ONNX checker, and 400/400 official `check_network`.
+  Matched fresh stress over 4,096 cases: 3,731 both-correct, 100 donor-only,
+  88 base-only, 160 both-wrong-same, 17 both-wrong-diff, net `+12`; projected
+  scorer gain `+0.2311`.
+- Do not stack lockbox `task095`, `task382`, `task050`, `task246`, or
+  `task277`; each looked clean at 128 examples but showed base-only
+  regressions in the 1,024-case matched fresh screen.
 
 ## Done
 
+- Submitted isolated Chimera `task219` as Kaggle ref `54726909`; it completed
+  at public LB `7359.74`.
+- Ran exact rewrite scan on the `7359.74` base; no candidate archive was
+  produced because there were zero accepted rewrites.
+- Submitted risky lockbox `task255` probe as Kaggle ref `54738494`; it
+  completed at public LB `7359.97`.
+- Ran exact rewrite scan on the `7359.97` base; no candidate archive was
+  produced because there were zero accepted rewrites.
+- Submitted risky lockbox `task157` probe as Kaggle ref `54739101`; it
+  completed at public LB `7360.49`.
+- Ran exact rewrite scan on the `7360.49` base; no candidate archive was
+  produced because there were zero accepted rewrites.
+- Submitted lockbox `task191` no-regression micro-graft as Kaggle ref
+  `54739406`; it completed at public LB `7360.52`.
+- Submitted exact `task191` cleanup on the `7360.52` base as Kaggle ref
+  `54739665`; it completed at public LB `7360.52`, no displayed improvement.
+- Submitted isolated Chimera `task285` scorer probe on the `7360.52` base as
+  Kaggle ref `54739851`; it errored before scoring with invalid ONNX processing
+  for `task285`.
+- Submitted JackGong base-unscorable `task171`/`task354` no-regression probe
+  as Kaggle ref `54740200`; it completed at public LB `7360.64`.
+- Submitted JackGong both-unscorable `task018`/`task127`/`task174`
+  no-regression probe as Kaggle ref `54740339`; it completed at public LB
+  `7360.27`, a regression.
+- Submitted stacked JackGong clean unscorable five-task probe as Kaggle ref
+  `54740366`; it completed at public LB `7360.39`, a regression versus the
+  `task171`/`task354` pair.
+- Submitted JackGong shrink-only `task127`/`task171` no-regression probe as
+  Kaggle ref `54740397`; it completed at public LB `7360.39`, a regression.
+- Submitted isolated JackGong `task171` and `task354` as Kaggle refs `54740511`
+  and `54740513`; they completed at public LB `7360.57` and `7360.59`,
+  respectively.
+- Submitted the full NCT public artifact as Kaggle ref `54740487`; it completed
+  at public LB `7302.22`.
+- Submitted high-risk late public Hail Mary bundle as Kaggle ref `54740683`;
+  it completed at public LB `7369.55`.
+- Ran exact rewrite scan on the `7369.55` base; no candidate archive was
+  produced because there were zero accepted rewrites.
+- Reranked late public sources against the `7369.55` base; only known-bad
+  `task316` and `task366` remained cost-positive.
+- Submitted isolated Chimera `task173` as Kaggle ref `54726396`; it errored
+  before scoring.
+- Submitted Chimera no-regression subset `task173`/`task219` as Kaggle ref
+  `54724599`; it errored before scoring.
+- Submitted Chimera no-regression stack `task173`/`task219`/`task366` as
+  Kaggle ref `54723158`; it errored before scoring.
+- Exact rewrite `task188` on the `7359.69` base completed as Kaggle ref
+  `54722313` with public LB `7359.71`.
 - Submitted the nine-task Udit22 survivor package as Kaggle ref `54673781`;
   it completed at `7330.16`, improving the exact-rewrite base by `+0.19`.
 - Rejected Udit22 `task205` and `task233` after fresh-generation failures;
@@ -266,6 +453,57 @@
 - Submitted the 74-task graft as Kaggle ref `54673405`. It completed with public
   score `7329.90`, improving `54661951` by `+9.88` and matching the local
   `7329.904902` projection at displayed precision.
+- Continued from `7329.90` with an exact rewrite pass, a fresh-validated Udit22
+  targeted graft, and the late 2026-07-14 public refresh. The corrected
+  late-refresh package at
+  `submissions/refresh-2026-07-14-survivors-896-no-chimera-failures/submission.zip`
+  rolled back Kaggle-processing failures `task308`, `task316`, `task361`, and
+  `task397`; Kaggle ref `54700213` scored `7358.16`.
+- Ran `scripts/exact_rewrite_toolchain.py` on the `7358.16` package. It found
+  one exact rewrite on `task080`, reducing local cost `8883 -> 8823` and
+  projecting `+0.006777`. The candidate
+  `submissions/exact-rewrite-7358-v1/submission.zip` passed fresh ARC-GEN
+  `824/824` generated in-bounds examples for `task080`, zip CRC/layout,
+  400/400 standard ONNX checker, and 400/400 official `check_network`.
+  Submitted as Kaggle ref `54713237`; it completed with public score `7358.17`.
+- Downloaded the 2026-07-15 public leaderboard snapshot. Score `7358.16` ranked
+  `482/3037`; top 10% was rank `304` at `7383.03`, so the current gap to that
+  threshold is about `24.87` points.
+- Re-ranked the late-refresh public archives against the `7358.16` base. The
+  remaining cost-positive donors are the filtered risky leftovers: fresh-fail
+  tasks such as `task161`, `task188`, `task079`, `task377`, and `task205`, plus
+  the Kaggle-processing failure tasks. Next medal-scale work should target
+  repair or resynthesis of those tasks, not another blind public bundle.
+- Added `scripts/diagnose_fresh_failures.py` to regenerate selected failing
+  ARC-GEN cases and compare base/donor grids. Diagnosed `task188` as a square
+  orientation bug in the compact lockbox model: it sometimes took the top half
+  when a square input was duplicated horizontally and needed the left half.
+- Added `scripts/patch_task188_lockbox.py`. The patched `task188` model keeps
+  the compact donor architecture but replaces the square orientation test with
+  the current base's color-weighted `col0 == col2` and `col1 == col3` signal.
+  It reduced local cost `525 -> 225`, projected `+0.847298`, matched the
+  `7358.17` base with zero regressions across 8,192 fresh ARC-GEN examples, and
+  passed zip CRC/layout, 400/400 ONNX checker, and 400/400 `check_network`.
+  Submitted as Kaggle ref `54713652`; it completed with public score `7359.01`.
+- Built `submissions/task188-patch-plus-task205-lockbox-probe/submission.zip`
+  by stacking raw lockbox `task205` onto the scored `7359.01` base. This is a
+  risky net-correctness probe rather than a no-regression repair: the 1,024-case
+  matched fresh control had 9 donor-only improvements, 1 base-only regression,
+  1,014 both-correct cases, and no runtime failures. Archive validation passed
+  zip CRC/layout, 400/400 ONNX checker, and 400/400 `check_network`. Submitted
+  as Kaggle ref `54717401`; it completed with public score `7359.69`.
+- Re-ranked the late-refresh public archives against the `7359.69` base. The
+  top remaining cost-positive tasks are still risky leftover donors:
+  `task161`, `task079`, `task377`, `task105`, `task370`, `task355`, `task251`,
+  `task157`, and `task095`; `task205` is no longer positive because it is now
+  in the base.
+- Re-ran `scripts/exact_rewrite_toolchain.py` on the `7359.69` package. It
+  found one safe `task188` cleanup, reducing cost `225 -> 220` and projecting
+  `+0.022473`. The candidate
+  `submissions/exact-rewrite-7359-v1/submission.zip` matched the scored base
+  across 8,192 fresh `task188` cases with zero regressions and passed zip
+  CRC/layout, 400/400 ONNX checker, and 400/400 `check_network`. Submitted as
+  Kaggle ref `54722313`; status was pending at last check.
 
 ## Questions
 
@@ -276,8 +514,8 @@
   and the tested `ryosuke-7266-48` grafts should not be selected as final
   submissions.
 - The grouped six-task rollback `54638892` should not be selected as final.
-- Current account best is the fresh-validated Ryosuke graft submission
-  `54673405` with public score `7329.90`.
+- Current completed account best is task205 probe ref `54717401` with public
+  score `7359.69`; exact-rewrite ref `54722313` is pending.
 - Prepared but unsubmitted fallback archives exist under
   `submissions/lucifer-plus-kaiwalya-task355/`,
   `submissions/lucifer-plus-kaiwalya-no205-no174/`, and

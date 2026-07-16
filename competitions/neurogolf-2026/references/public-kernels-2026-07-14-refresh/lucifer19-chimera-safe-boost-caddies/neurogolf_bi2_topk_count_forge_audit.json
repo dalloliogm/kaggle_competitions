@@ -1,0 +1,359 @@
+{
+  "title": "NeuroGolf BI2 TopK Count Forge",
+  "status": "prevalidated_exact_big_iteration_challenger",
+  "score_status": "estimated_only_not_kaggle_confirmed",
+  "confirmed_stable_anchor_public_score": 7269.64,
+  "parent_bi_estimated_public_score": 7270.314917700681,
+  "parent_archive_sha256": "591bf5331ae5fa9a1134de454aa23416583a0e1be98512b1472c74c6dbcae05c",
+  "parent_archive_bytes": 443100,
+  "new_changed_tasks": [
+    "task018",
+    "task037",
+    "task079",
+    "task092",
+    "task107",
+    "task157",
+    "task191",
+    "task285",
+    "task308",
+    "task366",
+    "task382",
+    "task397"
+  ],
+  "new_changed_task_count": 12,
+  "new_rewrites": [
+    {
+      "task": "task018",
+      "cost_before": 22708,
+      "cost_after": 22131,
+      "cost_delta": -577,
+      "estimated_score_gain": 0.025737944738204985,
+      "params_before": 118,
+      "params_after": 117,
+      "memory_before": 22590,
+      "memory_after": 22014,
+      "nodes_before": 675,
+      "nodes_after": 677,
+      "proof": "TopK values remain exact uint8 mask values; only the two scalar gates are cast back to float16 at multiplication boundaries."
+    },
+    {
+      "task": "task037",
+      "cost_before": 2450,
+      "cost_after": 2449,
+      "cost_delta": -1,
+      "estimated_score_gain": 0.0004082465866049452,
+      "params_before": 198,
+      "params_after": 197,
+      "memory_before": 2252,
+      "memory_after": 2252,
+      "nodes_before": 59,
+      "nodes_after": 59,
+      "proof": "Conservative removal of a redundant initializer; graph outputs and execution path are unchanged."
+    },
+    {
+      "task": "task079",
+      "cost_before": 3114,
+      "cost_after": 2802,
+      "cost_delta": -312,
+      "estimated_score_gain": 0.10557462549699129,
+      "params_before": 75,
+      "params_after": 75,
+      "memory_before": 3039,
+      "memory_after": 2727,
+      "nodes_before": 38,
+      "nodes_after": 37,
+      "proof": "Removed an unnecessary uint8-to-float16 cast before TopK; ordering and tie values are numerically identical."
+    },
+    {
+      "task": "task092",
+      "cost_before": 6458,
+      "cost_after": 6453,
+      "cost_delta": -5,
+      "estimated_score_gain": 0.0007745333823807423,
+      "params_before": 178,
+      "params_after": 178,
+      "memory_before": 6280,
+      "memory_after": 6275,
+      "nodes_before": 84,
+      "nodes_after": 83,
+      "proof": "Conservative no-op/dead-end graph cleanup."
+    },
+    {
+      "task": "task107",
+      "cost_before": 3573,
+      "cost_after": 3561,
+      "cost_delta": -12,
+      "estimated_score_gain": 0.0033641747456320684,
+      "params_before": 156,
+      "params_after": 156,
+      "memory_before": 3417,
+      "memory_after": 3405,
+      "nodes_before": 88,
+      "nodes_after": 88,
+      "proof": "A four-element Boolean count is accumulated in float16; all possible integer values 0..4 are exactly representable."
+    },
+    {
+      "task": "task157",
+      "cost_before": 6819,
+      "cost_after": 6746,
+      "cost_delta": -73,
+      "estimated_score_gain": 0.010763096899057445,
+      "params_before": 256,
+      "params_after": 256,
+      "memory_before": 6563,
+      "memory_after": 6490,
+      "nodes_before": 488,
+      "nodes_after": 486,
+      "proof": "Removed two int8-to-float16 casts before TopK and compared selected int8 values directly against zero."
+    },
+    {
+      "task": "task191",
+      "cost_before": 11082,
+      "cost_after": 11038,
+      "cost_delta": -44,
+      "estimated_score_gain": 0.003978305427848437,
+      "params_before": 73,
+      "params_after": 73,
+      "memory_before": 11009,
+      "memory_after": 10965,
+      "nodes_before": 64,
+      "nodes_after": 65,
+      "proof": "A 25-element Boolean motif count is accumulated in float16, with an explicit cast back to int32 at the QLinearConv bias boundary."
+    },
+    {
+      "task": "task285",
+      "cost_before": 16482,
+      "cost_after": 16450,
+      "cost_delta": -32,
+      "estimated_score_gain": 0.001943399129810923,
+      "params_before": 419,
+      "params_after": 418,
+      "memory_before": 16063,
+      "memory_after": 16032,
+      "nodes_before": 103,
+      "nodes_after": 102,
+      "proof": "Conservative common-subexpression/dead-data cleanup with unchanged live graph semantics."
+    },
+    {
+      "task": "task308",
+      "cost_before": 1455,
+      "cost_after": 1453,
+      "cost_delta": -2,
+      "estimated_score_gain": 0.0013755160353098766,
+      "params_before": 104,
+      "params_after": 102,
+      "memory_before": 1351,
+      "memory_after": 1351,
+      "nodes_before": 58,
+      "nodes_after": 58,
+      "proof": "Conservative duplicate/unused initializer cleanup."
+    },
+    {
+      "task": "task366",
+      "cost_before": 27108,
+      "cost_after": 27016,
+      "cost_delta": -92,
+      "estimated_score_gain": 0.003399604190600015,
+      "params_before": 206,
+      "params_after": 204,
+      "memory_before": 26902,
+      "memory_after": 26812,
+      "nodes_before": 425,
+      "nodes_after": 428,
+      "proof": "Three bounded Boolean counts (15, 17, and 6 per output lane) use float16 and are cast back to int32 before integer consumers."
+    },
+    {
+      "task": "task382",
+      "cost_before": 5695,
+      "cost_after": 5653,
+      "cost_delta": -42,
+      "estimated_score_gain": 0.007402219205991687,
+      "params_before": 127,
+      "params_after": 127,
+      "memory_before": 5568,
+      "memory_after": 5526,
+      "nodes_before": 71,
+      "nodes_after": 71,
+      "proof": "A 20-element Boolean row count uses float16; equality against one remains exact."
+    },
+    {
+      "task": "task397",
+      "cost_before": 2624,
+      "cost_after": 2623,
+      "cost_delta": -1,
+      "estimated_score_gain": 0.00038117019710595245,
+      "params_before": 191,
+      "params_after": 190,
+      "memory_before": 2433,
+      "memory_after": 2433,
+      "nodes_before": 56,
+      "nodes_after": 56,
+      "proof": "Conservative unused initializer cleanup."
+    }
+  ],
+  "new_cost_delta": -1193,
+  "new_estimated_score_gain": 0.16510283603553835,
+  "total_cost_delta_vs_7269_64_anchor": -9251,
+  "total_estimated_score_gain_vs_7269_64_anchor": 0.8400205367161107,
+  "estimated_public_score": 7270.480020536716,
+  "validation": {
+    "onnx_checker": "400/400 PASS",
+    "static_input_output_shapes": "400/400 PASS",
+    "changed_model_ort_load": "12/12 PASS",
+    "forbidden_operator_hits": 0,
+    "byte_identical_unchanged_models": "388/388",
+    "generic_full_model_trials": 1560,
+    "generic_completed_exact_comparisons": 1318,
+    "generic_both_failed_out_of_domain": 242,
+    "generic_one_side_failures": 0,
+    "generic_output_mismatches": 0,
+    "targeted_valid_domain_exact_comparisons": 80,
+    "targeted_valid_domain_mismatches": 0,
+    "total_successful_full_model_exact_comparisons": 1398,
+    "algebraic_dtype_checks": 10000,
+    "algebraic_mismatches": 0,
+    "per_task_generic_trials": [
+      {
+        "task": 18,
+        "trials": 130,
+        "exact": 130,
+        "paired_fail": 0,
+        "failure_divergence": 0,
+        "mismatch": 0,
+        "first": null
+      },
+      {
+        "task": 37,
+        "trials": 130,
+        "exact": 130,
+        "paired_fail": 0,
+        "failure_divergence": 0,
+        "mismatch": 0,
+        "first": null
+      },
+      {
+        "task": 79,
+        "trials": 130,
+        "exact": 130,
+        "paired_fail": 0,
+        "failure_divergence": 0,
+        "mismatch": 0,
+        "first": null
+      },
+      {
+        "task": 92,
+        "trials": 130,
+        "exact": 130,
+        "paired_fail": 0,
+        "failure_divergence": 0,
+        "mismatch": 0,
+        "first": null
+      },
+      {
+        "task": 107,
+        "trials": 130,
+        "exact": 130,
+        "paired_fail": 0,
+        "failure_divergence": 0,
+        "mismatch": 0,
+        "first": null
+      },
+      {
+        "task": 157,
+        "trials": 130,
+        "exact": 130,
+        "paired_fail": 0,
+        "failure_divergence": 0,
+        "mismatch": 0,
+        "first": null
+      },
+      {
+        "task": 191,
+        "trials": 130,
+        "exact": 127,
+        "paired_fail": 3,
+        "failure_divergence": 0,
+        "mismatch": 0,
+        "first": null
+      },
+      {
+        "task": 285,
+        "trials": 130,
+        "exact": 84,
+        "paired_fail": 46,
+        "failure_divergence": 0,
+        "mismatch": 0,
+        "first": null
+      },
+      {
+        "task": 308,
+        "trials": 130,
+        "exact": 86,
+        "paired_fail": 44,
+        "failure_divergence": 0,
+        "mismatch": 0,
+        "first": null
+      },
+      {
+        "task": 366,
+        "trials": 130,
+        "exact": 0,
+        "paired_fail": 130,
+        "failure_divergence": 0,
+        "mismatch": 0,
+        "first": null
+      },
+      {
+        "task": 382,
+        "trials": 130,
+        "exact": 111,
+        "paired_fail": 19,
+        "failure_divergence": 0,
+        "mismatch": 0,
+        "first": null
+      },
+      {
+        "task": 397,
+        "trials": 130,
+        "exact": 130,
+        "paired_fail": 0,
+        "failure_divergence": 0,
+        "mismatch": 0,
+        "first": null
+      }
+    ],
+    "targeted_valid_domain_trials": [
+      {
+        "task": "task191",
+        "trials": 20,
+        "mismatches": 0
+      },
+      {
+        "task": "task285",
+        "trials": 20,
+        "mismatches": 0
+      },
+      {
+        "task": "task308",
+        "trials": 20,
+        "mismatches": 0
+      },
+      {
+        "task": "task382",
+        "trials": 20,
+        "mismatches": 0
+      }
+    ],
+    "task366_note": "Synthetic probes are rejected by the inherited input-domain guard; the rewrite is covered by static shape bounds and exact bounded-integer algebraic checks."
+  },
+  "submission": {
+    "models": 400,
+    "archive_bytes": 446971,
+    "under_1mb": true,
+    "largest_model_bytes": 118333,
+    "per_model_limit_1_44mb": true,
+    "sha256": "a19a010b3e8b8fb800f1b92243df08429a1c88765034e683fd9e07efe8a2010a",
+    "filename": "submission.zip"
+  },
+  "note": "The score is calculated from exact cost deltas. Kaggle leaderboard confirmation requires submitting the generated archive."
+}

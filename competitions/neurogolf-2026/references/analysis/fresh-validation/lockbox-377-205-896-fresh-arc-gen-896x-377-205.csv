@@ -1,0 +1,3 @@
+task,arc_id,requested,generated,correct,runtime_failures,generator_failures,oversize_skipped,classification,first_failure,failure_indices
+task377,eb5a1d5d,896,896,893,0,0,0,fresh-gen-fail,example 279: 42 thresholded cells differ,"[279, 493, 509]"
+task205,8731374e,896,896,895,0,0,0,fresh-gen-fail,example 602: 80 thresholded cells differ,[602]

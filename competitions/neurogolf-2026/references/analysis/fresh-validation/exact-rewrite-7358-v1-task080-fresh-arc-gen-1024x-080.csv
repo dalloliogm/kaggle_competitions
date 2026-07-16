@@ -1,0 +1,2 @@
+task,arc_id,requested,generated,correct,runtime_failures,generator_failures,oversize_skipped,classification,first_failure,failure_indices
+task080,39e1d7f9,1024,824,824,0,0,200,fresh-gen-pass,,[]

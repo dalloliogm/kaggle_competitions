@@ -1,0 +1,42 @@
+[
+  {
+    "task": "task191",
+    "arc_id": "7df24a62",
+    "requested": 1024,
+    "generated": 1024,
+    "both_correct": 1013,
+    "base_only": 0,
+    "donor_only": 0,
+    "both_wrong_same": 11,
+    "both_wrong_diff": 0,
+    "base_runtime": 0,
+    "donor_runtime": 0,
+    "both_runtime": 0,
+    "oversize_skipped": 0,
+    "generator_failures": 0,
+    "net_correct": 0,
+    "classification": "no-regression",
+    "first_issue": "example 11: both wrong same, differ by 26 cells",
+    "issue_indices": "[11, 166, 172, 251, 367, 389, 704, 741, 753, 954, 958]"
+  },
+  {
+    "task": "task209",
+    "arc_id": "8a004b2b",
+    "requested": 1024,
+    "generated": 1024,
+    "both_correct": 931,
+    "base_only": 74,
+    "donor_only": 2,
+    "both_wrong_same": 5,
+    "both_wrong_diff": 12,
+    "base_runtime": 0,
+    "donor_runtime": 0,
+    "both_runtime": 0,
+    "oversize_skipped": 0,
+    "generator_failures": 0,
+    "net_correct": -72,
+    "classification": "net-negative-risk",
+    "first_issue": "example 13: base-only correct, donor differs by 48 cells",
+    "issue_indices": "[13, 35, 40, 46, 63, 92, 110, 118, 145, 147, 150, 151, 153, 159, 165, 166, 186, 187, 201, 203, 225, 231, 238, 249, 261, 271, 281, 285, 303, 304, 314, 318, 322, 326, 345, 351, 362, 365, 395, 397, 409, 429, 434, 436, 438, 460, 472, 489, 495, 519]"
+  }
+]

@@ -1,0 +1,27 @@
+[{"stream_name":"stderr","time":7.761681747,"data":"/usr/local/lib/python3.12/dist-packages/nbformat/__init__.py:96: MissingIDFieldWarning: Cell is missing an id field, this will become a hard error in future nbformat versions. You may want to use `normalize()` on your notebooks before validations (available since nbformat 5.1.4). Previous versions of nbformat are fixing this issue transparently, and will stop doing so in the future.\n"}
+,{"stream_name":"stderr","time":7.761766226,"data":"  validate(nb)\n"}
+,{"stream_name":"stderr","time":8.89538948,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":8.895430986000001,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":8.895436264,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":8.895440783,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":9.686398504,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":9.686436354,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":9.686441894,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":9.686446256,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":45.806639501,"data":"\u001b[33mWARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('\u003cpip._vendor.urllib3.connection.HTTPSConnection object at 0x7a564f5894c0\u003e: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')': /simple/onnxruntime/\u001b[0m\u001b[33m\r\n"}
+,{"stream_name":"stdout","time":78.316694179,"data":"\u001b[0m\u001b[33mWARNING: Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('\u003cpip._vendor.urllib3.connection.HTTPSConnection object at 0x7a564ee6e360\u003e: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')': /simple/onnxruntime/\u001b[0m\u001b[33m\r\n"}
+,{"stream_name":"stdout","time":111.327775524,"data":"\u001b[0m\u001b[33mWARNING: Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('\u003cpip._vendor.urllib3.connection.HTTPSConnection object at 0x7a564efecf80\u003e: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')': /simple/onnxruntime/\u001b[0m\u001b[33m\r\n"}
+,{"stream_name":"stdout","time":145.306290171,"data":"\u001b[0m\u001b[33mWARNING: Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('\u003cpip._vendor.urllib3.connection.HTTPSConnection object at 0x7a564ee48200\u003e: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')': /simple/onnxruntime/\u001b[0m\u001b[33m\r\n"}
+,{"stream_name":"stdout","time":181.317859752,"data":"\u001b[0m\u001b[33mWARNING: Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('\u003cpip._vendor.urllib3.connection.HTTPSConnection object at 0x7a564ee495b0\u003e: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')': /simple/onnxruntime/\u001b[0m\u001b[33m\r\n"}
+,{"stream_name":"stdout","time":213.358226527,"data":"\u001b[0m\u001b[31mERROR: Could not find a version that satisfies the requirement onnxruntime==1.24.4 (from versions: none)\u001b[0m\u001b[31m\r\n"}
+,{"stream_name":"stdout","time":213.358274839,"data":"\u001b[0m\u001b[31mERROR: No matching distribution found for onnxruntime==1.24.4\u001b[0m\u001b[31m\r\n"}
+,{"stream_name":"stdout","time":214.05864234,"data":"\u001b[0m{'lb': 7347.93, 'models': 400, 'bytes': 414038}\n"}
+,{"stream_name":"stderr","time":217.320247783,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":217.320287497,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":217.520608699,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":217.520635173,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":218.247977214,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":218.650751493,"data":"[NbConvertApp] Writing 696295 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":221.699138429,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":223.287079426,"data":"[NbConvertApp] Writing 1304780 bytes to __results__.html\n"}
+]

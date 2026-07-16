@@ -1,0 +1,22 @@
+[
+  {
+    "task": "task285",
+    "arc_id": "b775ac94",
+    "requested": 1024,
+    "generated": 1024,
+    "both_correct": 1016,
+    "base_only": 0,
+    "donor_only": 0,
+    "both_wrong_same": 6,
+    "both_wrong_diff": 0,
+    "base_runtime": 0,
+    "donor_runtime": 0,
+    "both_runtime": 2,
+    "oversize_skipped": 0,
+    "generator_failures": 0,
+    "net_correct": 0,
+    "classification": "runtime-or-empty",
+    "first_issue": "example 92: both wrong same, differ by 4 cells",
+    "issue_indices": "[92, 176, 287, 351, 411, 491, 620, 625]"
+  }
+]

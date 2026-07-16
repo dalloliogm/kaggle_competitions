@@ -99,13 +99,20 @@ def validate_task(
     generated = 0
     correct = 0
     runtime_failures = 0
+    generator_failures = 0
     oversize_skipped = 0
     first_failure = ""
     failure_indices: list[int] = []
     for index in range(examples):
         common.set_colors(list(range(10)))
         random.seed(seed + task * 100_000 + index)
-        example = generator()
+        try:
+            example = generator()
+        except Exception as exc:
+            generator_failures += 1
+            if not first_failure:
+                first_failure = f"generator example {index}: {type(exc).__name__}: {exc}"
+            continue
         converted = convert_to_numpy(example)
         if converted is None:
             oversize_skipped += 1
@@ -142,6 +149,7 @@ def validate_task(
         "generated": generated,
         "correct": correct,
         "runtime_failures": runtime_failures,
+        "generator_failures": generator_failures,
         "oversize_skipped": oversize_skipped,
         "classification": classification,
         "first_failure": first_failure,

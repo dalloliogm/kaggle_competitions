@@ -1,0 +1,7 @@
+task,arc_id,requested,generated,correct,runtime_failures,generator_failures,oversize_skipped,classification,first_failure,failure_indices
+task161,6cdd2623,128,128,126,0,0,0,fresh-gen-fail,example 9: 55 thresholded cells differ,"[9, 46]"
+task188,7b7f7511,128,128,125,0,0,0,fresh-gen-fail,example 12: 8 thresholded cells differ,"[12, 99, 127]"
+task079,39a8645d,128,128,127,0,0,0,fresh-gen-fail,example 85: 16 thresholded cells differ,[85]
+task377,eb5a1d5d,128,128,128,0,0,0,fresh-gen-pass,,[]
+task205,8731374e,128,128,128,0,0,0,fresh-gen-pass,,[]
+task105,4612dd53,128,128,127,0,0,0,fresh-gen-fail,example 98: 38 thresholded cells differ,[98]

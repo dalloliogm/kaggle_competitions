@@ -1,0 +1,15 @@
+[
+  {
+    "task": "task080",
+    "arc_id": "39e1d7f9",
+    "requested": 1024,
+    "generated": 824,
+    "correct": 824,
+    "runtime_failures": 0,
+    "generator_failures": 0,
+    "oversize_skipped": 200,
+    "classification": "fresh-gen-pass",
+    "first_failure": "",
+    "failure_indices": "[]"
+  }
+]
