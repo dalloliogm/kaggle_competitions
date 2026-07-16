@@ -369,3 +369,16 @@
   gap-5.8 graph-calibration recipe. It is the smallest clean original variant
   around the new Exp073 baseline.
 - Do not auto-submit; first inspect row counts, graph validity, and run stats.
+
+## 2026-07-16: Exp090 density-adaptive gap probe prepared
+
+- Notebook: `notebooks/biohub-exp090-density-adaptive-gap-candidate.ipynb`.
+- Source: public Roman density-adaptive gap implementation, forked into the
+  workspace as an Exp073-family probe.
+- Intentional isolation: `BIOHUB_GAP_DENSITY_ADAPTIVE=1` with reference `6.5 um`,
+  gain `0.040`, max step delta `0.125 um`, and `3` neighbours; adaptive
+  short-track rescue is disabled for this first run.
+- Rationale: density-aware gap repair is a plausible way to add or restrict only
+  marginal gap candidates depending on local crowding. Inspect
+  `gap_density_candidates_expanded`, `gap_density_candidates_restricted`, and
+  `gap_density_selected_outside_base` before deciding whether to submit.

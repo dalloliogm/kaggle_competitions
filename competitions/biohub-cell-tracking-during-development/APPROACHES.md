@@ -37,7 +37,8 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | 2026-07-08 | LB893 conservative safe-divisions candidate | `notebooks/biohub-lb893-conservative-safe-divisions-candidate.ipynb` | Kaggle v1 completed; 283,385 rows and 287 safe divisions; structural checks passed | Submitted 2026-07-09 (`54490638`/`54490358`): public LB `0.889`, below copied LB893 `0.893`. Tightening divisions did not beat the baseline. |
 | 2026-07-12 | Graph-aware consensus ensemble | `notebooks/biohub-graph-consensus-ensemble.ipynb` | Core + end-to-end cells verified locally (merge/prune/division/anchor/degree tests, ~12 s at scale, valid schema output) | Push kernel, attach the 3 diverse candidate outputs, run; then tune `TAU_*` via `VALIDATION_MODE` |
 | 2026-07-16 | Exp084 threshold probe around Exp073 | `notebooks/biohub-exp084-threshold-096875-candidate.ipynb` | Local syntax passed; only detector threshold changed from Exp073 `0.9700 -> 0.96875` | Upload/run on Kaggle T4; inspect output; do not auto-submit |
-| 2026-07-16 | Density-adaptive/long-track bridge probes around Exp073 | Public notebooks `romanrozen/biohub-best-score` and `yusuketogashi/biohub-another-approach` | Source pulled; not run by us yet | Port one mechanism at a time onto Exp073 baseline |
+| 2026-07-16 | Exp090 density-adaptive gap probe around Exp073 | `notebooks/biohub-exp090-density-adaptive-gap-candidate.ipynb` | Local syntax passed; density-adaptive gap branch enabled, adaptive short-track rescue disabled | Upload/run after Exp084; inspect density activation counters before submission |
+| 2026-07-16 | Long-track bridge probe around Exp073 | Public notebook `yusuketogashi/biohub-another-approach` | Source pulled; not run by us yet | Port after threshold and density-adaptive probes |
 
 ## Backlog
 

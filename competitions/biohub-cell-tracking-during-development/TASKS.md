@@ -18,7 +18,9 @@
   as `notebooks/biohub-exp084-threshold-096875-candidate.ipynb`. Run on Kaggle,
   inspect `run_stats.csv` and `submission.csv`, then decide whether to submit.
 - Second recommended probe: Exp073 + density-adaptive gap close from
-  `romanrozen/biohub-best-score`.
+  `romanrozen/biohub-best-score`, implemented as
+  `notebooks/biohub-exp090-density-adaptive-gap-candidate.ipynb` with adaptive
+  short-track rescue disabled for the first controlled run.
 - Third recommended probe: Exp073 + stable long-track bridge extension from
   `yusuketogashi/biohub-another-approach`.
 - Do not spend more slots on LB893 safe-division-only tuning unless Exp073-family
@@ -186,6 +188,10 @@
   original Exp073-family probe. The only intentional code-path delta is
   `BIOHUB_DET_THRESHOLD=0.96875`; all other Exp073 graph-calibration settings are
   unchanged.
+- Created `notebooks/biohub-exp090-density-adaptive-gap-candidate.ipynb` as the
+  second Exp073-family probe. It enables the local density-adaptive gap-radius
+  branch from `romanrozen/biohub-best-score` but keeps adaptive short-track rescue
+  disabled, so its first output isolates gap-radius behavior.
 
 ## Questions
 
