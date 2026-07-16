@@ -219,6 +219,11 @@
   status pending at submit time.
 - Submitted Exp084 threshold as competition submission `54768957`; status pending
   at submit time.
+- Created, ran, validated, and submitted Exp091 density gap + adaptive
+  short-track rescue as competition submission `54769343`. Short-track rescue
+  activated and recovered 177 nodes across 40 components.
+- Created, ran, validated, and submitted Exp092 threshold `0.96875` + density
+  gap as competition submission `54769344`.
 
 ## Questions
 
