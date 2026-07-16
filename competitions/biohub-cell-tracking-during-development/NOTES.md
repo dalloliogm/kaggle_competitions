@@ -401,6 +401,28 @@
   `gap_density_candidates_expanded`, `gap_density_candidates_restricted`, and
   `gap_density_selected_outside_base` before deciding whether to submit.
 
+### Exp090 v2 output
+
+- Kaggle kernel: `dalloliogm/biohub-exp090-density-adaptive-gap-candidate`,
+  version 2. Version 1 errored because the Kaggle metadata had no attached
+  datasets; version 2 used the corrected T4 + dataset metadata.
+- Evidence: `references/exp090-density-adaptive-gap-candidate-v2-output/`.
+- Output SHA-256:
+  `6d0dd8d5812a1b1392e48b822b9e24634def3d254d5a5f663ce16e7b0f62b7c0`.
+- Rows: `252,231` total = `128,379` nodes + `123,852` edges.
+- Divisions: `417` division-like sources.
+- Structural checks passed: unique contiguous IDs, no duplicate node keys, no
+  dangling edge endpoints, no nonconsecutive edges, max indegree `1`, max
+  outdegree `2`.
+- Density branch activation: `130,471` nodes scored, `124` candidates expanded,
+  `0` candidates restricted, and `52` selected outside the Exp073 base gate.
+- Adaptive short-track rescue stayed disabled: `0` trigger, `0` rescued nodes.
+- Delta versus Exp073: `+331` rows, `+162` nodes, `+169` edges, `-1`
+  division-like source; gap-added nodes `+46`, gap-added edges `+92`.
+- Interpretation: valid manual-submission candidate. It is a more mechanistic
+  test than Exp084 because raw detections are unchanged and the output delta is
+  concentrated in gap repair.
+
 ## 2026-07-16: Exp096 stable long-track bridge probe prepared
 
 - Notebook: `notebooks/biohub-exp096-stable-long-track-bridge-candidate.ipynb`.

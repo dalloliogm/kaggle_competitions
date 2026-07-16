@@ -1,0 +1,81 @@
+{
+  "dataset_counts": {
+    "44b6_0113de3b": 50151,
+    "44b6_0b24845f": 47214,
+    "6bba_05b6850b": 12509,
+    "6bba_05db0fb1": 142357
+  },
+  "delta_vs_exp073": {
+    "division_like_sources": -1,
+    "edges": 169,
+    "edges_stats": 169,
+    "gap_added_edges_stats": 92,
+    "gap_added_nodes_stats": 46,
+    "nodes": 162,
+    "nodes_stats": 162,
+    "raw_edges_stats": 0,
+    "raw_nodes_stats": 0,
+    "rows": 331,
+    "safe_divisions_added_stats": -1,
+    "short_track_edges_removed_stats": -78,
+    "short_track_nodes_removed_stats": -115
+  },
+  "density_activation": {
+    "gap_density_candidates_expanded": 124,
+    "gap_density_candidates_restricted": 0,
+    "gap_density_nodes_scored": 130471,
+    "gap_density_selected_outside_base": 52,
+    "gap_density_step_delta_milli_sum": 25943447,
+    "short_track_rescue_nodes": 0,
+    "short_track_rescue_triggered": 0
+  },
+  "division_like_sources": 417,
+  "duplicate_node_keys": 0,
+  "edges": 123852,
+  "experiment_tags": [
+    "exp090_density_adaptive_gap_only"
+  ],
+  "id_contiguous": true,
+  "id_max": 252230,
+  "id_min": 0,
+  "id_unique": true,
+  "kernel": "dalloliogm/biohub-exp090-density-adaptive-gap-candidate",
+  "max_indegree": 1,
+  "max_outdegree": 2,
+  "missing_edge_sources": 0,
+  "missing_edge_targets": 0,
+  "nodes": 128379,
+  "nonconsecutive_edges": 0,
+  "null_cells": 0,
+  "row_type_counts": {
+    "edge": 123852,
+    "node": 128379
+  },
+  "rows": 252231,
+  "run_stats_totals": {
+    "division_like_sources": 417,
+    "edges": 123852,
+    "gap2_added_nodes": 0,
+    "gap_added_edges": 4040,
+    "gap_added_nodes": 2020,
+    "gap_density_candidates_expanded": 124,
+    "gap_density_candidates_restricted": 0,
+    "gap_density_nodes_scored": 130471,
+    "gap_density_selected_outside_base": 52,
+    "gap_density_step_delta_milli_sum": 25943447,
+    "motion_relink_edges": 123647,
+    "nodes": 128379,
+    "pruned_isolated_nodes": 56,
+    "raw_edges": 120019,
+    "raw_nodes": 132735,
+    "safe_divisions_added": 417,
+    "short_track_edges_removed": 4252,
+    "short_track_nodes_removed": 6320,
+    "short_track_rescue_components": 0,
+    "short_track_rescue_nodes": 0,
+    "short_track_rescue_triggered": 0
+  },
+  "sha256": "6d0dd8d5812a1b1392e48b822b9e24634def3d254d5a5f663ce16e7b0f62b7c0",
+  "status": "COMPLETE",
+  "version": 2
+}

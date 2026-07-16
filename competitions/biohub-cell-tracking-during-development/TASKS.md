@@ -203,6 +203,12 @@
   to `references/exp084-threshold-096875-candidate-v1-output/`. Structural checks
   passed. Versus Exp073 it produced +457 rows, +234 nodes, +223 edges, and +1
   division-like source.
+- Exp090 Kaggle v2 completed under
+  `dalloliogm/biohub-exp090-density-adaptive-gap-candidate`; saved output
+  evidence to `references/exp090-density-adaptive-gap-candidate-v2-output/`.
+  Structural checks passed. Density-adaptive gap branch activated: 124 expanded
+  candidates, 52 selected outside the base gate, 0 restricted candidates, and
+  short-track rescue remained off.
 
 ## Questions
 
