@@ -370,6 +370,24 @@
   around the new Exp073 baseline.
 - Do not auto-submit; first inspect row counts, graph validity, and run stats.
 
+### Exp084 v1 output
+
+- Kaggle kernel: `dalloliogm/biohub-exp084-threshold-0-96875-candidate`, version 1.
+- Evidence: `references/exp084-threshold-096875-candidate-v1-output/`.
+- Output SHA-256:
+  `180849eb89b204bf8480f5c3759b6233c4aa993300ded3abe6976e472131603e`.
+- Rows: `252,357` total = `128,451` nodes + `123,906` edges.
+- Divisions: `419` division-like sources.
+- Structural checks passed: unique contiguous IDs, no duplicate node keys, no
+  dangling edge endpoints, no nonconsecutive edges, max indegree `1`, max
+  outdegree `2`.
+- Delta versus Exp073: `+457` rows, `+234` nodes, `+223` edges, `+1`
+  division-like source; gap-added nodes unchanged, safe divisions `+1`, and
+  short-track removals slightly lower.
+- Interpretation: this is a valid manual-submission candidate, but only public LB
+  can tell whether the extra detections from `DET_THRESHOLD=0.96875` improve the
+  hidden target.
+
 ## 2026-07-16: Exp090 density-adaptive gap probe prepared
 
 - Notebook: `notebooks/biohub-exp090-density-adaptive-gap-candidate.ipynb`.

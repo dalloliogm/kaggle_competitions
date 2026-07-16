@@ -1,0 +1,64 @@
+{
+  "dataset_counts": {
+    "44b6_0113de3b": 50173,
+    "44b6_0b24845f": 47284,
+    "6bba_05b6850b": 12490,
+    "6bba_05db0fb1": 142410
+  },
+  "delta_vs_exp073": {
+    "division_like_sources": 1,
+    "edges": 223,
+    "edges_stats": 223,
+    "gap_added_edges_stats": 0,
+    "gap_added_nodes_stats": 0,
+    "nodes": 234,
+    "nodes_stats": 234,
+    "raw_edges_stats": 192,
+    "raw_nodes_stats": 215,
+    "rows": 457,
+    "safe_divisions_added_stats": 1,
+    "short_track_edges_removed_stats": -9,
+    "short_track_nodes_removed_stats": -20
+  },
+  "division_like_sources": 419,
+  "duplicate_node_keys": 0,
+  "edges": 123906,
+  "experiment_tags": [
+    "exp084_public0903_det096875_gap58"
+  ],
+  "id_contiguous": true,
+  "id_max": 252356,
+  "id_min": 0,
+  "id_unique": true,
+  "kernel": "dalloliogm/biohub-exp084-threshold-0-96875-candidate",
+  "max_indegree": 1,
+  "max_outdegree": 2,
+  "missing_edge_sources": 0,
+  "missing_edge_targets": 0,
+  "nodes": 128451,
+  "nonconsecutive_edges": 0,
+  "null_cells": 0,
+  "row_type_counts": {
+    "edge": 123906,
+    "node": 128451
+  },
+  "rows": 252357,
+  "run_stats_totals": {
+    "division_like_sources": 419,
+    "edges": 123906,
+    "gap2_added_nodes": 0,
+    "gap_added_edges": 3948,
+    "gap_added_nodes": 1974,
+    "motion_relink_edges": 123860,
+    "nodes": 128451,
+    "pruned_isolated_nodes": 58,
+    "raw_edges": 120211,
+    "raw_nodes": 132950,
+    "safe_divisions_added": 419,
+    "short_track_edges_removed": 4321,
+    "short_track_nodes_removed": 6415
+  },
+  "sha256": "180849eb89b204bf8480f5c3759b6233c4aa993300ded3abe6976e472131603e",
+  "status": "COMPLETE",
+  "version": 1
+}

@@ -14,9 +14,10 @@
 - Run one-factor improvements around Exp073:
   `DET_THRESHOLD=0.96875`, gap-close radius, short-track filtering, density-
   adaptive gap close, and stable long-track bridge extension.
-- Current run: Exp073 + only `DET_THRESHOLD=0.96875` (Exp084 idea), implemented
-  as `notebooks/biohub-exp084-threshold-096875-candidate.ipynb`. Run on Kaggle,
-  inspect `run_stats.csv` and `submission.csv`, then decide whether to submit.
+- Current completed candidate: Exp073 + only `DET_THRESHOLD=0.96875` (Exp084
+  idea), implemented as
+  `notebooks/biohub-exp084-threshold-096875-candidate.ipynb`. Kaggle v1 completed
+  with valid output; manually submit if we want public-LB feedback.
 - Second recommended probe: Exp073 + density-adaptive gap close from
   `romanrozen/biohub-best-score`, implemented as
   `notebooks/biohub-exp090-density-adaptive-gap-candidate.ipynb` with adaptive
@@ -197,6 +198,11 @@
 - Created `notebooks/biohub-exp096-stable-long-track-bridge-candidate.ipynb` as
   the third queued probe. It keeps the density-adaptive gap recipe and enables
   Yusuke's stable long-track bridge extension; run after Exp090, not before.
+- Exp084 Kaggle v1 completed under
+  `dalloliogm/biohub-exp084-threshold-0-96875-candidate`; saved output evidence
+  to `references/exp084-threshold-096875-candidate-v1-output/`. Structural checks
+  passed. Versus Exp073 it produced +457 rows, +234 nodes, +223 edges, and +1
+  division-like source.
 
 ## Questions
 
