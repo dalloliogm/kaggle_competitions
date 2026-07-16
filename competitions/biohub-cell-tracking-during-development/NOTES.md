@@ -359,3 +359,13 @@
 - Next work should be one-factor original variants around Exp073, starting with
   `DET_THRESHOLD=0.96875` from Exp084, then density-adaptive gap close, then
   stable long-track bridge extension.
+
+## 2026-07-16: Exp084 threshold probe prepared
+
+- Notebook: `notebooks/biohub-exp084-threshold-096875-candidate.ipynb`.
+- Base: exact copied Exp073 source that scored `0.903`.
+- Only intentional delta: `BIOHUB_DET_THRESHOLD 0.9700 -> 0.96875`.
+- Rationale: public Exp084 notebook advertises this lower threshold on the same
+  gap-5.8 graph-calibration recipe. It is the smallest clean original variant
+  around the new Exp073 baseline.
+- Do not auto-submit; first inspect row counts, graph validity, and run stats.

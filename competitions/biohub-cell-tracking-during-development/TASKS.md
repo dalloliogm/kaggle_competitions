@@ -14,8 +14,9 @@
 - Run one-factor improvements around Exp073:
   `DET_THRESHOLD=0.96875`, gap-close radius, short-track filtering, density-
   adaptive gap close, and stable long-track bridge extension.
-- First recommended original probe: Exp073 + only `DET_THRESHOLD=0.96875`
-  (Exp084 idea) because it is the smallest clean delta from the new baseline.
+- Current run: Exp073 + only `DET_THRESHOLD=0.96875` (Exp084 idea), implemented
+  as `notebooks/biohub-exp084-threshold-096875-candidate.ipynb`. Run on Kaggle,
+  inspect `run_stats.csv` and `submission.csv`, then decide whether to submit.
 - Second recommended probe: Exp073 + density-adaptive gap close from
   `romanrozen/biohub-best-score`.
 - Third recommended probe: Exp073 + stable long-track bridge extension from
@@ -181,6 +182,10 @@
   under `references/own-kernels-2026-07-16/biohub-exp073-gap-5-8-public/`.
   Downloaded our copied Exp073 output locally; its submission `54758569` is still
   pending on Kaggle.
+- Created `notebooks/biohub-exp084-threshold-096875-candidate.ipynb` as the first
+  original Exp073-family probe. The only intentional code-path delta is
+  `BIOHUB_DET_THRESHOLD=0.96875`; all other Exp073 graph-calibration settings are
+  unchanged.
 
 ## Questions
 
