@@ -5,11 +5,19 @@
 - Improve beyond copied LB893 public LB `0.893`. The no-safe-divisions variant
   scored `0.886`, so use it as a diagnostic negative control rather than the new
   baseline.
+- Current pending submission: `54758569`, copied
+  `dalloliogm/biohub-exp073-gap-5-8-public`, submitted 2026-07-16 10:40:20.
+  It is byte-identical to public `lucashmateo/biohub-ct-exp073`; wait for public
+  LB before choosing the next submission.
 
 ## Next Experiments
 
 - Tune safe divisions instead of deleting them: try tighter parent/sister
   distance caps and lower global fraction caps.
+- If Exp073 scores near its claimed `0.902-0.903`, promote it to the working
+  baseline and run one-factor improvements around Exp073, not around LB893:
+  `DET_THRESHOLD=0.96875`, gap-close radius, short-track filtering, density-
+  adaptive gap close, and stable long-track bridge extension.
 - Manually submit Kaggle version 1 of
   `dalloliogm/biohub-lb893-conservative-safe-divisions-candidate` and record the
   public LB before further safe-division tuning.
@@ -163,6 +171,12 @@
   `2`. Evidence is preserved under
   `references/lb893-conservative-safe-divisions-candidate-v1-output/`. No
   automatic competition submission was made.
+- Reviewed recent public notebooks from 2026-07-16 and saved the analysis in
+  `references/recent-public-notebooks-2026-07-16.md`. Pulled public sources under
+  `references/public-kernels-2026-07-16/` and our exact copied Exp073 source
+  under `references/own-kernels-2026-07-16/biohub-exp073-gap-5-8-public/`.
+  Downloaded our copied Exp073 output locally; its submission `54758569` is still
+  pending on Kaggle.
 
 ## Questions
 

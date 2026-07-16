@@ -342,4 +342,5 @@
 
 ## Useful References
 
-- TBD
+- Recent public notebook review:
+  `references/recent-public-notebooks-2026-07-16.md`.

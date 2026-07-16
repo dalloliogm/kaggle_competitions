@@ -126,6 +126,15 @@ Capture durable information learned while working on this competition. This is f
 - No-safe-divisions scored `0.886`. This is competitive and novel, but it is not
   the new best. It indicates that the selected exact validation split is not
   representative for division tuning.
+- Recent public notebooks on 2026-07-16 shifted the strongest graph recipe away
+  from LB893 safe-division-only tuning. Exp073-style notebooks use lower
+  detection threshold (`0.9700`), short-track filtering (`min_track_len=6`),
+  gap2 disabled, two-frame gap close at `5.8 um`, learned motion bonus `1.0`,
+  and safe divisions with looser sister radius `8.5`. Our copied Exp073 run
+  produced `251,900` rows, `128,217` nodes, `123,683` edges, `418` divisions,
+  and removed `6,435` short-track nodes. This suggests track-density cleanup and
+  gap calibration are higher-leverage than continuing to tune only safe
+  divisions.
 - Private Kaggle notebook outputs are mounted under
   `/kaggle/input/notebooks/<owner>/<slug>/`. For composition kernels, discover
   expected files defensively and verify source identity before merging.
