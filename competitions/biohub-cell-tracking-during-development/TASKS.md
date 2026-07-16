@@ -2,22 +2,26 @@
 
 ## Current Goal
 
-- Improve beyond copied LB893 public LB `0.893`. The no-safe-divisions variant
-  scored `0.886`, so use it as a diagnostic negative control rather than the new
-  baseline.
-- Current pending submission: `54758569`, copied
-  `dalloliogm/biohub-exp073-gap-5-8-public`, submitted 2026-07-16 10:40:20.
-  It is byte-identical to public `lucashmateo/biohub-ct-exp073`; wait for public
-  LB before choosing the next submission.
+- Improve beyond Exp073 public LB `0.903`. Exp073 is now the working baseline;
+  copied LB893 `0.893`, no-safe `0.886`, and conservative-safe `0.889` are
+  superseded.
+- Submission `54758569`, copied
+  `dalloliogm/biohub-exp073-gap-5-8-public`, completed with public LB `0.903`.
+  It is byte-identical to public `lucashmateo/biohub-ct-exp073`.
 
 ## Next Experiments
 
-- Tune safe divisions instead of deleting them: try tighter parent/sister
-  distance caps and lower global fraction caps.
-- If Exp073 scores near its claimed `0.902-0.903`, promote it to the working
-  baseline and run one-factor improvements around Exp073, not around LB893:
+- Run one-factor improvements around Exp073:
   `DET_THRESHOLD=0.96875`, gap-close radius, short-track filtering, density-
   adaptive gap close, and stable long-track bridge extension.
+- First recommended original probe: Exp073 + only `DET_THRESHOLD=0.96875`
+  (Exp084 idea) because it is the smallest clean delta from the new baseline.
+- Second recommended probe: Exp073 + density-adaptive gap close from
+  `romanrozen/biohub-best-score`.
+- Third recommended probe: Exp073 + stable long-track bridge extension from
+  `yusuketogashi/biohub-another-approach`.
+- Do not spend more slots on LB893 safe-division-only tuning unless Exp073-family
+  probes regress sharply.
 - Manually submit Kaggle version 1 of
   `dalloliogm/biohub-lb893-conservative-safe-divisions-candidate` and record the
   public LB before further safe-division tuning.

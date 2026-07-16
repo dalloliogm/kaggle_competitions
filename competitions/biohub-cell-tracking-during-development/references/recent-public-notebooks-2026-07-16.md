@@ -3,7 +3,7 @@
 ## Current submission state
 
 - `54758569`: `Notebook Biohub Exp073 Gap 5.8 Public | Version 2`, submitted
-  2026-07-16 10:40:20, still pending when checked.
+  2026-07-16 10:40:20, completed with public LB `0.903`.
 - Conservative safe-divisions candidate was submitted after the previous session
   and scored `0.889` (`54490358`, `54490638`), below copied LB893 `0.893`.
 
@@ -101,9 +101,8 @@ disabling gap2, and using two-frame gap close with a shorter distance.
 
 ## Recommended next actions
 
-1. Wait for `54758569` to score. If it lands near the claimed `0.902-0.903`, make
-   Exp073 the new baseline.
-2. If Exp073 is strong, do one-factor ablations around it rather than continuing
+1. Make Exp073 the new baseline.
+2. Do one-factor ablations around it rather than continuing
    LB893 safe-division-only tuning:
    - `DET_THRESHOLD=0.96875` vs `0.9700`;
    - gap close `5.8` vs nearby values;

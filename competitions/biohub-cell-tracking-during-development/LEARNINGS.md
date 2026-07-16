@@ -135,6 +135,10 @@ Capture durable information learned while working on this competition. This is f
   and removed `6,435` short-track nodes. This suggests track-density cleanup and
   gap calibration are higher-leverage than continuing to tune only safe
   divisions.
+- The copied Exp073 run scored public LB `0.903` as submission `54758569`,
+  confirming the recent public-notebook claim and making Exp073 the new working
+  baseline. Future original variants should modify Exp073 one mechanism at a
+  time rather than reverting to LB893-only safe-division tuning.
 - Private Kaggle notebook outputs are mounted under
   `/kaggle/input/notebooks/<owner>/<slug>/`. For composition kernels, discover
   expected files defensively and verify source identity before merging.

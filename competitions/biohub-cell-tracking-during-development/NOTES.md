@@ -344,3 +344,18 @@
 
 - Recent public notebook review:
   `references/recent-public-notebooks-2026-07-16.md`.
+
+## 2026-07-16: Exp073 public baseline confirmed
+
+- Submission `54758569`, from `dalloliogm/biohub-exp073-gap-5-8-public`, scored
+  public LB `0.903`.
+- The notebook is byte-identical to public `lucashmateo/biohub-ct-exp073`.
+- This supersedes copied LB893 `0.893`, no-safe `0.886`, and conservative-safe
+  `0.889`.
+- Practical lesson: the improvement came from a combined graph calibration:
+  lower detector threshold `0.9700`, short-track filtering with min length `6`,
+  gap2 disabled, two-frame gap close at `5.8 um`, motion learned bonus `1.0`,
+  and safe divisions retained.
+- Next work should be one-factor original variants around Exp073, starting with
+  `DET_THRESHOLD=0.96875` from Exp084, then density-adaptive gap close, then
+  stable long-track bridge extension.

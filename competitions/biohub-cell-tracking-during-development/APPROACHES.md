@@ -11,6 +11,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | 2026-07-04 | Pretrained U-Net + transformer + ILP | 0.839409 | 0.810 | TBD | `notebooks/biohub-learned-unet-ilp-candidate.ipynb` | Validation gain did not transfer; worse than classical LB by 0.024 |
 | 2026-07-06 | LB893 learned graph tracker with motion relink, gap repair, line fit, and safe divisions | Exact validation pending in workspace runner | 0.893 | TBD | `notebooks/biohub-lb893-safe-divisions-source.ipynb` | New working baseline; copied public notebook output dominates previous approaches |
 | 2026-07-08 | LB893 minus safe-division insertion | 0.960641 on selected exact split | 0.886 | TBD | `notebooks/biohub-lb893-no-safe-divisions-candidate.ipynb` | Novel variant, but public LB -0.007 versus copied LB893; selected validation split underweights true divisions |
+| 2026-07-16 | Exp073 public graph calibration | Test-only public run; exact train validation not yet reproduced | 0.903 | TBD | `dalloliogm/biohub-exp073-gap-5-8-public` / `references/own-kernels-2026-07-16/` | New working baseline; lower detection threshold, short-track filtering, gap2 disabled, two-frame gap close |
 
 ## Tried
 
@@ -24,6 +25,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | 2026-07-07 | LB893 source import and ablation harness | Preserved source notebook, output stats/log, and created validation-ablation runner | Syntax checked; local GPU run not possible | 0.893 from submission `54397298` | Adopt as baseline for further work | Run exact validation ablations on Kaggle T4 |
 | 2026-07-08 | LB893 exact-validation baseline | Full LB893 with motion relink, gap close, gap2, linefit, and safe divisions | 0.954802 | 0.893 from copied submission | Established validation reference; division FP = 4 on selected split | Compare one-factor ablations against this score |
 | 2026-07-08 | No-safe-divisions LB893 ablation | Same as full LB893, but `BIOHUB_OUTPUT_SAFE_DIVISIONS=0` | 0.960641 | 0.886 | Useful negative/diagnostic result: local validation misled because it had no true scored divisions | Tune safe divisions rather than deleting them |
+| 2026-07-16 | Exp073 copied public recipe | `DET_THRESHOLD=0.9700`, short-track filtering on, min track length 6, gap2 off, gap close max gap 2 at 5.8 um, safe divisions kept | Not yet exact-validated locally | 0.903 | Accepted as new baseline; submission `54758569` | Tune one factor at a time around Exp073 |
 
 ## Prepared
 
@@ -34,6 +36,8 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | 2026-07-08 | LB893 no-safe-divisions test candidate | `notebooks/biohub-lb893-no-safe-divisions-candidate.ipynb` | Kaggle v1 completed; 283,092-row output passed structural checks; public LB 0.886 | Superseded by copied LB893 0.893; use as negative control for division tuning |
 | 2026-07-08 | LB893 conservative safe-divisions candidate | `notebooks/biohub-lb893-conservative-safe-divisions-candidate.ipynb` | Kaggle v1 completed; 283,385 rows and 287 safe divisions; structural checks passed | Submitted 2026-07-09 (`54490638`/`54490358`): public LB `0.889`, below copied LB893 `0.893`. Tightening divisions did not beat the baseline. |
 | 2026-07-12 | Graph-aware consensus ensemble | `notebooks/biohub-graph-consensus-ensemble.ipynb` | Core + end-to-end cells verified locally (merge/prune/division/anchor/degree tests, ~12 s at scale, valid schema output) | Push kernel, attach the 3 diverse candidate outputs, run; then tune `TAU_*` via `VALIDATION_MODE` |
+| 2026-07-16 | Exp084 threshold probe around Exp073 | Public notebook `beicicc/biohub-exp084-det-0-96875-gap-5-8-public` | Source pulled; not run by us yet | Create/run original fork with `DET_THRESHOLD=0.96875` if submission slots permit |
+| 2026-07-16 | Density-adaptive/long-track bridge probes around Exp073 | Public notebooks `romanrozen/biohub-best-score` and `yusuketogashi/biohub-another-approach` | Source pulled; not run by us yet | Port one mechanism at a time onto Exp073 baseline |
 
 ## Backlog
 
