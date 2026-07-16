@@ -209,6 +209,12 @@
   Structural checks passed. Density-adaptive gap branch activated: 124 expanded
   candidates, 52 selected outside the base gate, 0 restricted candidates, and
   short-track rescue remained off.
+- Exp096 Kaggle v2 completed under
+  `dalloliogm/biohub-exp096-stable-long-track-bridge-candidate`; saved output
+  evidence to `references/exp096-stable-long-track-bridge-candidate-v2-output/`.
+  Structural checks passed, but output is byte-identical to Exp090. Bridge branch
+  checked 87 candidates, 61 passed context, 0 passed motion, and 0 were selected.
+  Do not submit Exp096 unless the bridge gates are changed.
 
 ## Questions
 

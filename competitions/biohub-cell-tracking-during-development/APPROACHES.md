@@ -38,7 +38,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | 2026-07-12 | Graph-aware consensus ensemble | `notebooks/biohub-graph-consensus-ensemble.ipynb` | Core + end-to-end cells verified locally (merge/prune/division/anchor/degree tests, ~12 s at scale, valid schema output) | Push kernel, attach the 3 diverse candidate outputs, run; then tune `TAU_*` via `VALIDATION_MODE` |
 | 2026-07-16 | Exp084 threshold probe around Exp073 | `notebooks/biohub-exp084-threshold-096875-candidate.ipynb` | Kaggle v1 complete; 252,357 rows, 128,451 nodes, 123,906 edges, 419 division-like sources; structural checks passed | Manual submission candidate; public LB needed to decide if threshold helps |
 | 2026-07-16 | Exp090 density-adaptive gap probe around Exp073 | `notebooks/biohub-exp090-density-adaptive-gap-candidate.ipynb` | Kaggle v2 complete; 252,231 rows, 128,379 nodes, 123,852 edges; density branch activated with 124 expanded candidates and 52 selected outside base; structural checks passed | Manual submission candidate; use LB to compare density gap effect |
-| 2026-07-16 | Exp096 stable long-track bridge probe around Exp073 | `notebooks/biohub-exp096-stable-long-track-bridge-candidate.ipynb` | Local syntax passed; density-adaptive gap plus stable bridge branch enabled | Upload/run after Exp090 so bridge effect is separable |
+| 2026-07-16 | Exp096 stable long-track bridge probe around Exp073 | `notebooks/biohub-exp096-stable-long-track-bridge-candidate.ipynb` | Kaggle v2 complete; output byte-identical to Exp090; 87 bridge candidates checked, 61 context-ok, 0 motion-ok, 0 selected | Do not submit; bridge branch inactive on test set |
 
 ## Backlog
 

@@ -434,3 +434,18 @@
   and cost penalty `0.25 um`.
 - Run after Exp090, not before, because the branch includes density-adaptive gap
   logic and the bridge effect is only interpretable relative to Exp090.
+
+### Exp096 v2 output
+
+- Kaggle kernel: `dalloliogm/biohub-exp096-stable-long-track-bridge-candidate`,
+  version 2. Version 1 used incomplete metadata; version 2 used corrected T4 +
+  dataset metadata.
+- Evidence: `references/exp096-stable-long-track-bridge-candidate-v2-output/`.
+- Output SHA-256:
+  `6d0dd8d5812a1b1392e48b822b9e24634def3d254d5a5f663ce16e7b0f62b7c0`.
+- Rows: `252,231` total = `128,379` nodes + `123,852` edges.
+- Structural checks passed, but the output is byte-identical to Exp090.
+- Bridge activation: `87` candidates checked, `61` context-ok, `0` motion-ok,
+  and `0` selected.
+- Interpretation: do not submit Exp096 as-is. It does not test a new submission
+  because the bridge extension did not alter the density-adaptive output.
