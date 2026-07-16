@@ -382,3 +382,15 @@
   marginal gap candidates depending on local crowding. Inspect
   `gap_density_candidates_expanded`, `gap_density_candidates_restricted`, and
   `gap_density_selected_outside_base` before deciding whether to submit.
+
+## 2026-07-16: Exp096 stable long-track bridge probe prepared
+
+- Notebook: `notebooks/biohub-exp096-stable-long-track-bridge-candidate.ipynb`.
+- Source: public Yusuke stable long-track bridge implementation, forked into the
+  workspace as the third Exp073-family probe.
+- Experimental axis: keep the density-adaptive gap recipe and enable
+  `BIOHUB_GAP_TRACK_BRIDGE_EXTENSION=1` with context steps `2`, max mean step
+  `4.50 um`, max midpoint residual `2.10 um`, prediction disagreement `2.40 um`,
+  and cost penalty `0.25 um`.
+- Run after Exp090, not before, because the branch includes density-adaptive gap
+  logic and the bridge effect is only interpretable relative to Exp090.

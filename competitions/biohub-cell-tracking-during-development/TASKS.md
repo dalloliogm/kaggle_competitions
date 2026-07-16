@@ -22,7 +22,9 @@
   `notebooks/biohub-exp090-density-adaptive-gap-candidate.ipynb` with adaptive
   short-track rescue disabled for the first controlled run.
 - Third recommended probe: Exp073 + stable long-track bridge extension from
-  `yusuketogashi/biohub-another-approach`.
+  `yusuketogashi/biohub-another-approach`, implemented as
+  `notebooks/biohub-exp096-stable-long-track-bridge-candidate.ipynb`; run only
+  after Exp090 so the bridge effect can be separated from density adaptation.
 - Do not spend more slots on LB893 safe-division-only tuning unless Exp073-family
   probes regress sharply.
 - Manually submit Kaggle version 1 of
@@ -192,6 +194,9 @@
   second Exp073-family probe. It enables the local density-adaptive gap-radius
   branch from `romanrozen/biohub-best-score` but keeps adaptive short-track rescue
   disabled, so its first output isolates gap-radius behavior.
+- Created `notebooks/biohub-exp096-stable-long-track-bridge-candidate.ipynb` as
+  the third queued probe. It keeps the density-adaptive gap recipe and enables
+  Yusuke's stable long-track bridge extension; run after Exp090, not before.
 
 ## Questions
 
