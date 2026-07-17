@@ -118,6 +118,10 @@ Capture durable information learned while working on this competition. This is f
   a much larger graph delta (`+439` nodes and `+445` edges versus Exp073), so its
   LB result will mainly test interaction between mild division expansion and the
   threshold/density-gap branch.
+- Exp104 is the safer way to test division precision after the Exp100 rejection:
+  tighten safe-division insertion upstream, then let the generator emit a fresh
+  valid graph, rather than removing one daughter edge from an already serialized
+  fork.
 
 ## Ensembling And Submission Behavior
 

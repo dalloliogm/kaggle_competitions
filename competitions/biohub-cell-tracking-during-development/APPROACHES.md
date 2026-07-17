@@ -45,6 +45,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | 2026-07-17 | Exp101 upstream safe-division recall expansion | `notebooks/biohub-exp101-safe-division-recall-expansion-candidate.ipynb` | Kaggle v1 complete as `dalloliogm/biohub-exp101-safe-division-recall-expansion`; structural checks passed; rows `252,174`, nodes `128,316`, edges `123,858`, division-like sources `531`; submitted as `54780672` | Pending public LB |
 | 2026-07-17 | Exp102 mild upstream safe-division expansion | `notebooks/biohub-exp102-mild-safe-division-expansion-candidate.ipynb` | Kaggle v1 complete as `dalloliogm/biohub-exp102-mild-safe-division-expansion`; structural checks passed; rows `252,001`, nodes `128,262`, edges `123,739`, division-like sources `442`; submitted as `54781687` | Pending public LB |
 | 2026-07-17 | Exp103 threshold+density gap plus mild safe divisions | `notebooks/biohub-exp103-threshold-density-mild-division-candidate.ipynb` | Kaggle v1 complete as `dalloliogm/biohub-exp103-threshold-density-mild-division`; structural checks passed; rows `252,784`, nodes `128,656`, edges `124,128`, division-like sources `442`; submitted as `54784028` | Pending public LB |
+| 2026-07-17 | Exp104 upstream safe-division precision tightening | `notebooks/biohub-exp104-safe-division-precision-candidate.ipynb` | Kaggle v1 running as `dalloliogm/biohub-exp104-safe-division-precision`; tightens safe-division insertion upstream rather than deleting edges post-hoc | Submit if structural checks pass |
 
 ## Backlog
 
