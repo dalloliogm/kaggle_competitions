@@ -83,6 +83,31 @@
   shape is the leading suspected cause, but not yet proven.
 - Evidence: `references/exp100-division-risk-prune-v1-output/`.
 
+## 2026-07-17: Exp101 upstream safe-division recall expansion
+
+- Notebook:
+  `notebooks/biohub-exp101-safe-division-recall-expansion-candidate.ipynb`.
+- Kernel: `dalloliogm/biohub-exp101-safe-division-recall-expansion`, version 1.
+- Submission: `54780672`, pending at creation time.
+- Scope: full Exp073-family rerun; no blend and no post-hoc division-edge
+  deletion.
+- Parameter deltas relative to Exp073:
+  - `SAFE_DIV_MAX_UM`: `4.66 -> 4.90`
+  - `SAFE_DIV_SISTER_MAX_UM`: `8.5 -> 9.0`
+  - `SAFE_DIV_EXISTING_CHILD_MAX_UM`: `7.65 -> 8.20`
+  - `SAFE_DIV_FRAME_FRAC_CAP`: `0.0076 -> 0.0090`
+  - `SAFE_DIV_GLOBAL_FRAC_CAP`: `0.00375 -> 0.0045`
+- Output compared with Exp073: rows `251,900 -> 252,174`, nodes
+  `128,217 -> 128,316`, edges `123,683 -> 123,858`, division-like sources
+  `418 -> 531`.
+- Per-dataset division-like sources changed from `38/95/19/266` to
+  `70/114/28/319` for `44b6_0113de3b`, `44b6_0b24845f`, `6bba_05b6850b`, and
+  `6bba_05db0fb1`.
+- Structural checks passed: contiguous unique ids, no nulls, no duplicate node
+  keys, all edge endpoints present, consecutive-frame edges only, max indegree
+  `1`, max outdegree `2`, no duplicate edges, and correct node/edge sentinels.
+- Evidence: `references/exp101-safe-division-recall-expansion-v1-output/`.
+
 ## 2026-07-03: Gap-2 ablation prepared
 
 - Candidate source: the auditable delta in the reviewed LB-0.839 public notebook,

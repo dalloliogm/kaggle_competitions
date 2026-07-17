@@ -31,6 +31,10 @@
   parents. Kaggle v1 completed as `dalloliogm/biohub-exp100-division-risk-prune`
   and was submitted as `54776292`; Kaggle rejected it as invalid submission
   format despite passing local structural checks. Do not resubmit Exp100 as-is.
+- Current upstream division-calibration probe: Exp101 loosens Exp073 safe-division
+  insertion gates/caps before graph serialization. Kaggle v1 completed as
+  `dalloliogm/biohub-exp101-safe-division-recall-expansion`; structural checks
+  passed and submission `54780672` is pending public LB.
 - Do not spend more slots on LB893 safe-division-only tuning unless Exp073-family
   probes regress sharply.
 - Manually submit Kaggle version 1 of
@@ -232,6 +236,11 @@
   from `418` to `397`. Submission `54776292` was rejected by Kaggle as invalid
   submission format despite passing local checks. Evidence:
   `references/exp100-division-risk-prune-v1-output/`.
+- Created, ran, validated, and submitted Exp101 upstream safe-division recall
+  expansion as competition submission `54780672`. Compared with Exp073, it
+  changes rows `251,900 -> 252,174`, nodes `128,217 -> 128,316`, edges
+  `123,683 -> 123,858`, and division-like sources `418 -> 531`. Evidence:
+  `references/exp101-safe-division-recall-expansion-v1-output/`.
 - Created, ran, validated, and submitted Exp091 density gap + adaptive
   short-track rescue as competition submission `54769343`. Short-track rescue
   activated and recovered 177 nodes across 40 components.

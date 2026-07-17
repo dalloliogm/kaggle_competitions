@@ -104,6 +104,11 @@ Capture durable information learned while working on this competition. This is f
   as invalid format. Prefer calibrating division insertion inside the graph
   generator, or prune a complete invalid component with a stricter validator,
   rather than surgically removing one edge from an existing fork.
+- Exp101 is the safer division-calibration pattern: alter safe-division insertion
+  gates/caps upstream before CSV serialization. Its output increased
+  division-like sources from `418` to `531` while preserving all local structural
+  invariants. Public LB will decide whether Exp073 needs more division recall or
+  whether those extra divisions are mostly false positives.
 
 ## Ensembling And Submission Behavior
 
