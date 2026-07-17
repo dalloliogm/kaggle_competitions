@@ -134,6 +134,29 @@
   `1`, max outdegree `2`, no duplicate edges, and correct node/edge sentinels.
 - Evidence: `references/exp102-mild-safe-division-expansion-v1-output/`.
 
+## 2026-07-17: Exp103 threshold+density gap plus mild safe divisions
+
+- Notebook:
+  `notebooks/biohub-exp103-threshold-density-mild-division-candidate.ipynb`.
+- Kernel: `dalloliogm/biohub-exp103-threshold-density-mild-division`, version 1.
+- Submission: `54784028`, pending at creation time.
+- Scope: full Exp092-family rerun with Exp102 mild upstream safe-division
+  settings; no blend and no post-hoc division-edge deletion.
+- Deltas relative to Exp092: safe-division settings changed to the Exp102 mild
+  expansion values (`4.78`, `8.75`, `7.90`, `0.0082`, `0.0040`) while keeping
+  `DET_THRESHOLD=0.96875`, density-adaptive gap repair enabled, and adaptive
+  short-track rescue disabled.
+- Output compared with Exp073: rows `251,900 -> 252,784`, nodes
+  `128,217 -> 128,656`, edges `123,683 -> 124,128`, division-like sources
+  `418 -> 442`.
+- Per-dataset division-like sources changed from `38/95/19/266` to
+  `37/102/19/284` for `44b6_0113de3b`, `44b6_0b24845f`, `6bba_05b6850b`, and
+  `6bba_05db0fb1`.
+- Structural checks passed: contiguous unique ids, no nulls, no duplicate node
+  keys, all edge endpoints present, consecutive-frame edges only, max indegree
+  `1`, max outdegree `2`, no duplicate edges, and correct node/edge sentinels.
+- Evidence: `references/exp103-threshold-density-mild-division-v1-output/`.
+
 ## 2026-07-03: Gap-2 ablation prepared
 
 - Candidate source: the auditable delta in the reviewed LB-0.839 public notebook,

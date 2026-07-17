@@ -40,6 +40,10 @@
   expansion between Exp073 and Exp101. Kaggle v1 completed as
   `dalloliogm/biohub-exp102-mild-safe-division-expansion`; structural checks
   passed and submission `54781687` is pending public LB.
+- Third batch probe: Exp103 combines Exp092 threshold+density-gap behavior with
+  Exp102's mild safe-division settings. Kaggle v1 completed as
+  `dalloliogm/biohub-exp103-threshold-density-mild-division`; structural checks
+  passed and submission `54784028` is pending public LB.
 - Operating rule for the rest of this challenge: Kaggle submissions may take
   several hours to validate, and user time is limited. If daily submission slots
   remain, run/validate/submit multiple independent candidates without waiting for
@@ -256,6 +260,11 @@
   changes rows `251,900 -> 252,001`, nodes `128,217 -> 128,262`, edges
   `123,683 -> 123,739`, and division-like sources `418 -> 442`. Evidence:
   `references/exp102-mild-safe-division-expansion-v1-output/`.
+- Created, ran, validated, and submitted Exp103 threshold+density gap plus mild
+  safe-divisions as competition submission `54784028`. Compared with Exp073, it
+  changes rows `251,900 -> 252,784`, nodes `128,217 -> 128,656`, edges
+  `123,683 -> 124,128`, and division-like sources `418 -> 442`. Evidence:
+  `references/exp103-threshold-density-mild-division-v1-output/`.
 - Created, ran, validated, and submitted Exp091 density gap + adaptive
   short-track rescue as competition submission `54769343`. Short-track rescue
   activated and recovered 177 nodes across 40 components.

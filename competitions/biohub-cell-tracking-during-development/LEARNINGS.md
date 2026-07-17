@@ -113,6 +113,11 @@ Capture durable information learned while working on this competition. This is f
   division-like sources `418 -> 442`, with only `+45` nodes and `+56` edges
   versus Exp073. Use Exp101 and Exp102 together to infer whether division recall
   helps monotonically, only mildly, or not at all.
+- Exp103 reuses Exp102's mild division setting with Exp092's threshold+density
+  graph recipe. It has the same total division-like sources as Exp102 (`442`) but
+  a much larger graph delta (`+439` nodes and `+445` edges versus Exp073), so its
+  LB result will mainly test interaction between mild division expansion and the
+  threshold/density-gap branch.
 
 ## Ensembling And Submission Behavior
 
