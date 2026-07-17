@@ -61,6 +61,10 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | Conservative division recovery | Can add up to 0.1, but risks edge and division FPs | Low-medium | Low | P2 |
 | Velocity-aware gap-2 interpolation | Newer claimed LB improvement, but very small/capped effect | Low | Low | P2 |
 | LB893 component ablations | Public LB 0.893 likely comes from post-processing, not only the learned backbone | High | Medium | P0 |
+| Weighted gap-node interpolation | Recent public notebook changes synthetic gap-node placement using local motion; compatible with Exp073/Exp092 without changing detector | Medium | Low-medium | P0 |
+| Outside-base spacing gate for density gaps | Preserve safe base gap mask but require local spacing for extra density-adaptive candidates | Medium | Low | P1 |
+| TTA plus ILP-cost branch | Public notebook changes inference averaging and ILP appearance/disappearance costs; broader signal than post-processing only | Medium-high | High | P1 |
+| Bright/top-hat detector mix | Alternative detector preprocessing could complement Exp073 errors | Unknown | High | P2 |
 
 ## Abandoned
 

@@ -45,6 +45,31 @@
 
 - TBD
 
+## 2026-07-17: Public notebook inspiration plan
+
+- Current high-vote public work is converging on the same learned
+  U-Net/transformer/ILP backbone plus graph calibration. To stay original, the
+  next experiments should isolate mechanisms rather than copy whole notebooks.
+- Best immediate idea: weighted gap-node interpolation from
+  `chiranjithdharma/replace-midpoint-insertion-with-weighted-interpola`. It
+  changes where synthetic gap nodes are placed: use neighboring track motion
+  rather than a pure source-target midpoint, with a safety clamp.
+- Related but already partly covered: `yusuketogashi/biohub-another-approach`
+  uses density-adaptive gap repair and an outside-base spacing gate. We already
+  tested density-adaptive branches; the remaining useful idea is the precision
+  gate for extra outside-base candidates.
+- Higher-cost branch: `outwrest/metric-hack-minimal-baseline-tta-2gpu` uses TTA
+  and different ILP appearance/disappearance costs. This is broader than a
+  post-processing tweak and should wait until quick graph experiments finish.
+- Bigger detector branch: `xiaoleilian/biohub-cell-tracking-bright-tophat-mix`
+  combines bright and top-hat-preprocessed U-Nets. Treat as a separate detector
+  family requiring artifact inspection.
+- Process takeaway from `nilsfl/how-reliable-is-local-validation-a-measurement`:
+  local validation can invert public-LB ranking for graph post-processing, so
+  one-factor public-LB probes are justified while submission slots remain.
+- Full ranked plan:
+  `references/recent-public-notebooks-2026-07-17.md`.
+
 ## 2026-07-17: Division calibration concept
 
 - Division calibration means tuning only the part of the tracking graph that

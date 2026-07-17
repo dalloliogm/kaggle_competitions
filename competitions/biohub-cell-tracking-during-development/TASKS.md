@@ -49,6 +49,15 @@
   `0.0033`) instead of post-hoc edge deletion. Kaggle v1 is running as
   `dalloliogm/biohub-exp104-safe-division-precision`; submit if structural
   checks pass.
+- Public-notebook follow-up plan from the 2026-07-17 scan:
+  1. Exp105 weighted gap-node interpolation, using local motion to place
+     inserted gap nodes instead of pure midpoint placement.
+  2. Exp106 outside-base spacing gate for density-adaptive gap candidates,
+     initially `8.50 um`, if density-gap branches look promising.
+  3. Exp107 TTA plus ILP-cost branch, higher runtime and broader changes.
+  4. Larger detector-preprocessing branch from bright/top-hat U-Net mix only
+     after inspecting its weight artifact and output density.
+  Detailed notes: `references/recent-public-notebooks-2026-07-17.md`.
 - Operating rule for the rest of this challenge: Kaggle submissions may take
   several hours to validate, and user time is limited. If daily submission slots
   remain, run/validate/submit multiple independent candidates without waiting for
@@ -215,6 +224,11 @@
   under `references/own-kernels-2026-07-16/biohub-exp073-gap-5-8-public/`.
   Downloaded our copied Exp073 output locally; its submission `54758569` is still
   pending on Kaggle.
+- Reviewed recent public notebooks from 2026-07-17 and saved the ranked plan in
+  `references/recent-public-notebooks-2026-07-17.md`. Pulled five representative
+  sources under `references/public-notebooks-2026-07-17/`: weighted
+  interpolation, outside-spacing/density gap, TTA/ILP-cost, bright/top-hat
+  detector mix, and local-validation reliability.
 - Created `notebooks/biohub-exp084-threshold-096875-candidate.ipynb` as the first
   original Exp073-family probe. The only intentional code-path delta is
   `BIOHUB_DET_THRESHOLD=0.96875`; all other Exp073 graph-calibration settings are
