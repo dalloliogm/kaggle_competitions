@@ -36,6 +36,10 @@
   insertion gates/caps before graph serialization. Kaggle v1 completed as
   `dalloliogm/biohub-exp101-safe-division-recall-expansion`; structural checks
   passed and submission `54780672` is pending public LB.
+- Second upstream division-calibration probe: Exp102 is a milder safe-division
+  expansion between Exp073 and Exp101. Kaggle v1 completed as
+  `dalloliogm/biohub-exp102-mild-safe-division-expansion`; structural checks
+  passed and submission `54781687` is pending public LB.
 - Operating rule for the rest of this challenge: Kaggle submissions may take
   several hours to validate, and user time is limited. If daily submission slots
   remain, run/validate/submit multiple independent candidates without waiting for
@@ -247,6 +251,11 @@
   changes rows `251,900 -> 252,174`, nodes `128,217 -> 128,316`, edges
   `123,683 -> 123,858`, and division-like sources `418 -> 531`. Evidence:
   `references/exp101-safe-division-recall-expansion-v1-output/`.
+- Created, ran, validated, and submitted Exp102 mild upstream safe-division
+  expansion as competition submission `54781687`. Compared with Exp073, it
+  changes rows `251,900 -> 252,001`, nodes `128,217 -> 128,262`, edges
+  `123,683 -> 123,739`, and division-like sources `418 -> 442`. Evidence:
+  `references/exp102-mild-safe-division-expansion-v1-output/`.
 - Created, ran, validated, and submitted Exp091 density gap + adaptive
   short-track rescue as competition submission `54769343`. Short-track rescue
   activated and recovered 177 nodes across 40 components.

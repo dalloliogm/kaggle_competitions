@@ -109,6 +109,10 @@ Capture durable information learned while working on this competition. This is f
   division-like sources from `418` to `531` while preserving all local structural
   invariants. Public LB will decide whether Exp073 needs more division recall or
   whether those extra divisions are mostly false positives.
+- Exp102 provides a milder point on the same upstream-safe-division axis:
+  division-like sources `418 -> 442`, with only `+45` nodes and `+56` edges
+  versus Exp073. Use Exp101 and Exp102 together to infer whether division recall
+  helps monotonically, only mildly, or not at all.
 
 ## Ensembling And Submission Behavior
 

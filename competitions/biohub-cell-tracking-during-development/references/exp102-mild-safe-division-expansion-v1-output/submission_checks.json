@@ -1,0 +1,56 @@
+{
+  "delta_vs_exp073": {
+    "division_like_sources": 24,
+    "edges": 56,
+    "nodes": 45,
+    "rows": 101
+  },
+  "division_like_sources": 442,
+  "duplicate_edges": 0,
+  "duplicate_node_keys": 0,
+  "edge_sentinel_bad": 0,
+  "edges": 123739,
+  "experiment_tag": "exp102_mild_safe_div_expansion",
+  "id_contiguous": true,
+  "id_unique": true,
+  "max_indegree": 1,
+  "max_outdegree": 2,
+  "missing_edge_sources": 0,
+  "missing_edge_targets": 0,
+  "node_sentinel_bad": 0,
+  "nodes": 128262,
+  "nonconsecutive_edges": 0,
+  "null_cells": 0,
+  "per_dataset": [
+    {
+      "dataset": "44b6_0113de3b",
+      "division_like_sources": 38,
+      "edges": 24693,
+      "nodes": 25453,
+      "rows": 50146
+    },
+    {
+      "dataset": "44b6_0b24845f",
+      "division_like_sources": 101,
+      "edges": 22736,
+      "nodes": 24240,
+      "rows": 46976
+    },
+    {
+      "dataset": "6bba_05b6850b",
+      "division_like_sources": 19,
+      "edges": 6134,
+      "nodes": 6363,
+      "rows": 12497
+    },
+    {
+      "dataset": "6bba_05db0fb1",
+      "division_like_sources": 284,
+      "edges": 70176,
+      "nodes": 72206,
+      "rows": 142382
+    }
+  ],
+  "rows": 252001,
+  "sha256": "d0126c3589138ac84e7a37c940c109dd7b6fe1e367f7ade1243fc08c8fb1abef"
+}
