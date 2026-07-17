@@ -17,7 +17,8 @@
 - Current completed candidate: Exp073 + only `DET_THRESHOLD=0.96875` (Exp084
   idea), implemented as
   `notebooks/biohub-exp084-threshold-096875-candidate.ipynb`. Kaggle v1 completed
-  with valid output; manually submit if we want public-LB feedback.
+  with valid output, was submitted as `54768957`, and tied Exp073 with public LB
+  `0.903`.
 - Second recommended probe: Exp073 + density-adaptive gap close from
   `romanrozen/biohub-best-score`, implemented as
   `notebooks/biohub-exp090-density-adaptive-gap-candidate.ipynb` with adaptive
@@ -35,6 +36,11 @@
   insertion gates/caps before graph serialization. Kaggle v1 completed as
   `dalloliogm/biohub-exp101-safe-division-recall-expansion`; structural checks
   passed and submission `54780672` is pending public LB.
+- Operating rule for the rest of this challenge: Kaggle submissions may take
+  several hours to validate, and user time is limited. If daily submission slots
+  remain, run/validate/submit multiple independent candidates without waiting for
+  the previous pending submission to score. Later, compare all completed public
+  LB results together.
 - Do not spend more slots on LB893 safe-division-only tuning unless Exp073-family
   probes regress sharply.
 - Manually submit Kaggle version 1 of
