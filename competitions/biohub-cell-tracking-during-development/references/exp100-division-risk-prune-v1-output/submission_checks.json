@@ -1,0 +1,17 @@
+{
+  "division_like_sources": 397,
+  "duplicate_node_keys": 0,
+  "edges": 123662,
+  "experiment_tag": "exp100_division_risk_prune_top5pct",
+  "id_contiguous": true,
+  "id_unique": true,
+  "max_indegree": 1,
+  "max_outdegree": 2,
+  "missing_edge_sources": 0,
+  "missing_edge_targets": 0,
+  "nodes": 128217,
+  "nonconsecutive_edges": 0,
+  "null_cells": 0,
+  "rows": 251879,
+  "sha256": "a430267cc5a856f753450b12f39265fab31dd40391cd367bbfcde2fc88c7c072"
+}

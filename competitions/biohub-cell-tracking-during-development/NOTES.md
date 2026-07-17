@@ -45,6 +45,40 @@
 
 - TBD
 
+## 2026-07-17: Division calibration concept
+
+- Division calibration means tuning only the part of the tracking graph that
+  decides whether one cell at frame `t` becomes two daughter cells at frame
+  `t+1`. In the submission, this appears as one parent node with two outgoing
+  edges.
+- The tradeoff is asymmetric: too few divisions lose division recall, but a false
+  daughter edge can also damage the main edge-tracking component. Because the
+  final metric is mostly adjusted edge Jaccard plus a smaller `0.1` division
+  bonus, division changes should be conservative and structurally validated.
+- Exp073 has `418` division-like parents. Their parent-to-daughter distances are
+  already tight: median about `3.17 um`, 95th percentile about `4.16 um`, and
+  maximum about `6.11 um`. A broad hard cutoff such as `8 um` would remove
+  nothing, so Exp100 uses a ranked risk prune instead.
+
+## 2026-07-17: Exp100 division-risk prune
+
+- Notebook: `notebooks/biohub-exp100-division-risk-prune-candidate.ipynb`.
+- Kernel: `dalloliogm/biohub-exp100-division-risk-prune`, version 1.
+- Submission: `54776292`; Kaggle status `COMPLETE`, public score field blank in
+  the CLI row.
+- Scope: post-processes the completed Exp073 `submission.csv`; no new detection,
+  linking, or model inference.
+- Risk score: `0.50 * max(parent-to-daughter distance) + 0.35 * sister distance
+  + 0.15 * daughter distance imbalance`.
+- Action: prune the farther daughter edge for the top 5% riskiest division-like
+  parents.
+- Output: rows `251,900 -> 251,879`, nodes unchanged at `128,217`, edges
+  `123,683 -> 123,662`, division-like sources `418 -> 397`.
+- Structural checks passed: contiguous unique ids, no nulls, no duplicate node
+  keys, all edge endpoints present, consecutive-frame edges only, max indegree
+  `1`, and max outdegree `2`.
+- Evidence: `references/exp100-division-risk-prune-v1-output/`.
+
 ## 2026-07-03: Gap-2 ablation prepared
 
 - Candidate source: the auditable delta in the reviewed LB-0.839 public notebook,

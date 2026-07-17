@@ -94,6 +94,11 @@ Capture durable information learned while working on this competition. This is f
   below the copied LB893 score `0.893`. The hidden/public test set rewards at
   least some safe divisions. The next promising axis is not removing divisions
   completely, but tuning their precision/coverage.
+- Exp073 division candidates are geometrically tight already: among 418
+  division-like parents, the parent-to-daughter max distance has median about
+  `3.17 um`, 95th percentile about `4.16 um`, and maximum about `6.11 um`.
+  Division calibration around Exp073 should therefore use ranked risk, caps, or
+  recall/coverage gates rather than broad distance cutoffs such as `8 um`.
 
 ## Ensembling And Submission Behavior
 

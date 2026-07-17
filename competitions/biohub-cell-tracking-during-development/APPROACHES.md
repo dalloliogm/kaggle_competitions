@@ -41,6 +41,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | 2026-07-16 | Exp096 stable long-track bridge probe around Exp073 | `notebooks/biohub-exp096-stable-long-track-bridge-candidate.ipynb` | Kaggle v2 complete; output byte-identical to Exp090; 87 bridge candidates checked, 61 context-ok, 0 motion-ok, 0 selected | Do not submit; bridge branch inactive on test set |
 | 2026-07-16 | Exp091 density gap + adaptive short-track rescue | `notebooks/biohub-exp091-density-plus-short-track-rescue-candidate.ipynb` | Kaggle v1 complete as `dalloliogm/biohub-exp091-short-track-rescue`; structural checks passed; short-track rescue recovered 177 nodes in 40 components; submitted as `54769343` | Pending public LB |
 | 2026-07-16 | Exp092 threshold 0.96875 + density gap | `notebooks/biohub-exp092-threshold-plus-density-gap-candidate.ipynb` | Kaggle v1 complete as `dalloliogm/biohub-exp092-threshold-plus-density-gap-candidate`; structural checks passed; combines Exp084 threshold with Exp090 density gap; submitted as `54769344` | Pending public LB |
+| 2026-07-17 | Exp100 division-risk prune around Exp073 | `notebooks/biohub-exp100-division-risk-prune-candidate.ipynb` | Kaggle v1 complete as `dalloliogm/biohub-exp100-division-risk-prune`; structural checks passed; same `128,217` nodes, edges `123,683 -> 123,662`, division-like sources `418 -> 397`; submitted as `54776292` | Submission complete, public score field blank in CLI |
 
 ## Backlog
 

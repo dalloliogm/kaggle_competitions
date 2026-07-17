@@ -26,6 +26,11 @@
   `yusuketogashi/biohub-another-approach`, implemented as
   `notebooks/biohub-exp096-stable-long-track-bridge-candidate.ipynb`; run only
   after Exp090 so the bridge effect can be separated from density adaptation.
+- Current division-calibration probe: Exp100 post-processes the Exp073 output by
+  pruning the farther daughter edge for the top 5% riskiest division-like
+  parents. Kaggle v1 completed as `dalloliogm/biohub-exp100-division-risk-prune`
+  and was submitted as `54776292`; Kaggle marks the submission complete, but the
+  public score field is blank in the CLI row.
 - Do not spend more slots on LB893 safe-division-only tuning unless Exp073-family
   probes regress sharply.
 - Manually submit Kaggle version 1 of
@@ -219,6 +224,14 @@
   status pending at submit time.
 - Submitted Exp084 threshold as competition submission `54768957`; status pending
   at submit time.
+- Exp091, Exp092, Exp084, and Exp090 all completed with public LB `0.903`,
+  tying Exp073 but not improving it. Exp096 was byte-identical to Exp090 and was
+  not submitted.
+- Created and submitted Exp100 division-risk prune. It leaves all nodes unchanged,
+  removes 21 high-risk division daughter edges, and reduces division-like sources
+  from `418` to `397`. Submission `54776292` completed with a blank public-score
+  field in the CLI. Evidence:
+  `references/exp100-division-risk-prune-v1-output/`.
 - Created, ran, validated, and submitted Exp091 density gap + adaptive
   short-track rescue as competition submission `54769343`. Short-track rescue
   activated and recovered 177 nodes across 40 components.
