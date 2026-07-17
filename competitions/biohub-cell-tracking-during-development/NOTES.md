@@ -182,6 +182,31 @@
   `1`, max outdegree `2`, no duplicate edges, and correct node/edge sentinels.
 - Evidence: `references/exp103-threshold-density-mild-division-v1-output/`.
 
+## 2026-07-17: Exp104 upstream safe-division precision tightening
+
+- Notebook: `notebooks/biohub-exp104-safe-division-precision-candidate.ipynb`.
+- Kernel: `dalloliogm/biohub-exp104-safe-division-precision`, version 1.
+- Submission: `54785550`, pending at creation time.
+- Scope: full Exp073-family rerun; no blend and no post-hoc division-edge
+  deletion.
+- Parameter deltas relative to Exp073:
+  - `SAFE_DIV_MAX_UM`: `4.66 -> 4.42`
+  - `SAFE_DIV_SISTER_MAX_UM`: `8.5 -> 7.90`
+  - `SAFE_DIV_EXISTING_CHILD_MAX_UM`: `7.65 -> 7.25`
+  - `SAFE_DIV_FRAME_FRAC_CAP`: `0.0076 -> 0.0069`
+  - `SAFE_DIV_GLOBAL_FRAC_CAP`: `0.00375 -> 0.0033`
+- Output compared with Exp073: rows `251,900 -> 251,832`, nodes
+  `128,217 -> 128,216`, edges `123,683 -> 123,616`, division-like sources
+  `418 -> 351`.
+- Per-dataset division-like sources changed from `38/95/19/266` to
+  `26/84/16/225` for `44b6_0113de3b`, `44b6_0b24845f`, `6bba_05b6850b`, and
+  `6bba_05db0fb1`.
+- Structural checks passed: exact expected columns, contiguous unique ids, no
+  nulls, no duplicate node keys, all edge endpoints present, consecutive-frame
+  edges only, max indegree `1`, max outdegree `2`, no duplicate edges, and
+  correct node/edge sentinels.
+- Evidence: `references/exp104-safe-division-precision-v1-output/`.
+
 ## 2026-07-03: Gap-2 ablation prepared
 
 - Candidate source: the auditable delta in the reviewed LB-0.839 public notebook,

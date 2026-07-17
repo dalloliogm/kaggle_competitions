@@ -122,6 +122,10 @@ Capture durable information learned while working on this competition. This is f
   tighten safe-division insertion upstream, then let the generator emit a fresh
   valid graph, rather than removing one daughter edge from an already serialized
   fork.
+- Exp104 provides the precision-side comparison to Exp101/Exp102: it reduces
+  division-like sources from `418` to `351` while preserving almost the same node
+  count (`128,217 -> 128,216`). The public LB result should indicate whether the
+  Exp073 hidden-test division policy is over- or under-permissive.
 
 ## Ensembling And Submission Behavior
 
