@@ -64,8 +64,8 @@
 
 - Notebook: `notebooks/biohub-exp100-division-risk-prune-candidate.ipynb`.
 - Kernel: `dalloliogm/biohub-exp100-division-risk-prune`, version 1.
-- Submission: `54776292`; Kaggle status `COMPLETE`, public score field blank in
-  the CLI row.
+- Submission: `54776292`; Kaggle rejected it as invalid submission format. Do
+  not resubmit this exact post-processed output.
 - Scope: post-processes the completed Exp073 `submission.csv`; no new detection,
   linking, or model inference.
 - Risk score: `0.50 * max(parent-to-daughter distance) + 0.35 * sister distance
@@ -77,6 +77,10 @@
 - Structural checks passed: contiguous unique ids, no nulls, no duplicate node
   keys, all edge endpoints present, consecutive-frame edges only, max indegree
   `1`, and max outdegree `2`.
+- Later Kaggle-side rejection shows this local checker was insufficient. The
+  candidate removed only one daughter edge from selected division forks, leaving
+  the target daughter lineage as a new mid-movie root in many cases. That graph
+  shape is the leading suspected cause, but not yet proven.
 - Evidence: `references/exp100-division-risk-prune-v1-output/`.
 
 ## 2026-07-03: Gap-2 ablation prepared

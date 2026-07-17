@@ -29,8 +29,8 @@
 - Current division-calibration probe: Exp100 post-processes the Exp073 output by
   pruning the farther daughter edge for the top 5% riskiest division-like
   parents. Kaggle v1 completed as `dalloliogm/biohub-exp100-division-risk-prune`
-  and was submitted as `54776292`; Kaggle marks the submission complete, but the
-  public score field is blank in the CLI row.
+  and was submitted as `54776292`; Kaggle rejected it as invalid submission
+  format despite passing local structural checks. Do not resubmit Exp100 as-is.
 - Do not spend more slots on LB893 safe-division-only tuning unless Exp073-family
   probes regress sharply.
 - Manually submit Kaggle version 1 of
@@ -229,8 +229,8 @@
   not submitted.
 - Created and submitted Exp100 division-risk prune. It leaves all nodes unchanged,
   removes 21 high-risk division daughter edges, and reduces division-like sources
-  from `418` to `397`. Submission `54776292` completed with a blank public-score
-  field in the CLI. Evidence:
+  from `418` to `397`. Submission `54776292` was rejected by Kaggle as invalid
+  submission format despite passing local checks. Evidence:
   `references/exp100-division-risk-prune-v1-output/`.
 - Created, ran, validated, and submitted Exp091 density gap + adaptive
   short-track rescue as competition submission `54769343`. Short-track rescue

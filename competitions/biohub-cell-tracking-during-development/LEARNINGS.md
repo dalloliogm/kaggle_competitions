@@ -99,6 +99,11 @@ Capture durable information learned while working on this competition. This is f
   `3.17 um`, 95th percentile about `4.16 um`, and maximum about `6.11 um`.
   Division calibration around Exp073 should therefore use ranked risk, caps, or
   recall/coverage gates rather than broad distance cutoffs such as `8 um`.
+- Post-hoc deletion of a single daughter edge is unsafe as a submission strategy:
+  Exp100 passed local CSV/graph checks but Kaggle rejected submission `54776292`
+  as invalid format. Prefer calibrating division insertion inside the graph
+  generator, or prune a complete invalid component with a stricter validator,
+  rather than surgically removing one edge from an existing fork.
 
 ## Ensembling And Submission Behavior
 
