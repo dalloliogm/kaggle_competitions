@@ -61,7 +61,11 @@ mkdir -p "${WORK_DIR}"
 cp "${NOTEBOOK_PATH}" "${WORK_DIR}/${CODE_FILE}"
 
 METADATA="${WORK_DIR}/kernel-metadata.json"
-if [[ ! -f "${METADATA}" ]]; then
+SIDE_METADATA="${NOTEBOOK_PATH%.ipynb}.kernel-metadata.json"
+if [[ -f "${SIDE_METADATA}" ]]; then
+  cp "${SIDE_METADATA}" "${METADATA}"
+  echo "Using sidecar metadata: ${SIDE_METADATA}"
+elif [[ ! -f "${METADATA}" ]]; then
   cat > "${METADATA}" <<EOF
 {
   "id": "${KERNEL_ID}",
@@ -85,4 +89,3 @@ fi
 echo "Pushing ${CODE_FILE} to Kaggle kernel ${KERNEL_ID}"
 echo "Working folder: ${WORK_DIR}"
 kaggle kernels push -p "${WORK_DIR}"
-
