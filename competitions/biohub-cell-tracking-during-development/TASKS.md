@@ -59,7 +59,8 @@
   midpoint/refinement behavior, raises density-gap gain to `0.04375`, and blocks
   candidates outside the reference `0.040` density mask unless local spacing is
   at least `8.50 um`. Notebook:
-  `notebooks/biohub-exp106-density-spacing-gate-candidate.ipynb`.
+  `notebooks/biohub-exp106-density-spacing-gate-candidate.ipynb`. Kaggle v1 is
+  running as `dalloliogm/biohub-exp106-density-spacing-gate`.
 - Public-notebook follow-up plan from the 2026-07-17 scan:
   1. Exp105 weighted gap-node interpolation, using local motion to place
      inserted gap nodes instead of pure midpoint placement.
@@ -307,8 +308,9 @@
 - Created and uploaded Exp105 weighted gap-node interpolation candidate as
   `dalloliogm/biohub-exp105-weighted-gap-interpolation`. Local notebook JSON and
   Python syntax checks passed; Kaggle v1 is running.
-- Created Exp106 density spacing gate candidate. Local notebook JSON and Python
-  syntax checks passed; Kaggle run pending.
+- Created and uploaded Exp106 density spacing gate candidate as
+  `dalloliogm/biohub-exp106-density-spacing-gate`. Local notebook JSON and
+  Python syntax checks passed; Kaggle v1 is running.
 - Created, ran, validated, and submitted Exp091 density gap + adaptive
   short-track rescue as competition submission `54769343`. Short-track rescue
   activated and recovered 177 nodes across 40 components.
