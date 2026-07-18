@@ -48,6 +48,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | 2026-07-17 | Exp104 upstream safe-division precision tightening | `notebooks/biohub-exp104-safe-division-precision-candidate.ipynb` | Kaggle v1 complete as `dalloliogm/biohub-exp104-safe-division-precision`; structural checks passed; rows `251,832`, nodes `128,216`, edges `123,616`, division-like sources `351`; submitted as `54785550` | Public LB `0.903`; tied Exp073 |
 | 2026-07-18 | Exp105 weighted gap-node interpolation | `notebooks/biohub-exp105-weighted-gap-interpolation-candidate.ipynb` | Kaggle v1 complete as `dalloliogm/biohub-exp105-weighted-gap-interpolation`; structural checks passed; rows `252,688`, nodes `128,614`, edges `124,074`; weighted motion used for `2019/2020` synthetic gaps; submitted as `54800958` | Pending public LB |
 | 2026-07-18 | Exp106 density spacing gate | `notebooks/biohub-exp106-density-spacing-gate-candidate.ipynb` | Kaggle v1 running as `dalloliogm/biohub-exp106-density-spacing-gate`; Exp092 branch with density gain `0.04375` plus outside-reference local-spacing gate `8.50 um` | Download/validate output, then submit if structural checks pass |
+| 2026-07-18 | Exp107 density gain 0.0475 | `notebooks/biohub-exp107-density-gain-0475-candidate.ipynb` | Prepared locally; syntax checks passed; Exp092 branch with only `BIOHUB_GAP_DENSITY_GAIN=0.0475` | Upload/run next |
 
 ## Backlog
 
