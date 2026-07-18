@@ -108,7 +108,11 @@
   `dalloliogm/biohub-exp109-exp092-exp108-6bba05db-split`; downloaded output
   passed the structural harness with `252,306` rows, `128,435` nodes,
   `123,871` edges, and no warnings. Submitted as Kaggle submission `54815064`;
-  current status `PENDING`.
+  Kaggle rejected it with the generic incorrect-format message. This is a
+  checker gap: local schema, dtype, dataset coverage, contiguous row IDs, and
+  dangling-edge checks all passed, but the competition-side validation still
+  failed. Do not spend more slots on direct CSV-spliced outputs until the
+  stricter failure condition is identified.
 - Add component-size diagnostics to the submission validator before any stronger
   graph repair. The forum reports scoring timeouts may depend on connected
   component structure, not just node count.
