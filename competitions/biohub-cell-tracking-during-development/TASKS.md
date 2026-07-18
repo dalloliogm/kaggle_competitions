@@ -60,7 +60,8 @@
   clamp `4.0 um`) instead of a pure midpoint. Notebook:
   `notebooks/biohub-exp105-weighted-gap-interpolation-candidate.ipynb`. Kaggle
   v1 completed as `dalloliogm/biohub-exp105-weighted-gap-interpolation`;
-  structural checks passed and submission `54800958` is pending public LB.
+  structural checks passed and submission `54800958` scored public LB `0.903`,
+  tying Exp073.
 - Parallel queued probe: Exp106 density spacing gate. This keeps Exp092's
   midpoint/refinement behavior, raises density-gap gain to `0.04375`, and blocks
   candidates outside the reference `0.040` density mask unless local spacing is
@@ -69,7 +70,7 @@
   completed as `dalloliogm/biohub-exp106-density-spacing-gate`; structural checks
   passed with rows `252,696`, nodes `128,617`, edges `124,079`, and divisions
   `418`. CLI submit attempts returned HTTP 400 `CreateSubmission`; the user
-  manually submitted it as `54802933`, currently pending public LB.
+  manually submitted it as `54802933`; public LB `0.903`, tying Exp073.
 - Additional queued probe: Exp107 density gain `0.0475`. This keeps Exp092's
   midpoint/refinement behavior and all safe-division settings, changing only
   `BIOHUB_GAP_DENSITY_GAIN` from `0.040` to `0.0475`. Notebook:
@@ -77,7 +78,7 @@
   completed as `dalloliogm/biohub-exp107-density-gain-0475`; structural checks
   passed with rows `252,696`, nodes `128,616`, edges `124,080`, and divisions
   `418`. CLI submit attempts returned HTTP 400 `CreateSubmission`; the user
-  manually submitted it as `54802935`, currently pending public LB.
+  manually submitted it as `54802935`; public LB `0.903`, tying Exp073.
 - Forum-derived next probe: build an original frozen-transition-aware candidate
   on top of Exp073/Exp092. Detect exact or near-exact duplicate adjacent frames
   in each test movie; across frozen transitions prefer zero/near-zero
@@ -369,7 +370,12 @@
 - The user manually submitted the two validated CSVs on 2026-07-18. Kaggle
   submission records were created: Exp106 is assumed to be `54802933` and Exp107
   is assumed to be `54802935`, based on the order and timestamps of the manual
-  uploads. Both are pending public LB.
+  uploads. Both completed with public LB `0.903`.
+- Exp105 (`54800958`), Exp106 (`54802933`), and Exp107 (`54802935`) all completed
+  with public LB `0.903`. These tied Exp073 and did not improve the leaderboard.
+  The next branch should move away from small density/gap-radius tweaks and
+  toward the frozen-frame-aware candidate or the validation-harness train-mode
+  work.
 - Created `scripts/biohub_validation_harness.py` and
   `references/validation-harness-plan.md`. The harness was smoke-tested on
   downloaded Exp106 and Exp107 outputs with `--skip-metric`; both produced valid

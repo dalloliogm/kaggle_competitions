@@ -163,6 +163,12 @@ Capture durable information learned while working on this competition. This is f
   differs from Exp092. The graph size barely changed (`+2` nodes, `+1` edge
   versus Exp092), so its public LB will mostly test whether coordinates of
   inserted gap nodes matter rather than graph-density changes.
+- Exp105, Exp106, and Exp107 all scored public LB `0.903`, tying Exp073. This
+  means weighted synthetic gap placement, outside-reference spacing gating, and
+  a mild density-gain increase are active but not enough to move the public
+  leaderboard. Stop spending submission slots on nearby density/gap-radius
+  micro-tuning unless a stronger validation harness identifies a specific
+  recoverable error mode.
 
 ## Ensembling And Submission Behavior
 
