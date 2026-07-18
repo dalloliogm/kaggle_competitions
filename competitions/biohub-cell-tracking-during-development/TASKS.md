@@ -8,6 +8,11 @@
 - Submission `54758569`, copied
   `dalloliogm/biohub-exp073-gap-5-8-public`, completed with public LB `0.903`.
   It is byte-identical to public `lucashmateo/biohub-ct-exp073`.
+- Build a stronger validation harness early enough to guide the rest of the
+  competition. The first reusable script is
+  `scripts/biohub_validation_harness.py`; it performs structural graph checks,
+  component diagnostics, optional duplicated-frame diagnostics, and optional
+  official-metric scoring when train GEFF plus the tracking repo are available.
 
 ## Next Experiments
 
@@ -82,6 +87,12 @@
 - Add component-size diagnostics to the submission validator before any stronger
   graph repair. The forum reports scoring timeouts may depend on connected
   component structure, not just node count.
+- Integrate `scripts/biohub_validation_harness.py` into every new candidate
+  notebook immediately after writing `submission.csv`. Require a valid
+  `validation_report.json` before submission.
+- Build a train-mode Exp073/Exp092 runner that emits candidate train predictions
+  and calls the harness with `--train-dir` and `--tracking-repo`, so controlled
+  exact validation becomes routine rather than notebook-specific.
 - Medium-effort forum-derived branch: affinity rescoring from existing learned
   edge probabilities plus local motion consistency, inspired by the temporal
   affinity/flow-field discussion. Do this after the frozen-transition probe or
@@ -355,6 +366,11 @@
   reached Kaggle, but `CreateSubmission` returned HTTP 400 and neither attempt
   created a new submission record. Current live submission list still has only
   Exp105 (`54800958`) pending for 2026-07-18.
+- Created `scripts/biohub_validation_harness.py` and
+  `references/validation-harness-plan.md`. The harness was smoke-tested on
+  downloaded Exp106 and Exp107 outputs with `--skip-metric`; both produced valid
+  reports with no structural errors. Exact metric mode remains environment-gated
+  until train GEFF and `biohub_tracking`/`traccuracy` dependencies are attached.
 - Created, ran, validated, and submitted Exp091 density gap + adaptive
   short-track rescue as competition submission `54769343`. Short-track rescue
   activated and recovered 177 nodes across 40 components.

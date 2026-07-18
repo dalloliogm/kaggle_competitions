@@ -40,6 +40,15 @@ Capture durable information learned while working on this competition. This is f
   or field-level random splits can leak embryo-specific appearance.
 - Do not select parameters using proxies that weight division equally with edges,
   substitute node F1, or approximate the node-count penalty differently.
+- Validation has to be layered. Structural submission validity is separate from
+  score prediction: a candidate can be structurally valid but bad on public LB,
+  and a locally promising candidate can fail to generalize. Use
+  `scripts/biohub_validation_harness.py` for repeatable structural checks,
+  component diagnostics, optional duplicated-frame diagnostics, and optional
+  official-metric scoring when train predictions are available.
+- Dataset-local `node_id` keys matter. A naive global `node_id` check produces
+  false errors because Biohub node IDs are reused across datasets; validators
+  must key edges and degrees by `(dataset, node_id)`.
 
 ## Leakage And Rules
 
