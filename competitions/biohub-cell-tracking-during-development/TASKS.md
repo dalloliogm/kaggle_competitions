@@ -60,13 +60,19 @@
   midpoint/refinement behavior, raises density-gap gain to `0.04375`, and blocks
   candidates outside the reference `0.040` density mask unless local spacing is
   at least `8.50 um`. Notebook:
-  `notebooks/biohub-exp106-density-spacing-gate-candidate.ipynb`. Kaggle v1 is
-  running as `dalloliogm/biohub-exp106-density-spacing-gate`.
+  `notebooks/biohub-exp106-density-spacing-gate-candidate.ipynb`. Kaggle v1
+  completed as `dalloliogm/biohub-exp106-density-spacing-gate`; structural checks
+  passed with rows `252,696`, nodes `128,617`, edges `124,079`, and divisions
+  `418`. Submit attempt returned HTTP 400 `CreateSubmission`, with no submission
+  ID created.
 - Additional queued probe: Exp107 density gain `0.0475`. This keeps Exp092's
   midpoint/refinement behavior and all safe-division settings, changing only
   `BIOHUB_GAP_DENSITY_GAIN` from `0.040` to `0.0475`. Notebook:
-  `notebooks/biohub-exp107-density-gain-0475-candidate.ipynb`. Kaggle v1 is
-  running as `dalloliogm/biohub-exp107-density-gain-0475`.
+  `notebooks/biohub-exp107-density-gain-0475-candidate.ipynb`. Kaggle v1
+  completed as `dalloliogm/biohub-exp107-density-gain-0475`; structural checks
+  passed with rows `252,696`, nodes `128,616`, edges `124,080`, and divisions
+  `418`. Submit attempt returned HTTP 400 `CreateSubmission`, with no submission
+  ID created.
 - Forum-derived next probe: build an original frozen-transition-aware candidate
   on top of Exp073/Exp092. Detect exact or near-exact duplicate adjacent frames
   in each test movie; across frozen transitions prefer zero/near-zero
@@ -336,6 +342,19 @@
 - Created and uploaded Exp107 density gain `0.0475` candidate as
   `dalloliogm/biohub-exp107-density-gain-0475`. Local notebook JSON and Python
   syntax checks passed; Kaggle v1 is running.
+- Exp106 and Exp107 both completed on Kaggle and were downloaded locally under
+  `kaggle_outputs/`. Structural checks passed for both using dataset-local
+  `node_id` keys. Exp106 output SHA-256:
+  `f4689e43df5b769dc45117b96e09c91753b73326a9ad2157c232df6bb63d3565`; Exp107
+  output SHA-256:
+  `c8429be1242e8bfb342e46e66620d491b87674ab73aa45e6a59a5c345a528029`.
+  Evidence preserved in
+  `references/exp106-density-spacing-gate-v1-output/` and
+  `references/exp107-density-gain-0475-v1-output/`.
+- Tried to submit Exp106 and Exp107 after validation on 2026-07-18. Both uploads
+  reached Kaggle, but `CreateSubmission` returned HTTP 400 and neither attempt
+  created a new submission record. Current live submission list still has only
+  Exp105 (`54800958`) pending for 2026-07-18.
 - Created, ran, validated, and submitted Exp091 density gap + adaptive
   short-track rescue as competition submission `54769343`. Short-track rescue
   activated and recovered 177 nodes across 40 components.
