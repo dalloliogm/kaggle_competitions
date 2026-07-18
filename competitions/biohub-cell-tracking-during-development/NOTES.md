@@ -223,6 +223,24 @@
   blended with local endpoint motion at weight `0.5`, and is clamped to at most
   `4.0 um` from the original midpoint before the existing intensity refinement.
 
+## 2026-07-18: Exp105 weighted gap-node interpolation
+
+- Notebook:
+  `notebooks/biohub-exp105-weighted-gap-interpolation-candidate.ipynb`.
+- Kernel: `dalloliogm/biohub-exp105-weighted-gap-interpolation`, version 1.
+- Submission: `54800958`, pending at creation time.
+- Scope: full Exp092-family rerun; no blend and no division-policy change.
+- Output compared with Exp092: rows `+3`, nodes `+2`, edges `+1`; SHA differs
+  from Exp092.
+- Run stats: `2,020` gap pairs selected and synthetic nodes inserted;
+  `2,020` synthetic nodes intensity-refined; weighted motion used for `2,019`
+  synthetic gaps and clamped `0`.
+- Structural checks passed: exact expected columns, contiguous unique ids, no
+  nulls, no duplicate node keys, all edge endpoints present, consecutive-frame
+  edges only, max indegree `1`, max outdegree `2`, no duplicate edges, and
+  correct node/edge sentinels.
+- Evidence: `references/exp105-weighted-gap-interpolation-v1-output/`.
+
 ## 2026-07-03: Gap-2 ablation prepared
 
 - Candidate source: the auditable delta in the reviewed LB-0.839 public notebook,

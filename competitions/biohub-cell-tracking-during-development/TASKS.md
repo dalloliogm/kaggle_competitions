@@ -54,7 +54,8 @@
   nodes using a local-motion blend (`BIOHUB_GAP_MIDPOINT_MOTION_WEIGHT=0.5`,
   clamp `4.0 um`) instead of a pure midpoint. Notebook:
   `notebooks/biohub-exp105-weighted-gap-interpolation-candidate.ipynb`. Kaggle
-  v1 is running as `dalloliogm/biohub-exp105-weighted-gap-interpolation`.
+  v1 completed as `dalloliogm/biohub-exp105-weighted-gap-interpolation`;
+  structural checks passed and submission `54800958` is pending public LB.
 - Parallel queued probe: Exp106 density spacing gate. This keeps Exp092's
   midpoint/refinement behavior, raises density-gap gain to `0.04375`, and blocks
   candidates outside the reference `0.040` density mask unless local spacing is
@@ -307,7 +308,10 @@
   geometry.
 - Created and uploaded Exp105 weighted gap-node interpolation candidate as
   `dalloliogm/biohub-exp105-weighted-gap-interpolation`. Local notebook JSON and
-  Python syntax checks passed; Kaggle v1 is running.
+  Python syntax checks passed. Kaggle v1 completed with rows `252,688`, nodes
+  `128,614`, edges `124,074`; weighted motion used for `2019/2020` synthetic
+  gap nodes. Submitted as `54800958`. Evidence:
+  `references/exp105-weighted-gap-interpolation-v1-output/`.
 - Created and uploaded Exp106 density spacing gate candidate as
   `dalloliogm/biohub-exp106-density-spacing-gate`. Local notebook JSON and
   Python syntax checks passed; Kaggle v1 is running.

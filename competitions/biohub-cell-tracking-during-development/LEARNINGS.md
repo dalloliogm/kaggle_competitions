@@ -130,6 +130,11 @@ Capture durable information learned while working on this competition. This is f
   scored `0.902`, while Exp102 and Exp104 tied Exp073 at `0.903`. Nearby
   safe-division permissiveness is therefore not the next high-leverage axis.
   Move to gap-node geometry and other non-division graph-construction changes.
+- Exp105 confirms the weighted gap-node interpolation branch is active on test:
+  local motion was used for `2019/2020` synthetic gap nodes and the output SHA
+  differs from Exp092. The graph size barely changed (`+2` nodes, `+1` edge
+  versus Exp092), so its public LB will mostly test whether coordinates of
+  inserted gap nodes matter rather than graph-density changes.
 
 ## Ensembling And Submission Behavior
 
