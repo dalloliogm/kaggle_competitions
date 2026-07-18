@@ -67,6 +67,19 @@
   `BIOHUB_GAP_DENSITY_GAIN` from `0.040` to `0.0475`. Notebook:
   `notebooks/biohub-exp107-density-gain-0475-candidate.ipynb`. Kaggle v1 is
   running as `dalloliogm/biohub-exp107-density-gain-0475`.
+- Forum-derived next probe: build an original frozen-transition-aware candidate
+  on top of Exp073/Exp092. Detect exact or near-exact duplicate adjacent frames
+  in each test movie; across frozen transitions prefer zero/near-zero
+  displacement links and suppress normal extrapolation; after a frozen run ends,
+  allow a small one-step relaxed jump gate because real motion may be accumulated.
+  Keep this conditional on detected duplicated transitions only.
+- Add component-size diagnostics to the submission validator before any stronger
+  graph repair. The forum reports scoring timeouts may depend on connected
+  component structure, not just node count.
+- Medium-effort forum-derived branch: affinity rescoring from existing learned
+  edge probabilities plus local motion consistency, inspired by the temporal
+  affinity/flow-field discussion. Do this after the frozen-transition probe or
+  when current Exp105/106/107 results return.
 - Public-notebook follow-up plan from the 2026-07-17 scan:
   1. Exp105 weighted gap-node interpolation, using local motion to place
      inserted gap nodes instead of pure midpoint placement.

@@ -9,6 +9,16 @@ Capture durable information learned while working on this competition. This is f
   approximately isotropic working grid.
 - Training labels are sparse GEFF tracking graphs, and dataset names group fields
   of view by embryo prefix.
+- A 2026-07-18 forum scan found a credible report that many `6bba` train movies
+  contain exact duplicate adjacent frames while `44b6` does not. The reported
+  numbers were `947` duplicate adjacent pairs across `114/128` `6bba` movies and
+  none across `71` `44b6` movies. Treat duplicated/frozen transitions as a
+  likely acquisition artifact and test conditional linking/gap behavior rather
+  than assuming constant time spacing everywhere.
+- Boundary-adjacent cells may leave and re-enter the field of view with GT
+  annotations split into separate lineages. Boundary gap closing is therefore
+  risky: a biologically continuous link can be scored as a false positive if the
+  sparse GT intentionally split the track.
 
 ## Target And Metric
 
@@ -19,6 +29,10 @@ Capture durable information learned while working on this competition. This is f
   but total-node overprediction is penalized separately.
 - Official division evaluation allows temporal tolerance and tests connected
   lineage coverage; exact predicted-parent matching is not an adequate proxy.
+- The hosts announced a patch for a division-Jaccard exploit on 2026-07-18 and
+  plan to rescore submissions. Do not optimize around fake forks, duplicated
+  tracks, artificial hubs, or other metric-hack graph patterns; use the patched
+  local evaluator before trusting division-heavy gains.
 
 ## Validation
 
@@ -51,6 +65,11 @@ Capture durable information learned while working on this competition. This is f
 - Auditable rule-based family: DoG -> physical NMS -> Hungarian linking -> gap
   interpolation -> isolated-node pruning.
 - Ceiling-raising family: temporal 3D U-Net + learned edge model/transformer + ILP.
+- Forum discussion suggests a promising higher-ceiling reformulation: temporal
+  affinity or flow-field tracking, where short-track pseudo-labels supervise
+  local displacement/link fields. The lowest-cost version for this workspace is
+  not a new model from scratch, but rescoring candidate links using existing
+  learned edge probabilities plus local motion consistency.
 - Several notebooks labeled U-Net/ILP actually execute only the rule-based path.
 - The actual pretrained `unet_transformer` + ILP pipeline scored `0.839409` exact
   validation versus `0.810458` for the best classical model. Aggregate edges
