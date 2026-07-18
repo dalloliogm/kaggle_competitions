@@ -53,7 +53,8 @@
   Exp092 threshold+density-gap graph recipe but places inserted synthetic gap
   nodes using a local-motion blend (`BIOHUB_GAP_MIDPOINT_MOTION_WEIGHT=0.5`,
   clamp `4.0 um`) instead of a pure midpoint. Notebook:
-  `notebooks/biohub-exp105-weighted-gap-interpolation-candidate.ipynb`.
+  `notebooks/biohub-exp105-weighted-gap-interpolation-candidate.ipynb`. Kaggle
+  v1 is running as `dalloliogm/biohub-exp105-weighted-gap-interpolation`.
 - Public-notebook follow-up plan from the 2026-07-17 scan:
   1. Exp105 weighted gap-node interpolation, using local motion to place
      inserted gap nodes instead of pure midpoint placement.
@@ -298,8 +299,9 @@
   `0.903`, Exp103 `0.902`, Exp104 `0.903`. Broadening or tightening safe
   divisions did not improve beyond Exp073, so the next active axis is gap-node
   geometry.
-- Created Exp105 weighted gap-node interpolation candidate. Local notebook JSON
-  and Python syntax checks passed; Kaggle run pending.
+- Created and uploaded Exp105 weighted gap-node interpolation candidate as
+  `dalloliogm/biohub-exp105-weighted-gap-interpolation`. Local notebook JSON and
+  Python syntax checks passed; Kaggle v1 is running.
 - Created, ran, validated, and submitted Exp091 density gap + adaptive
   short-track rescue as competition submission `54769343`. Short-track rescue
   activated and recovered 177 nodes across 40 components.
