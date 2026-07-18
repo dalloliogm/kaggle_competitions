@@ -93,6 +93,14 @@
   a near-zero relink gate with no velocity extrapolation; the first transition
   after a frozen pair uses a relaxed no-velocity release gate; gap closing through
   frozen pairs is suppressed. Local notebook Python syntax checks passed.
+- Exp108 candidate completed on Kaggle v2 as
+  `dalloliogm/biohub-exp108-frozen-transition-aware`; downloaded output passed
+  `scripts/biohub_validation_harness.py --skip-metric` with `252,282` rows,
+  `128,421` nodes, `123,861` edges, and no structural warnings. Frozen handling
+  activated only for the `6bba` movies (`10` exact frozen pairs each). Submitted
+  notebook version 2 with output `submission.csv` as Kaggle submission
+  `54813931`; current status `PENDING`. The paired Exp108 train-validation
+  kernel errored and should not be treated as validation evidence.
 - Add component-size diagnostics to the submission validator before any stronger
   graph repair. The forum reports scoring timeouts may depend on connected
   component structure, not just node count.
