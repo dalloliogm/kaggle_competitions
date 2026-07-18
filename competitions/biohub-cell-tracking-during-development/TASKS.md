@@ -85,6 +85,14 @@
   displacement links and suppress normal extrapolation; after a frozen run ends,
   allow a small one-step relaxed jump gate because real motion may be accumulated.
   Keep this conditional on detected duplicated transitions only.
+- Prepared Exp108 frozen-transition-aware notebooks:
+  `notebooks/biohub-exp108-frozen-transition-validation.ipynb` for labeled-train
+  exact validation and
+  `notebooks/biohub-exp108-frozen-transition-aware-candidate.ipynb` for test
+  inference. The graph delta is conditional: exact duplicated adjacent frames use
+  a near-zero relink gate with no velocity extrapolation; the first transition
+  after a frozen pair uses a relaxed no-velocity release gate; gap closing through
+  frozen pairs is suppressed. Local notebook Python syntax checks passed.
 - Add component-size diagnostics to the submission validator before any stronger
   graph repair. The forum reports scoring timeouts may depend on connected
   component structure, not just node count.

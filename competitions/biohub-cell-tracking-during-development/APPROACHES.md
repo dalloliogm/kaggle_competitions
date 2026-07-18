@@ -49,6 +49,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | 2026-07-18 | Exp105 weighted gap-node interpolation | `notebooks/biohub-exp105-weighted-gap-interpolation-candidate.ipynb` | Kaggle v1 complete as `dalloliogm/biohub-exp105-weighted-gap-interpolation`; structural checks passed; rows `252,688`, nodes `128,614`, edges `124,074`; weighted motion used for `2019/2020` synthetic gaps; submitted as `54800958` | Public LB `0.903`; tied Exp073 |
 | 2026-07-18 | Exp106 density spacing gate | `notebooks/biohub-exp106-density-spacing-gate-candidate.ipynb` | Kaggle v1 complete as `dalloliogm/biohub-exp106-density-spacing-gate`; structural checks passed; rows `252,696`, nodes `128,617`, edges `124,079`, divisions `418` | User manually submitted as `54802933`; public LB `0.903`; tied Exp073 |
 | 2026-07-18 | Exp107 density gain 0.0475 | `notebooks/biohub-exp107-density-gain-0475-candidate.ipynb` | Kaggle v1 complete as `dalloliogm/biohub-exp107-density-gain-0475`; structural checks passed; rows `252,696`, nodes `128,616`, edges `124,080`, divisions `418` | User manually submitted as `54802935`; public LB `0.903`; tied Exp073 |
+| 2026-07-18 | Exp108 frozen-transition-aware graph recipe | `notebooks/biohub-exp108-frozen-transition-aware-candidate.ipynb` and `notebooks/biohub-exp108-frozen-transition-validation.ipynb` | Prepared; local notebook Python syntax checks passed. Validation notebook runs on one labeled train movie per embryo; candidate notebook runs on test. | Upload/run validation first, then candidate if validation and frozen-transition activation look sane |
 
 ## Backlog
 
@@ -68,6 +69,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | Outside-base spacing gate for density gaps | Preserve safe base gap mask but require local spacing for extra density-adaptive candidates | Medium | Low | P1 |
 | TTA plus ILP-cost branch | Public notebook changes inference averaging and ILP appearance/disappearance costs; broader signal than post-processing only | Medium-high | High | P1 |
 | Bright/top-hat detector mix | Alternative detector preprocessing could complement Exp073 errors | Unknown | High | P2 |
+| Frozen-transition-aware relink/gap repair | Forum evidence reports systematic exact duplicate adjacent frames in `6bba`; condition motion relinking and gap closing on detected frozen transitions | Medium | Medium | P0 |
 
 ## Abandoned
 
