@@ -101,6 +101,14 @@
   notebook version 2 with output `submission.csv` as Kaggle submission
   `54813931`; current status `PENDING`. The paired Exp108 train-validation
   kernel errored and should not be treated as validation evidence.
+- Last-slot split candidate Exp109:
+  `notebooks/biohub-exp109-exp092-exp108-6bba05db-split.ipynb`. It is a
+  CSV-only notebook that uses Exp092 for `44b6_0113de3b`, `44b6_0b24845f`, and
+  `6bba_05b6850b`, and Exp108 only for `6bba_05db0fb1`. Kaggle v1 completed as
+  `dalloliogm/biohub-exp109-exp092-exp108-6bba05db-split`; downloaded output
+  passed the structural harness with `252,306` rows, `128,435` nodes,
+  `123,871` edges, and no warnings. Submitted as Kaggle submission `54815064`;
+  current status `PENDING`.
 - Add component-size diagnostics to the submission validator before any stronger
   graph repair. The forum reports scoring timeouts may depend on connected
   component structure, not just node count.
