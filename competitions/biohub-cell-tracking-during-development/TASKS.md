@@ -48,7 +48,12 @@
   safe-division insertion upstream (`4.42`, `7.90`, `7.25`, `0.0069`,
   `0.0033`) instead of post-hoc edge deletion. Kaggle v1 completed as
   `dalloliogm/biohub-exp104-safe-division-precision`; structural checks passed
-  and submission `54785550` is pending public LB.
+  and submission `54785550` scored public LB `0.903`, tying Exp073.
+- Current next probe: Exp105 weighted gap-node interpolation. This keeps the
+  Exp092 threshold+density-gap graph recipe but places inserted synthetic gap
+  nodes using a local-motion blend (`BIOHUB_GAP_MIDPOINT_MOTION_WEIGHT=0.5`,
+  clamp `4.0 um`) instead of a pure midpoint. Notebook:
+  `notebooks/biohub-exp105-weighted-gap-interpolation-candidate.ipynb`.
 - Public-notebook follow-up plan from the 2026-07-17 scan:
   1. Exp105 weighted gap-node interpolation, using local motion to place
      inserted gap nodes instead of pure midpoint placement.
@@ -289,6 +294,12 @@
   changes rows `251,900 -> 251,832`, nodes `128,217 -> 128,216`, edges
   `123,683 -> 123,616`, and division-like sources `418 -> 351`. Evidence:
   `references/exp104-safe-division-precision-v1-output/`.
+- Public LB returned for the 2026-07-17 division batch: Exp101 `0.902`, Exp102
+  `0.903`, Exp103 `0.902`, Exp104 `0.903`. Broadening or tightening safe
+  divisions did not improve beyond Exp073, so the next active axis is gap-node
+  geometry.
+- Created Exp105 weighted gap-node interpolation candidate. Local notebook JSON
+  and Python syntax checks passed; Kaggle run pending.
 - Created, ran, validated, and submitted Exp091 density gap + adaptive
   short-track rescue as competition submission `54769343`. Short-track rescue
   activated and recovered 177 nodes across 40 components.

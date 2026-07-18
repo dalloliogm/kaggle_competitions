@@ -207,6 +207,22 @@
   correct node/edge sentinels.
 - Evidence: `references/exp104-safe-division-precision-v1-output/`.
 
+## 2026-07-18: Division batch result and Exp105 pivot
+
+- Exp101 public LB: `0.902`.
+- Exp102 public LB: `0.903`.
+- Exp103 public LB: `0.902`.
+- Exp104 public LB: `0.903`.
+- Interpretation: hidden public test does not reward nearby safe-division
+  permissiveness changes around Exp073. Aggressive recall expansion and
+  threshold+density plus mild expansion regressed by `0.001`; mild expansion and
+  precision tightening tied baseline.
+- Pivot: Exp105 targets synthetic gap-node placement rather than division count.
+  It keeps the Exp092 threshold+density-gap branch and changes only the position
+  of newly inserted gap nodes. The synthetic node starts from the midpoint, is
+  blended with local endpoint motion at weight `0.5`, and is clamped to at most
+  `4.0 um` from the original midpoint before the existing intensity refinement.
+
 ## 2026-07-03: Gap-2 ablation prepared
 
 - Candidate source: the auditable delta in the reviewed LB-0.839 public notebook,

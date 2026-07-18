@@ -126,6 +126,10 @@ Capture durable information learned while working on this competition. This is f
   division-like sources from `418` to `351` while preserving almost the same node
   count (`128,217 -> 128,216`). The public LB result should indicate whether the
   Exp073 hidden-test division policy is over- or under-permissive.
+- The 2026-07-17 division batch did not improve public LB: Exp101 and Exp103
+  scored `0.902`, while Exp102 and Exp104 tied Exp073 at `0.903`. Nearby
+  safe-division permissiveness is therefore not the next high-leverage axis.
+  Move to gap-node geometry and other non-division graph-construction changes.
 
 ## Ensembling And Submission Behavior
 
