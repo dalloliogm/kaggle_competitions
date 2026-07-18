@@ -68,16 +68,16 @@
   `notebooks/biohub-exp106-density-spacing-gate-candidate.ipynb`. Kaggle v1
   completed as `dalloliogm/biohub-exp106-density-spacing-gate`; structural checks
   passed with rows `252,696`, nodes `128,617`, edges `124,079`, and divisions
-  `418`. Submit attempt returned HTTP 400 `CreateSubmission`, with no submission
-  ID created.
+  `418`. CLI submit attempts returned HTTP 400 `CreateSubmission`; the user
+  manually submitted it as `54802933`, currently pending public LB.
 - Additional queued probe: Exp107 density gain `0.0475`. This keeps Exp092's
   midpoint/refinement behavior and all safe-division settings, changing only
   `BIOHUB_GAP_DENSITY_GAIN` from `0.040` to `0.0475`. Notebook:
   `notebooks/biohub-exp107-density-gain-0475-candidate.ipynb`. Kaggle v1
   completed as `dalloliogm/biohub-exp107-density-gain-0475`; structural checks
   passed with rows `252,696`, nodes `128,616`, edges `124,080`, and divisions
-  `418`. Submit attempt returned HTTP 400 `CreateSubmission`, with no submission
-  ID created.
+  `418`. CLI submit attempts returned HTTP 400 `CreateSubmission`; the user
+  manually submitted it as `54802935`, currently pending public LB.
 - Forum-derived next probe: build an original frozen-transition-aware candidate
   on top of Exp073/Exp092. Detect exact or near-exact duplicate adjacent frames
   in each test movie; across frozen transitions prefer zero/near-zero
@@ -366,6 +366,10 @@
   reached Kaggle, but `CreateSubmission` returned HTTP 400 and neither attempt
   created a new submission record. Current live submission list still has only
   Exp105 (`54800958`) pending for 2026-07-18.
+- The user manually submitted the two validated CSVs on 2026-07-18. Kaggle
+  submission records were created: Exp106 is assumed to be `54802933` and Exp107
+  is assumed to be `54802935`, based on the order and timestamps of the manual
+  uploads. Both are pending public LB.
 - Created `scripts/biohub_validation_harness.py` and
   `references/validation-harness-plan.md`. The harness was smoke-tested on
   downloaded Exp106 and Exp107 outputs with `--skip-metric`; both produced valid
