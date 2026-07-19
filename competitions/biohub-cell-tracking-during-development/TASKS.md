@@ -428,6 +428,13 @@
   activated and recovered 177 nodes across 40 components.
 - Created, ran, validated, and submitted Exp092 threshold `0.96875` + density
   gap as competition submission `54769344`.
+- Created Exp111 original-branch exploration notebook:
+  `notebooks/biohub-exp111-original-branch-exploration.ipynb`. This freezes the
+  Exp092/0.903-family graph recipe and adds diagnostics rather than a new scoring
+  tweak. Static notebook JSON and Python syntax checks passed. Next action:
+  upload/run on Kaggle T4, download `run_stats.csv` and
+  `exp111_original_branch_diagnostics.csv`, then decide the next targeted branch
+  from measured relaxed-link, long-edge, gap, division, and short-track patterns.
 
 ## Questions
 
@@ -436,3 +443,6 @@
   embryo-disjoint validation?
 - What are the exact aggregate and per-embryo validation metrics from version 7?
   The kernel completed, but `ListKernelSessionOutput` still returns HTTP 429.
+- Exp111 decision question: after diagnostics run, which single failure regime
+  is largest enough to justify exp112: relaxed motion links, long gap edges,
+  dataset-specific density, or safe-division burden?

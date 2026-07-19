@@ -52,6 +52,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | 2026-07-18 | Exp108 frozen-transition-aware graph recipe | `notebooks/biohub-exp108-frozen-transition-aware-candidate.ipynb` and `notebooks/biohub-exp108-frozen-transition-validation.ipynb` | Candidate Kaggle v2 complete as `dalloliogm/biohub-exp108-frozen-transition-aware`; structural harness passed: `252,282` rows, `128,421` nodes, `123,861` edges, `418` division-like sources. Validation notebook errored and was not used as evidence. | Submitted candidate as `54813931`; status pending |
 | 2026-07-18 | Exp109 Exp092/Exp108 one-movie split | `notebooks/biohub-exp109-exp092-exp108-6bba05db-split.ipynb` | Kaggle v1 complete as `dalloliogm/biohub-exp109-exp092-exp108-6bba05db-split`; structural harness passed: `252,306` rows, `128,435` nodes, `123,871` edges. Uses Exp108 only for `6bba_05db0fb1`; Exp092 for all other datasets. | Submitted as `54815064`; Kaggle rejected with incorrect-format message despite local structural validity. Do not retry CSV-spliced outputs until the checker gap is understood. |
 | 2026-07-19 | Exp110 ILP birth/death costs | `notebooks/biohub-exp110-ilp-birth-death-cost-candidate.ipynb` | Kaggle v1 complete as `dalloliogm/biohub-exp110-ilp-birth-death-cost`; structural harness passed: `238,534` rows, `121,403` nodes, `117,131` edges, `320` division-like sources. Exp092-family TTA was already active, so this isolates ILP appearance/disappearance weights `0.0` / `1.4`. | Submitted as `54826078`; status pending. Meaningfully different from Exp092 (`12,141` semantic rows added, `26,292` removed), testing a more conservative graph. |
+| 2026-07-19 | Exp111 original-branch exploration | `notebooks/biohub-exp111-original-branch-exploration.ipynb` | Local JSON and Python syntax checks passed. Graph recipe intentionally frozen to Exp092/0.903-family settings; adds `exp111_original_branch_diagnostics.csv` with serialized-edge distance tails, relaxed motion-relink usage, gap additions, division burden, and short-track removal by dataset. | Upload/run on Kaggle T4, download diagnostics, and use them to choose the next targeted candidate. Do not submit by default unless output is materially different or a frozen-reference LB control is needed. |
 
 ## Backlog
 
@@ -72,6 +73,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | TTA plus ILP-cost branch | Public notebook changes inference averaging and ILP appearance/disappearance costs; broader signal than post-processing only | Medium-high | High | P1 |
 | Bright/top-hat detector mix | Alternative detector preprocessing could complement Exp073 errors | Unknown | High | P2 |
 | Frozen-transition-aware relink/gap repair | Forum evidence reports systematic exact duplicate adjacent frames in `6bba`; condition motion relinking and gap closing on detected frozen transitions | Medium | Medium | P0 |
+| Original-branch diagnostic-driven tuning | Exp111 measures where the 0.903-family branch is fragile before spending more submission slots | Medium | Low | P0 |
 
 ## Abandoned
 

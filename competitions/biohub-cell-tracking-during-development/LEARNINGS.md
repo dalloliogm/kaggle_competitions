@@ -169,6 +169,12 @@ Capture durable information learned while working on this competition. This is f
   leaderboard. Stop spending submission slots on nearby density/gap-radius
   micro-tuning unless a stronger validation harness identifies a specific
   recoverable error mode.
+- Exp111 should be treated as an exploratory branch, not a leaderboard-first
+  branch. The Exp092-family motion relinker already uses a learned-affinity bonus
+  in its assignment cost, so the immediate learning gap is not "add learned
+  affinity"; it is measuring whether risky graph regions are dominated by
+  relaxed motion links, long serialized edges, gap additions, safe divisions, or
+  dataset-specific short-track filtering.
 
 ## Ensembling And Submission Behavior
 
