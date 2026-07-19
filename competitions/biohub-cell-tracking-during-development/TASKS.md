@@ -147,7 +147,8 @@
   materially different from Exp092: `12,141` semantic rows added and `26,292`
   removed. This satisfies the "do not submit if count-identical" rule, but it is
   a more conservative graph, so the strategic question is whether to spend a
-  slot testing fewer nodes/edges/divisions after many `0.903` ties.
+  slot testing fewer nodes/edges/divisions after many `0.903` ties. Submitted as
+  Kaggle submission `54826078`; current status `PENDING`.
 - Operating rule for the rest of this challenge: Kaggle submissions may take
   several hours to validate, and user time is limited. If daily submission slots
   remain, run/validate/submit multiple independent candidates without waiting for
