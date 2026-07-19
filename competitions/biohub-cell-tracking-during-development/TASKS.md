@@ -447,6 +447,16 @@
   Next action: review this queue, attach/download the competition `test/*.zarr`
   volumes and regenerate with `--image-root` if crops are useful, then choose one
   targeted Exp112 rule from the reviewed labels. Do not build a full UI yet.
+- Created the public-facing, submission-agnostic review notebook
+  `notebooks/biohub-suspicious-tracking-event-review.ipynb` plus its sidecar
+  Kaggle kernel metadata. It discovers or accepts one or more `submission.csv`
+  files, ranks division-like sources, long edges, midpoint-like gap nodes,
+  fragmented movies, and low edge-to-node-ratio movies, and shows four-frame XY
+  projections when competition OME-Zarr data is attached. The graph-only path
+  ran top-to-bottom locally on two example submissions; notebook JSON, every
+  Python cell, metadata JSON, and the image-unavailable placeholder were
+  validated. This artifact is a notebook/kernel only and was not submitted to
+  the competition.
 
 ## Questions
 

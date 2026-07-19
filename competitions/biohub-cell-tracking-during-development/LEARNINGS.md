@@ -49,6 +49,16 @@ Capture durable information learned while working on this competition. This is f
 - Dataset-local `node_id` keys matter. A naive global `node_id` check produces
   false errors because Biohub node IDs are reused across datasets; validators
   must key edges and degrees by `(dataset, node_id)`.
+- Suspicious-event review can remain submission-agnostic and dependency-light:
+  endpoint joins plus physical distances identify long links and division
+  geometry, while union-find component counts and edge-to-node ratios expose
+  fragmentation. Midpoint residuals provide a useful review queue for likely
+  interpolated gap nodes, but every flag remains a triage heuristic rather than
+  an error label.
+- Image crops should be optional rather than a hard dependency. The public review
+  notebook tries installed Zarr first and the competition's Blosc2 timepoint
+  chunks second; without raw OME-Zarr movies it still provides complete event
+  tables, coordinate overlays, comparison counts, and a clear attachment prompt.
 
 ## Leakage And Rules
 
