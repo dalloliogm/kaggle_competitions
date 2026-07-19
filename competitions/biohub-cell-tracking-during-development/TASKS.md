@@ -140,8 +140,14 @@
   new TTA enablement experiment. It keeps the Exp092 threshold+density-gap graph
   recipe and changes only ILP appearance/disappearance weights to `0.0` / `1.4`,
   matching the public TTA/ILP-cost idea's distinctive cost setting. Notebook:
-  `notebooks/biohub-exp110-ilp-birth-death-cost-candidate.ipynb`. Submit only
-  after the Kaggle output downloads and passes the structural harness.
+  `notebooks/biohub-exp110-ilp-birth-death-cost-candidate.ipynb`. Kaggle v1
+  completed as `dalloliogm/biohub-exp110-ilp-birth-death-cost`; downloaded
+  output passed the structural harness with `238,534` rows, `121,403` nodes,
+  `117,131` edges, `320` division-like sources, and no warnings. It is
+  materially different from Exp092: `12,141` semantic rows added and `26,292`
+  removed. This satisfies the "do not submit if count-identical" rule, but it is
+  a more conservative graph, so the strategic question is whether to spend a
+  slot testing fewer nodes/edges/divisions after many `0.903` ties.
 - Operating rule for the rest of this challenge: Kaggle submissions may take
   several hours to validate, and user time is limited. If daily submission slots
   remain, run/validate/submit multiple independent candidates without waiting for
