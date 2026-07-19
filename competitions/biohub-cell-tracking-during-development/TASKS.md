@@ -161,7 +161,8 @@
   aggressive pruning). Local notebook JSON and Python syntax checks passed.
   Next action: upload/run both on Kaggle T4, download outputs, run the structural
   harness, compare row/node/edge/division deltas against Exp110, then decide
-  which if any deserves a submission slot.
+  which if any deserves a submission slot. Uploaded both as Kaggle v1 kernels on
+  2026-07-19; both initially reported `RUNNING`.
 - Operating rule for the rest of this challenge: Kaggle submissions may take
   several hours to validate, and user time is limited. If daily submission slots
   remain, run/validate/submit multiple independent candidates without waiting for
