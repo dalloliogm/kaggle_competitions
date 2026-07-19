@@ -5,7 +5,9 @@
 - Publish a readable public version of the current best ILP-cost notebook:
   `dalloliogm/biohub-exp110-ilp-birth-death-cost` should explain nodes, edges,
   divisions, and conservative ILP graph pruning without relying on private
-  experiment shorthand from this workspace.
+  experiment shorthand from this workspace. Kaggle version 2 was pushed on
+  2026-07-19 after Exp114/Exp115 freed the GPU batch slots; initial status was
+  `RUNNING`.
 - Improve beyond Exp110 public LB `0.909` (user-reported on 2026-07-19; CLI
   verification still pending because live polling was unavailable in that turn).
   Exp110 is now the working baseline; Exp073 `0.903`, copied LB893 `0.893`,
