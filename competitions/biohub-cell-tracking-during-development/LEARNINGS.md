@@ -193,6 +193,11 @@ Capture durable information learned while working on this competition. This is f
   `121,403` nodes, `117,131` edges, `320` division-like sources), so the score
   suggests the public LB rewarded pruning weak tracks/nodes/divisions more than
   preserving the denser `0.903` graph.
+- The immediate follow-up should be a controlled disappearance-cost sweep, not a
+  return to gap/division micro-tuning. Exp112 (`1.2`) and Exp113 (`1.6`) bracket
+  Exp110's `1.4` while keeping appearance cost `0.0`; their graph sizes should
+  tell whether the breakthrough came from a specific pruning level or from a
+  broader direction toward smaller ILP graphs.
 - Exp111's final submission and downloaded raw GEFF graphs are sufficient to
   enumerate synthetic gap insertions exactly: gap nodes are the final node IDs
   absent from the raw GEFF node-ID set. They also show that all 418 final

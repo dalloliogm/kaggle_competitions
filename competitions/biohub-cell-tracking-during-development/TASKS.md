@@ -153,6 +153,15 @@
   breaks the repeated `0.903` plateau and makes ILP-cost/graph-size calibration
   the highest-priority follow-up axis. CLI verification remains pending because
   the approval service rejected live Kaggle polling in the recording turn.
+- Prepared controlled Exp110 follow-ups:
+  `notebooks/biohub-exp112-ilp-disappearance-1-2-candidate.ipynb` and
+  `notebooks/biohub-exp113-ilp-disappearance-1-6-candidate.ipynb`. Both keep ILP
+  appearance cost at `0.0` and change only disappearance cost around Exp110's
+  winning `1.4` setting (`1.2` tests less aggressive pruning; `1.6` tests more
+  aggressive pruning). Local notebook JSON and Python syntax checks passed.
+  Next action: upload/run both on Kaggle T4, download outputs, run the structural
+  harness, compare row/node/edge/division deltas against Exp110, then decide
+  which if any deserves a submission slot.
 - Operating rule for the rest of this challenge: Kaggle submissions may take
   several hours to validate, and user time is limited. If daily submission slots
   remain, run/validate/submit multiple independent candidates without waiting for
