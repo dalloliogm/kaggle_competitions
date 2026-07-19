@@ -1,10 +1,10 @@
 {
   "id": "dalloliogm/biohub-exp110-ilp-birth-death-cost",
-  "title": "Biohub Exp110 ILP Birth Death Cost",
+  "title": "Biohub Cell Tracking: Conservative ILP Graph Pruning",
   "code_file": "biohub-exp110-ilp-birth-death-cost-candidate.ipynb",
   "language": "python",
   "kernel_type": "notebook",
-  "is_private": true,
+  "is_private": false,
   "enable_gpu": true,
   "enable_tpu": false,
   "enable_internet": false,

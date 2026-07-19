@@ -66,6 +66,9 @@ Capture durable information learned while working on this competition. This is f
   the active execution path and independently reproduce scores.
 - External public artifacts are allowed, but learned pipelines must remain
   reproducible without notebook internet access.
+- Public-facing competition notebooks need a different narrative than internal
+  experiment logs: explain the graph task, the node/edge/division schema, and the
+  single modeling idea; remove private experiment IDs and stale feedback blocks.
 
 ## Features
 
