@@ -195,6 +195,14 @@
   structural validation, then submit manually if valid and materially different.
   Uploaded both as Kaggle v1 kernels on 2026-07-19; both initially reported
   `RUNNING`.
+- Exp114 and Exp115 completed on Kaggle on 2026-07-19. Downloaded outputs passed
+  fast structural checks. Exp114 produced `237,078` rows, `120,663` nodes,
+  `116,415` edges, and `310` division-like sources; submitted as `54838832`,
+  status `PENDING`. Exp115 produced `233,682` rows, `118,940` nodes, `114,742`
+  edges, and `290` division-like sources; submitted as `54838833`, status
+  `PENDING`. A direct raw-CSV submission attempt returned Kaggle `400 Bad
+  Request`; code-submitting the completed kernel versions with `-k ... -v 1 -f
+  submission.csv` succeeded.
 - Operating rule for the rest of this challenge: Kaggle submissions may take
   several hours to validate, and user time is limited. If daily submission slots
   remain, run/validate/submit multiple independent candidates without waiting for
