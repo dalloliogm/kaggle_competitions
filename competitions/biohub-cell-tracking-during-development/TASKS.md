@@ -459,6 +459,8 @@
   the competition. Published Kaggle kernel version 1, then attached the public
   `romanrozen/biohub-best-score` output as the generic example submission for
   version 2 so the public notebook can run immediately without private inputs.
+  The subsequent presentation revision hides every code cell by default and
+  enlarges the four-frame event viewer into a 2x2 grid for easier inspection.
 
 ## Questions
 
