@@ -179,6 +179,14 @@
   `17:02:32.247` and `54835647` at `17:02:40.103`. Because descriptions are
   blank, the user clarified the order: Exp113 was submitted first as `54835643`,
   and Exp112 was submitted second as `54835647`.
+- Prepared two more same-day ILP-cost candidates while Exp112/Exp113 are pending:
+  `notebooks/biohub-exp114-ilp-disappearance-1-5-candidate.ipynb` and
+  `notebooks/biohub-exp115-ilp-disappearance-1-8-candidate.ipynb`. Both keep ILP
+  appearance cost `0.0` and change only disappearance cost. Exp114 (`1.5`) is a
+  near-optimum interpolation between Exp110 `1.4` and Exp113 `1.6`; Exp115
+  (`1.8`) tests stronger pruning. Local notebook JSON and Python syntax checks
+  passed. Next action: upload/run both on Kaggle, download outputs, run
+  structural validation, then submit manually if valid and materially different.
 - Operating rule for the rest of this challenge: Kaggle submissions may take
   several hours to validate, and user time is limited. If daily submission slots
   remain, run/validate/submit multiple independent candidates without waiting for

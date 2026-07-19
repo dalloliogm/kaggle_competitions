@@ -204,6 +204,10 @@ Capture durable information learned while working on this competition. This is f
   the more hypothesis-aligned public-LB test if we believe Exp110 won by pruning
   weak graph elements, while Exp112 is the control for whether Exp110 already
   pruned too far.
+- While Exp112/Exp113 are pending, the most informative extra same-day slots are
+  still on the ILP pruning curve: Exp114 (`1.5`) refines between the known
+  breakthrough `1.4` and the submitted stronger-pruning `1.6`, while Exp115
+  (`1.8`) tests whether the smaller-graph direction continues to help.
 - Exp111's final submission and downloaded raw GEFF graphs are sufficient to
   enumerate synthetic gap insertions exactly: gap nodes are the final node IDs
   absent from the raw GEFF node-ID set. They also show that all 418 final

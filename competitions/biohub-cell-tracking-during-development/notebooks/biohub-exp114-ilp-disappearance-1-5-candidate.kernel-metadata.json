@@ -1,0 +1,24 @@
+{
+  "id": "dalloliogm/biohub-exp114-ilp-disappearance-1-5-candidate",
+  "title": "Biohub Exp114 ILP Disappearance 1.5 Candidate",
+  "code_file": "biohub-exp114-ilp-disappearance-1-5-candidate.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [
+    "pilkwang/biohub-tracking-support-pack-50ep-v1",
+    "thibautgoldsborough/cellmot-baseline-artifacts"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "model_sources": [],
+  "machine_shape": "NvidiaTeslaT4"
+}
