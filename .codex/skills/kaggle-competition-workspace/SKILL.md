@@ -150,6 +150,55 @@ For running notebooks on Kaggle from this repo, prefer the existing helper scrip
 
 Preserve Kaggle compatibility in code: use `/kaggle/input/...` and `/kaggle/working` on Kaggle, with local fallbacks such as `data/` and `working/` only when useful.
 
+### Code-Competition Submissions
+
+Some competitions accept only code/notebook submissions even though the executed
+notebook writes a `submission.csv`. For these, raw CSV upload may fail with a
+generic Kaggle `400 Bad Request`. Submit the completed kernel version instead:
+
+```bash
+kaggle competitions submit <competition-slug> \
+  -k owner/kernel-slug \
+  -v <completed-version-number> \
+  -f submission.csv \
+  -m "short experiment description"
+```
+
+Before spending a daily submission slot:
+
+- confirm the kernel status is `COMPLETE`;
+- download the output with `./scripts/kaggle_output.sh owner/kernel-slug`;
+- validate the produced `submission.csv` schema, row IDs, nulls, row types, and
+  competition-specific graph/ID invariants;
+- record the row/node/edge counts, the submission ID, and the pending/complete
+  status in `TASKS.md` and `APPROACHES.md`.
+
+When evaluations take hours and the user explicitly wants to use multiple daily
+slots, do not wait for earlier pending submissions if independent completed
+kernels are already valid. Submit the distinct completed kernel versions, then
+compare all leaderboard results together after they finish.
+
+### Public Notebook Publication
+
+When the user wants to share a competition notebook publicly, treat this as a
+publication edit rather than ordinary experiment logging:
+
+- keep the algorithm and data sources unchanged unless the user asks for a new
+  experiment;
+- rewrite the title, introduction, and summary cells for an external reader;
+- explain the competition objective, submission schema, metric implications, and
+  the single modeling idea being demonstrated;
+- remove private experiment shorthand, stale feedback/debug blocks, and
+  references to private notebook IDs that readers cannot interpret;
+- clear stale outputs before pushing a new public kernel version;
+- set the sidecar `kernel-metadata.json` intentionally, including `is_private`
+  and GPU/internet settings.
+
+If Kaggle rejects the push with `Maximum batch GPU session count ... reached`,
+check currently running kernels with `kaggle_status.sh` and retry after a batch
+GPU slot frees. Do not cancel useful running experiments unless the user
+explicitly authorizes it.
+
 ## When To Suggest A Separate Repo
 
 Suggest a dedicated repo only when the competition grows into a real project: reusable `src/`, configs, tests, multiple pipelines, team collaboration, or a production-style inference package.
