@@ -198,6 +198,12 @@ Capture durable information learned while working on this competition. This is f
   Exp110's `1.4` while keeping appearance cost `0.0`; their graph sizes should
   tell whether the breakthrough came from a specific pruning level or from a
   broader direction toward smaller ILP graphs.
+- The completed Exp112/Exp113 sweep cleanly brackets Exp110's graph size.
+  Exp112 (`1.2`) adds back `+2,245` rows versus Exp110, while Exp113 (`1.6`)
+  removes another `-2,639` rows. Both are structurally valid. This makes Exp113
+  the more hypothesis-aligned public-LB test if we believe Exp110 won by pruning
+  weak graph elements, while Exp112 is the control for whether Exp110 already
+  pruned too far.
 - Exp111's final submission and downloaded raw GEFF graphs are sufficient to
   enumerate synthetic gap insertions exactly: gap nodes are the final node IDs
   absent from the raw GEFF node-ID set. They also show that all 418 final

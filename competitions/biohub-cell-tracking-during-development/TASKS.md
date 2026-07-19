@@ -163,6 +163,17 @@
   harness, compare row/node/edge/division deltas against Exp110, then decide
   which if any deserves a submission slot. Uploaded both as Kaggle v1 kernels on
   2026-07-19; both initially reported `RUNNING`.
+- Exp112 and Exp113 completed on Kaggle and both passed the structural harness
+  with no warnings. Exp112 (`disappearance=1.2`) produced `240,779` rows,
+  `122,541` nodes, `118,238` edges, and `336` division-like sources; versus
+  Exp110 this is `+2,245` rows, `+1,138` nodes, `+1,107` edges, and `+16`
+  divisions. Exp113 (`disappearance=1.6`) produced `235,895` rows, `120,065`
+  nodes, `115,830` edges, and `304` division-like sources; versus Exp110 this is
+  `-2,639` rows, `-1,338` nodes, `-1,301` edges, and `-16` divisions. Evidence:
+  `references/exp112-ilp-disappearance-1-2-v1-output/` and
+  `references/exp113-ilp-disappearance-1-6-v1-output/`. If only one gets a slot,
+  prefer Exp113 because it continues the pruning direction that likely drove
+  Exp110's `0.909`; Exp112 is a useful control for whether Exp110 over-pruned.
 - Operating rule for the rest of this challenge: Kaggle submissions may take
   several hours to validate, and user time is limited. If daily submission slots
   remain, run/validate/submit multiple independent candidates without waiting for
