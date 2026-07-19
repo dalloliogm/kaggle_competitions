@@ -1,0 +1,22 @@
+{
+  "id": "dalloliogm/biohub-suspicious-tracking-event-review",
+  "title": "Biohub Suspicious Tracking Event Review",
+  "code_file": "biohub-suspicious-tracking-event-review.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [
+    "cell-tracking",
+    "visualization",
+    "graph-diagnostics"
+  ],
+  "dataset_sources": [],
+  "kernel_sources": [],
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "model_sources": []
+}
