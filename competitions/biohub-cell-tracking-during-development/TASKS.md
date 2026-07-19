@@ -177,8 +177,8 @@
 - User manually submitted both Exp112 and Exp113 on 2026-07-19. Live Kaggle list
   shows two new pending blank-description submissions: `54835643` at
   `17:02:32.247` and `54835647` at `17:02:40.103`. Because descriptions are
-  blank, map them by likely manual order: Exp112 -> `54835643`, Exp113 ->
-  `54835647`; verify from final scores or Kaggle UI if order is uncertain.
+  blank, the user clarified the order: Exp113 was submitted first as `54835643`,
+  and Exp112 was submitted second as `54835647`.
 - Operating rule for the rest of this challenge: Kaggle submissions may take
   several hours to validate, and user time is limited. If daily submission slots
   remain, run/validate/submit multiple independent candidates without waiting for
