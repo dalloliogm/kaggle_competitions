@@ -2,9 +2,10 @@
 
 ## Current Goal
 
-- Improve beyond Exp073 public LB `0.903`. Exp073 is now the working baseline;
-  copied LB893 `0.893`, no-safe `0.886`, and conservative-safe `0.889` are
-  superseded.
+- Improve beyond Exp110 public LB `0.909` (user-reported on 2026-07-19; CLI
+  verification still pending because live polling was unavailable in that turn).
+  Exp110 is now the working baseline; Exp073 `0.903`, copied LB893 `0.893`,
+  no-safe `0.886`, and conservative-safe `0.889` are superseded.
 - Submission `54758569`, copied
   `dalloliogm/biohub-exp073-gap-5-8-public`, completed with public LB `0.903`.
   It is byte-identical to public `lucashmateo/biohub-ct-exp073`.
@@ -135,7 +136,7 @@
   4. Larger detector-preprocessing branch from bright/top-hat U-Net mix only
      after inspecting its weight artifact and output density.
   Detailed notes: `references/recent-public-notebooks-2026-07-17.md`.
-- Current branch: Exp110 ILP birth/death costs. Inspection of Exp092/107/108
+- Current breakthrough: Exp110 ILP birth/death costs. Inspection of Exp092/107/108
   logs showed that D4-style detection TTA was already active, so this is not a
   new TTA enablement experiment. It keeps the Exp092 threshold+density-gap graph
   recipe and changes only ILP appearance/disappearance weights to `0.0` / `1.4`,
@@ -148,7 +149,10 @@
   removed. This satisfies the "do not submit if count-identical" rule, but it is
   a more conservative graph, so the strategic question is whether to spend a
   slot testing fewer nodes/edges/divisions after many `0.903` ties. Submitted as
-  Kaggle submission `54826078`; current status `PENDING`.
+  Kaggle submission `54826078`; user reported completed public LB `0.909`. This
+  breaks the repeated `0.903` plateau and makes ILP-cost/graph-size calibration
+  the highest-priority follow-up axis. CLI verification remains pending because
+  the approval service rejected live Kaggle polling in the recording turn.
 - Operating rule for the rest of this challenge: Kaggle submissions may take
   several hours to validate, and user time is limited. If daily submission slots
   remain, run/validate/submit multiple independent candidates without waiting for

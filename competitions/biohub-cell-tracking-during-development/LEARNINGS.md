@@ -185,6 +185,14 @@ Capture durable information learned while working on this competition. This is f
   affinity"; it is measuring whether risky graph regions are dominated by
   relaxed motion links, long serialized edges, gap additions, safe divisions, or
   dataset-specific short-track filtering.
+- Exp110 is the first clear improvement after the `0.903` plateau: the user
+  reported public LB `0.909` for submission `54826078`. The important mechanism
+  is conservative ILP appearance/disappearance costs (`0.0` / `1.4`), not TTA
+  enablement, because Exp092-family logs already had D4-style detection TTA
+  active. The output was much smaller than Exp092-family runs (`238,534` rows,
+  `121,403` nodes, `117,131` edges, `320` division-like sources), so the score
+  suggests the public LB rewarded pruning weak tracks/nodes/divisions more than
+  preserving the denser `0.903` graph.
 - Exp111's final submission and downloaded raw GEFF graphs are sufficient to
   enumerate synthetic gap insertions exactly: gap nodes are the final node IDs
   absent from the raw GEFF node-ID set. They also show that all 418 final
