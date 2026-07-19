@@ -8,13 +8,11 @@
   "enable_gpu": false,
   "enable_tpu": false,
   "enable_internet": false,
-  "keywords": [
-    "cell-tracking",
-    "visualization",
-    "graph-diagnostics"
-  ],
+  "keywords": [],
   "dataset_sources": [],
-  "kernel_sources": [],
+  "kernel_sources": [
+    "romanrozen/biohub-best-score"
+  ],
   "competition_sources": [
     "biohub-cell-tracking-during-development"
   ],

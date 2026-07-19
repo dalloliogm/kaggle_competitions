@@ -456,7 +456,9 @@
   ran top-to-bottom locally on two example submissions; notebook JSON, every
   Python cell, metadata JSON, and the image-unavailable placeholder were
   validated. This artifact is a notebook/kernel only and was not submitted to
-  the competition.
+  the competition. Published Kaggle kernel version 1, then attached the public
+  `romanrozen/biohub-best-score` output as the generic example submission for
+  version 2 so the public notebook can run immediately without private inputs.
 
 ## Questions
 
