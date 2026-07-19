@@ -175,6 +175,21 @@ Capture durable information learned while working on this competition. This is f
   affinity"; it is measuring whether risky graph regions are dominated by
   relaxed motion links, long serialized edges, gap additions, safe divisions, or
   dataset-specific short-track filtering.
+- Exp111's final submission and downloaded raw GEFF graphs are sufficient to
+  enumerate synthetic gap insertions exactly: gap nodes are the final node IDs
+  absent from the raw GEFF node-ID set. They also show that all 418 final
+  division-like sources correspond to the 418 safe divisions added in this run,
+  so the first division review queue can focus on distance-to-gate geometry.
+- Exp111 does not retain the tight-versus-relaxed motion pass on individual final
+  edges; only per-dataset counts survive in `run_stats.csv`. Any per-edge relaxed
+  queue reconstructed from the downloaded artifacts must therefore be labeled a
+  proxy. The static report uses the highest-distance non-gap/non-division links
+  after reserving the exact 10 longest final edges.
+- Raw competition test microscopy Zarr volumes are not present locally. The
+  first report remains usable as a 100-event graph review table with crop
+  placeholders and unsaved manual-label controls. Its generator accepts an
+  optional `--image-root` containing `<dataset>.zarr` volumes and will embed
+  t-1/t/t+1/t+2 XY max-projection crops when Zarr support and images are present.
 
 ## Ensembling And Submission Behavior
 

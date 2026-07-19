@@ -435,6 +435,18 @@
   upload/run on Kaggle T4, download `run_stats.csv` and
   `exp111_original_branch_diagnostics.csv`, then decide the next targeted branch
   from measured relaxed-link, long-edge, gap, division, and short-track patterns.
+- Exp111 completed and its downloaded output is under
+  `kaggle_outputs/biohub-exp111-original-branch-exploration/`. Created
+  `scripts/generate_exp111_suspicious_events_report.py` and the first static
+  review artifact at `reports/exp111_suspicious_events.html`. The report contains
+  100 events: 40 safe-division boundary cases, 30 synthetic gap insertions
+  prioritized to `44b6_0b24845f`, 20 explicitly marked relaxed-motion proxies,
+  and the 10 longest final edges. It includes all eight requested manual labels,
+  but labels are not persisted. Raw test image Zarr volumes are not local, so the
+  current report contains graph-derived tables and clear crop placeholders.
+  Next action: review this queue, attach/download the competition `test/*.zarr`
+  volumes and regenerate with `--image-root` if crops are useful, then choose one
+  targeted Exp112 rule from the reviewed labels. Do not build a full UI yet.
 
 ## Questions
 
@@ -446,3 +458,6 @@
 - Exp111 decision question: after diagnostics run, which single failure regime
   is largest enough to justify exp112: relaxed motion links, long gap edges,
   dataset-specific density, or safe-division burden?
+- Exp111 review question: which event class has the highest manual false-event
+  rate, and does that support a narrow upstream rule that can be validated before
+  another submission?
