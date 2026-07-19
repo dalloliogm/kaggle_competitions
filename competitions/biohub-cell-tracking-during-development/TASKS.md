@@ -135,6 +135,13 @@
   4. Larger detector-preprocessing branch from bright/top-hat U-Net mix only
      after inspecting its weight artifact and output density.
   Detailed notes: `references/recent-public-notebooks-2026-07-17.md`.
+- Current branch: Exp110 ILP birth/death costs. Inspection of Exp092/107/108
+  logs showed that D4-style detection TTA was already active, so this is not a
+  new TTA enablement experiment. It keeps the Exp092 threshold+density-gap graph
+  recipe and changes only ILP appearance/disappearance weights to `0.0` / `1.4`,
+  matching the public TTA/ILP-cost idea's distinctive cost setting. Notebook:
+  `notebooks/biohub-exp110-ilp-birth-death-cost-candidate.ipynb`. Submit only
+  after the Kaggle output downloads and passes the structural harness.
 - Operating rule for the rest of this challenge: Kaggle submissions may take
   several hours to validate, and user time is limited. If daily submission slots
   remain, run/validate/submit multiple independent candidates without waiting for
