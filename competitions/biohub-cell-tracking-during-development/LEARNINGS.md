@@ -250,6 +250,21 @@ Capture durable information learned while working on this competition. This is f
   `0.903`, `chenwensheng` `0.903`. Everyone on the minimal branch is at `0.950`.
 - Do NOT tune post-processing heuristics on top of the ILP. Fix or delete the
   post-processing and let the global optimizer's output stand.
+- Exp116 confirmed that two clean routes to the minimal public-solution branch
+  are exactly the same output. The direct export built from
+  `hengck23/minimal-baseline-tta-2gpu` and the hack-stripped
+  `kaiwalyaatulraut/biohub-cell-tracking-solution` both produced SHA256
+  `dbba5f419e5b341bf0b413154ebf785bcf9caa19857f21f6242b012ebc65cd90` with
+  `240,529` rows, `124,743` nodes, `115,786` edges, and zero divisions. Treat
+  them as one experiment, not two independent submission candidates.
+- Exp117 used the official local metric on labelled train movies to test whether
+  the minimal ILP branch merely needed cheaper divisions. It did not. The default
+  `ILP_DIVISION_WEIGHT=1.0` was locally best (`0.914831`) and emitted zero forks;
+  cheaper/negative division weights emitted hundreds to thousands of forks but
+  still found zero true-positive divisions on the labelled split. Lowering the
+  division cost alone trades edge quality for false forks. Any division gain must
+  come from better division candidates/features or a more selective division
+  scorer, not a blind cost sweep.
 
 ## Metric mechanics confirmed from official source
 

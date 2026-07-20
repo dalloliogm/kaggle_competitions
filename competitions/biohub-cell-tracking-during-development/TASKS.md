@@ -43,15 +43,24 @@ filtering, or ILP costs on top of the old post-processing stack.
   Both carry identical config (`POINT_THRESHOLD 0.9700`, ILP
   `-1.0 / 0.0 / 1.4 / 1.0`, `USE_TTA=True`, same 50ep weights pack) because
   kaiwalyaatulraut is a verbatim copy of hengck23 plus the hub hack. Expect
-  near-identical outputs. **Compare output SHAs before spending a second
-  submission slot on the other one.**
+  near-identical outputs. Downloaded outputs are byte-identical:
+  SHA256 `dbba5f419e5b341bf0b413154ebf785bcf9caa19857f21f6242b012ebc65cd90`,
+  `240,529` rows, `124,743` nodes, `115,786` edges, **0 divisions**. Do not spend
+  a second submission slot on the clean-ablation kernel while the direct-export
+  submission is pending.
 - **Exp117** (`dalloliogm/biohub-exp117-ilp-division-weight-sweep`) is a
   diagnostic that writes NO submission and costs NO slot. It sweeps
   `ILP_DIVISION_WEIGHT` over `[1.0, 0.5, 0.25, 0.0, -0.25, -0.5, -1.0]`, reusing
   one cached inference pass per movie, and scores every setting with the OFFICIAL
   metric on labelled train movies. This doubles as the trustworthy offline
-  harness the workspace has lacked. Kernel v3 running; v1 failed on a
-  float-index bug, v2 on `GraphView.copy()` - both fixed (see Gotchas).
+  harness the workspace has lacked. Kernel v3 COMPLETE. Local aggregate score was
+  best at the inherited default `division_weight=1.0` (`0.914831`, 0 forks);
+  making divisions cheaper created many forks but no division true positives on
+  the labelled split (`division_weight=0.5`: 984 forks, 14 div FP, 0 div TP,
+  score `0.912502`; negative weights worse). Conclusion: division improvement
+  needs better division candidates/scoring, not only cheaper ILP division cost.
+  v1 failed on a float-index bug, v2 on `GraphView.copy()` - both fixed (see
+  Gotchas).
 - Submission mechanism for this code competition: raw CSV upload fails with a
   generic `400`. Use
   `kaggle competitions submit <slug> -k owner/kernel-slug -v <version> -f submission.csv -m "..."`
