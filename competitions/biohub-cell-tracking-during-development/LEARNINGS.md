@@ -224,6 +224,69 @@ Capture durable information learned while working on this competition. This is f
   optional `--image-root` containing `<dataset>.zarr` volumes and will embed
   t-1/t/t+1/t+2 XY max-projection crops when Zarr support and images are present.
 
+## CRITICAL 2026-07-20: our post-processing stack is the bottleneck
+
+- Verified from the live leaderboard (1414 teams) and source inspection:
+  `hengck23/minimal-baseline-tta-2gpu` scores public LB `0.950` using the SAME
+  weights pack (`pilkwang/biohub-tracking-support-pack-50ep-v1`, split_0), the
+  SAME ILP weights (`edge -1.0`, `appearance 0.0`, `disappearance 1.4`,
+  `division 1.0`), the SAME detection threshold (`0.9700` vs our `0.96875`), and
+  D4 TTA — which our Exp110 also has (kernel logs confirm `TTA patch applied`).
+- The ONLY material difference: hengck23 exports the ILP graph VERBATIM
+  ("Direct node export. Rounding is only CSV serialization."). It has NO motion
+  relink, NO gap closing, NO short-track filter, NO linefit smoothing, NO safe
+  divisions. Our Exp110 runs 13 post-processing stages on top.
+- Therefore our inherited Exp073/LB893 post-processing stack costs about
+  `-0.041` of score. We are at `0.909`; the same model with no post-processing
+  is at `0.950`.
+- Mechanism: `filter_output_graph` step 4 does `edges = motion_edges`, a TOTAL
+  REPLACEMENT that discards all `114,860` ILP edges and rebuilds association with
+  a greedy causal two-pass Hungarian sweep. The global ILP optimum is thrown away;
+  the ILP only determines which nodes survive.
+- This explains the plateaus. The ILP disappearance sweep is flat because its
+  edges are discarded: `1.2 -> 0.908`, `1.4/1.5/1.6/1.8 -> 0.909`. And the whole
+  heavy-post-processing lineage is capped: `pilkwang` (author of the weights
+  pack) `0.903` with 80 submissions, `beicicc` `0.903` with 71, `romanrozen`
+  `0.903`, `chenwensheng` `0.903`. Everyone on the minimal branch is at `0.950`.
+- Do NOT tune post-processing heuristics on top of the ILP. Fix or delete the
+  post-processing and let the global optimizer's output stand.
+
+## Metric mechanics confirmed from official source
+
+- Read from `royerlab/kaggle-cell-tracking-competition`
+  (`src/tracking_cellmot/metrics.py`, `division_metrics.py`, `metrics.md`).
+- `adj_edge_jaccard = max(0, edge_jaccard * (1 - 0.1 * (N_pred - N_true)/N_true))`
+  where `N_true` is `estimated_number_of_nodes` from GEFF metadata (ALL cells,
+  including unannotated). **If `N_pred < N_true` the multiplier exceeds 1 and the
+  adjusted score can exceed the raw Jaccard.** Under-predicting nodes is rewarded.
+  This is an untapped, legitimate calibration axis.
+- Edge FP uses OR, not AND: `pred_valid = out_valid(source) OR in_valid(target)`.
+  Once a predicted node matches an annotated GT node with any GT out-edge, every
+  outgoing predicted edge is forced to TP or FP; there is no ignore escape.
+- FP and FN are structurally coupled, so fixing a MIS-LINK is worth ~2x either
+  error alone: `d(J)` per mis-link fixed `= (1+J)/D` vs `1/D` for a recovered FN.
+- `adj_edge_jaccard` is weight-averaged across datasets by `TP+FP+FN`;
+  `division_jaccard` is pooled (micro) across datasets, then one Jaccard.
+- Our detection is NOT the problem: measured `node_recall` `1.0000` and `0.9988`.
+  All edge loss is linking loss.
+
+## Division-metric exploit: patched, and already neutral
+
+- The exploit welded predictions into one weakly connected component plus fake
+  forks (hub node at `t=-1000`, coords `-10000`, `FORKS=5`,
+  `MAX_COMPONENTS=1400`), making every GT division a free TP.
+- Patched in commit `aa65e90a` (2026-07-17): `_weakly_connected_components` was
+  replaced by `_is_strongly_connected_division` requiring directed local topology.
+- Evidence the patch is ALREADY live in scoring: hacked forks score exactly the
+  same as the clean original (`outwrest` `0.950` = `hengck23` `0.950`;
+  `kaiwalyaatulraut`, `navazshfathi`, `nikitagajbhiye30` all `0.950`). If the
+  exploit still paid, they would be above it.
+- Therefore `0.950` is a legitimate clean score, NOT a hack score. Do not avoid
+  it on ethics grounds, and do not expect a rescore to lift us past that cluster.
+- The patch also hardened the edge side (non-consecutive edges dropped, duplicate
+  edges deduped, out-degree capped at 2). All three are neutral for us:
+  `dropped_nonconsecutive_edges=0`, `max_indegree=1`, `max_outdegree=2`.
+
 ## Ensembling And Submission Behavior
 
 - One-frame gaps must be represented by an inserted node and consecutive edges;

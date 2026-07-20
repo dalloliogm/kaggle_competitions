@@ -60,6 +60,44 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | 2026-07-19 | Exp115 ILP disappearance 1.8 | `notebooks/biohub-exp115-ilp-disappearance-1-8-candidate.ipynb` | Kaggle v1 complete; fast structural checks passed with `233,682` rows, `118,940` nodes, `114,742` edges, and `290` division-like sources. Controlled Exp110 follow-up: appearance cost stays `0.0`, disappearance cost changes `1.4 -> 1.8`. | Submitted as `54838833`; public LB `0.909`, tying Exp110. Stronger pruning did not improve public LB. |
 | 2026-07-20 | Exp116 clean public-solution tracker ablation | `notebooks/biohub-exp116-clean-public-solution-ablation.ipynb` | Local JSON/Python syntax checks passed. Starts from public `kaiwalyaatulraut/biohub-cell-tracking-solution`, removes the final negative-time hub/fork augmentation, and adds strict biological output checks. | Upload/run on Kaggle. Submit only if output is valid and materially informative versus Exp110. |
 
+## ILP disappearance sweep: RESOLVED 2026-07-20 — the axis is flat
+
+All five submissions scored, confirming the sweep is saturated:
+
+| Exp | Disappearance | Nodes | Public LB |
+| --- | ---: | ---: | ---: |
+| Exp112 | 1.2 | 122,541 | `0.908` |
+| Exp110 | 1.4 | 121,403 | `0.909` |
+| Exp114 | 1.5 | 120,663 | `0.909` |
+| Exp113 | 1.6 | 120,065 | `0.909` |
+| Exp115 | 1.8 | 118,940 | `0.909` |
+
+A 3.6k-node swing moves the score by at most `0.001`. This is a plateau, not a
+peak, and the cause is now known: post-processing discards the ILP edges, so ILP
+weights barely reach the submission. See the CRITICAL section in `LEARNINGS.md`.
+Stop sweeping ILP costs while the post-processing stack is in place.
+
+## 2026-07-20 STRATEGIC RESET: adopt the minimal branch
+
+Live leaderboard (1414 teams): our `0.909` ranks ~209. Bronze AND silver both
+require `>= 0.950`; gold requires `>= 0.968`. The rank curve is a cliff —
+`0.940` gives rank ~190, `0.950` gives rank ~46. Incremental tuning below `0.950`
+is close to worthless.
+
+`hengck23/minimal-baseline-tta-2gpu` reaches `0.950` with our exact model,
+weights, ILP settings, and TTA, by exporting the ILP graph directly with zero
+post-processing. Verified clean (no hub/fork hack). The new baseline should be
+that notebook, not the Exp073/Exp110 lineage.
+
+| Priority | Action | Expected |
+| --- | --- | --- |
+| P0 | Run `hengck23/minimal-baseline-tta-2gpu` verbatim, hack-free, as our own kernel | `~0.950` (+0.041) |
+| P0 | Use its built-in `MODE="local"` evaluator as the trustworthy local harness we never had | unblocks all tuning |
+| P1 | Sweep `POINT_THRESHOLD` and exploit `N_pred < N_true` bonus multiplier | `+0.005-0.015` |
+| P1 | Sweep `ILP_DIVISION_WEIGHT` (never once varied; `0.1 * division_jaccard` is ~fully untapped) | `+0.02-0.04` |
+| P2 | Compare TTA variants already in the notebook (`4flip`, `8yx`, `8fliprot`, `9public`) | small |
+| P2 | Multi-checkpoint / multi-split ensembling at probability-map level | unknown |
+
 ## Backlog
 
 | Idea | Rationale | Expected impact | Cost | Priority |
