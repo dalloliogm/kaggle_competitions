@@ -39,6 +39,35 @@ Capture durable information learned while working on this competition. This is f
   those structures into submissions unless explicitly running a separate
   metric-risk branch.
 
+## SETTLED 2026-07-20: motion-relink parameters are essentially INERT
+
+All three probes on the Exp110 branch scored. The `TIGHT_UM` bracket is flat and
+`LEARNED_BONUS` barely moves:
+
+| exp | change | tight / relaxed edges | public LB |
+| --- | --- | --- | ---: |
+| Exp124 | `TIGHT_UM` `6.0 -> 5.0` | `111,393` / `6,735` | `0.909` |
+| Exp110 | incumbent `6.0` | `114,649` / `3,358` | `0.909` |
+| Exp126 | `TIGHT_UM` `6.0 -> 7.0` | `116,853` / `1,212` | **`0.910`** |
+| Exp123 | `LEARNED_BONUS` `1.0 -> 1.5` | - | **`0.910`** |
+
+- A `+-1 um` swing on the gate governing **97% of edges** moves the score by
+  `0.001`. Exp124 changed 2.4% of edges and Exp126 5.6%, yet the score barely
+  responds.
+- **New best `0.910`**, reached two independent ways - but the margin over
+  `0.909` is `0.001` and should not be over-read.
+- Conclusion: the post-processing's value is **structural, not parametric**. That
+  it runs at all is worth `+0.032` (Exp110 `0.909` vs Exp116 `0.877`); how it is
+  tuned is worth `~0.001`. This mirrors the ILP-cost result exactly (Exp110-115
+  flat `0.908`-`0.909`).
+- **Stop tuning post-processing parameters.** Three separate axes - ILP costs,
+  gap/density geometry, and now motion relink - have each been bracketed on the
+  leaderboard and each is flat. The remaining leverage is in the model, not the
+  graph repair.
+- Untested combination worth one slot: Exp123 + Exp126 together
+  (`LEARNED_BONUS 1.5` AND `TIGHT_UM 7.0`), in case the two `+0.001` gains are
+  independent.
+
 ## SETTLED 2026-07-20: the incumbent checkpoint is 402 epochs, not 50
 
 Read directly from `checkpoint_last.pth` in
