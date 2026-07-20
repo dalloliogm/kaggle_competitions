@@ -39,6 +39,62 @@ Capture durable information learned while working on this competition. This is f
   those structures into submissions unless explicitly running a separate
   metric-risk branch.
 
+## SETTLED 2026-07-20: the incumbent checkpoint is 402 epochs, not 50
+
+Read directly from `checkpoint_last.pth` in
+`pilkwang/biohub-tracking-support-pack-50ep-v1`:
+
+```
+epoch                : 402
+best_score           : 0.9834918738001537   (acc * recall on its own val split)
+method               : unet_transformer_5090_50ep_v1
+fold                 : 0
+optimizer_state_dict : PRESENT
+model_config         : {unet_out_channels 32, unet_layers [32,64,128],
+                        downsample [1,4,4], window_size 2, pool_kernel_um 5.0}
+```
+
+- The `50ep` in the dataset name is misleading; the `ARTIFACT_MANIFEST.json`
+  claim of `400ep-snapshot` was correct. **"Train longer" is NOT an available
+  win** - the official README's "not trained to convergence" refers to the
+  organisers' own 3-epoch baseline, not to this pack.
+- `optimizer_state_dict` is present, so this checkpoint can be **resumed or
+  fine-tuned** rather than only used for inference. That is a far better use of
+  GPU hours than training a fresh model from scratch.
+- The checkpoint contains BOTH learned stages in one file: `unet.*`
+  (TemporalUNet3D + temporal attention), `detect_head.*`, and `transformer.*`
+  (4 cross-attention blocks, `pair_mlp` ending in a single logit).
+
+## Measured training cost on a Kaggle T4 (Exp125)
+
+- **1.02 s per iteration** at batch size 4.
+- **397 s fixed startup** (imports, dataset indexing, model init) - a large,
+  accelerator-independent overhead worth amortising with longer runs.
+- In a 9h kernel: about **30,900 iterations / 123,600 images** after startup and
+  headroom. At `--max-iters 150` that is ~200 bounded "epochs", but note an epoch
+  under `--max-iters` is exactly that many batches and is NOT comparable to the
+  incumbent's full-dataset epochs.
+- 199 labelled movies; folds are 180 train / 19 val. Seeded fold 0 vs fold 1
+  validation overlap is only 2 movies (11%), so folds are reasonably independent -
+  but fold 0's TRAINING set still covers most of fold 1's validation movies, so a
+  model fine-tuned from the incumbent has leaky validation and will be correlated
+  with it, reducing ensemble benefit.
+
+## TPUs are a poor fit for this pipeline
+
+Considered and rejected for training:
+
+- **Dynamic shapes.** XLA compiles per static shape, but `SimpleNodeTransformer`
+  runs over a variable number of detected nodes per frame, which differs every
+  batch. Constant recompilation would dominate runtime.
+- **3D convolutions.** The detector is `Conv3d` throughout; XLA's coverage is
+  weaker and less optimised than cuDNN's.
+- **Porting cost.** The official script is CUDA-idiomatic (`torch.cuda.set_device`,
+  `DataParallel`); TPU needs `torch_xla`, `xm.xla_device()`, `ParallelLoader`,
+  `xm.optimizer_step` - a rewrite of a ~1,300-line script we do not own.
+- The only real attraction is that Kaggle's TPU quota is separate from the GPU
+  quota. Not worth it; the 397 s startup is data indexing, which TPUs do not fix.
+
 ## Exp122: the metric patch does NOT change our edge numbers (2026-07-20)
 
 Ran the Exp121 ablation scoring every variant twice - vendored pre-patch metric

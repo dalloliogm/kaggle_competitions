@@ -1,0 +1,20 @@
+{
+  "id": "dalloliogm/biohub-score-your-submission-offline",
+  "title": "Biohub Score Your Submission Offline",
+  "code_file": "biohub-offline-scoring-demo.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": [
+    "dalloliogm/biohub-official-scorer-patched",
+    "pilkwang/biohub-tracking-support-pack-50ep-v1"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "model_sources": []
+}
