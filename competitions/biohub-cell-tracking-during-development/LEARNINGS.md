@@ -196,21 +196,13 @@ Capture durable information learned while working on this competition. This is f
   `121,403` nodes, `117,131` edges, `320` division-like sources), so the score
   suggests the public LB rewarded pruning weak tracks/nodes/divisions more than
   preserving the denser `0.903` graph.
-- The immediate follow-up should be a controlled disappearance-cost sweep, not a
-  return to gap/division micro-tuning. Exp112 (`1.2`) and Exp113 (`1.6`) bracket
-  Exp110's `1.4` while keeping appearance cost `0.0`; their graph sizes should
-  tell whether the breakthrough came from a specific pruning level or from a
-  broader direction toward smaller ILP graphs.
-- The completed Exp112/Exp113 sweep cleanly brackets Exp110's graph size.
-  Exp112 (`1.2`) adds back `+2,245` rows versus Exp110, while Exp113 (`1.6`)
-  removes another `-2,639` rows. Both are structurally valid. This makes Exp113
-  the more hypothesis-aligned public-LB test if we believe Exp110 won by pruning
-  weak graph elements, while Exp112 is the control for whether Exp110 already
-  pruned too far.
-- While Exp112/Exp113 are pending, the most informative extra same-day slots are
-  still on the ILP pruning curve: Exp114 (`1.5`) refines between the known
-  breakthrough `1.4` and the submitted stronger-pruning `1.6`, while Exp115
-  (`1.8`) tests whether the smaller-graph direction continues to help.
+- The completed ILP disappearance-cost sweep shows that the broad pruning move
+  mattered, but tiny changes around it are saturated on the public LB. Exp112
+  (`1.2`) made the graph denser and scored `0.908`, while Exp113 (`1.6`), Exp114
+  (`1.5`), and Exp115 (`1.8`) all tied Exp110 at `0.909` despite removing
+  progressively more rows. Do not keep spending leaderboard slots on nearby
+  disappearance-cost micro-sweeps without new validation evidence or a distinct
+  structural change.
 - Exp111's final submission and downloaded raw GEFF graphs are sufficient to
   enumerate synthetic gap insertions exactly: gap nodes are the final node IDs
   absent from the raw GEFF node-ID set. They also show that all 418 final

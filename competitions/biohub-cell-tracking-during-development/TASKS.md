@@ -7,9 +7,9 @@
   divisions, and conservative ILP graph pruning without relying on private
   experiment shorthand from this workspace. Kaggle version 2 was pushed on
   2026-07-19 after Exp114/Exp115 freed the GPU batch slots; initial status was
-  `RUNNING`.
-- Improve beyond Exp110 public LB `0.909` (user-reported on 2026-07-19; CLI
-  verification still pending because live polling was unavailable in that turn).
+  `RUNNING`; it later completed successfully.
+- Improve beyond Exp110 public LB `0.909` (verified from Kaggle submissions on
+  2026-07-20).
   Exp110 is now the working baseline; Exp073 `0.903`, copied LB893 `0.893`,
   no-safe `0.886`, and conservative-safe `0.889` are superseded.
 - Submission `54758569`, copied
@@ -184,7 +184,9 @@
   shows two new pending blank-description submissions: `54835643` at
   `17:02:32.247` and `54835647` at `17:02:40.103`. Because descriptions are
   blank, the user clarified the order: Exp113 was submitted first as `54835643`,
-  and Exp112 was submitted second as `54835647`.
+  and Exp112 was submitted second as `54835647`. Both have now completed:
+  Exp113 scored public LB `0.909`, tying Exp110; Exp112 scored public LB `0.908`,
+  so relaxing the disappearance penalty back toward denser graphs appears worse.
 - Prepared two more same-day ILP-cost candidates while Exp112/Exp113 are pending:
   `notebooks/biohub-exp114-ilp-disappearance-1-5-candidate.ipynb` and
   `notebooks/biohub-exp115-ilp-disappearance-1-8-candidate.ipynb`. Both keep ILP
@@ -198,11 +200,14 @@
 - Exp114 and Exp115 completed on Kaggle on 2026-07-19. Downloaded outputs passed
   fast structural checks. Exp114 produced `237,078` rows, `120,663` nodes,
   `116,415` edges, and `310` division-like sources; submitted as `54838832`,
-  status `PENDING`. Exp115 produced `233,682` rows, `118,940` nodes, `114,742`
+  and scored public LB `0.909`. Exp115 produced `233,682` rows, `118,940` nodes, `114,742`
   edges, and `290` division-like sources; submitted as `54838833`, status
-  `PENDING`. A direct raw-CSV submission attempt returned Kaggle `400 Bad
+  `COMPLETE`, public LB `0.909`. A direct raw-CSV submission attempt returned Kaggle `400 Bad
   Request`; code-submitting the completed kernel versions with `-k ... -v 1 -f
-  submission.csv` succeeded.
+  submission.csv` succeeded. This means the disappearance-cost sweep from `1.4`
+  to `1.8` is flat on public LB, while `1.2` is slightly worse; do not keep
+  spending slots on tiny disappearance-cost changes without new validation
+  evidence.
 - Operating rule for the rest of this challenge: Kaggle submissions may take
   several hours to validate, and user time is limited. If daily submission slots
   remain, run/validate/submit multiple independent candidates without waiting for
