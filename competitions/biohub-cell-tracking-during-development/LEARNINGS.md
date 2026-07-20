@@ -39,6 +39,65 @@ Capture durable information learned while working on this competition. This is f
   those structures into submissions unless explicitly running a separate
   metric-risk branch.
 
+## CRITICAL 2026-07-20: the local harness INVERTS leaderboard ranking
+
+Exp121 ablated Exp110's post-processing on labelled train movies with the
+official metric. Evidence:
+`references/exp121-postproc-ablation-v2-output/exp121_postproc_ablation.csv`.
+
+| ablation | nodes | edges | forks | adjJ_6bba |
+| --- | ---: | ---: | ---: | ---: |
+| full | 121,123 | 116,875 | 325 | 0.887733 |
+| no_motion_relink | 119,488 | 114,353 | 405 | 0.906630 |
+| no_gap_close | 117,653 | 112,980 | 361 | 0.880888 |
+| no_filter_short_tracks | 125,790 | 120,306 | 325 | 0.885256 |
+| no_safe_divisions | 120,853 | 116,351 | 0 | 0.887846 |
+| no_linefit_smooth | 121,123 | 116,875 | 325 | 0.890191 |
+| **ilp_only** | 124,740 | 115,776 | 0 | **0.908261** |
+
+The harness is MECHANICALLY correct: the `ilp_only` control reproduces the Exp116
+minimal branch almost exactly (`124,740` nodes / `115,776` edges versus Exp116's
+`124,743` / `115,786`).
+
+But its RANKING is inverted against the leaderboard:
+
+```
+local:  ilp_only 0.9083  >  full 0.8877   (delta -0.021)
+LB:     ilp_only 0.877   <  full 0.909    (delta +0.032)
+```
+
+Same comparison, opposite sign, comparable magnitude. **Local scoring cannot rank
+graph-construction choices.** Probable cause: train GT is very sparse - `50` to
+`1,183` annotated edges against `25k-70k` cells per movie, under 2% coverage - and
+edges touching no annotated node are ignored by the metric entirely. The
+annotated subset behaves like a biased easy sample where the raw ILP is already
+right, while motion relink earns its value in dense regions the local labels do
+not cover.
+
+### Consequence: separate LEADERBOARD-measured from LOCAL-measured claims
+
+Trustworthy (measured on the public LB):
+- Exp110-115 ILP disappearance sweep is flat (`0.908`-`0.909`).
+- Exp116 minimal branch `0.877` versus Exp110 `0.909`.
+- Exp101-104 division permissiveness `0.902`-`0.903`.
+- Exp073 family `0.903`.
+
+NOT trustworthy (local only, and the harness inverts rankings):
+- Exp118 "inherited ILP costs already optimal".
+- Exp117 "division weight 1.0 optimal" (also computed with the pre-patch metric).
+- Exp121 stage contributions above.
+
+So MORE axes are open than previously recorded, not fewer. Do not close an axis
+on local evidence alone.
+
+### What the harness IS still good for
+
+- Structural validity (schema, dangling edges, degree caps, consecutive frames).
+- Catching catastrophic regressions and crashes before spending a slot.
+- Confirming a code path is actually active (the `ilp_only` control worked).
+
+It is NOT a substitute for a leaderboard probe when ranking graph construction.
+
 ## CRITICAL: our local harness used the PRE-PATCH metric (found 2026-07-20)
 
 - The metric vendored inside `pilkwang/biohub-tracking-support-pack-50ep-v1`
