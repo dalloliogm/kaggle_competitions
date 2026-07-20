@@ -22,6 +22,38 @@ evidence is in `LEARNINGS.md` (see the CRITICAL section). Summary:
 DO NOT resume tuning motion relink, gap closing, safe divisions, short-track
 filtering, or ILP costs on top of the old post-processing stack.
 
+## SUBMISSION SLOT COORDINATION - 2026-07-20 (read before submitting)
+
+Two agents are working this competition in parallel against ONE shared budget of
+5 submissions/day. User decision on 2026-07-20: **the Claude Code instance does
+the submitting; the Codex instance keeps ONE slot in reserve.**
+
+Allocation for the UTC day 2026-07-20:
+
+| # | Submission | Owner | Status |
+| ---: | --- | --- | --- |
+| 1 | Exp116 minimal ILP direct export (`54845958`) | Claude | PENDING |
+| 2 | Exp119 detection threshold `0.98` | Claude | kernel RUNNING |
+| 3 | Exp120 detection threshold `0.95` | Claude | queued behind GPU cap |
+| 4 | Exp118 grid winner (best ILP cost config) | Claude | held until Exp118 lands |
+| 5 | **RESERVED** | **Codex instance** | free |
+
+Do not submit beyond slot 5. Kaggle evaluation is taking 5+ hours, so a wasted
+slot is effectively lost for the day.
+
+Do NOT re-submit `biohub-exp116-clean-public-solution-ablation`: its output is
+byte-identical to the direct-export kernel (same SHA256
+`dbba5f419e5b341bf0b413154ebf785bcf9caa19857f21f6242b012ebc65cd90`).
+
+## Operational gotchas
+
+- Kaggle caps **concurrent batch GPU sessions at 2**. Further pushes fail with
+  `Maximum batch GPU session count of 2 reached`; retry when one frees.
+- Kaggle derives the kernel slug from the **title**, not the metadata `id`. A
+  title containing `0.9800` produced slug `...-0-9800`, and `kernels status` on
+  the intended id returned a permission error. Submission with
+  `-k owner/slug -v <version>` needs the slug from the notebook URL.
+
 ## Current Goal
 
 - Strict strategy decision on 2026-07-20: stay with biologically plausible
