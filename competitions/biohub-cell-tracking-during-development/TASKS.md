@@ -1,7 +1,30 @@
 # Tasks
 
+## READ FIRST - 2026-07-20 strategic reset
+
+The Exp073/Exp110 post-processing branch is a dead end. Full reasoning and
+evidence is in `LEARNINGS.md` (see the CRITICAL section). Summary:
+
+- `hengck23/minimal-baseline-tta-2gpu` scores public LB `0.950` using the SAME
+  weights pack, ILP costs, threshold, and D4 TTA as Exp110 (`0.909`), differing
+  only in that it exports the ILP graph verbatim with NO post-processing.
+- Our `filter_output_graph` step 4 (`edges = motion_edges`) discards all
+  ~114,860 ILP edges and rebuilds them with a greedy causal Hungarian sweep. The
+  global optimum is thrown away, which is why the ILP cost sweep is flat
+  (`1.2 -> 0.908`; `1.4/1.5/1.6/1.8 -> 0.909`) and why the whole heavy
+  post-processing lineage is stuck at `0.903` (`pilkwang` 80 subs, `beicicc` 71).
+- Live LB: 1414 teams. Our `0.909` is rank ~209. Bronze AND silver both need
+  `>= 0.950`; gold needs `>= 0.968`. The curve is a cliff: `0.940` -> rank ~190,
+  `0.950` -> rank ~46. Tuning below `0.950` is close to worthless.
+- The `0.950` cluster is NOT the division exploit. Hacked forks score the same
+  as the clean original, so the patch is already live in scoring.
+
+DO NOT resume tuning motion relink, gap closing, safe divisions, short-track
+filtering, or ILP costs on top of the old post-processing stack.
+
 ## Current Goal
 
+<<<<<<< HEAD
 - Strict strategy decision on 2026-07-20: stay with biologically plausible
   trackers for now. Do not add negative-time hubs, impossible coordinates, or
   artificial fork chains from metric-hack public notebooks unless the user
@@ -24,6 +47,56 @@
   `scripts/biohub_validation_harness.py`; it performs structural graph checks,
   component diagnostics, optional duplicated-frame diagnostics, and optional
   official-metric scoring when train GEFF plus the tracking repo are available.
+=======
+- **Exp116** (`dalloliogm/biohub-exp116-minimal-ilp-direct-export`,
+  `notebooks/biohub-exp116-minimal-ilp-direct-export-candidate.ipynb`) is the
+  hengck23-derived minimal pipeline, verified hack-free. Kernel v1 COMPLETE:
+  `240,529` rows, `124,743` nodes, `115,786` edges, **0 divisions**, all
+  structural checks passed. Submitted as `54845958`, status PENDING as of
+  2026-07-20 07:22. Expected `~0.950`.
+- **Exp117** (`dalloliogm/biohub-exp117-ilp-division-weight-sweep`) is a
+  diagnostic that writes NO submission and costs NO slot. It sweeps
+  `ILP_DIVISION_WEIGHT` over `[1.0, 0.5, 0.25, 0.0, -0.25, -0.5, -1.0]`, reusing
+  one cached inference pass per movie, and scores every setting with the
+  OFFICIAL metric on labelled train movies. Kernel v2 RUNNING (v1 errored on a
+  float-index bug, now fixed).
+- Submission mechanism: raw CSV upload fails with a generic `400`. Use
+  `kaggle competitions submit <slug> -k owner/kernel-slug -v <version> -f submission.csv -m "..."`
+  as documented in `.codex/skills/kaggle-competition-workspace/SKILL.md`.
+
+## Open findings worth acting on
+
+- **The ILP never emits a division.** Exp116 has max outdegree 1 across all
+  115,786 edges. `ILP_DIVISION_WEIGHT=1.0` was inherited and never varied across
+  Exp110-115. Exp110's `320` "division-like sources" came from
+  `add_safe_divisions_postlink` (post-processing), not the optimizer. So the
+  whole `0.1 * division_jaccard` term is unclaimed, and Exp101-104 were tuning a
+  heuristic bolted onto an optimizer that was silently refusing to divide.
+  Exp117 tests both cost directions because the tracksdata sign convention is
+  unverified.
+- **GT labels are very unevenly distributed.** Measured GT edge counts:
+  `44b6_0113de3b` 50, `44b6_0b24845f` 49, `6bba_05b6850b` 845,
+  `6bba_05db0fb1` 1,183, `44b6_33b596bf` 49. Since `adj_edge_jaccard` is
+  weight-averaged by `TP+FP+FN`, any local score is ~95% determined by the two
+  6bba movies. Treat local conclusions as 6bba-specific.
+- **We under-predict `44b6_0b24845f` by ~30%** (`22,937` nodes vs
+  `n_total = 32,795`). ~10k cells never detected in that movie. This contradicts
+  the earlier "detection is solved" conclusion, which was based on
+  `node_recall ~ 1.0` measured only on the two well-labelled movies. Unexplored.
+- Measured `n_total` per movie (useful for node-count calibration; note the
+  metric gives a bonus multiplier > 1 when `N_pred < N_true`):
+  `44b6_0113de3b` 25,755, `44b6_0b24845f` 32,795, `6bba_05b6850b` 6,362,
+  `6bba_05db0fb1` 69,800, `44b6_33b596bf` 23,330.
+
+## Superseded goals (kept for history)
+
+- Publish a readable public version of `dalloliogm/biohub-exp110-ilp-birth-death-cost`.
+  Low value now that the branch is superseded.
+- Submission `54758569`, copied `dalloliogm/biohub-exp073-gap-5-8-public`,
+  completed with public LB `0.903`, byte-identical to `lucashmateo/biohub-ct-exp073`.
+- `scripts/biohub_validation_harness.py` remains useful for STRUCTURAL checks,
+  but Exp117 supersedes it for official-metric scoring.
+>>>>>>> a2b8bd9 (docs(biohub): reset TASKS to the minimal branch; fix exp117 sweep)
 
 ## Next Experiments
 
