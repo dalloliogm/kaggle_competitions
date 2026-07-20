@@ -302,6 +302,65 @@ Capture durable information learned while working on this competition. This is f
   edges deduped, out-degree capped at 2). All three are neutral for us:
   `dropped_nonconsecutive_edges=0`, `max_indegree=1`, `max_outdegree=2`.
 
+## Exp117 division-weight sweep: RESOLVED 2026-07-20
+
+Measured with the OFFICIAL metric on 5 labelled train movies. Evidence:
+`references/exp117-division-sweep-v3-output/exp117_division_sweep.csv`.
+
+| `ILP_DIVISION_WEIGHT` | forks | div TP | div FP | adj_edge_jaccard |
+| ---: | ---: | ---: | ---: | ---: |
+| `1.0` (current) | 0 | 0 | 0 | **0.914831** |
+| `0.5` | 984 | 0 | 14 | 0.912502 |
+| `0.25` | 1,048 | 0 | 16 | 0.911566 |
+| `0.0` | 1,223 | 0 | 17 | 0.910153 |
+| `-0.25` | 1,653 | 0 | 27 | 0.901540 |
+| `-0.5` | 3,574 | 0 | 55 | 0.883607 |
+| `-1.0` | 3,611 | 0 | 55 | 0.884176 |
+
+- Sign convention confirmed: LOWER `ILP_DIVISION_WEIGHT` produces MORE forks.
+- **Keep `ILP_DIVISION_WEIGHT = 1.0`.** It is optimal. Every lower value costs
+  edge accuracy monotonically and returns nothing.
+- **Zero division true positives at every setting**, including with `3,611`
+  forks. ILP cost tuning generates divisions in the wrong places; this is not a
+  viable route to the `0.1 * division_jaccard` term.
+- Caveat on power: the labelled set contains only **3** annotated divisions in
+  total (all in `6bba_05db0fb1`), so the division term is nearly unmeasurable
+  locally. This does not prove divisions are worthless on the hidden test set;
+  it proves naive ILP-cost-driven fork generation does not find them.
+
+## What the local harness actually measures
+
+- **Calibration point:** the minimal pipeline scores `0.914831` locally while the
+  identical config (`hengck23/minimal-baseline-tta-2gpu`) scores `0.950` on the
+  public LB. The harness under-reads by about `0.035`. Treat local numbers as
+  RANKING signal, not absolute score prediction.
+- **The 44b6 movies are useless for validation.** They carry ~50 GT edges each
+  and we score them perfectly (`edge FP = 0`, `edge FN = 0`). Any change will
+  look neutral there.
+- **The node-count bonus multiplier is real and active.** `44b6_0b24845f` returns
+  `adj_edge_jaccard = 1.03006` - above 1.0 - because we predict `22,937` nodes
+  against `n_total = 32,795`. Confirms `adj = J * (1 - 0.1 * (N_pred-N_true)/N_true)`
+  exceeds `J` when under-predicting.
+- **Essentially all measurable loss sits in one movie.** Per-movie at the current
+  config:
+
+| dataset | nodes | edge TP | edge FP | edge FN | adj_edge_jaccard | local weight |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| `44b6_0113de3b` | 25,533 | 50 | 0 | 0 | 1.00086 | 2% |
+| `44b6_0b24845f` | 22,937 | 49 | 0 | 0 | 1.03006 | 2% |
+| `44b6_33b596bf` | 24,431 | 49 | 0 | 0 | 0.99528 | 2% |
+| `6bba_05b6850b` | 6,311 | 821 | 3 | 24 | 0.96894 | 38% |
+| **`6bba_05db0fb1`** | **69,962** | **1,095** | **79** | **88** | **0.86747** | **56%** |
+
+- `6bba_05db0fb1` is the highest-leverage target by a wide margin: fixing its
+  `79` FP and `88` FN is worth roughly `+0.07` aggregate, and because edge FP and
+  FN are structurally coupled, each mis-link fixed counts about double.
+- It is also the densest movie (~757 nodes/frame) AND a `6bba` movie, the prefix
+  carrying the duplicate/frozen-adjacent-frame artifact. Frozen-transition-aware
+  linking (Exp108) tied at `0.903` on the old post-processing branch, but was
+  never tested on the minimal branch - and is now measurable locally at zero
+  submission cost.
+
 ## Ensembling And Submission Behavior
 
 - One-frame gaps must be represented by an inserted node and consecutive edges;
