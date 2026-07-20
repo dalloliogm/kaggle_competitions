@@ -226,7 +226,9 @@
   frame indices, negative coordinates, dangling edges, nulls, and malformed row
   IDs. Purpose: measure the real learned+ILP tracker without metric-hack graph
   structures. Local notebook JSON and Python syntax checks passed; upload/run on
-  Kaggle next.
+  Kaggle next. Uploaded as Kaggle v1 on 2026-07-20:
+  `dalloliogm/biohub-exp116-clean-public-solution-ablation`; initial status
+  `RUNNING`.
 - Manually submit Kaggle version 1 of
   `dalloliogm/biohub-lb893-conservative-safe-divisions-candidate` and record the
   public LB before further safe-division tuning.
