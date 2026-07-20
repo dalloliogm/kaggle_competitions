@@ -39,6 +39,45 @@ Capture durable information learned while working on this competition. This is f
   those structures into submissions unless explicitly running a separate
   metric-risk branch.
 
+## CRITICAL: our local harness used the PRE-PATCH metric (found 2026-07-20)
+
+- The metric vendored inside `pilkwang/biohub-tracking-support-pack-50ep-v1`
+  (module `biohub_tracking`, built 2026-07-08) **predates the division-exploit
+  patch** and still contains `_weakly_connected_components`. Verified by reading
+  the source shipped in Exp110's kernel output.
+- Every local score from Exp117, Exp118 and Exp121 therefore used the OLD metric.
+- The official patched implementation is `royerlab/kaggle-cell-tracking-competition`
+  at commit `075fc5f` (contains `aa65e90` "updating metric to patch weakly
+  connected component exploit"), module `tracking_cellmot`. Measured diff:
+  - `division_metrics.py`: `450 -> 574` lines; division scoring rewritten
+    (weak connectivity replaced by directed local topology, plus new FP rules for
+    cross-GT-component and locally-merged branches).
+  - `metrics.py`: 90 changed lines. Edge side adds non-consecutive-edge filtering
+    and duplicate-edge dedup.
+- **Our EDGE conclusions survive**: both edge changes are no-ops for our graphs
+  (`dropped_nonconsecutive_edges = 0`, max in-degree `1`, no duplicate edges).
+- **Our DIVISION numbers do not.** Any local division result computed before
+  2026-07-20 was produced with the wrong metric and must not be trusted -
+  including Exp117's "zero division true positives".
+
+## Official scorer is packaged for offline kernels
+
+- `dalloliogm/biohub-official-scorer-patched` (private dataset) contains an
+  unmodified copy of the repo at `075fc5f`, BSD 3-Clause, with `PROVENANCE.md`.
+  Kaggle auto-extracts it to `/kaggle/input/biohub-official-scorer-patched/
+  tracking_cellmot_075fc5f/src`, so kernels only need `sys.path.insert`.
+- Always assert the patched version actually loaded:
+  `_weakly_connected_components` must be ABSENT from
+  `tracking_cellmot.division_metrics`. A silent fallback to the old metric is the
+  failure mode this guards against.
+- The repo also ships the round trip the hosts document:
+  `scripts/csv_to_geffs.py` then `scripts/evaluate.py` scores a submission CSV
+  against train GT with no images loaded. This means **any candidate can be
+  scored offline before spending a submission slot.**
+- Gotcha: `kaggle datasets create -p DIR` defaults to `--dir-mode skip` and
+  SILENTLY DROPS subdirectories. Package source trees as a tarball (Kaggle
+  auto-extracts) and verify with `kaggle datasets files` after upload.
+
 ## Validation
 
 - Use embryo-disjoint folds and the official metric implementation. Frame-level
