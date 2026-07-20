@@ -1,6 +1,43 @@
 # Tasks
 
-## READ FIRST - 2026-07-20 strategic reset
+## READ FIRST - 2026-07-20 CORRECTION (supersedes the earlier "strategic reset")
+
+**The earlier reset was wrong and is retracted. See the RETRACTION section at the
+top of `LEARNINGS.md`.**
+
+Measured public LB, not inferred:
+
+| Branch | Config | Divisions | Public LB |
+| --- | --- | ---: | ---: |
+| Exp110 post-processing | Exp073 family + ILP 0.0/1.4 | 320 | **`0.909`** |
+| Exp116 minimal, clean | identical to hengck23 notebook | 0 | `0.877` |
+
+**The minimal branch is WORSE by `0.032`. Post-processing ADDS score.** Exp110
+remains the working baseline. Do not delete the post-processing stack.
+
+Why the earlier claim was wrong: I attributed the `0.950` leaderboard score of
+the *author* hengck23 to their public notebook. A team's LB entry is the best of
+all their submissions (hengck23 had 12), not any single notebook's score.
+
+Because clean minimal = `0.877` while hacked forks = `0.950`, **the division
+hack is still paying `+0.073` on the live leaderboard** - the patch is not yet
+live in scoring. The `0.950` cluster is hack-inflated and should collapse toward
+~`0.877` on rescore. Our clean `0.909` already sits above that. **Do not chase
+`0.950`, and do not copy the hack.**
+
+Axes closed by measurement - do NOT re-test:
+- ILP division weight (Exp117): `1.0` optimal.
+- ILP cost grid on minimal branch (Exp118): inherited `0.0 / 1.4 / -1.0` already
+  optimal; all 10 configs within `0.007`.
+- ILP disappearance on the old branch (Exp110-115): flat `0.908`-`0.909`.
+
+Most promising open direction: divisions. Exp110's `320` safe divisions are the
+most plausible source of its `+0.032` over the division-free minimal branch, and
+the old no-safe-divisions test (`0.886` vs `0.893`) points the same way. Exp117's
+"zero division TPs" was a local artifact - the labelled split has only `3`
+annotated divisions, so it had no power to measure this.
+
+## Superseded: earlier strategic reset (2026-07-20, RETRACTED)
 
 The Exp073/Exp110 post-processing branch is a dead end. Full reasoning and
 evidence is in `LEARNINGS.md` (see the CRITICAL section). Summary:

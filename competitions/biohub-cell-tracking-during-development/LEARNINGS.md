@@ -224,7 +224,75 @@ Capture durable information learned while working on this competition. This is f
   optional `--image-root` containing `<dataset>.zarr` volumes and will embed
   t-1/t/t+1/t+2 XY max-projection crops when Zarr support and images are present.
 
-## CRITICAL 2026-07-20: our post-processing stack is the bottleneck
+## RETRACTION 2026-07-20: the "post-processing is the bottleneck" claim was WRONG
+
+**Measured, not inferred:** Exp116 - the clean minimal pipeline, byte-identical
+config to `hengck23/minimal-baseline-tta-2gpu` - scored public LB **`0.877`**
+(submission `54845958`). Our post-processing branch Exp110 scores **`0.909`**.
+
+**The minimal branch is WORSE by `0.032`. The post-processing stack ADDS score;
+it does not cost `-0.041`.** Everything in the section below is retracted except
+the leaderboard/rank arithmetic and the metric mechanics.
+
+### The reasoning error
+
+I inferred "hengck23's notebook scores 0.950" from the fact that the AUTHOR's
+team score is `0.950`. A team's leaderboard entry is the best of ALL their
+submissions - hengck23 had **12** - not the score of any particular notebook.
+This is exactly the failure mode `references/top-notebooks-analysis.md` already
+warned about: *"Public notebook titles and claimed LB scores are not sufficient
+evidence"* and *"Popularity is not evidence of performance."* I applied that rule
+to notebook titles but not to author leaderboard scores, which are equally
+indirect. **Never attribute a team's LB score to a specific public notebook.**
+
+### What this implies about the 0.95 cluster
+
+Clean minimal = `0.877`; the hacked forks = `0.950`. The gap of `+0.073` means
+**the division-Jaccard hack is STILL PAYING on the live leaderboard**, so the
+`aa65e90a` patch has not yet been applied to live scoring. The earlier inference
+that "hacked forks score the same as the clean original, therefore the hack is
+neutral" rested on the same false premise and is also retracted.
+
+Consequence: the 165-team `0.950` cluster is hack-inflated and should collapse
+toward ~`0.877` when the hosts rescore. Our `0.909` is a legitimate clean score
+and is already ABOVE where that cluster would land. **Do not chase `0.950`.**
+
+### What actually earns us the +0.032
+
+Exp110 emits `320` division-like sources; Exp116 emits **zero** (the ILP never
+divides at `division_weight=1.0`). The most plausible account is that the
+post-processor's safe divisions earn real `division_jaccard` on the hidden test
+set, worth roughly `+0.03`. This is consistent with the older measurement that
+no-safe-divisions scored `0.886` against LB893's `0.893`.
+
+**Exp117's "zero division true positives" was a local artifact.** The labelled
+split contains only `3` annotated divisions, so it had no power to detect
+division value. Divisions matter on the hidden test set. Do not use Exp117 to
+argue against divisions.
+
+### Local harness calibration, corrected
+
+Local aggregate `0.914831` corresponds to public LB `0.877`, so the harness
+**over-reads by ~`0.038`** (I previously wrote "under-reads by 0.035", derived
+from the false `0.950` premise). It also has almost no division signal. Treat it
+as a weak ranking signal for EDGE quality only.
+
+### Axes now closed by measurement
+
+- ILP division weight (Exp117): `1.0` optimal; lower values add forks, no TPs.
+- ILP cost grid (Exp118, minimal branch): the inherited `appearance 0.0 /
+  disappearance 1.4 / edge -1.0` is already optimal; all 10 configs within
+  `0.007`, default wins.
+- ILP disappearance on the old branch (Exp110-115): flat `0.908`-`0.909`.
+
+### Standing conclusion
+
+`Exp110` (`0.909`) is our best and remains the working baseline. The productive
+direction is the post-processing branch plus its divisions - NOT the minimal
+branch. Detection threshold on the minimal branch (Exp119 `0.98`, submitted as
+`54848728`) is expected to land near `0.877` and is likely a spent slot.
+
+## CRITICAL 2026-07-20: our post-processing stack is the bottleneck [RETRACTED - SEE ABOVE]
 
 - Verified from the live leaderboard (1414 teams) and source inspection:
   `hengck23/minimal-baseline-tta-2gpu` scores public LB `0.950` using the SAME
