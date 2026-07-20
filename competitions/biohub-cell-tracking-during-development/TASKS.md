@@ -24,51 +24,52 @@ filtering, or ILP costs on top of the old post-processing stack.
 
 ## Current Goal
 
-<<<<<<< HEAD
 - Strict strategy decision on 2026-07-20: stay with biologically plausible
-  trackers for now. Do not add negative-time hubs, impossible coordinates, or
-  artificial fork chains from metric-hack public notebooks unless the user
-  explicitly reopens a metric-risk branch.
-- Publish a readable public version of the current best ILP-cost notebook:
-  `dalloliogm/biohub-exp110-ilp-birth-death-cost` should explain nodes, edges,
-  divisions, and conservative ILP graph pruning without relying on private
-  experiment shorthand from this workspace. Kaggle version 2 was pushed on
-  2026-07-19 after Exp114/Exp115 freed the GPU batch slots; initial status was
-  `RUNNING`; it later completed successfully.
-- Improve beyond Exp110 public LB `0.909` (verified from Kaggle submissions on
-  2026-07-20).
-  Exp110 is now the working baseline; Exp073 `0.903`, copied LB893 `0.893`,
-  no-safe `0.886`, and conservative-safe `0.889` are superseded.
-- Submission `54758569`, copied
-  `dalloliogm/biohub-exp073-gap-5-8-public`, completed with public LB `0.903`.
-  It is byte-identical to public `lucashmateo/biohub-ct-exp073`.
-- Build a stronger validation harness early enough to guide the rest of the
-  competition. The first reusable script is
-  `scripts/biohub_validation_harness.py`; it performs structural graph checks,
-  component diagnostics, optional duplicated-frame diagnostics, and optional
-  official-metric scoring when train GEFF plus the tracking repo are available.
-=======
-- **Exp116** (`dalloliogm/biohub-exp116-minimal-ilp-direct-export`,
-  `notebooks/biohub-exp116-minimal-ilp-direct-export-candidate.ipynb`) is the
-  hengck23-derived minimal pipeline, verified hack-free. Kernel v1 COMPLETE:
-  `240,529` rows, `124,743` nodes, `115,786` edges, **0 divisions**, all
-  structural checks passed. Submitted as `54845958`, status PENDING as of
-  2026-07-20 07:22. Expected `~0.950`.
+  trackers. Do not add negative-time hubs, impossible coordinates, or artificial
+  fork chains from metric-hack public notebooks unless the user explicitly
+  reopens a metric-risk branch. This is now also the pragmatic choice, not only
+  the principled one: the hack is scoring-neutral post-patch (hacked forks score
+  the same `0.950` as the clean original).
+- **Exp116 - TWO INDEPENDENT IMPLEMENTATIONS CONVERGED.** Both agents built the
+  same minimal pipeline from different starting points on 2026-07-20:
+  - `notebooks/biohub-exp116-minimal-ilp-direct-export-candidate.ipynb` ->
+    `dalloliogm/biohub-exp116-minimal-ilp-direct-export`, derived from
+    `hengck23/minimal-baseline-tta-2gpu` (already clean). Kernel v1 COMPLETE:
+    `240,529` rows, `124,743` nodes, `115,786` edges, **0 divisions**, all
+    structural checks passed. Submitted as `54845958`, PENDING as of 07:22.
+  - `notebooks/biohub-exp116-clean-public-solution-ablation.ipynb` ->
+    `dalloliogm/biohub-exp116-clean-public-solution-ablation`, derived from
+    `kaiwalyaatulraut/biohub-cell-tracking-solution` with the hack stripped.
+  Both carry identical config (`POINT_THRESHOLD 0.9700`, ILP
+  `-1.0 / 0.0 / 1.4 / 1.0`, `USE_TTA=True`, same 50ep weights pack) because
+  kaiwalyaatulraut is a verbatim copy of hengck23 plus the hub hack. Expect
+  near-identical outputs. **Compare output SHAs before spending a second
+  submission slot on the other one.**
 - **Exp117** (`dalloliogm/biohub-exp117-ilp-division-weight-sweep`) is a
   diagnostic that writes NO submission and costs NO slot. It sweeps
   `ILP_DIVISION_WEIGHT` over `[1.0, 0.5, 0.25, 0.0, -0.25, -0.5, -1.0]`, reusing
-  one cached inference pass per movie, and scores every setting with the
-  OFFICIAL metric on labelled train movies. Kernel v2 RUNNING (v1 errored on a
-  float-index bug, now fixed).
-- Submission mechanism: raw CSV upload fails with a generic `400`. Use
+  one cached inference pass per movie, and scores every setting with the OFFICIAL
+  metric on labelled train movies. This doubles as the trustworthy offline
+  harness the workspace has lacked. Kernel v3 running; v1 failed on a
+  float-index bug, v2 on `GraphView.copy()` - both fixed (see Gotchas).
+- Submission mechanism for this code competition: raw CSV upload fails with a
+  generic `400`. Use
   `kaggle competitions submit <slug> -k owner/kernel-slug -v <version> -f submission.csv -m "..."`
   as documented in `.codex/skills/kaggle-competition-workspace/SKILL.md`.
+
+## Gotchas when reusing the minimal notebook
+
+- `np.savez` round-trips everything as float64. `build_graph` uses the edge
+  endpoints as list indices, so they must be cast back to `int`.
+- `ILPSolver.solve()` returns a `GraphView`. The official `evaluate()` internally
+  calls `pred_graph.copy()`, which `GraphView` rejects - call `.detach()` first.
+  hengck23's notebook sidesteps this by round-tripping through geff.
 
 ## Open findings worth acting on
 
 - **The ILP never emits a division.** Exp116 has max outdegree 1 across all
-  115,786 edges. `ILP_DIVISION_WEIGHT=1.0` was inherited and never varied across
-  Exp110-115. Exp110's `320` "division-like sources" came from
+  `115,786` edges. `ILP_DIVISION_WEIGHT=1.0` was inherited and never varied
+  across Exp110-115. Exp110's `320` "division-like sources" came from
   `add_safe_divisions_postlink` (post-processing), not the optimizer. So the
   whole `0.1 * division_jaccard` term is unclaimed, and Exp101-104 were tuning a
   heuristic bolted onto an optimizer that was silently refusing to divide.
@@ -81,22 +82,25 @@ filtering, or ILP costs on top of the old post-processing stack.
   6bba movies. Treat local conclusions as 6bba-specific.
 - **We under-predict `44b6_0b24845f` by ~30%** (`22,937` nodes vs
   `n_total = 32,795`). ~10k cells never detected in that movie. This contradicts
-  the earlier "detection is solved" conclusion, which was based on
+  the earlier "detection is solved" conclusion, which rested on
   `node_recall ~ 1.0` measured only on the two well-labelled movies. Unexplored.
-- Measured `n_total` per movie (useful for node-count calibration; note the
-  metric gives a bonus multiplier > 1 when `N_pred < N_true`):
+- Measured `n_total` per movie (for node-count calibration; the metric pays a
+  bonus multiplier > 1 when `N_pred < N_true`):
   `44b6_0113de3b` 25,755, `44b6_0b24845f` 32,795, `6bba_05b6850b` 6,362,
   `6bba_05db0fb1` 69,800, `44b6_33b596bf` 23,330.
 
 ## Superseded goals (kept for history)
 
-- Publish a readable public version of `dalloliogm/biohub-exp110-ilp-birth-death-cost`.
-  Low value now that the branch is superseded.
+- Publish a readable public version of
+  `dalloliogm/biohub-exp110-ilp-birth-death-cost` (Kaggle v2 completed
+  successfully). Low value now that the branch is superseded.
+- Improve beyond Exp110 public LB `0.909` (verified from Kaggle submissions on
+  2026-07-20). Exp073 `0.903`, copied LB893 `0.893`, no-safe `0.886`, and
+  conservative-safe `0.889` are all superseded.
 - Submission `54758569`, copied `dalloliogm/biohub-exp073-gap-5-8-public`,
   completed with public LB `0.903`, byte-identical to `lucashmateo/biohub-ct-exp073`.
 - `scripts/biohub_validation_harness.py` remains useful for STRUCTURAL checks,
   but Exp117 supersedes it for official-metric scoring.
->>>>>>> a2b8bd9 (docs(biohub): reset TASKS to the minimal branch; fix exp117 sweep)
 
 ## Next Experiments
 
