@@ -1,0 +1,23 @@
+{
+  "id": "dalloliogm/biohub-exp119-minimal-threshold-0-9800",
+  "title": "Biohub EXP119 Minimal Threshold 0.9800",
+  "code_file": "biohub-exp119-minimal-threshold-09800.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [
+    "pilkwang/biohub-tracking-support-pack-50ep-v1"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "model_sources": [],
+  "machine_shape": "NvidiaTeslaT4"
+}
