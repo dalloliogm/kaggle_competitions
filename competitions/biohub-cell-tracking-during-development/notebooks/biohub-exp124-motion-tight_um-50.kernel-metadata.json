@@ -1,6 +1,6 @@
 {
-  "id": "dalloliogm/biohub-exp124-motion-relink-probe",
-  "title": "Biohub EXP124 Motion Relink Probe",
+  "id": "dalloliogm/biohub-exp124-tight-gate-5um",
+  "title": "Biohub Exp124 Tight Gate 5um",
   "code_file": "biohub-exp124-motion-tight_um-50.ipynb",
   "language": "python",
   "kernel_type": "notebook",

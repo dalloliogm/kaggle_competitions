@@ -39,6 +39,51 @@ Capture durable information learned while working on this competition. This is f
   those structures into submissions unless explicitly running a separate
   metric-risk branch.
 
+## Exp122: the metric patch does NOT change our edge numbers (2026-07-20)
+
+Ran the Exp121 ablation scoring every variant twice - vendored pre-patch metric
+and official patched metric - side by side. Evidence:
+`references/exp122-patched-metric-v2-output/exp122_postproc_ablation_patched.csv`.
+
+**Edge delta (patched minus pre-patch) is exactly `+0.000000` for all 7 variants.**
+This confirms the prediction: the patch's edge-side changes (non-consecutive-edge
+filtering, duplicate-edge dedup) are no-ops for graphs that already have
+consecutive-frame edges and in-degree `1`, which ours do. So the pre-patch metric
+never corrupted our EDGE conclusions - only division numbers were at risk.
+
+Division counts under the PATCHED metric (labelled train split):
+
+| ablation | div TP / FP / FN | div Jaccard |
+| --- | --- | ---: |
+| full (320 safe divisions) | 0 / 3 / 3 | 0.0000 |
+| no_safe_divisions | 0 / 0 / 3 | 0.0000 |
+| ilp_only | 0 / 0 / 3 | 0.0000 |
+
+- The labelled split contains only **3** GT divisions and we recover **none** of
+  them under either metric, so `division_jaccard` is `0` everywhere and the local
+  harness has NO power to evaluate divisions. This is a power problem, not a
+  correctness one, and the patched metric does not fix it.
+- Locally, safe divisions produce only false positives (`3` FP, `0` TP). But the
+  leaderboard has Exp110 (320 divisions) at `0.909` versus Exp116 (0 divisions)
+  at `0.877`, and that comparison confounds divisions with all the other
+  post-processing. Divisions remain UNRESOLVED and can only be settled on the
+  leaderboard.
+
+## Motion relink: LEARNED_BONUS is a low-leverage knob
+
+Exp123 raised `MOTION_RELINK_LEARNED_BONUS` from `1.0` to `1.5` on the Exp110
+branch. Effect on the graph was small:
+
+- nodes `121,403 -> 121,390`, edges `117,131 -> 117,127`, divisions `320 -> 318`
+- `motion_relink_tight_edges` **identical** at `114,649`; relaxed `3,358 -> 3,371`
+- versus Exp110: `1,303` edges differ out of `117,131` (edge Jaccard `0.978`),
+  98.9% of nodes bit-identical
+
+A 50% increase in the learned-probability weight moved only 1.1% of edges, so the
+relink assignment is dominated by geometry rather than by learned edge
+probability. Expect small leaderboard movement; the higher-leverage knob is the
+gate radius `MOTION_RELINK_TIGHT_UM`, which governs 97% of edges (Exp124).
+
 ## CRITICAL 2026-07-20: the local harness INVERTS leaderboard ranking
 
 Exp121 ablated Exp110's post-processing on labelled train movies with the
