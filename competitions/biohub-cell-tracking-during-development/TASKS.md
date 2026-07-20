@@ -61,30 +61,26 @@ filtering, or ILP costs on top of the old post-processing stack.
 
 ## SUBMISSION SLOT COORDINATION - 2026-07-20 (read before submitting)
 
-Two agents share ONE budget of 5 submissions/day. User decision: **the Claude
-Code instance submits; the Codex instance keeps ONE slot in reserve.**
-
-Actual usage for UTC day 2026-07-20, verified against `kaggle competitions
-submissions` (an earlier version of this table over-counted - Exp120 was listed
-as spent but never pushed):
+Two agents share ONE budget of 5 submissions/day. **Claude Code submits; the
+Codex instance keeps ONE slot in reserve.** Verified against the Kaggle API:
 
 | # | Submission | Result |
 | ---: | --- | --- |
 | 1 | Exp116 minimal ILP direct export (`54845958`) | **`0.877`** - minimal branch REJECTED |
-| 2 | Exp119 minimal, threshold `0.98` (`54848728`) | PENDING; expected ~`0.877`, likely a spent slot |
-| 3 | free - Claude | hold for an informed Exp110-branch candidate |
-| 4 | free - Claude | hold |
+| 2 | Exp119 minimal, threshold `0.98` (`54848728`) | **`0.875`** - confirms the branch is dead |
+| 3 | Exp123 motion relink `LEARNED_BONUS` 1.0->1.5 (`54852826`) | PENDING |
+| 4 | Exp124 motion relink `TIGHT_UM` 6.0->5.0 (`54853368`) | PENDING |
 | 5 | **RESERVED - Codex instance** | free |
 
-Do not submit minimal-branch variants: that branch measures `0.877` against
-Exp110's `0.909`. Exp120 (threshold `0.95`, minimal) was cancelled for this reason
-and should not be revived.
+**Claude's budget for 2026-07-20 is spent.** Do not submit further today except
+the reserved slot.
 
-Do NOT re-submit `biohub-exp116-clean-public-solution-ablation`: byte-identical
-output to the direct-export kernel (SHA256
-`dbba5f419e5b341bf0b413154ebf785bcf9caa19857f21f6242b012ebc65cd90`).
+Do not submit minimal-branch variants: measured `0.877` / `0.875` against
+Exp110's `0.909`. Do NOT re-submit
+`biohub-exp116-clean-public-solution-ablation` (byte-identical output to the
+direct-export kernel).
 
-Kaggle evaluation is taking 5+ hours, so a wasted slot is lost for the day.
+Kaggle evaluation is taking 5-7 hours, so a wasted slot is lost for the day.
 
 ## Operational gotchas
 
