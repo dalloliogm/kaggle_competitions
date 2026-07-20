@@ -61,26 +61,30 @@ filtering, or ILP costs on top of the old post-processing stack.
 
 ## SUBMISSION SLOT COORDINATION - 2026-07-20 (read before submitting)
 
-Two agents are working this competition in parallel against ONE shared budget of
-5 submissions/day. User decision on 2026-07-20: **the Claude Code instance does
-the submitting; the Codex instance keeps ONE slot in reserve.**
+Two agents share ONE budget of 5 submissions/day. User decision: **the Claude
+Code instance submits; the Codex instance keeps ONE slot in reserve.**
 
-Allocation for the UTC day 2026-07-20:
+Actual usage for UTC day 2026-07-20, verified against `kaggle competitions
+submissions` (an earlier version of this table over-counted - Exp120 was listed
+as spent but never pushed):
 
-| # | Submission | Owner | Status |
-| ---: | --- | --- | --- |
-| 1 | Exp116 minimal ILP direct export (`54845958`) | Claude | PENDING |
-| 2 | Exp119 detection threshold `0.98` | Claude | kernel RUNNING |
-| 3 | Exp120 detection threshold `0.95` | Claude | queued behind GPU cap |
-| 4 | Exp118 grid winner (best ILP cost config) | Claude | held until Exp118 lands |
-| 5 | **RESERVED** | **Codex instance** | free |
+| # | Submission | Result |
+| ---: | --- | --- |
+| 1 | Exp116 minimal ILP direct export (`54845958`) | **`0.877`** - minimal branch REJECTED |
+| 2 | Exp119 minimal, threshold `0.98` (`54848728`) | PENDING; expected ~`0.877`, likely a spent slot |
+| 3 | free - Claude | hold for an informed Exp110-branch candidate |
+| 4 | free - Claude | hold |
+| 5 | **RESERVED - Codex instance** | free |
 
-Do not submit beyond slot 5. Kaggle evaluation is taking 5+ hours, so a wasted
-slot is effectively lost for the day.
+Do not submit minimal-branch variants: that branch measures `0.877` against
+Exp110's `0.909`. Exp120 (threshold `0.95`, minimal) was cancelled for this reason
+and should not be revived.
 
-Do NOT re-submit `biohub-exp116-clean-public-solution-ablation`: its output is
-byte-identical to the direct-export kernel (same SHA256
+Do NOT re-submit `biohub-exp116-clean-public-solution-ablation`: byte-identical
+output to the direct-export kernel (SHA256
 `dbba5f419e5b341bf0b413154ebf785bcf9caa19857f21f6242b012ebc65cd90`).
+
+Kaggle evaluation is taking 5+ hours, so a wasted slot is lost for the day.
 
 ## Operational gotchas
 
