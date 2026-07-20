@@ -61,19 +61,26 @@ filtering, or ILP costs on top of the old post-processing stack.
 
 ## SUBMISSION SLOT COORDINATION - 2026-07-20 (read before submitting)
 
-Two agents share ONE budget of 5 submissions/day. **Claude Code submits; the
-Codex instance keeps ONE slot in reserve.** Verified against the Kaggle API:
+**User decision, updated 2026-07-20: Claude Code uses ALL FIVE slots today. The
+Codex reserve is released - the Codex instance should NOT submit today.**
+
+Verified against the Kaggle API:
 
 | # | Submission | Result |
 | ---: | --- | --- |
 | 1 | Exp116 minimal ILP direct export (`54845958`) | **`0.877`** - minimal branch REJECTED |
-| 2 | Exp119 minimal, threshold `0.98` (`54848728`) | **`0.875`** - confirms the branch is dead |
+| 2 | Exp119 minimal, threshold `0.98` (`54848728`) | **`0.875`** - branch confirmed dead |
 | 3 | Exp123 motion relink `LEARNED_BONUS` 1.0->1.5 (`54852826`) | PENDING |
 | 4 | Exp124 motion relink `TIGHT_UM` 6.0->5.0 (`54853368`) | PENDING |
-| 5 | **RESERVED - Codex instance** | free |
+| 5 | Exp126 motion relink `TIGHT_UM` 6.0->7.0 | kernel running, will be submitted |
 
-**Claude's budget for 2026-07-20 is spent.** Do not submit further today except
-the reserved slot.
+**All five slots for 2026-07-20 are allocated. Neither agent should submit
+further today.**
+
+Slots 4-5 deliberately bracket the incumbent `TIGHT_UM = 6.0` (Exp110, `0.909`)
+at `5.0` and `7.0`. Testing one point tells us little - the ILP disappearance
+sweep looked live at one point and proved flat across five submissions - so the
+bracket resolves direction AND flatness in a single day.
 
 Do not submit minimal-branch variants: measured `0.877` / `0.875` against
 Exp110's `0.909`. Do NOT re-submit
