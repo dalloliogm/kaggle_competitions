@@ -1,6 +1,6 @@
 {
-  "id": "dalloliogm/biohub-exp127-train-second-fold",
-  "title": "Biohub Exp127 Train Second Fold",
+  "id": "dalloliogm/biohub-exp127-finetune-incumbent",
+  "title": "Biohub Exp127 Finetune Incumbent",
   "code_file": "biohub-exp127-train-second-fold.ipynb",
   "language": "python",
   "kernel_type": "notebook",
@@ -13,7 +13,8 @@
   ],
   "dataset_sources": [
     "pilkwang/biohub-tracking-support-pack-50ep-v1",
-    "dalloliogm/biohub-official-scorer-patched"
+    "dalloliogm/biohub-official-scorer-patched",
+    "dalloliogm/biohub-tracking-weights-mirror"
   ],
   "kernel_sources": [],
   "competition_sources": [
