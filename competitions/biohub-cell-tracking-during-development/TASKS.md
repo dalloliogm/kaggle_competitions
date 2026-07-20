@@ -2,6 +2,10 @@
 
 ## Current Goal
 
+- Strict strategy decision on 2026-07-20: stay with biologically plausible
+  trackers for now. Do not add negative-time hubs, impossible coordinates, or
+  artificial fork chains from metric-hack public notebooks unless the user
+  explicitly reopens a metric-risk branch.
 - Publish a readable public version of the current best ILP-cost notebook:
   `dalloliogm/biohub-exp110-ilp-birth-death-cost` should explain nodes, edges,
   divisions, and conservative ILP graph pruning without relying on private
@@ -215,6 +219,14 @@
   LB results together.
 - Do not spend more slots on LB893 safe-division-only tuning unless Exp073-family
   probes regress sharply.
+- Prepared strict Exp116 clean-public-solution ablation:
+  `notebooks/biohub-exp116-clean-public-solution-ablation.ipynb`. It starts from
+  public `kaiwalyaatulraut/biohub-cell-tracking-solution` but removes the final
+  negative-time hub/fork augmentation and adds strict checks rejecting negative
+  frame indices, negative coordinates, dangling edges, nulls, and malformed row
+  IDs. Purpose: measure the real learned+ILP tracker without metric-hack graph
+  structures. Local notebook JSON and Python syntax checks passed; upload/run on
+  Kaggle next.
 - Manually submit Kaggle version 1 of
   `dalloliogm/biohub-lb893-conservative-safe-divisions-candidate` and record the
   public LB before further safe-division tuning.

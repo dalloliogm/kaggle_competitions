@@ -33,6 +33,11 @@ Capture durable information learned while working on this competition. This is f
   plan to rescore submissions. Do not optimize around fake forks, duplicated
   tracks, artificial hubs, or other metric-hack graph patterns; use the patched
   local evaluator before trusting division-heavy gains.
+- Current strategy choice: keep the main branch strict and biological. Public
+  notebooks that use negative-time hubs, impossible coordinates, or artificial
+  fork chains can be useful for diagnosing metric weaknesses, but do not copy
+  those structures into submissions unless explicitly running a separate
+  metric-risk branch.
 
 ## Validation
 
