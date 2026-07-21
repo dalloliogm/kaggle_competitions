@@ -64,9 +64,36 @@ All three probes on the Exp110 branch scored. The `TIGHT_UM` bracket is flat and
   gap/density geometry, and now motion relink - have each been bracketed on the
   leaderboard and each is flat. The remaining leverage is in the model, not the
   graph repair.
-- Untested combination worth one slot: Exp123 + Exp126 together
-  (`LEARNED_BONUS 1.5` AND `TIGHT_UM 7.0`), in case the two `+0.001` gains are
-  independent.
+- ~~Untested combination worth one slot: Exp123 + Exp126 together~~ - CLOSED by
+  Exp128, see the 2026-07-21 section below.
+
+## CONFIRMED 2026-07-21: combination axis closed; four candidates never landed
+
+Live Kaggle submission list confirmed (credentials work; this box's egress proxy
+blocks `api.kaggle.com`, so the table was pulled from a machine with Kaggle
+access):
+
+- **Exp128 (`54870143`) scored `0.910`.** This is `LEARNED_BONUS 1.5` AND
+  `TIGHT_UM 7.0` together - the last untested combination. It gives `0.910`, NOT
+  `0.911`: the two `+0.001` gains do **not** compose. The motion-relink axis is
+  now fully closed, consistent with the "structural not parametric" conclusion.
+  `0.910` is the confirmed ceiling of the post-processing branch.
+- **Exp129, Exp130, Exp131, Exp132 were never submitted.** They do not appear in
+  the live list, `submitted_shas.txt` records only Exp128, and no output dirs
+  exist for them. Root cause: the submit pipeline (`await_validate_submit.py`) is
+  a foreground watcher that polls for up to 10h then submits - the session that
+  launched the batch ended before the watchers completed (and possibly before the
+  post-filename-fix push finished), so they died un-submitted. The Exp130/131/132
+  double-prefix filename bug that blocked the initial push is fixed; filenames now
+  match `code_file`.
+- **Workflow fragility lesson:** submission depends on a local process outliving
+  the kernel run. A session ending silently loses the whole batch. Prefer running
+  the watcher under `tmux`/`nohup` on a host that stays up, and always verify the
+  ledger + live list afterwards rather than trusting that "pushed with auto-submit"
+  means "landed."
+- Re-run helper: `scripts/push_and_submit_exp129_132.sh` (run locally / where
+  `api.kaggle.com` is reachable) stages, pushes, and arms the watchers for all
+  four. Exp129 is the one that matters - first LB test of the fold-1 fine-tune.
 
 ## SETTLED 2026-07-20: the incumbent checkpoint is 402 epochs, not 50
 

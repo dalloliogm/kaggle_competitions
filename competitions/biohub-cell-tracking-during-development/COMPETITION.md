@@ -47,11 +47,20 @@ identify division events to reconstruct cell lineages.
 - Team/merge rules: Timeline and merge details must be verified on Kaggle.
 - Submission limit: 5 per day
 
+## Current Best (confirmed 2026-07-21 on the live Kaggle submission list)
+
+- Public LB best: `0.910` (Exp128 `54870143`, and Exp123/Exp126). The
+  motion-relink parameter axis is fully bracketed and flat; `0.910` is the
+  ceiling of the post-processing branch. Remaining leverage is model-side.
+- Built but NOT yet submitted: Exp129 (fold-1 fine-tuned model - first LB test of
+  a self-trained model), Exp130/131/132 (node-count probes). See LEARNINGS.md
+  2026-07-21 and `scripts/push_and_submit_exp129_132.sh`.
+
 ## Current Baseline
 
 - Local CV: exact validation completed on Kaggle; artifact download remains
   blocked by Kaggle output API HTTP 429.
-- Public LB: `0.827`
+- Public LB: `0.827` (first scored submission; superseded, kept for history)
 - Notebook: `notebooks/biohub-exact-dog-hungarian-baseline.ipynb`
 - Kaggle kernel: `dalloliogm/biohub-exact-validation-and-dog-hungarian-baseline`
 - Kernel version 7 completed successfully on 2026-07-03 and produced the first
