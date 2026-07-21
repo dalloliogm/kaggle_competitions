@@ -2,7 +2,7 @@
 Kaggle Competitions
 -----------------------
 
-This is my Kaggle profile: [dalloliogm](https://www.kaggle.com/dalloliogm/). This repo is linked to the Kaggle account, and contains all my notebooks for the competitions, in an utterly disorganized and chaotic way.
+This is my Kaggle profile: [dalloliogm](https://www.kaggle.com/dalloliogm/). This repo is linked to the Kaggle account, and contains all my notebooks for the competitions. Notebooks are organized by competition under `competitions/<slug>/notebooks/`; new root-level notebooks land here via Kaggle's "Save to GitHub" workflow and get sorted in over time. A handful of notebooks that aren't tied to a specific Kaggle competition (course exercises, one-off research, ambiguous forks) remain at the repo root.
 
 ## Starting a new competition chat
 
