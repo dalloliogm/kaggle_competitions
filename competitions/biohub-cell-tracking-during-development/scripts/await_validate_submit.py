@@ -52,6 +52,13 @@ def wait_for_kernel(slug: str) -> str:
         if "RUNNING" in status or "QUEUED" in status:
             time.sleep(POLL_SECONDS)
             continue
+        # A kernel that has not been created yet (still pushing, or queued behind
+        # the 2-session GPU cap) reports "Cannot access"/404. That is NOT a
+        # failure - keep waiting rather than aborting, which is what happened
+        # the first time this ran against three not-yet-pushed kernels.
+        if any(k in status for k in ("Cannot access", "404", "not found", "Not Found")):
+            time.sleep(POLL_SECONDS)
+            continue
         return status
     return "TIMEOUT"
 

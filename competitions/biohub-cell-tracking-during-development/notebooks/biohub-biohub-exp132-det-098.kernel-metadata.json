@@ -1,0 +1,24 @@
+{
+  "id": "dalloliogm/biohub-exp132-det-098",
+  "title": "Biohub Exp132 Det 098",
+  "code_file": "biohub-biohub-exp132-det-098.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [
+    "pilkwang/biohub-tracking-support-pack-50ep-v1",
+    "thibautgoldsborough/cellmot-baseline-artifacts"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "model_sources": [],
+  "machine_shape": "NvidiaTeslaT4"
+}
