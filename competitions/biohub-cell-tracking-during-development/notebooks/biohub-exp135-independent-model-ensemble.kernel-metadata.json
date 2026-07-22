@@ -1,0 +1,25 @@
+{
+  "id": "dalloliogm/biohub-exp135-independent-model-ensemble",
+  "title": "Biohub Exp135 Independent Model Ensemble",
+  "code_file": "biohub-exp135-independent-model-ensemble.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [
+    "pilkwang/biohub-tracking-support-pack-50ep-v1",
+    "thibautgoldsborough/cellmot-baseline-artifacts",
+    "subinium/biohub-v34-retrain-weights-mirror"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "model_sources": [],
+  "machine_shape": "NvidiaTeslaT4"
+}
