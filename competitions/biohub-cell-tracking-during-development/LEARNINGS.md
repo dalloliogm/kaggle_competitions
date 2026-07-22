@@ -39,6 +39,55 @@ Capture durable information learned while working on this competition. This is f
   those structures into submissions unless explicitly running a separate
   metric-risk branch.
 
+## SETTLED 2026-07-22: node-count axis has a peak at the incumbent, and the MODEL cannot be improved on this data
+
+Node-count sweep (all on the best recipe, LB measured):
+
+| exp | change | nodes | public LB |
+| --- | --- | ---: | ---: |
+| Exp131 | `MIN_TRACK_LEN` 4 | more | `0.908` |
+| Exp126 | `MIN_TRACK_LEN` 6 (incumbent) | 121,427 | **`0.910`** |
+| Exp130 | `MIN_TRACK_LEN` 10 | -6,245 | `0.909` |
+| Exp132 | `DET_THRESHOLD` 0.98 | fewer | `0.906` |
+
+Unlike the other axes this one is NOT flat - it is a clean gradient with the peak
+at or near the inherited `6`. Pruning harder, looser, or cutting detections all
+lose. Closed: the incumbent is already well-placed here too.
+
+**The model cannot be improved by training on this data.** Three independent
+results converge:
+
+1. Exp129 - fine-tuning the FULL model (fold 1, +14 epochs from epoch 402) scored
+   public LB `0.900`, WORSE than the `0.910` baseline. Fine-tuning overfits the
+   leaky field-of-view split away from the general 402-epoch checkpoint.
+2. Exp134 - freezing the U-Net and training ONLY the linker
+   (`SimpleNodeTransformer`, 580,353 trainable params) was completely inert:
+   validation recall was `0.9821` at every one of 13 epochs, diagnosis
+   `PLATEAUED`. The linker learned nothing.
+3. Detection `node_recall` is already `0.998`.
+
+Interpretation: the incumbent 402-epoch model is at the ceiling of what these
+sparse labels support. Recall is saturated and the sparse supervision gives the
+transformer no new signal. Do NOT spend further GPU/quota on training against
+this competition's labels - neither continuation, fine-tuning, nor linker-only
+training helps, and fine-tuning actively hurts. Any model gain would need
+different DATA (e.g. pseudo-labels from other trackers) or a different
+architecture, not more training of this one.
+
+## STRATEGIC POSITION 2026-07-22
+
+Six axes are now bracketed on the leaderboard, and our best is `0.910`:
+- ILP costs (flat), gap/density geometry (flat), motion relink (flat),
+  combined motion params (flat), node count (peak at incumbent),
+  model training (worse or inert).
+Everything reachable from the pilkwang checkpoint + post-processing is at its
+ceiling. The public-label resolution bound is +-0.013, so the `0.909`-`0.910`
+plateau is inside the noise floor and cannot be optimised further with these
+labels. Remaining directions all require something genuinely new: different
+detections (a second independently-trained detector, or a non-U-Net detector),
+pseudo-label supervision for the linker, or ensembling with a truly independent
+model - none cheap. Exp133 (checkpoint ensemble) is the last low-cost probe.
+
 ## SETTLED 2026-07-20: motion-relink parameters are essentially INERT
 
 All three probes on the Exp110 branch scored. The `TIGHT_UM` bracket is flat and
