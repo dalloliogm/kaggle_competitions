@@ -59,29 +59,46 @@ evidence is in `LEARNINGS.md` (see the CRITICAL section). Summary:
 DO NOT resume tuning motion relink, gap closing, safe divisions, short-track
 filtering, or ILP costs on top of the old post-processing stack.
 
-## PLAN FOR TOMORROW (2026-07-23) - read first
+## PLAN - GPU BLOCKED ~52h (as of 2026-07-22 evening)
 
-Two blockers cleared overnight if the schedules cooperate: the 5/day submission
-slots reset at UTC midnight, and Kaggle's weekly 30h GPU quota should also free.
+Weekly 30h GPU quota does NOT reset overnight - Kaggle reports ~52h to reset
+(~2026-07-24 evening). So no GPU kernel can run until then. Submission slots DO
+reset daily at UTC midnight, but we cannot produce new distinct predictions
+without compute, so slots alone don't help.
 
-Priority order:
+Exp135 (the v34 independent-ensemble ceiling test) is built and committed but
+**cannot run on GPU until ~2026-07-24**.
 
-1. **Run Exp135** (`biohub-exp135-independent-model-ensemble`, already built +
-   committed). Push it (fresh slug if the stale-record "Notebook not found" bites),
-   let it run (~15 min), then submit via
-   `scripts/await_validate_submit.py`. This is the real ceiling test: incumbent +
-   `subinium/biohub-v34-retrain` (an INDEPENDENTLY trained model, config identical
-   to ours). The only untested lever with genuine diversity.
-2. **Check Exp133's two scores.** `54894521` (v2, 3-member) and `54910912` (v1,
-   4-member) both went in COMPLETE-but-unscored / PENDING - likely stuck in the
-   organizers' rescore queue (discussion 727154), NOT our error: our graph is
-   structurally healthy (largest weak component 253 nodes / 0.22%). If they score
-   > 0.910, ensembling helps and Exp135 is worth pushing hard.
-3. If Exp135 beats 0.910, try the fuller ensemble (add hongdaekim 300ep/350ep
-   pins - same architecture) and/or a genuinely different DETECTOR
-   (`justinkim1216/biohub-nnunet-flow-support-v1`, flow-based) or LINKER
-   (Trackastra, `subinium/biohub-trackastra-public-weights-mirror`).
+### The only GPU-free path to still test ideas: CPU kernels
 
+Kaggle CPU kernels do NOT count against the GPU quota and have a ~12h limit.
+The models are small (64^3 working volumes, ~2M params), so CPU inference is
+plausible for a SINGLE model with modest TTA, though the full 8-way x multi-model
+ensemble likely exceeds 12h. Candidate CPU jobs, in value order:
+
+1. **v34 ALONE on the best recipe (CPU, reduced TTA).** Tests v34's standalone
+   quality - the prerequisite for the ensemble. If v34 alone is much weaker than
+   our 0.910 incumbent, averaging it in will not help and we skip Exp135. If it is
+   comparable, the ensemble case is strong. Needs: remove the CUDA hard guard,
+   force device=cpu, cap TTA to fit ~12h. A distinct submission either way.
+2. Reduced-TTA 2-model ensemble on CPU, only if (1) fits comfortably in time.
+
+CPU feasibility is UNVERIFIED - the 3D conv stack may be too slow even at 64^3.
+Build (1), watch the first movie's timing, and abort early if it will not fit.
+
+### GPU-free prep for when the quota returns
+
+- Wire up a genuinely different architecture so it fires instantly at ~52h:
+  `justinkim1216/biohub-nnunet-flow-support-v1` (flow detector, ships
+  `source/model.py`) is the most self-contained. Trackastra is higher-ceiling but
+  needs the package + a mask/detection input - bigger build.
+
+### Nothing to submit in the meantime
+
+Out of distinct already-computed outputs (last one, Exp133 v1, submitted
+2026-07-22). New submissions require new compute = CPU kernels above, or wait.
+
+## Other pretrained models found (2026-07-22) - all public, drop-in candidates
 ## Other pretrained models found (2026-07-22) - all public, drop-in candidates
 
 Same `unet_transformer` architecture (drop straight into the ensemble glob):
