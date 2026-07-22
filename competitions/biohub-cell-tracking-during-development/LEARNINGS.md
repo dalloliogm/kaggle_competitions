@@ -39,6 +39,38 @@ Capture durable information learned while working on this competition. This is f
   those structures into submissions unless explicitly running a separate
   metric-risk branch.
 
+## Model survey verdict 2026-07-22: no worthwhile alternative model to build around
+
+Surveyed every public pretrained model. Only ONE is worth using:
+
+- `subinium/biohub-v34-retrain-weights-mirror` - an INDEPENDENT retrain of our
+  exact `unet_transformer` architecture (config.json identical). The only genuine
+  ensemble diversity available. Being tested standalone on CPU as Exp136.
+
+Everything else is a dead end - do NOT spend build effort on these:
+- `hongdaekim/biohub-300ep`, `-350ep` - per their README, literally EARLIER
+  snapshots of pilkwang's own run (our incumbent is epoch 402). Strictly worse.
+- `justinkim1216/biohub-nnunet-flow-support-v1` and `-center-support` - a
+  genuinely different architecture (residual 3D U-Net with center/offset/FLOW
+  heads, the learned motion prior that would target our linking bottleneck) BUT
+  the DATACARD config shows `epochs: 1, steps_per_epoch: 4` = **16 gradient steps
+  total**. It is a proof-of-concept, not a trained model. Building a tracker
+  around it would track near-random detections. Not worth it.
+- `drkongvis/biohub-v4-3dunet-pretrained-weights` - 49MB weights but no manifest,
+  no README, unclear provenance, 0 votes. Untrustworthy without training details.
+- `subinium/biohub-trackastra-public-weights-mirror` - real Trackastra weights,
+  but 2D/CTC and needs segmentation masks we do not have. Poor architectural fit.
+
+Consequence: there is no genuinely-trained different-architecture model to build
+a pipeline around. The remaining ceiling levers are (a) the v34 ensemble
+(diversity from an independent same-arch retrain), and (b) training a genuinely
+new model ourselves - which we already established does not help on this data.
+
+Note on CPU: Exp136 confirmed CPU inference of the small 3D U-Net runs (no GPU
+quota cost, ~12h limit). So the v34 ENSEMBLE can be run on CPU during a GPU-quota
+block, provided single-model timing (Exp136's wall-clock print) leaves room for
+the ~2x cost of two models.
+
 ## SETTLED 2026-07-22: node-count axis has a peak at the incumbent, and the MODEL cannot be improved on this data
 
 Node-count sweep (all on the best recipe, LB measured):
