@@ -59,35 +59,56 @@ evidence is in `LEARNINGS.md` (see the CRITICAL section). Summary:
 DO NOT resume tuning motion relink, gap closing, safe divisions, short-track
 filtering, or ILP costs on top of the old post-processing stack.
 
-## SUBMISSION SLOT COORDINATION - 2026-07-20 (read before submitting)
+## PLAN FOR TOMORROW (2026-07-23) - read first
 
-**User decision, updated 2026-07-20: Claude Code uses ALL FIVE slots today. The
-Codex reserve is released - the Codex instance should NOT submit today.**
+Two blockers cleared overnight if the schedules cooperate: the 5/day submission
+slots reset at UTC midnight, and Kaggle's weekly 30h GPU quota should also free.
 
-Verified against the Kaggle API:
+Priority order:
 
-| # | Submission | Result |
-| ---: | --- | --- |
-| 1 | Exp116 minimal ILP direct export (`54845958`) | **`0.877`** - minimal branch REJECTED |
-| 2 | Exp119 minimal, threshold `0.98` (`54848728`) | **`0.875`** - branch confirmed dead |
-| 3 | Exp123 motion relink `LEARNED_BONUS` 1.0->1.5 (`54852826`) | PENDING |
-| 4 | Exp124 motion relink `TIGHT_UM` 6.0->5.0 (`54853368`) | PENDING |
-| 5 | Exp126 motion relink `TIGHT_UM` 6.0->7.0 | kernel running, will be submitted |
+1. **Run Exp135** (`biohub-exp135-independent-model-ensemble`, already built +
+   committed). Push it (fresh slug if the stale-record "Notebook not found" bites),
+   let it run (~15 min), then submit via
+   `scripts/await_validate_submit.py`. This is the real ceiling test: incumbent +
+   `subinium/biohub-v34-retrain` (an INDEPENDENTLY trained model, config identical
+   to ours). The only untested lever with genuine diversity.
+2. **Check Exp133's two scores.** `54894521` (v2, 3-member) and `54910912` (v1,
+   4-member) both went in COMPLETE-but-unscored / PENDING - likely stuck in the
+   organizers' rescore queue (discussion 727154), NOT our error: our graph is
+   structurally healthy (largest weak component 253 nodes / 0.22%). If they score
+   > 0.910, ensembling helps and Exp135 is worth pushing hard.
+3. If Exp135 beats 0.910, try the fuller ensemble (add hongdaekim 300ep/350ep
+   pins - same architecture) and/or a genuinely different DETECTOR
+   (`justinkim1216/biohub-nnunet-flow-support-v1`, flow-based) or LINKER
+   (Trackastra, `subinium/biohub-trackastra-public-weights-mirror`).
 
-**All five slots for 2026-07-20 are allocated. Neither agent should submit
-further today.**
+## Other pretrained models found (2026-07-22) - all public, drop-in candidates
 
-Slots 4-5 deliberately bracket the incumbent `TIGHT_UM = 6.0` (Exp110, `0.909`)
-at `5.0` and `7.0`. Testing one point tells us little - the ILP disappearance
-sweep looked live at one point and proved flat across five submissions - so the
-bracket resolves direction AND flatness in a single day.
+Same `unet_transformer` architecture (drop straight into the ensemble glob):
+- `subinium/biohub-v34-retrain-weights-mirror` - INDEPENDENT retrain (Exp135 uses it)
+- `hongdaekim/biohub-300ep-checkpoint-pin-v1`, `...-350ep-...` - snapshots of the
+  pilkwang run (correlated, less diverse than v34)
 
-Do not submit minimal-branch variants: measured `0.877` / `0.875` against
-Exp110's `0.909`. Do NOT re-submit
-`biohub-exp116-clean-public-solution-ablation` (byte-identical output to the
-direct-export kernel).
+Genuinely different architectures (would need pipeline work, higher ceiling):
+- `justinkim1216/biohub-nnunet-flow-support-v1` / `...-center-...` - flow/center
+  nnU-Net detectors, compact `source/model.py` included
+- `drkongvis/biohub-v4-3dunet-pretrained-weights` - different 3D U-Net detector
+- `subinium/biohub-trackastra-public-weights-mirror` - Trackastra LINKER (ctc +
+  general_2d); needs the trackastra package and a detection/mask input
+- `pilkwang/biohub-local-association-ranker-unet300-v1` - small alternate linker/reranker
 
-Kaggle evaluation is taking 5-7 hours, so a wasted slot is lost for the day.
+## SUBMISSION SLOT USAGE - 2026-07-22
+
+5/day budget. Used 2:
+- `54894521` Exp133 v2 (3-member equal-weight ensemble) - COMPLETE, unscored (queue)
+- `54910912` Exp133 v1 (4-member unequal ensemble) - PENDING
+
+3 slots left but NOT usable today: the weekly GPU quota is exhausted, so no new
+distinct prediction can be produced, and every remaining candidate needs a fresh
+inference run. Did NOT burn slots on byte-duplicates of already-scored outputs
+(no information, and the sha guard in await_validate_submit.py refuses them).
+
+Best public LB remains `0.910` (Exp126/Exp128).
 
 ## Operational gotchas
 
