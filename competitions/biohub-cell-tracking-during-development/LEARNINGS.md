@@ -39,6 +39,41 @@ Capture durable information learned while working on this competition. This is f
   those structures into submissions unless explicitly running a separate
   metric-risk branch.
 
+## CRITICAL 2026-07-23: submissions RE-RUN the notebook on the hidden test - ensembles TIME OUT
+
+This is a code competition: submitting a kernel version RE-EXECUTES the notebook
+on the HIDDEN test set (larger than the 4 visible movies; our committed
+submission.csv is just a placeholder that the rerun regenerates). The notebook
+must finish within the rerun time limit and write submission.csv.
+
+Evidence: every SINGLE-MODEL kernel scored (Exp126/128/130/131/132/129/124), but
+BOTH Exp133 ensemble submissions show `COMPLETE` with a BLANK score - the UI
+label is "Notebook Timeout". So the earlier "stuck in the organizer rescore
+queue" theory was WRONG: those were notebook timeouts.
+
+Hard consequences:
+- **Multi-model ensembles are UNSUBMITTABLE as sequential inference** - even the
+  3-model GPU ensemble (Exp133) timed out on the hidden rerun. The ensemble path
+  to gold is blocked by RUNTIME, not score.
+- **Exp137 (CPU 2-model ensemble) is futile to submit** - CPU + 2 models is far
+  slower than the GPU 3-model that already timed out. Do not submit it; its
+  interactive output is local-only information.
+- **CPU kernels are at risk for submission** - the rerun of a CPU (enable_gpu=false)
+  notebook runs on CPU over the larger hidden set. Exp136 (CPU single-model, 83
+  min interactive on 4 movies) is the pivotal test: if it times out, CPU is dead
+  for submission and gap-filling collapses to "wait for GPU".
+- Reliable submission form = **single-model, GPU**. That is the only thing proven
+  to survive the rerun.
+
+Path to gold within this constraint:
+- The only way to get ensemble-like gain at single-model inference cost is a
+  WEIGHT-SPACE average ("model soup") of incumbent + v34 - one model, single-model
+  speed, submittable. Risk: v34 is an INDEPENDENT retrain, so the two may not be
+  weight-aligned and the soup could be incoherent. Cheap to build and test.
+- Building the souped checkpoint needs no GPU (average two state_dicts). Running
+  its inference for submission needs GPU to fit the rerun budget (or CPU only if
+  Exp136 proves CPU single-model submits).
+
 ## MEDAL ZONE 2026-07-23: rescore landed, we are SILVER
 
 The organizers' patched-metric rescore (discussion 727154) ran. Effect:
