@@ -1,14 +1,33 @@
 # Tasks
 
+## Resume Here Tomorrow (2026-07-24+)
+
+We used all 5 of 2026-07-23's submission slots; Kaggle's scoring was extremely slow that day (6+ hours pending, no scores landed before we stopped). **First thing tomorrow: check all 5 submission scores** — `kaggle competitions submissions rogii-wellbore-geology-prediction --format json` (note: use `--format json` and compare `ref` as an `int`, not a string — see the polling bugs noted in the session; the table view wraps long descriptions onto a second line and breaks naive parsing).
+
+The 5 pending submissions form a deliberate sweep — read the scores together, not in isolation:
+
+| Ref | Candidate | What it isolates |
+|---|---|---|
+| 54927668 | Contact-override (main/aggressive) | Full pipeline incl. same-well geological contact reconstruction |
+| 54929149 | Model-package-only | Pure separate pretrained model (TabICL/model-package), nothing else |
+| 54935192 | No-override blend | Full PF+learned blend, override forced off |
+| 54935198 | Pure learned-branch | LightGBM/CatBoost booster ensemble alone |
+| 54935199 | Pure PF/ridge anchor | Signal-processing/PF side alone, no ML |
+
+Decision tree once scores are in:
+- If **54927668 (override) scores near its expected ~7.3** (or better): the geological shortcut generalizes well from visible prefix to hidden tail. Lean into it; Phase 2 differentiation should focus on improving the contact-reconstruction step itself (candidate reference formations, MD-interpolation quality), not on more upstream blending.
+- If **54927668 scores much worse than ~7.3** (e.g. back near double digits): the override overfit to the visible prefix and didn't generalize. Compare against 54935192 (no-override) — if that one scores better, the safer path forward is the blend without the override, and the "public-aggressive" same-well shortcut should probably be avoided or used only as a hedge pick, not our primary.
+- Compare 54929149 vs. 54935198 vs. 54935199 to see which single signal family (model-package, learned GBM, or PF/ridge anchor) is strongest in isolation — that tells us where to invest further modeling effort in Phase 2.
+- Whichever pair looks best (one aggressive, one robust) becomes our current best pair to refine toward the Phase 3 final-submission picks.
+
 ## Current Goal
 
-**Catch-up strategy (as of 2026-07-23, ~13 days left, deadline 2026-08-05 23:59:00).** We're at rank 3504/5504 (score 11.107, from 2026-05-10) while the public meta has moved to a "target-free geosteering" pipeline (PF/beam/DTW + GBM residual + contact override, see `LEARNINGS.md`) clustering at 6-9. GPU is confirmed *not* required for this approach, so the current GPU-quota gap (refreshes in ~2 days) is not a blocker — work starts now on CPU.
+**Catch-up strategy (as of 2026-07-23, ~13 days left, deadline 2026-08-05 23:59:00).** We're at rank 3504/5504 (score 11.107, from 2026-05-10) while the public meta has moved to a "target-free geosteering" pipeline (PF/beam/DTW + GBM residual + contact override, see `LEARNINGS.md`) clustering at 6-9. GPU is confirmed *not* required for this approach, so the current GPU-quota gap is not a blocker — work happens on CPU.
 
-### Phase 0 (CPU, now → GPU refresh): reproduce the shared baseline
-- Adapt/fork one of the 5 pulled public notebooks in `notebooks/` (`working-note-target-free-tvt-geosteering.ipynb` or `top-pf-config-branch-conservative-visuals.ipynb` are the most complete) into a runnable submission on Kaggle.
-- Install `koolbox` (e.g. `phongnguyn23021656/koolbox-offline`) and mount `ravaghi/wellbore-geology-prediction-artifacts` as datasets.
-- Get one submission in to confirm we land in the expected ~6-9 public-score range. This alone should be a huge rank jump (top-25%/bronze territory) — see medal math in `COMPETITION.md`.
-- Set up local validation using the visible-prefix holdout mechanism (hide suffixes of known `TVT_input`, score candidates on that) instead of blind public-LB probing, since submissions are capped at 5/day.
+### Phase 0 (CPU): reproduce the shared baseline — DONE, awaiting scores
+- Adapted `rogii-lb7295-public-rebuild.ipynb` (simple, 3 datasets) and `working-note-target-free-tvt-geosteering.ipynb` (advanced, 7 datasets) — both produced byte-identical `submission.csv` since the contact override dominates for our 3 test wells (see `LEARNINGS.md`).
+- Built 3 additional single-change forks to isolate each pipeline component: no-override, pure-learned-branch, pure-PF-anchor (see `notebooks/working-note-*-ablation.ipynb` and their sidecar `.kernel-metadata.json` files — reusable templates for future ablations).
+- All 5 submitted 2026-07-23; see "Resume Here Tomorrow" above for what to do with the scores.
 
 ### Phase 1 (once GPU refreshes): evaluate the learned-branch NN
 - Check via CV whether the torch-based "learned branch" component adds anything over the LightGBM/CatBoost residual models before spending GPU time on it.

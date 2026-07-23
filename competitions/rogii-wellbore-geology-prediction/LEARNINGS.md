@@ -68,7 +68,9 @@ Shared community tooling (public Kaggle datasets, confirmed legitimate under rul
 
 ## Ensembling And Submission Behavior
 
-- TBD — revisit once we've reproduced a baseline from the shared pipeline and have our own CV numbers to blend against.
+- **For our 3 test wells specifically, the same-well contact override dominates completely and makes everything upstream irrelevant.** Ran both `rogii-lb7295-public-rebuild.ipynb` (simple, 3 datasets) and `working-note-target-free-tvt-geosteering.ipynb` (adds visible-prefix calibration, bimodal hedge, model-package/TabICL blending, 7 datasets) on 2026-07-23: both produced **byte-identical** `submission.csv` (sha256 `fdf4a817...`). The override fires for all 3 test wells with near-perfect visible-prefix reconstruction (RMSE 0.008-0.01 ft, 100% of rows overridden per well in both runs), so whatever the PF/ridge/learned-branch/model-package/TabICL layers compute gets fully overwritten. The model-package correction layer even self-gated off (`model package p95 diff 26.701 > 25.000`, above its own 25.0 threshold).
+- **Implication**: more upstream modeling sophistication (more datasets, more blending layers) won't move our score at all while the override is active. Real improvement has to come from the contact-reconstruction step itself (candidate reference-formation choice, MD-interpolation quality) or from something that changes whether/how the override applies — not from bigger ensembles on top.
+- Before pushing another variant notebook from this lineage, diff its output `submission.csv` hash against what we already have — don't assume added complexity changed anything.
 
 ## Leaderboard Notes (2026-07-23 snapshot)
 
