@@ -140,6 +140,30 @@ Use templates for repeatable patterns such as tabular LightGBM baselines, CatBoo
 
 ## Kaggle Execution
 
+### Authentication (do this first in any new environment)
+
+Kaggle credentials are per-machine and are **not** committed to the repo, so a
+fresh chat/session starts unauthenticated ("variables not set"). The current CLI
+uses an **access token** (`auth_method: ACCESS_TOKEN`), not the legacy
+`kaggle.json` username/key pair. Set it up once per environment:
+
+```bash
+# Preferred: save the KGAT... token (from https://www.kaggle.com/settings/api)
+mkdir -p ~/.kaggle && printf 'KGAT...' > ~/.kaggle/access_token && chmod 600 ~/.kaggle/access_token
+# or, for CI / non-interactive shells:
+export KAGGLE_API_TOKEN=KGAT...
+# verify:
+uvx --index-url https://pypi.org/simple kaggle config view   # expect auth_method: ACCESS_TOKEN
+```
+
+`scripts/kaggle_env.sh` (sourced by the helpers below) accepts any of:
+`~/.kaggle/access_token`, `KAGGLE_API_TOKEN`, legacy `~/.kaggle/kaggle.json`, or
+`KAGGLE_USERNAME`+`KAGGLE_KEY`. Do not point `KAGGLE_CONFIG_DIR` away from
+`~/.kaggle` when relying on the token file. Never write the token into a tracked
+file.
+
+### Running notebooks
+
 For running notebooks on Kaggle from this repo, prefer the existing helper scripts:
 
 ```bash
