@@ -5,3 +5,5 @@ c3c934f2aa047e17a0e6e55d188cf734f888c2270d56dd118f6d6e649080966b  dalloliogm/bio
 1ff2097be0907f233872b57dd84ecc51cca095c282fcdac5118fcbf8ae0c685a  dalloliogm/biohub-exp129-finetuned-model v2  exp129 FINE-TUNED model (fold1, resumed from epoch 402, +14 epochs lr 2e-5) on t
 732fe190707c2f72d2b5af16498728b3f619a9b14320617e912730fbc4f30332  dalloliogm/biohub-exp133-checkpoint-ensemble v2  exp133 3-checkpoint detection ensemble (logit avg, content-deduped) on best reci
 932b65eace351e14ab75a86dbedce8ba49f667abd75de6e82c763be90bbd7172  dalloliogm/biohub-exp133-checkpoint-ensemble v1  exp133 v1 4-model ensemble
+98b2751192fdc755a7264ffdac5625aa017d77214f2b9c496e942d2660a05981  dalloliogm/biohub-exp136-v34-cpu-standalone v1  exp136 v34 INDEPENDENT model standalone on CPU (4-way TTA, best recipe TIGHT_UM 
+98b2751192fdc755a7264ffdac5625aa017d77214f2b9c496e942d2660a05981  dalloliogm/biohub-exp136-v34-cpu-standalone v1  exp136 v34 standalone

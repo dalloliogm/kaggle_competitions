@@ -39,6 +39,32 @@ Capture durable information learned while working on this competition. This is f
   those structures into submissions unless explicitly running a separate
   metric-risk branch.
 
+## MEDAL ZONE 2026-07-23: rescore landed, we are SILVER
+
+The organizers' patched-metric rescore (discussion 727154) ran. Effect:
+
+- Our division-bearing submissions dropped ~`0.002` (`0.910` -> `0.908`); the
+  minimal 0-division submission (`0.877`) was UNCHANGED. So the patch trimmed
+  division credit slightly - it did not touch pure-edge score.
+- The metric-hack cluster collapsed: leaderboard top is now `0.929` (was `0.982`).
+- **Our clean `0.908` is now rank ~24 / 1547 = SILVER (top 1.6%).**
+- Thresholds (1547 teams): GOLD `>= 0.910` (top ~13), SILVER `>= 0.908` (top ~77),
+  BRONZE `>= 0.902` (top ~154). Score band is compressed: `0.908` has 59 teams,
+  `0.909` 7, `0.910` 5, then sparse to `0.929`.
+
+Consequences for strategy:
+- GOLD is only `+0.002` away. On the real (full hidden-test) leaderboard that IS a
+  resolvable difference, unlike our local `+-0.013` label-noise floor. Small real
+  LB gains now matter again.
+- Divisions got slightly cheaper under the patch. Worth re-checking whether our
+  310-358 safe divisions still help or now cost - a targeted test once slots allow.
+- The best gold shot is the v34 independent-model ENSEMBLE (Exp137, running on
+  CPU since GPU quota is exhausted - CPU works because Exp136 measured ~83
+  min/model, and metadata must OMIT `machine_shape: NvidiaTeslaT4` or the push is
+  billed to GPU quota even with enable_gpu=false).
+- FINAL SELECTION now matters: keep our best clean submissions on record; do not
+  let experimentation crowd out protecting the `0.908` result.
+
 ## Model survey verdict 2026-07-22: no worthwhile alternative model to build around
 
 Surveyed every public pretrained model. Only ONE is worth using:
