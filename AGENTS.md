@@ -44,6 +44,25 @@ Personal Kaggle competition notebooks for [dalloliogm](https://www.kaggle.com/da
 - **Trust the live ladder over local benchmarks.** Local seeded matches can diverge from live results; verify a submission's real behavior by downloading its replays (`kaggle competitions episodes <id>`, then `replay <episode_id>`) and analyzing them.
 - **Verify current state directly before acting or assuming.** Check which submissions are actually live (`kaggle competitions submissions`) and whether files changed (`git status`) rather than relying on assumptions — submission slots and the latest-N active-pair window are easy to misjudge.
 
+**Notebook-only ("code") competitions** (e.g. ROGII Wellbore Geology Prediction) reject a plain file upload outright:
+
+- `kaggle competitions submit -c <slug> -f submission.csv -m "..."` fails with a 400 and a generic `Bad Request` from the CLI. The real reason only shows up if you catch the `requests.HTTPError` and read `e.response.text` — it says `"Submission not allowed: This competition only accepts Submissions from Notebooks."` The CLI swallows this detail.
+- The CLI's documented `-k KERNEL -v VERSION` flags route to a **different** API endpoint (`CreateCodeSubmission` instead of `CreateSubmission`) but still fail with a bare 400 if you don't also pass `-f <output-filename>` — the file name (e.g. `submission.csv`) is required so Kaggle knows which of the kernel's output files to grade, and the CLI's argument parser doesn't enforce that combination.
+- **What works**: call the Python client directly rather than fighting the CLI:
+  ```python
+  from kaggle.api.kaggle_api_extended import KaggleApi
+  api = KaggleApi(); api.authenticate()
+  api.competition_submit_code(
+      file_name='submission.csv',        # the kernel's output file to grade
+      message='...',
+      competition='<competition-slug>',
+      kernel='<owner>/<kernel-slug>',    # the pushed kernel, not a local path
+      kernel_version=1,                  # from `kaggle kernels push` output
+  )
+  ```
+  Run it via `uvx --index-url https://pypi.org/simple --from kaggle python3 -c "..."` in this repo's env. This returns a submission `ref` immediately (still scores asynchronously — poll `kaggle competitions submissions -c <slug> --format json` and compare `ref` as an `int`, not a string).
+- A kernel can produce many candidate output files, but Kaggle only ever grades whichever one is passed as `file_name` (almost always `submission.csv`) — to submit a *different* candidate file as the graded one, the kernel itself must write it out under that name (e.g. append a final cell that overwrites `submission.csv` from the desired file), not just have it sitting alongside as another output.
+
 ## Running notebooks
 
 Notebooks are designed to run on Kaggle kernels, not locally. Input data paths are `/kaggle/input/<competition-name>/`. There is no local test runner or CI.

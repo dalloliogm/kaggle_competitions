@@ -69,13 +69,25 @@ Shared community tooling (public Kaggle datasets, confirmed legitimate under rul
 ## Ensembling And Submission Behavior
 
 - **For our 3 test wells specifically, the same-well contact override dominates completely and makes everything upstream irrelevant.** Ran both `rogii-lb7295-public-rebuild.ipynb` (simple, 3 datasets) and `working-note-target-free-tvt-geosteering.ipynb` (adds visible-prefix calibration, bimodal hedge, model-package/TabICL blending, 7 datasets) on 2026-07-23: both produced **byte-identical** `submission.csv` (sha256 `fdf4a817...`). The override fires for all 3 test wells with near-perfect visible-prefix reconstruction (RMSE 0.008-0.01 ft, 100% of rows overridden per well in both runs), so whatever the PF/ridge/learned-branch/model-package/TabICL layers compute gets fully overwritten. The model-package correction layer even self-gated off (`model package p95 diff 26.701 > 25.000`, above its own 25.0 threshold).
-- **Implication**: more upstream modeling sophistication (more datasets, more blending layers) won't move our score at all while the override is active. Real improvement has to come from the contact-reconstruction step itself (candidate reference-formation choice, MD-interpolation quality) or from something that changes whether/how the override applies — not from bigger ensembles on top.
 - Before pushing another variant notebook from this lineage, diff its output `submission.csv` hash against what we already have — don't assume added complexity changed anything.
+- **CRITICAL, confirmed by real scores (2026-07-24): the contact override actively hurts, it doesn't just dominate/neutral-out.** Ran a 5-point ablation sweep isolating each pipeline component and submitted all 5 (`54927668` through `54935199`, all 2026-07-23/24):
 
-## Leaderboard Notes (2026-07-23 snapshot)
+  | Candidate | Score | Rank (of 5572) |
+  |---|---|---|
+  | Model-package-only (pure pretrained model, no PF, no override) | **7.097** | ~1317 (top 23.6%) |
+  | No-override blend (PF/ridge + learned branch, override off) | 7.102 | ~1335 (top 24.0%) |
+  | Pure learned-branch (GBM boosters alone) | 7.856 | ~2408 (top 43.2%) |
+  | Contact-override ("aggressive"/self-verified-anchor, our original pick) | 9.565 | ~3004 (top 53.9%) |
+  | Pure PF/ridge anchor alone | *(scored empty — anomaly, file verified clean locally)* | — |
 
-- Full public LB CSV saved at `references/rogii-wellbore-geology-prediction-publicleaderboard-2026-07-23T08:29:24.csv` (5504 teams).
-- Our rank: 3504/5504 at 11.107 (worse than ~64% of the field) — stale from a 2026-05-10 submission, i.e. missed ~2.5 months of public-meta evolution, not "a few weeks" as initially assumed.
-- Medal cutoffs (approximate, using Kaggle's usual top-10+0.2%N / top-5% / top-10% gold/silver/bronze formula against the real score distribution): gold ≈ ≤5.945 (rank ~21), silver ≈ ≤6.542 (rank ~275), bronze ≈ ≤6.662 (rank ~550), top25% ≈ ≤7.160, median 8.863.
-- Hundreds of public forks (many literally just re-forks of the same "Contact-Gated Stratigraphic Alignment" notebook with one config value changed) already cluster in the 6-9 public-score range — reproducing that shared pipeline is a near-certain path to top-25%/bronze; gold (sub-6) requires beating the most aggressively-tuned public configs or adding a genuinely independent signal.
-- The top of the leaderboard is moving in real time (multiple sub-6 submissions dated today, 2026-07-23) — this is an active, fast-iterating public meta, not a settled one.
+  So despite reconstructing the visible prefix to ~0.01 ft RMSE, the override **generalizes worse to the hidden tail than just not using it at all** — a genuine overfitting case, not a rounding difference (9.565 vs. 7.097-7.102 is a huge gap). **Do not default to the contact-override profile for this competition; the two non-override candidates above are the current best starting points**, and are close enough to each other (0.005 apart) to be worth ensembling (they come from different signal paths: a separate pretrained model vs. a PF+GBM blend).
+- The pure-learned-branch-alone score (7.856) being clearly worse than the blend/model-package tells us the PF/ridge anchor and/or model-package are adding real value beyond the raw GBM boosters — don't drop those components even though the override should go.
+
+## Leaderboard Notes
+
+- Full public LB CSVs saved at `references/rogii-wellbore-geology-prediction-publicleaderboard-2026-07-23T08:29:24.csv` (5504 teams, stale baseline) and `references/rogii-wellbore-geology-prediction-publicleaderboard-2026-07-24T05:15:25.csv` (5572 teams, current).
+- Rank history: 3504/5504 at 11.107 (stale, from a 2026-05-10 submission — missed ~2.5 months of meta evolution) → **~1317/5572 at 7.097** (2026-07-24, top 23.6%) after one day of catch-up work.
+- Medal cutoffs as of 2026-07-24 (5572 teams, Kaggle's usual top-10+0.2%N / top-5% / top-10% gold/silver/bronze formula): gold ≈ ≤5.902 (rank ~21), silver ≈ ≤6.471 (rank ~278), bronze ≈ ≤6.538 (rank ~557), top25% ≈ ≤7.125, median ≈ 8.814. These shift slightly day to day as more teams submit — recompute from a fresh leaderboard download rather than trusting old numbers for anything precision-sensitive.
+- Our current best (7.097) is inside top25% but ~0.56 short of bronze — closing that gap is the next concrete target, not a medal yet.
+- Hundreds of public forks (many literally just re-forks of the same "Contact-Gated Stratigraphic Alignment" notebook with one config value changed) cluster in the 6-9 public-score range — but per the ablation sweep above, many of those forks are likely leaving score on the table by defaulting to the override/aggressive profile rather than testing without it.
+- The top of the leaderboard moves in real time (multiple sub-6 submissions dated the same day) — this is an active, fast-iterating public meta, not a settled one.
