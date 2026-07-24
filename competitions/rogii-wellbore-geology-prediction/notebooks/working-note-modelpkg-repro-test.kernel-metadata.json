@@ -1,7 +1,7 @@
 {
-  "id": "dalloliogm/rogii-working-note-geosteering-catchup",
-  "title": "ROGII Working Note Geosteering Catchup",
-  "code_file": "working-note-target-free-tvt-geosteering.ipynb",
+  "id": "dalloliogm/rogii-modelpkg-repro-test",
+  "title": "ROGII Modelpkg Repro Test",
+  "code_file": "working-note-modelpkg-repro-test.ipynb",
   "language": "python",
   "kernel_type": "notebook",
   "is_private": true,
