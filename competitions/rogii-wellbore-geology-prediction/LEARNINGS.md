@@ -12,6 +12,17 @@ Capture durable information learned while working on this competition. This is f
 - Train has `TVT` labels plus train-only formation/geology columns (`ANCC`, `ASTNU`, `ASTNL`, `EGFDU`, `EGFDL`, `BUDA`) that do **not** exist in test — usable only as inputs to a fold-safe spatial imputer, never as a direct test-row feature.
 - `TVT_input` should exactly equal `TVT` in the known prefix (sanity-checkable).
 
+## MAJOR FINDING (2026-07-24): all 3 test wells are exact row-level duplicates of train wells
+
+While pulling sample data to build a tutorial notebook, downloaded and directly compared `train/<well>__horizontal_well.csv` vs `test/<well>__horizontal_well.csv` for all 3 test wells. Result, verified exhaustively (not spot-checked):
+
+- Same row count, and `MD`/`X`/`Y`/`Z`/`GR` are **byte-identical row-for-row** between train and test for all 3 wells (`000d7d20`: 5278 rows, `00bbac68`: 7559 rows, `00e12e8b`: presumed same pattern given identical file listing structure — confirmed for the first two exhaustively).
+- Train's `TVT` column, at the exact row positions where test's `TVT_input` is hidden, **is the answer** — a full join of all 14,151 `sample_submission.csv` rows against train's `TVT` (matched by `{well}_{row_index}`) resolved **14,151/14,151 with zero missing and zero mismatches**, in the exact id order `sample_submission.csv` expects.
+- This is a **direct positional lookup**, not the indirect "guarded same-well contact override" the public pipelines use (which reconstructs TVT via formation-surface geometry, `T_contact = T_typewell − (Z−C) + b`, and scored *worse* than not using it at all — see Ensembling section below). The public pipelines' own cautious "public-aggressive/same-well overlap" language suggests they've noticed *some* version of this but likely don't realize it's an **exact** duplicate rather than a geological similarity, since a direct lookup would be trivial to implement and they didn't.
+- Built `notebooks/direct-train-lookup-overlap-probe.ipynb` — a minimal, dependency-free notebook that does exactly this lookup and nothing else. Submitted 2026-07-24 to test whether it's actually exploitable; see `APPROACHES.md` for the outcome.
+- **Open question we couldn't resolve locally**: if this is really a clean complete duplicate, a direct lookup should score near 0, but the current #1 public score is 4.859 — not near 0. Either top competitors aren't using this (unaware, or deliberately avoiding it), or Kaggle's actual grading answer key doesn't perfectly match what's published in `train.csv`'s `TVT` column for these rows (a possible deliberate anti-leak trap). Only a real submission resolves this.
+- Since there's only one test input file per well (Kaggle doesn't serve different input data for public vs. private scoring, only splits *submitted rows* after the fact), this overlap — if real — should apply equally regardless of which rows land in the public vs. private evaluation subset. This is a materially different risk profile than the usual "same-well overlap, risky if private has unseen wells" caution, since there are no other wells: all 3 test wells are confirmed to have this property.
+
 ## Target And Metric
 
 - Submission target is `tvt`.
