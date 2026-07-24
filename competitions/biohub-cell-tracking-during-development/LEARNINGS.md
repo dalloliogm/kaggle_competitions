@@ -58,12 +58,26 @@ Hard consequences:
 - **Exp137 (CPU 2-model ensemble) is futile to submit** - CPU + 2 models is far
   slower than the GPU 3-model that already timed out. Do not submit it; its
   interactive output is local-only information.
-- **CPU kernels are at risk for submission** - the rerun of a CPU (enable_gpu=false)
-  notebook runs on CPU over the larger hidden set. Exp136 (CPU single-model, 83
-  min interactive on 4 movies) is the pivotal test: if it times out, CPU is dead
-  for submission and gap-filling collapses to "wait for GPU".
-- Reliable submission form = **single-model, GPU**. That is the only thing proven
-  to survive the rerun.
+- **CPU is DEAD for submission (CONFIRMED 2026-07-23).** Exp136 (CPU single-model,
+  ~83 min interactive on the 4 visible movies) was the pivotal test. Both its
+  submissions (54919925/54919963) sat `COMPLETE` with a BLANK score for 13+ h -
+  the same timeout signature as the Exp133 ensembles. The control diagnostic
+  (Exp133 v2 resubmit 54920170, built to test "does a fresh submit score or hang
+  again?") was ALSO blank at ~13 h. Since every GPU single-model kernel scores
+  within ~1-2 h, blank-for-13h = the hidden-test rerun timed out. Even a SINGLE
+  model is too slow on CPU over the larger hidden set. So gap-filling during a
+  GPU-quota block collapses to "wait for GPU" - do NOT spend slots on more CPU
+  submissions.
+- Confound closed (user-confirmed 2026-07-24): the timeout is CPU/ensemble-only,
+  NOT a competition-wide eval change. All 07-22+ blanks were CPU or ensembles
+  (GPU quota ran out 07-21, so no GPU single-model was submitted after the cliff);
+  the user verified in the Kaggle UI that the older GPU single-model versions
+  still show their 0.908 scores. So the eval is unchanged and GPU single-model
+  still scores - the soup gold plan stands.
+- Reliable submission form = **single-model, GPU**. The ONLY thing proven to
+  survive the rerun. The model soup (Exp138, packaged as
+  dalloliogm/biohub-model-soup-incumbent-v34) is therefore submittable ONLY as a
+  GPU single-model inference - it is gated on GPU quota, not built.
 
 Path to gold within this constraint:
 - The only way to get ensemble-like gain at single-model inference cost is a

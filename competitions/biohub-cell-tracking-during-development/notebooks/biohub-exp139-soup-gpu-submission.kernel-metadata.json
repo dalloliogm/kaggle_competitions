@@ -1,0 +1,25 @@
+{
+  "id": "dalloliogm/biohub-exp139-soup-gpu-submission",
+  "title": "Biohub Exp139 Soup GPU Submission",
+  "code_file": "biohub-exp139-soup-gpu-submission.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [
+    "pilkwang/biohub-tracking-support-pack-50ep-v1",
+    "thibautgoldsborough/cellmot-baseline-artifacts",
+    "dalloliogm/biohub-model-soup-incumbent-v34"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "model_sources": [],
+  "machine_shape": "NvidiaTeslaT4"
+}
