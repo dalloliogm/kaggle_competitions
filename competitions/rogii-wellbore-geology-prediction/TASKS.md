@@ -2,30 +2,34 @@
 
 ## Current Goal
 
-**Catch-up strategy, updated 2026-07-24 (~12 days left, deadline 2026-08-05 23:59:00).** Yesterday's 5-point ablation sweep scored (see `APPROACHES.md`/`LEARNINGS.md` for full numbers) and **overturned the working assumption from Phase 0**: the contact-override profile we expected to be our strong pick actually scored *worst* (9.565) of the four that scored. Current best is **model-package-only at 7.097** (rank ~1317/5572, top 23.6%), effectively tied with the no-override blend (7.102). We've moved from rank 3504 to ~1317 in one day; bronze needs ≤6.538, about 0.56 away.
+**Catch-up strategy, updated 2026-07-25 (~11 days left, deadline 2026-08-05 23:59:00).** Best-ever public score is **model-package-only at 7.097** (rank ~1317/5572, top 23.6%, 2026-07-23), but as of 2026-07-25 this is under serious doubt — see "Reliability crisis" below, now the top priority.
 
-### Phase 0 (CPU): reproduce the shared baseline — DONE
-- Confirmed GPU not required; confirmed the contact-override profile is real-world *worse* than not using it, not just neutral. Full sweep and scores in `APPROACHES.md`.
+### Reliability crisis (top priority right now)
+Resubmitted the exact same byte-identical `submission_model_package_only.csv` file (verified via SHA-256 across two independent kernel runs) and it scored **20.067** instead of 7.097. Separately, resubmitting the no-override blend threw another exception. **This pipeline family is unreliable at Kaggle's actual grading time in a way that isn't visible from our own interactive kernel runs** — see `LEARNINGS.md` "Escalation" section for full details. A tie-breaker third submission (`54968605`) is in flight.
 
-### Phase 1 (now): ensemble the two near-tied leaders
-- Average `submission_model_package_only.csv` (7.097) and the no-override blend's `submission.csv` (7.102) — same id order in both, so this is a trivial merge. They come from different signal paths (separate pretrained model vs. PF+GBM blend) so there's a real chance of pulling independent error down.
-- Resolve the pure-PF-anchor scoring anomaly (empty `publicScore` despite a verified-clean file) — resubmit or investigate further before relying on that data point.
-- Decide whether to keep investigating *why* the override overfits (Backlog item) or deprioritize it — don't spend more than one focused session on this before moving on.
+**Until this resolves, do not treat any single score from this pipeline (ours or a public notebook's) as a stable fact.** This changes the submission-budget calculus: spend slots on repeat-confirming whatever we're leaning toward for Final Submissions, not just chasing new variants.
 
-### Phase 2 (days ~3-10): push past top25% toward bronze/silver
-- The ensemble in Phase 1 is the first concrete lever. Beyond that:
-  - Ensemble our own `triple-signal-beam-search-dual-pf-lightgbm.ipynb` (dual-PF + LGBM) and the highest-voted alternative lineage (`9-251-...-dwt-based.ipynb`, DWT-based GR alignment + LGBM/CatBoost/hill-climbing) as independent signals on top of the current best.
-  - Spend modeling effort on the LightGBM/CatBoost residual layer and/or the PF/ridge anchor specifically — the pure-learned-branch ablation (7.856) shows those two components add real value beyond raw GBM boosters, so there's headroom there, not just in override tuning.
-  - Tune conservatively via CV/visible-prefix holdout; don't burn the 5/day submission budget on blind LB probing.
+### Recently submitted, pending as of 2026-07-25
+- Tie-breaker #3 for model-package-only (`54968605`)
+- Continuity-fade ablation (`54968618`) — legitimate boundary-smoothing fix, not leak-related, ported from a public notebook self-reporting LB 6.40
+- Capped overlap calibration (`54968623`) — leak-adjacent (5.5% dose of the same signal our full override already showed hurts at 100%), also ported from that notebook
 
-### Phase 3 (final ~days): stability and final-submission picks
-- Select 2 Final Submissions (rule allows up to 2). Given the override finding, lean toward two *non-override* variants (e.g. the ensemble as primary, no-override blend or model-package-only alone as the hedge) rather than pairing an aggressive-override pick with a conservative one as originally planned.
+Both new ablations should be treated skeptically even if they score well, until repeated — see reliability crisis above.
+
+### Once reliability is understood: differentiate beyond the current sweep
+- If a config turns out genuinely stable, ensemble it with our own `triple-signal-beam-search-dual-pf-lightgbm.ipynb` or the DWT-based lineage (`9-251-...-dwt-based.ipynb`) as an independent signal.
+- The pure-learned-branch ablation (7.856, worse than the blend/model-package) shows the PF/ridge anchor and model-package both add real value beyond raw GBM boosters — headroom exists there if we can trust the numbers.
+- Tune conservatively via CV/visible-prefix holdout; don't burn the 5/day submission budget on blind LB probing.
+
+### Final-submission picks (once reliability is sorted)
+- Select 2 Final Submissions (rule allows up to 2). Given the demonstrated instability, prefer whichever candidate(s) show the *most consistent* repeated scores over whichever has the single best point-estimate — a lucky 7.097 that regresses to 20 on the actual scored run would be catastrophic for final placement.
 - Leave 1-2 days of buffer before the deadline for submission failures or last-minute issues.
 
-### Operational notes carried over from 2026-07-23
+### Operational notes
 - Kaggle's submission scoring can take 6+ hours to return a score (observed once) — don't assume PENDING for a few hours means something is broken.
 - Use `kaggle competitions submissions ... --format json` and compare `ref` as an `int`, not a string, when scripting status checks — the table view wraps long descriptions onto a second line and breaks naive line-based parsing.
 - `notebooks/working-note-*-ablation.ipynb` and their sidecar `.kernel-metadata.json` files are reusable templates for future single-change ablations of this pipeline.
+- Resubmitting an already-pushed kernel version (no new push needed) is enough to get a fresh, independent grading-time execution — useful for reproducibility checks without waiting ~10-15 min for a rerun.
 
 ## Next Experiments (smaller/parallel items, low priority given the pivot above)
 

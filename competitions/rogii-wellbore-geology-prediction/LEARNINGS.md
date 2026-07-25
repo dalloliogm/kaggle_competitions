@@ -104,6 +104,14 @@ Two submissions (`54935199` pure-anchor-ablation, `54946892` direct-train-lookup
 - Checked the same for pure-anchor's dependency (`sp45_projection_submission.csv`) and it's actually written **unconditionally** — no `if` guard. So that specific file probably wasn't the cause; the failure there is more likely generic flakiness somewhere in the shared pipeline (pure-anchor and pure-learned-ablation share every cell except the last one, and pure-learned succeeded), not something specific to what we appended.
 - **Lesson for future ablation forks**: don't assume an intermediate/diagnostic file (anything not part of the pipeline's own guaranteed final-output contract) will reliably exist on every execution. Either check `os.path.exists(...)` defensively with a clear fallback/error message before reading it, or only patch via files confirmed to be unconditionally written.
 
+### Escalation (2026-07-25): grading instability isn't just "throws or doesn't" — it can silently produce a wildly different score for byte-identical input
+
+Submitted `submission_model_package_only.csv` from `dalloliogm/rogii-modelpkg-repro-test` v1 — a file **proven byte-for-byte identical (same SHA-256)** to the file that scored 7.097 on 2026-07-23 (submission `54929149`), via two independent interactive kernel reruns. The resubmission (`54955977`) scored **20.067**. Not a rounding difference — a ~3x-worse result for provably identical input.
+
+This is a stronger and more concerning finding than the earlier exception cases: it's not just "the notebook sometimes throws" (already known), it's "the notebook can silently produce a substantially different, wrong-looking result on some grading runs, with the file itself giving no indication anything is different." Combined with the same-day exception on the no-override-blend reproducibility test (`54958529`, another empty score) — **two independent confirmations that this pipeline family is unreliable at actual grading time**, not just occasionally slow or occasionally throwing.
+
+**Implication for Final Submission selection**: none of our observed scores (7.097, 7.102, 7.856, 9.565, 11.736, 20.067) should be treated as a stable expectation for that configuration — each is one sample from what may be a noisy process. Before locking in Final Submissions, get repeat confirmations of whichever candidate(s) we're relying on, and weight submission-count budget toward reproducibility checks over blind exploration of new variants as the deadline approaches. A tie-breaker third sample of the model-package-only config is in flight (`54968605`) to see whether 7.097 or 20.067 (or something else) is closer to typical.
+
 ## Leaderboard Notes
 
 - Full public LB CSVs saved at `references/rogii-wellbore-geology-prediction-publicleaderboard-2026-07-23T08:29:24.csv` (5504 teams, stale baseline) and `references/rogii-wellbore-geology-prediction-publicleaderboard-2026-07-24T05:15:25.csv` (5572 teams, current).
