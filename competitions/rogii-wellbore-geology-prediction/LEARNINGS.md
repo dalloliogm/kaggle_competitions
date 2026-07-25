@@ -60,6 +60,35 @@ Shared community tooling (public Kaggle datasets, confirmed legitimate under rul
 
 **GPU verdict: not required.** All 5 notebooks reviewed use `USE_GPU = os.environ.get("USE_GPU", "auto")` with an `nvidia-smi` detect-and-fallback pattern for LightGBM/CatBoost `device_type`, and the only `torch` usage found was CPU-only inference of a pretrained checkpoint (`torch.load(..., map_location='cpu')`, `torch.device('cpu')`). The whole pipeline is numba/joblib CPU signal processing plus small GBMs. A Kaggle GPU-quota gap does not block progress on this competition's dominant approach.
 
+## Where top-team scores (5.7-6.0) actually come from — beyond the shared pipeline (forum research, 2026-07-25)
+
+The "target-free geosteering" pipeline above plateaus around ~7.1 for us (see Ensembling section below — 3 attempts at model-package-only gave 3 different outcomes, and none of our ablations meaningfully beat 7.1). Checked the competition forum (`kaggle competitions topics list/topic-messages` — see "Operational" section for why this is the only way to actually read forum content) and found concrete, well-evidenced explanations of what separates top-team scores from this pipeline family. None of this is implemented anywhere in the notebooks we've tested.
+
+### 1. Neighbor-well curve transfer (the dominant lever) — discussion 726465, 14-19 votes, detailed multi-competitor thread
+
+Top teams (CV/LB 5.7-6.0) are not primarily winning via better GR signal processing. The dominant signal is **spatial proximity to other wells**: *"top teams simply copy the shape of the old well's path and paste it onto yours... If you have a close neighbor, you basically already know the answer."* Concretely, per-well error splits sharply by distance to the nearest spatially-close well:
+- Wells with a neighbor **<150 ft** away: already at RMSE ~6.70 (matches the theoretical "per-well line oracle" — i.e., just fitting a straight trend per well already gets you here if you have a close neighbor).
+- Wells with **no neighbor within 600 ft**: RMSE ~10.15 (worse than that well's own constant-baseline!) and these wells **dominate the total error**.
+- Going below 6.70 down to 5.7-6.0 requires **full-curve transfer** (borrowing the actual stratigraphic wiggle/curvature from the neighbor, not just a straight-line trend) — genuine cross-well signal, not just per-well signal processing.
+- Pure GR fine-structure/shape matching is reported as fundamentally unreliable here: high-passed lateral-vs-typewell shape-cost minimizes ~20 ft from the true TVT (SNR<1) — "the true position isn't even a low-cost point." This is consistent with the bimodal-datum finding below.
+- One competitor (`tuckerarrants` in the same thread) reports getting **CV 4.5-5.3 ft (5-fold, pooled ~5.18-5.77)** using a proper per-well sequence model (not tabular row-wise) *without* neighbor-well data at all — confirms sub-5ft is achievable on pure per-well modeling too, so this isn't the only path, but neighbor transfer is reported as the more common/accessible route to 5.7-6.0.
+- **Concrete, never-tried second lever from the same thread**: split modeling by **drilling azimuth/direction**. Wells drilled in opposite directions traverse the rock layers in reverse order; training one model on both directions together "confuses" it. Reported to often drop score significantly on its own. Nothing in any notebook we've reviewed does this.
+
+### 2. Bimodal datum ambiguity is real, well-characterized, and we've never enabled the fix — discussion 711878, 19 votes, extensive rigorous multi-competitor collaborative thread
+
+The Eagle Ford is rhythmically bedded with **Milankovitch (orbital) cycles**: limestone-marl couplets repeating on a ~15-25 ft scale. Over a long lateral, horizontal-well GR can genuinely match the typewell at **two stratigraphic positions ~1 bundle apart** — both equally plausible, i.e. a real, physically-motivated bimodal ambiguity, not a modeling failure.
+- Affects a minority of wells (~10-15%) but they carry a large fraction of total squared error (estimates in the thread range ~40-65% depending on method).
+- **When a well is genuinely ~50/50 bimodal, the RMSE-optimal prediction is the midpoint (posterior mean) of the two candidate datums, not committing to either mode.** Committing gives ~0 ft error half the time and ~30 ft the other half (expected RMSE ~21 ft); the midpoint gives a flat ~15 ft. Chasing "the right mode" makes the score worse on these wells, not better.
+- Through extensive collaborative validation in the thread: **~80% of the "tail" (wells with datum bias) is legally recoverable** via proper heel gain/offset calibration (fit only on the visible known prefix) — only a genuine **~12% self-similar core** remains irreducibly bimodal even under oracle-quality calibration.
+- **Our own pipeline already has this exact mechanism** (`RUN_BIMODAL_DETECTOR`, `RUN_VP_BIMODAL_GUARD` / the `bimodal_guarded` profile preset) — but every profile we've tested so far runs with `run_bimodal_detector=False`. Worth testing the `bimodal_guarded` preset specifically, since forum consensus says this is where most of the top-tier residual error genuinely lives.
+- Side-note on process: this thread contains a private-OOF-sharing offer between two competitors that a third party correctly flagged as against the rules (private sharing without a team merge); both parties immediately corrected course and took the shared data down. Good reminder not to do this ourselves — public discussion only.
+
+### 3. Data-structure gotchas relevant to any custom feature engineering (lower priority for us since we're not building from scratch, but useful context)
+
+- **The 6 "formation columns" (`ANCC`, `ASTNU`, `ASTNL`, `EGFDU`, `EGFDL`, `BUDA`) are not 6 independent 3D structural surfaces** — discussion 708167, 25 votes. Layer thickness between adjacent columns is constant along every well (std < 0.01 ft, i.e. rounding noise only) and derived from the typewell's own geology intervals via the "parallel formation assumption" (97.5% of wells match to <1 ft). Effectively **1 degree of freedom**, not 6. Test wells don't have these columns (train-only, as we already knew) since they're derived from the typewell.
+- **These columns are stored in TVD/Z units, not TVT** — discussion 701034, 13 votes. Using them directly against TVT without converting (via the well's own near-perfectly-correlated Z↔TVT relationship, |r|≈0.999) introduces a ~20,000 ft error. Not leakage to do this conversion — `Z` is provided for all wells including test, and only the known/visible `TVT_input` portion is used to fit the interpolator.
+- TVT in this dataset is a **cumulative vertical distance** (`TVT[i] = TVT[i-1] + |ΔZ_vertical|`), not literally "true vertical thickness of a single layer" in the traditional geological sense — in the horizontal section the vertical component ≈ 0 so TVT barely changes row-to-row, consistent with "prefix-conditioned forecasting" framing elsewhere in this file.
+
 ## Validation
 
 - Treat well ID as the grouping unit for validation (`GroupKFold(well_id)`).

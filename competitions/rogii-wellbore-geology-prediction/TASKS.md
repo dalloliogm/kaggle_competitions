@@ -2,24 +2,23 @@
 
 ## Current Goal
 
-**Catch-up strategy, updated 2026-07-25 (~11 days left, deadline 2026-08-05 23:59:00).** Best-ever public score is **model-package-only at 7.097** (rank ~1317/5572, top 23.6%, 2026-07-23). Checked the competition forum and got two resolving answers to what looked like open mysteries — see `LEARNINGS.md` for full detail and forum thread IDs:
+**Catch-up strategy, updated 2026-07-25 (~11 days left, deadline 2026-08-05 23:59:00).** The "target-free geosteering" pipeline family has plateaued for us around ~7.1 with real execution instability (model-package-only: 3 submissions, 3 different outcomes — 7.097, 20.067, an exception; continuity-fade and capped-overlap ablations both landed at/near the same 7.1 baseline or failed outright — see `APPROACHES.md`). Forum research (see `LEARNINGS.md`) explains why and points to three concrete, never-tried levers that top teams (LB 5.7-6.0) actually use.
 
-1. **The visible `test/` folder (3 wells) is placeholder data, replaced entirely at grading time with a real hidden set (~52 wells for public alone).** Confirmed directly by the host. This means our train/test overlap discovery, while real in the placeholder data, isn't exploitable for real scoring — **the capped-overlap-calibration ablation is a dead end**, and per-well diagnostics we ran against the visible 3 wells don't necessarily transfer to the real scored set.
-2. **Score variance between identical resubmissions is confirmed, community-documented, unseeded PF-feature randomness** — not a bug in our code or a platform failure. Other competitors have reported the exact same symptom (identical notebook, 3 submissions, 3 different scores) with a clear community explanation. Our 7.097→20.067 swing is an extreme case of the same well-understood phenomenon.
+### Top priority: three concrete new levers from forum research
+1. **Test the `bimodal_guarded` profile preset** — our pipeline already has this (`run_bimodal_detector=True`, `run_vp_bimodal_guard=True`) but every profile we've tried runs with it off. Forum consensus says bimodal datum ambiguity (Milankovitch cyclicity, ~15-25 ft repeating bundles) is where most top-tier residual error lives, and this is the built-in fix. Cheapest thing to try — just flip existing flags.
+2. **Neighbor-well curve transfer** for wells with a close (<150 ft) spatial neighbor — reported as *the* dominant lever separating top scores from this pipeline family. Needs new feature engineering (find nearest same-frame neighbor, transfer its interpreted TVT curve/shape, not just a trend line).
+3. **Azimuth/drilling-direction-based model splitting** — wells drilled in opposite directions traverse layers in reverse order; reported to drop score significantly on its own. Mechanically simple if azimuth is derivable from trajectory columns.
 
-### What this changes
-- **Stop pursuing the overlap-exploitation angle** — deprioritize the capped-overlap-calibration result whenever it lands; it's not expected to be informative either way.
-- **The "reliability crisis" is resolved conceptually** (we know the cause now) but the practical implication stands: any single score is one noisy sample. For Final Submission selection, prefer repeat-confirmed candidates or deliberately resubmit a strong candidate multiple times and bank whichever draw scores best — this is a legitimate, community-validated tactic (per the forum: *"one could get top 5 on the public LB just submitting the best public notebook like 10 times"*), not overfitting, since the random draw applies uniformly across all rows in one submission rather than being a public-only artifact.
-- **The continuity-fade ablation is still worth trusting as a concept** (it's not leak-related, just a legitimate boundary-smoothing fix) — its result should still be read with the "one noisy sample due to PF randomness" caveat, same as anything else from this pipeline.
+Full rationale, forum thread IDs, and quotes are in `LEARNINGS.md` under "Where top-team scores actually come from."
 
-### Recently submitted, pending as of 2026-07-25
-- Tie-breaker #3 for model-package-only (`54968605`) — expect a third, likely different, number; don't be surprised
-- Continuity-fade ablation (`54968618`)
-- Capped overlap calibration (`54968623`) — expect this to be a near-no-op given Finding 1 above
+### Reliability/randomness — understood, now just a practical constraint
+- Score variance between identical resubmissions is confirmed, community-documented, unseeded PF-feature randomness (one competitor's unmodified notebook: 8.354/8.188/8.438 across 3 submissions) — not a bug in our code or a platform failure.
+- The visible `test/` folder (3 wells) is placeholder data, replaced entirely at grading time with a real hidden set (~52 wells for public alone) — confirmed by the host. This is why overlap/override-based approaches never worked; **don't pursue that angle further, confirmed dead end.**
+- Practical implication for Final Submissions: prefer a strategy of **resubmitting our best-understood config several times near the deadline and banking the best-scoring draw(s)** — a legitimate, community-validated tactic (forum: *"one could get top 5 on the public LB just submitting the best public notebook like 10 times"*), not overfitting, since the random draw applies uniformly across all rows in one submission.
 
 ### Differentiate beyond the current sweep
-- Ensemble a genuinely independent signal — our own `triple-signal-beam-search-dual-pf-lightgbm.ipynb` or the DWT-based lineage (`9-251-...-dwt-based.ipynb`) — on top of the current best, now that we understand the score noise isn't something ensembling alone will fix (the earlier ensemble regression to 11.736 is now better explained by PF randomness than by a bad ensemble idea).
-- The pure-learned-branch ablation (7.856, worse than the blend/model-package) shows the PF/ridge anchor and model-package both add real value beyond raw GBM boosters.
+- The three levers above are the priority. Beyond those: ensemble a genuinely independent signal (our own `triple-signal-beam-search-dual-pf-lightgbm.ipynb` or the DWT-based lineage) on top of whichever config wins.
+- The pure-learned-branch ablation (7.856, worse than the blend/model-package) shows the PF/ridge anchor and model-package both add real value beyond raw GBM boosters — keep those components even while adding the new levers.
 - Given real reproducibility requires *repeated* submissions to average out noise, and we only get 5/day, budget for this explicitly rather than treating every slot as a new experiment.
 
 ### Final-submission picks
