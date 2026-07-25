@@ -88,6 +88,72 @@ Path to gold within this constraint:
   its inference for submission needs GPU to fit the rerun budget (or CPU only if
   Exp136 proves CPU single-model submits).
 
+- **RESULT (Exp139, 2026-07-25): the 50/50 incumbent+v34 soup is INCOHERENT - DO
+  NOT submit.** Ran cleanly on GPU (wiring verified in log: soup checkpoint loaded,
+  device=cuda, 8-way TTA applied, det-threshold 0.96875, 8.4 min). But on the 4
+  visible movies it produced only **71,407 nodes / 68,710 edges / 120 divisions**
+  vs the incumbent's ~121k/117k/310 and v34's 132k/128k/358 - a ~41% node collapse.
+  The averaged detector under-fires (fewer voxels clear the threshold), so the
+  submission would miss ~40% of detections and score well below silver. The
+  dry-run validation gate caught this BEFORE spending a daily slot (only ~8 min of
+  GPU compute burned, no submission).
+- **Lesson: model soups need weight-aligned parents (shared init / same training
+  trajectory). Two INDEPENDENT retrains cannot be weight-averaged** - their
+  midpoint is a broken region. So the v34 soup direction is closed.
+- Better soup candidate if we keep pushing for gold: soup the incumbent (epoch
+  402) with Exp129, which was fine-tuned RESUMING FROM epoch 402 -> weight-aligned
+  -> should stay coherent. Pending: is the Exp129 checkpoint retrievable as a
+  dataset. Exp129 alone scored 0.900 (below 0.908), so a weighted soup toward the
+  incumbent (e.g. 0.7/0.3) is the sensible form, not 50/50.
+
+## CRITICAL 2026-07-25: exp140 failed on FORMAT, not timeout (corrects prior framing)
+
+The aligned soup (Exp140) was submitted and, after ~6h, showed COMPLETE + blank -
+which I first mis-called a timeout. The Kaggle UI label is actually: **"Your
+notebook generated a submission file with incorrect format"** (wrong #rows/cols,
+empty values, bad dtype, or invalid values). So:
+
+- **GPU single-model does NOT time out.** Exp140 ran fine (COMPLETE); the earlier
+  "8-way TTA GPU is now too slow" hypothesis was WRONG. COMPLETE+blank has (at
+  least) two distinct causes here: notebook timeout (Exp133 ensemble - user saw
+  that label) AND incorrect-format (Exp140). Do not assume blank == timeout.
+- **The rescore changed the METRIC, not the format.** It re-graded our EXISTING
+  submissions to 0.908 (trimmed division credit), so the grader can read our
+  format. Therefore Exp140's FRESHLY regenerated hidden-set file is malformed -
+  and since the format code is identical to the incumbent (which grades fine), the
+  cause is soup-specific VALUES on some hidden movie.
+- Leading suspects (vs official sample_submission.csv, unchanged since 2026-06-26):
+  (a) a hidden movie where the soup under-fires to ZERO detections -> missing/empty
+  dataset -> "wrong number of rows"; (b) our files carry node_id=0 while the sample
+  is 1-based.
+- **Fix = Exp141: Exp140 + a SUBMISSION SANITIZER final cell** that guarantees every
+  test dataset is present with >=1 node (inject placeholder if empty), remaps
+  node_ids to 1-based contiguous per dataset, drops dangling edges, forces
+  non-negative int coords and a contiguous id column. It preserves graph topology
+  and node times, so the SCORE is unchanged - only the format is hardened. Tested
+  offline on real Exp139 output (injects placeholder for a simulated empty dataset,
+  removes node_id=0, 0 edges dropped, all invariants pass) before shipping.
+- OPEN: still no plain-incumbent resubmission since 07-22, so "soup-specific vs
+  pipeline-wide format issue" is not fully proven. If Exp141 (sanitized) scores ->
+  fix worked + we get the soup's real number. If it still format-errors -> resubmit
+  the bare incumbent next to isolate.
+
+- **RESULT (Exp141, 2026-07-25): kernel ERRORED - the sanitizer never ran.** The
+  pipeline died during inference with `AssertionError: 44b6_0113de3b:
+  post-processing removed every node`. That is a VISIBLE movie for which the same
+  soup gave ~18k nodes in Exp140 - so the soup is so borderline there that run-to-run
+  GPU nondeterminism flips it between ~18k nodes and ZERO, and post-processing then
+  wipes the dataset. ROOT CAUSE confirmed: **the soup weakens detection** (same
+  under-firing as Exp139, milder/per-movie). Exp140 got lucky on the visible movies
+  but unlucky on a HIDDEN one (empty dataset -> format error); Exp141 got unlucky on
+  a visible one (assertion -> crash). The format sanitizer addressed a symptom, not
+  the cause, and can't help because the crash happens before submission.csv exists.
+- **Verdict: the model-soup route is not viable for this pipeline.** Averaging
+  weights (independent v34 OR the weaker exp129 fine-tune, 0.900) drops the detector
+  below the pipeline's operating point -> dataset collapse. To "fix" it you'd have to
+  lower DET_THRESHOLD to compensate, i.e. re-tune back toward the incumbent - at which
+  point the soup's benefit is gone. Soups are closed. Silver 0.908 stays locked.
+
 ## MEDAL ZONE 2026-07-23: rescore landed, we are SILVER
 
 The organizers' patched-metric rescore (discussion 727154) ran. Effect:

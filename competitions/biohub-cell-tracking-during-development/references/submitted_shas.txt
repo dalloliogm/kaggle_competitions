@@ -7,3 +7,5 @@ c3c934f2aa047e17a0e6e55d188cf734f888c2270d56dd118f6d6e649080966b  dalloliogm/bio
 932b65eace351e14ab75a86dbedce8ba49f667abd75de6e82c763be90bbd7172  dalloliogm/biohub-exp133-checkpoint-ensemble v1  exp133 v1 4-model ensemble
 98b2751192fdc755a7264ffdac5625aa017d77214f2b9c496e942d2660a05981  dalloliogm/biohub-exp136-v34-cpu-standalone v1  exp136 v34 INDEPENDENT model standalone on CPU (4-way TTA, best recipe TIGHT_UM 
 98b2751192fdc755a7264ffdac5625aa017d77214f2b9c496e942d2660a05981  dalloliogm/biohub-exp136-v34-cpu-standalone v1  exp136 v34 standalone
+b1e6eb8e2436df1af49799a3c04e7b2f0641a5ae4d50a89208a559561325affc  dalloliogm/biohub-exp140-soup-ft-gpu-submission v1  exp140 weight-aligned soup incumbent+exp129 fine-tune (0.7/0.3), in-memory singl
+7b11f0ce7b06b20543ab443962b3d41ebe68210c8f8110ab16deb434850b39bb  dalloliogm/biohub-exp142-incumbent-sanitized v1  exp142 BARE INCUMBENT (exp126 recipe: GPU 8-way TTA TIGHT_UM 7.0) + format sanit
