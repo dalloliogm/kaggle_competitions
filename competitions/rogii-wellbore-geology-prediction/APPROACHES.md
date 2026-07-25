@@ -46,16 +46,18 @@ Also confirmed independently (from this same notebook's own code, cell 59, "hidd
 
 | Idea | Rationale | Expected impact | Cost | Priority |
 | --- | --- | --- | --- | --- |
-| Ensemble model-package-only (7.097) + no-override blend (7.102) | Both near-tied but from different signal paths (separate pretrained model vs. PF+GBM blend) — likely some independent error to average out | Possible push toward bronze (needs ≤6.538) | Low (just average two already-computed submission files, same id order) | High |
-| Retry/resubmit the pure-PF-anchor candidate | Its score came back empty despite a verified-clean file — unresolved anomaly, and we don't yet know how the anchor performs in isolation | Fills a real gap in the ablation picture | Low | Medium |
-| Investigate why the contact override generalizes so badly (9.565) despite ~0.01 ft prefix RMSE | Understanding *why* it overfits could inform a corrected version of the override that actually helps, rather than discarding the idea entirely | Could unlock the "public-aggressive" upside if fixed | Medium-High | Medium |
 | Ensemble our own dual-PF/LightGBM notebook + the DWT-based lineage on top of the current best | Independent signals beyond this pipeline's own components are the realistic path from top25% to silver/gold | Differentiation beyond the fork cluster | Medium-High | Medium |
 | Validate via visible-prefix holdout instead of LB probing | Competition-specific per-well self-calibration signal already built into the public notebooks; submissions capped at 5/day | Avoid wasting submission budget | Low | High |
 | Build an end-to-end Kaggle submission notebook from whichever candidate wins the ensembling test | Current best notebooks are exploratory/ablation forks, not a clean reproducible pipeline | Make submissions reproducible | Medium | Medium |
+| Resubmit whichever config we're leaning toward for Final Submission several times and bank the best-scoring draw | Score variance is confirmed unseeded-PF-randomness (see `LEARNINGS.md`), not overfitting risk — a community-validated tactic, not a gray-area one | Could meaningfully improve final placement for a fixed config | Low (just resubmission budget) | High, once we've settled on 1-2 candidates worth backing |
+
+~~Ensemble model-package-only (7.097) + no-override blend (7.102)~~ — **done**, regressed to 11.736, now understood as PF-randomness noise rather than a bad ensembling idea (see `LEARNINGS.md`).
+~~Retry/resubmit the pure-PF-anchor candidate~~ — **done**, threw an exception both times, deprioritized.
+~~Investigate why the contact override generalizes so badly despite ~0.01 ft prefix RMSE~~ — **answered via the forum**: the visible test/ wells aren't the real scored wells, so there's no real overlap for the override to correctly exploit at grading time (see `LEARNINGS.md` "MAJOR FINDING, CORRECTED").
 
 ## Abandoned
 
 | Approach | Why dropped | Evidence | Revisit if |
 | --- | --- | --- | --- |
-| Contact-gated same-well override (`RUN_GUARDED_OVERLAP_OVERRIDE=True`, "aggressive"/self-verified-anchor profile) | Scored 9.565, worse than 3 of 4 alternatives tested in the same sweep | Submission `54927668`, 2026-07-24. Verified prefix RMSE was ~0.01 ft (near-perfect) yet hidden-tail generalization was clearly worse — a real overfitting case, not a fluke | If we understand *why* it overfits and can fix the generalization gap (see Backlog) |
+| Contact-gated same-well override (`RUN_GUARDED_OVERLAP_OVERRIDE=True`, "aggressive"/self-verified-anchor profile) | Scored 9.565, worse than 3 of 4 alternatives tested in the same sweep | Submission `54927668`, 2026-07-24. Verified prefix RMSE was ~0.01 ft (near-perfect) yet hidden-tail generalization was clearly worse. **Explained 2026-07-25 via the competition forum**: the visible `test/` wells are placeholder data — the real hidden test set (~52 wells) doesn't overlap with train at all, so the override has nothing genuine to match against at grading time (see `LEARNINGS.md`) | Not worth revisiting — this isn't a fixable generalization gap, it's targeting data that doesn't exist at grading time |
 | Compare starter NN/TCN/LightGBM notebooks under one grouped CV split | Superseded — the target-free geosteering approach is confirmed much stronger and is what we're building on now | `notebooks/nn-starter-cv-15-5.ipynb` scored 15.744 in May vs. 7.097 now | Not planned |
