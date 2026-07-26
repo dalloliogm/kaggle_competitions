@@ -133,10 +133,31 @@ empty values, bad dtype, or invalid values). So:
   and node times, so the SCORE is unchanged - only the format is hardened. Tested
   offline on real Exp139 output (injects placeholder for a simulated empty dataset,
   removes node_id=0, 0 edges dropped, all invariants pass) before shipping.
-- OPEN: still no plain-incumbent resubmission since 07-22, so "soup-specific vs
-  pipeline-wide format issue" is not fully proven. If Exp141 (sanitized) scores ->
-  fix worked + we get the soup's real number. If it still format-errors -> resubmit
-  the bare incumbent next to isolate.
+- RESOLVED (2026-07-26): BOTH incumbents scored **0.908** - Exp142 (bare incumbent
+  + sanitizer) AND Exp126 (bare incumbent, no sanitizer). So: fresh incumbent reruns
+  grade fine under the current/patched eval (no pipeline-wide format issue); the
+  sanitizer is NEUTRAL (bare == sanitized); and Exp140's format error was genuinely
+  SOUP-SPECIFIC (soup under-fired on a hidden movie -> empty dataset). Pipeline is
+  confirmed; we are solid SILVER 0.908. Gold (0.910) needs +0.002 on EDGE quality:
+  the rescore CAPPED division credit (division-bearing 0.910->0.908, 0-division 0.877
+  unchanged), so recipe/division tweaks (all topped at 0.908) cannot reach gold -
+  only better detection/linking (stronger TTA or a better-trained model) can.
+
+- FELL OFF THE MEDAL ZONE 2026-07-26: the field jumped (LB top ~0.910 -> 0.932;
+  rank ~17 now 0.913). Our 0.908 single-model is outclassed. CAUSE: the community
+  adopted pilkwang's **two-seed detection logit-blend** notebook
+  (`biohub-cell-tracking-two-seeds-logit-blend`, 122 votes): run TWO independently
+  seeded TemporalUNet3D detectors, BLEND their detection heatmaps
+  (d_shared=(1-a)d_A + a d_B, a~=0.475) into ONE point set, then run graph/ILP/
+  post-proc ONCE + a DeepCenter model that confirms only marginal gap-repair nodes.
+  This is the detection ENSEMBLE we couldn't build: dodges the timeout (graph runs
+  once, only detection doubled) AND the soup collapse (blends outputs, not weights).
+  All components are PUBLIC pilkwang datasets: seed A = our incumbent support-pack,
+  seed B = biohub-temporal-unet3d-seed314159-v1, DeepCenter =
+  biohub-deepcenter-unet3d-center-prior-v1. PIVOT: forked as Exp144 (had to strip
+  pilkwang's id_no + private kaggle-private-byod docker_image from the metadata to
+  push under our account). Exp143 (fine-tuned detector @0.98) is moot: 105k nodes,
+  under-detects vs incumbent 121k.
 
 - **RESULT (Exp141, 2026-07-25): kernel ERRORED - the sanitizer never ran.** The
   pipeline died during inference with `AssertionError: 44b6_0113de3b:
