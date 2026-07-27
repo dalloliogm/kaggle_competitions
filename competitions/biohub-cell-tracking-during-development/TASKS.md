@@ -60,6 +60,11 @@ Best public LB is now **`0.912`** from Exp144:
   `a9adfc43cfec82de9a85a37bf90d067c917eba7e6b67a55bb20f536a74f461dc`,
   `233,061` rows, `118,606` nodes, `114,455` edges, `304` division-like
   sources, no nulls, no dangling edges, no negative times/coordinates.
+- Exp148: freezes Exp144's secondary detection weight at `0.475` and changes
+  only two-seed edge fusion from `low_margin_consensus` to `adaptive`. Kaggle
+  kernel v1 `dalloliogm/biohub-exp148-adaptive-edge-fusion` was pushed on
+  2026-07-27 and is running. Submit immediately after the downloaded output
+  passes schema, graph-invariant, and distinctness checks.
 
 Interpretation so far: Exp144's `0.475` is better than `0.40`, so do not keep
 moving toward lower secondary-seed weights unless Exp146 surprisingly beats
