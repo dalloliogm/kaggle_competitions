@@ -2,10 +2,22 @@
 
 ## Current Goal
 
-- Improve on completed baseline submission `54491765` (`official-demo-v4-extracted-reference-agent`, public score `0.815`) without losing the known-good official demo submission behavior.
+- Improve on completed submission `54972472` (`official-demo-v6-blended-baseline`, public score `0.819`) without losing the known-good official demo submission behavior.
+- Submission `55011609` (`official-demo-v5-model-recipe-retry-20260726`) completed at 0.818 and did not improve on v6.
+- Submission `55029319` (`official-demo-v8-adaptive-feature-gate-llm-advisory`)
+  errored because `submit_predictions` was never called.
+- Submission `55030429` (`official-demo-v9-v5-shell-adaptive-recovery`) is
+  pending after Kaggle refunded the failed v8 slot.
 
 ## Next Experiments
 
+- Defer the schema-adaptive specialist ensemble until the exact v6 source package is recovered.
+- Do not submit the independent CatBoost specialist as a standalone agent: its 16-task replay mean was 0.7990, with three tasks below 0.70.
+- Retain the v8 adaptive modeling payload for replay comparison, but do not
+  resubmit its failed control shell.
+- Monitor v9 submission `55030429`; it preserves the proven v4/v5 agent name,
+  generation settings, initial `data_analyst` delegation, and session-ending
+  warning rather than using a `run_command`-first control prompt.
 - Create `submissions/agent-configs/baseline-autonomous-tabular/` with:
   - `agent.yaml` at archive root
   - a low-temperature system prompt with an anti-loop rule
@@ -27,7 +39,9 @@
 - If `54491765` errors, retrieve the detailed API error with:
   - `.venv/bin/python` plus `KaggleApi().competition_submissions('autonomous-agent-prediction-beta')`
 - If another custom package is needed, keep the zip filename exactly `submission.zip` and do not include `run_skill_script`.
-- Before the next upload, check whether the daily quota has reset; v5 was rejected with generic `400 Bad Request` after four recorded rows and one earlier upload-gate rejection.
+- Before the next upload, check whether the daily quota has reset. Live Kaggle
+  metadata reports a 1/day limit, but an errored run may be refunded even while
+  a naive history-based counter still says the quota is exhausted.
 
 ## Done
 
@@ -38,8 +52,19 @@
 - Pulled public notebooks:
   - `sidhaarthshree/autonomous-agent-prediction-a-to-z-guide`
   - `nursrijan/agent-starter-dynamic-automl-guide`
-- Created local tutorial scaffold:
+- Rebuilt and executed the local tutorial notebook:
   - `notebooks/autonomous-agent-prediction-beta-competition-tutorial.ipynb`
+  - covers competition mechanics, a runnable synthetic baseline, agent-package
+    preflight, submissions v1-v6, the 16-task CatBoost replay, and public
+    notebook approaches
+  - public leaderboard and notebook scores were refreshed on 2026-07-27;
+    leaderboard-only methods are explicitly marked as unknown
+- Uploaded private Kaggle notebook version 1 on 2026-07-27 and confirmed its
+  hosted execution completed:
+  - `dalloliogm/autonomous-agent-prediction-beta-tutorial`
+- Uploaded private Kaggle notebook version 2 with the v8 feature ablations,
+  target-normality explanation, and LLM advisory design; its hosted execution
+  completed successfully.
 - Added source-level notes and repo-improvement backlog in `references/`.
 - Submitted four agent packages on 2026-07-09:
   - `54491451`: custom v1, errored with no `submit_predictions`
@@ -47,6 +72,42 @@
   - `54491615`: custom v3, errored with no `submit_predictions`
   - `54491765`: official-demo v4, completed with public score `0.815`
 - Attempted v5 (`official-demo-v5-model-recipe-no-run-skill-script`); upload rejected with generic `400 Bad Request` and no row.
+- Submission `54972472` (`official-demo-v6-blended-baseline`) completed on 2026-07-25 with public score `0.819`.
+- Retried the validated v5 archive on 2026-07-26 as submission `55011609`; upload succeeded and evaluation is pending.
+- Submission `55011609` completed with public score `0.818`.
+- Downloaded the complete official practice archive and discovered 16 replay tasks.
+- Built `official-demo-v7-catboost-specialist` independently of v6 and replayed it on all 16 tasks.
+- Recorded per-task results in `references/catboost-specialist-v7-replay.csv`; no Kaggle slot was spent.
+- Replayed an AutoGluon 1.5.0 classical portfolio on all 16 tasks and recorded
+  `references/autogluon-classical-replay.csv`; its 0.7995 mean effectively tied
+  the standalone CatBoost specialist.
+- Screened Mitra zero-shot on deterministic 1,000-row samples and recorded the
+  result in `references/mitra-vs-autogluon-sampled-replay.csv`; quality tied the
+  classical portfolio while CPU runtime was 28x to 173x slower.
+- Documented package availability, licensing, runtime evidence, and the TabPFN
+  verdict in `references/automl-foundation-model-assessment.md`.
+- Built `official-demo-v8-feature-engineered` with a mandatory first baseline,
+  a solution-blind LLM transformation adviser, and a deterministic adaptive
+  feature candidate.
+- Replayed the broad portfolio, numeric-only ablation, and adaptive gate on all
+  16 tasks. Recorded:
+  - `references/feature-engineered-v8-replay.csv` (broad, mean 0.7981)
+  - `references/feature-engineered-v8-numeric-replay.csv` (numeric, mean 0.7994)
+  - `references/feature-engineered-v8-adaptive-replay.csv` (adaptive, mean 0.8001)
+- Packaged the v8 branch as `submissions/submission.zip`; archive integrity,
+  source-folder compilation, and extracted-archive compilation all passed the
+  official starter-kit validator.
+- Submitted the v8 archive as Kaggle submission `55029319`, consuming the
+  nominal single 2026-07-27 slot. It errored because the agent never called
+  `submit_predictions`, and Kaggle subsequently refunded the slot.
+- Rebuilt the candidate as v9 on the byte-identical v5 `agent.yaml` and proven
+  first-valid-submission workflow, with adaptive feature engineering demoted to
+  an optional post-baseline candidate.
+- Validated both v9 source and extracted ZIP with the official ADK compiler;
+  its smoke output matched the sample schema/order with 10,000 unique IDs and
+  finite predictions.
+- Submitted v9 as `55030429`; Kaggle accepted the refunded slot and evaluation
+  is pending.
 
 ## Questions
 

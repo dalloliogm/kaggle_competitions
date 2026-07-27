@@ -37,6 +37,46 @@ the old no-safe-divisions test (`0.886` vs `0.893`) points the same way. Exp117'
 "zero division TPs" was a local artifact - the labelled split has only `3`
 annotated divisions, so it had no power to measure this.
 
+## CURRENT STATUS - 2026-07-27
+
+Best public LB is now **`0.912`** from Exp144:
+
+- `54996564` Exp144: Pilkwang two-seed detection logit blend, secondary detection
+  weight `0.475`, edge weight `0.15`, DeepCenter gap confirmation. COMPLETE,
+  public LB `0.912`.
+- `55007462` Exp145: same two-seed blend with secondary detection weight `0.40`.
+  COMPLETE, public LB `0.910`; moving toward the incumbent seed was worse.
+- `55019565` Exp146: same two-seed blend with secondary detection weight `0.325`.
+  Submitted from this Codex session using Kaggle kernel v1
+  `dalloliogm/biohub-exp146-two-seed-blend-w0325`; PENDING at submit time.
+  Visible-output validation passed before submission: SHA256
+  `bf5e8a1c0b3a070c7764b31806d23b450df54e62f7ad2da04248808e785e05e2`,
+  `235,706` rows, `119,965` nodes, `115,741` edges, `313` division-like
+  sources, no nulls, no dangling edges, no negative times/coordinates.
+- `55026280` Exp147: same two-seed blend with secondary detection weight `0.55`,
+  above Exp144's `0.475`. Submitted from this Codex session using Kaggle kernel
+  v1 `dalloliogm/biohub-exp147-two-seed-blend-w055`; PENDING at submit time.
+  Visible-output validation passed before submission: SHA256
+  `a9adfc43cfec82de9a85a37bf90d067c917eba7e6b67a55bb20f536a74f461dc`,
+  `233,061` rows, `118,606` nodes, `114,455` edges, `304` division-like
+  sources, no nulls, no dangling edges, no negative times/coordinates.
+- Exp148: freezes Exp144's secondary detection weight at `0.475` and changes
+  only two-seed edge fusion from `low_margin_consensus` to `adaptive`. Kaggle
+  kernel v1 `dalloliogm/biohub-exp148-adaptive-edge-fusion` completed and was
+  submitted as `55029450` on 2026-07-27 under the user's explicit same-day
+  authorization. Visible output SHA256 is
+  `052a4d5807210868de98fad7c26f0d25bd831a460a3183c5af6fd7d9520146d8`:
+  `240,020` rows, `122,107` nodes, `117,913` edges, and `333` division-like
+  sources. The structural harness passed with all four datasets, no warnings or
+  errors, max indegree `1`, and max outdegree `2`. It differs materially from
+  Exp144 (`233,902` rows, `117,913` versus `114,863` edges), so the adaptive
+  linker branch is active. Kaggle grading is PENDING.
+
+Interpretation so far: Exp144's `0.475` is better than `0.40`, so do not keep
+moving toward lower secondary-seed weights unless Exp146 surprisingly beats
+`0.912`. If Exp146 scores below Exp144, the next two-seed probe should move the
+other direction from Exp144, not farther toward the incumbent.
+
 ## Superseded: earlier strategic reset (2026-07-20, RETRACTED)
 
 The Exp073/Exp110 post-processing branch is a dead end. Full reasoning and
