@@ -25,7 +25,7 @@ Competition-specific instructions for `competitions/autonomous-agent-prediction-
 - The agent must generate and submit prediction CSVs inside the evaluation session.
 - Agents run in a standard Kaggle CPU environment; submitted logic should not rely on internet access or package installation.
 - External data and AutoML tools are allowed only when reasonably accessible, properly licensed, and reproducible under the rules.
-- Daily submission limit is 5; final submission selection limit is 2.
+- Live Kaggle metadata reported a daily submission limit of 1 on 2026-07-26; final submission selection limit is 2.
 - Known leakage risks:
   - submitted agent code must not read `solution.csv` or similarly named answer/ground-truth files
   - target encoding must be out-of-fold for training rows
