@@ -1,0 +1,5 @@
+task,rows,features,id_columns,auc,seconds,best_model,models_fit,error,test_rows_scored
+train_03,,,,,,,0,"RuntimeError: No models were trained successfully during fit(). Inspect the log output or increase verbosity to determine why no models were fit. Alternatively, set `raise_on_no_models_fitted` to False during the fit call.",
+train_05,1060.0,9.0,row_id,0.6842558302472226,118.5199577500025,Mitra,1,,1000.0
+train_09,1109.0,18.0,row_id,0.6367049964790985,256.2246957079915,Mitra,1,,1000.0
+train_13,500.0,9.0,row_id,0.627820045120722,54.53219412500039,Mitra,1,,1000.0
