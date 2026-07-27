@@ -1,5 +1,7 @@
 .qodo
-submission*
+submission.*
+submission_*
+submission-*
 *h5
 .env
 .venv/
