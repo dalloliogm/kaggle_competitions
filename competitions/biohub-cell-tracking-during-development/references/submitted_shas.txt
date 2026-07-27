@@ -11,3 +11,4 @@ b1e6eb8e2436df1af49799a3c04e7b2f0641a5ae4d50a89208a559561325affc  dalloliogm/bio
 7b11f0ce7b06b20543ab443962b3d41ebe68210c8f8110ab16deb434850b39bb  dalloliogm/biohub-exp142-incumbent-sanitized v1  exp142 BARE INCUMBENT (exp126 recipe: GPU 8-way TTA TIGHT_UM 7.0) + format sanit
 22b22e94babe04e0ab4971734fb75ee073819ce88b425a8a7985ec8c84a6bdfb  dalloliogm/biohub-exp126-tight-gate-7um v1  exp126 BARE INCUMBENT (no sanitizer), diagnostic pair vs exp142 - isolates wheth
 bf5e8a1c0b3a070c7764b31806d23b450df54e62f7ad2da04248808e785e05e2  dalloliogm/biohub-exp146-two-seed-blend-w0325 v1  exp146 two-seed blend secondary detection weight 0.325; submission 55019565
+a9adfc43cfec82de9a85a37bf90d067c917eba7e6b67a55bb20f536a74f461dc  dalloliogm/biohub-exp147-two-seed-blend-w055 v1  exp147 two-seed blend secondary detection weight 0.55; submission 55026280

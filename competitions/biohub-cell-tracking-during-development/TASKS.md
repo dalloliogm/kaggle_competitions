@@ -53,11 +53,13 @@ Best public LB is now **`0.912`** from Exp144:
   `bf5e8a1c0b3a070c7764b31806d23b450df54e62f7ad2da04248808e785e05e2`,
   `235,706` rows, `119,965` nodes, `115,741` edges, `313` division-like
   sources, no nulls, no dangling edges, no negative times/coordinates.
-- Exp147 is prepared but not run/submitted:
-  `notebooks/biohub-exp147-two-seed-blend-w055.ipynb` / kernel
-  `dalloliogm/biohub-exp147-two-seed-blend-w055`. It tests the opposite
-  direction from Exp145/146: secondary detection weight `0.55`, above Exp144's
-  `0.475`. Notebook JSON and code-cell syntax checks passed locally.
+- `55026280` Exp147: same two-seed blend with secondary detection weight `0.55`,
+  above Exp144's `0.475`. Submitted from this Codex session using Kaggle kernel
+  v1 `dalloliogm/biohub-exp147-two-seed-blend-w055`; PENDING at submit time.
+  Visible-output validation passed before submission: SHA256
+  `a9adfc43cfec82de9a85a37bf90d067c917eba7e6b67a55bb20f536a74f461dc`,
+  `233,061` rows, `118,606` nodes, `114,455` edges, `304` division-like
+  sources, no nulls, no dangling edges, no negative times/coordinates.
 
 Interpretation so far: Exp144's `0.475` is better than `0.40`, so do not keep
 moving toward lower secondary-seed weights unless Exp146 surprisingly beats
