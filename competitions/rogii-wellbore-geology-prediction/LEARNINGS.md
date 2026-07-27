@@ -98,6 +98,33 @@ The Eagle Ford is rhythmically bedded with **Milankovitch (orbital) cycles**: li
 - **These columns are stored in TVD/Z units, not TVT** — discussion 701034, 13 votes. Using them directly against TVT without converting (via the well's own near-perfectly-correlated Z↔TVT relationship, |r|≈0.999) introduces a ~20,000 ft error. Not leakage to do this conversion — `Z` is provided for all wells including test, and only the known/visible `TVT_input` portion is used to fit the interpolator.
 - TVT in this dataset is a **cumulative vertical distance** (`TVT[i] = TVT[i-1] + |ΔZ_vertical|`), not literally "true vertical thickness of a single layer" in the traditional geological sense — in the horizontal section the vertical component ≈ 0 so TVT barely changes row-to-row, consistent with "prefix-conditioned forecasting" framing elsewhere in this file.
 
+## BREAKTHROUGH (2026-07-27): GS1.30 — a one-line change that beats everything else we tried, found via a notebook worked on from another machine
+
+While the primary session was mid-flight on the neighbor-transfer/bimodal-hedge levers above, separate work happened directly on Kaggle (another machine) that found something much simpler and far more effective: **`dalloliogm/rogii-public-score-frontier-lab-visuals`, a fork of a highly-voted public notebook (346 votes), scored 6.474** — our best result of the entire session by a wide margin (previous best ~7.1-7.15). Rank ~718/5793 (top 12.4%) as of 2026-07-27; bronze needs ≤6.463 (0.011 away), silver ≤6.427.
+
+**The actual change (cell 31), one line:**
+```python
+gs = float(np.clip(np.nanstd(kn.GR.fillna(0).values - tw_at_k), 10., 60.)) * 1.3
+```
+This widens the particle filter's gamma-ray likelihood tolerance (`σ_GR`) by 30% versus the vanilla calculation (present unchanged elsewhere in the same notebook, cells 8 and 30, for comparison). Effect: the PF becomes less confident/less willing to commit hard to a single GR-match hypothesis when the horizontal-well GR doesn't perfectly track the typewell — philosophically the same spirit as bimodal-hedging (don't overcommit to a possibly-wrong match) but achieved as a single fundamental parameter change rather than a detection-and-correction layer. The notebook's own markdown states the upstream lineage reports **6.568** for GS1.30 alone; our 6.474 likely also benefits from this pipeline family's existing 128-seed PF ensemble + guarded bimodal branch-hedge machinery, which was already active (`vp_balanced_modelpkg_005` profile) independent of GS1.30.
+
+**Forum corroboration**: discussion 728712 ("Observation: a small `gs` (GR noise scale) tweak in a public notebook — sharing for transparency", posted 2026-07-24) is almost certainly about this exact change — we saw the title earlier but hadn't opened it before this was independently rediscovered.
+
+**Practical implication**: this dwarfs the effect size of everything in the "Where top-team scores actually come from" section above. If revisiting Phase 2 work, GS1.30 (or further tuning the multiplier) should be the starting point, not the neighbor-transfer/bimodal-hedge ablations — those may still add incremental value *on top of* GS1.30, but haven't been tested in combination with it yet.
+
+### WARNING: a later cell in the same notebook ("Q0522") hardcodes the placeholder test data and will very likely crash at real grading
+
+A subsequent cell (47) in the *current* (root-committed) version of this notebook adds an experiment labeled "Q0522" that is a clear instance of the placeholder-vs-real-data trap this file already warns about elsewhere:
+
+```python
+_EX_EXPECTED_WELL = '00e12e8b'          # one of our 3 known PLACEHOLDER test wells
+_EX_EXPECTED_BASE_SHA = 'b192d3f3...'   # hardcoded SHA256 of the upstream output
+_EX_EXTRA_SHIFT = 0.522                 # added to an existing +2.0ft branch shift, total "2.522"
+```
+It asserts the upstream `submission.csv` matches this exact hash/well/row-count and applies a manually-tuned shift to that one hardcoded well — with **no try/except, no graceful fallback**. Since the real hidden test set does not contain well `00e12e8b` (host-confirmed, see the MAJOR FINDING section above), this cell should reliably throw `RuntimeError` the moment it runs against real grading data (`_mask.sum()` will be 0, tripping an explicit `raise`). This is textbook public-LB-probing: a value (2.522) that can only have been chosen by iteratively resubmitting and reading back the public score, tuned to data that doesn't represent the real test set at all.
+
+Our successful 6.474 submission and its reproducibility check both explicitly used `kernel_version=1` of this kernel, which most likely predates this cell (it reads as a later, in-progress experiment layered on top of the working GS1.30 base). **Do not submit a version of this notebook that includes the Q0522 cell as-is** — either remove it or gate it behind a flag that's off by default, since as written it will burn a submission slot on a guaranteed failure against real data.
+
 ## Validation
 
 - Treat well ID as the grouping unit for validation (`GroupKFold(well_id)`).
