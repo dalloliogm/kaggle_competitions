@@ -37,6 +37,28 @@ the old no-safe-divisions test (`0.886` vs `0.893`) points the same way. Exp117'
 "zero division TPs" was a local artifact - the labelled split has only `3`
 annotated divisions, so it had no power to measure this.
 
+## CURRENT STATUS - 2026-07-27
+
+Best public LB is now **`0.912`** from Exp144:
+
+- `54996564` Exp144: Pilkwang two-seed detection logit blend, secondary detection
+  weight `0.475`, edge weight `0.15`, DeepCenter gap confirmation. COMPLETE,
+  public LB `0.912`.
+- `55007462` Exp145: same two-seed blend with secondary detection weight `0.40`.
+  COMPLETE, public LB `0.910`; moving toward the incumbent seed was worse.
+- `55019565` Exp146: same two-seed blend with secondary detection weight `0.325`.
+  Submitted from this Codex session using Kaggle kernel v1
+  `dalloliogm/biohub-exp146-two-seed-blend-w0325`; PENDING at submit time.
+  Visible-output validation passed before submission: SHA256
+  `bf5e8a1c0b3a070c7764b31806d23b450df54e62f7ad2da04248808e785e05e2`,
+  `235,706` rows, `119,965` nodes, `115,741` edges, `313` division-like
+  sources, no nulls, no dangling edges, no negative times/coordinates.
+
+Interpretation so far: Exp144's `0.475` is better than `0.40`, so do not keep
+moving toward lower secondary-seed weights unless Exp146 surprisingly beats
+`0.912`. If Exp146 scores below Exp144, the next two-seed probe should move the
+other direction from Exp144, not farther toward the incumbent.
+
 ## Superseded: earlier strategic reset (2026-07-20, RETRACTED)
 
 The Exp073/Exp110 post-processing branch is a dead end. Full reasoning and

@@ -158,6 +158,13 @@ empty values, bad dtype, or invalid values). So:
   pilkwang's id_no + private kaggle-private-byod docker_image from the metadata to
   push under our account). Exp143 (fine-tuned detector @0.98) is moot: 105k nodes,
   under-detects vs incumbent 121k.
+- Exp144 restored the public LB to **`0.912`** with secondary detection weight
+  `0.475`. Exp145 tested a more incumbent-favoring secondary detection weight
+  `0.40` and scored **`0.910`**, so that direction is worse unless the next lower
+  point contradicts it. Exp146 (`0.325`) was submitted as a forced same-day slot
+  usage after validating visible output; if it also scores below `0.912`, stop
+  moving toward lower secondary-seed weights and, if tuning the two-seed blend
+  further, probe above `0.475` instead.
 
 - **RESULT (Exp141, 2026-07-25): kernel ERRORED - the sanitizer never ran.** The
   pipeline died during inference with `AssertionError: 44b6_0113de3b:
