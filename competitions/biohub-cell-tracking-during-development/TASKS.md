@@ -102,6 +102,9 @@ Both same backbone (det 0.475, adaptive edge fusion, edge 0.15); only
 SECONDARY_MIX_TEMPERATURE differs. Auto-submitted on kernel COMPLETE. If softening
 helps (Exp153 > 0.913), next probe is temp 1.3; if the whole axis is flat/worse,
 temperature is exhausted and 1.0 is optimal - move to a new axis.
+- Both auto-submitted 2026-07-28 ~20:20 UTC: Exp153 (1.15) = `55064248`, Exp152
+  (0.75) = `55064277`, both PENDING. All 5 slots for 2026-07-28 used (none wasted).
+  Scores expected 2026-07-29 given today's slow grading queue.
 
 ## CURRENT STATUS - 2026-07-27
 
