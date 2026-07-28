@@ -37,6 +37,35 @@ the old no-safe-divisions test (`0.886` vs `0.893`) points the same way. Exp117'
 "zero division TPs" was a local artifact - the labelled split has only `3`
 annotated divisions, so it had no power to measure this.
 
+## CURRENT STATUS - 2026-07-28 (live scores confirmed)
+
+Best public LB is now **`0.913`** from Exp148 (adaptive two-seed edge fusion).
+Live submission scores pulled from Kaggle on 2026-07-28:
+
+| Sub | Exp | Change | Public LB |
+| --- | --- | --- | ---: |
+| `54996564` | Exp144 | det weight 0.475, edge 0.15, low_margin fusion | `0.912` |
+| `55007462` | Exp145 | det weight 0.40 | `0.910` |
+| `55019565` | Exp146 | det weight 0.325 | `0.909` |
+| `55026280` | Exp147 | det weight 0.55 | `0.909` |
+| `55029450` | Exp148 | det 0.475 + **adaptive** edge fusion, edge weight 0.15 | **`0.913`** |
+| `55046291` | Exp149 | adaptive, edge weight 0.15->0.25 | `0.912` (regressed) |
+
+Conclusions:
+- Detection blend weight `0.475` is the confirmed optimum (0.40/0.325/0.55 all
+  worse). Do not re-sweep it.
+- Adaptive edge fusion beats low_margin_consensus by `+0.001` (Exp148 vs Exp144).
+- **Edge-weight axis peaked at the 0.15 adaptive floor**: 0.25 regressed `-0.001`.
+  Do not push edge weight higher.
+- `notebooks/biohub-exp150-adaptive-edge-w035.ipynb` (edge weight 0.35) is BUILT
+  but should NOT be submitted - it continues the regressed direction. Hold/retire.
+- Next probe is orthogonal: `notebooks/biohub-exp151-adaptive-temp085.ipynb`
+  keeps the Exp148 confirmed-best config (det 0.475, adaptive, edge 0.15) and only
+  sharpens the post-mix edge logits via `SECONDARY_MIX_TEMPERATURE` 1.0 -> 0.85.
+  NOT yet run/submitted.
+
+Submission slots on 2026-07-28: 1 used (Exp149 `55046291` at 05:39 UTC), 4 left.
+
 ## CURRENT STATUS - 2026-07-27
 
 Best public LB is now **`0.912`** from Exp144:
