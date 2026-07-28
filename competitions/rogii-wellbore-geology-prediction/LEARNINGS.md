@@ -197,6 +197,31 @@ The forum has extensive, directly on-point discussion of this exact phenomenon:
 
 **Bottom line**: our 7.097 → 20.067 swing is an extreme instance of a well-documented, community-understood phenomenon (unseeded PF randomness resampled fresh on every grading execution), not a bug specific to our forks or a Kaggle platform failure. Given this, resubmitting a promising, already-verified-format candidate multiple times near the final-submission deadline and keeping whichever draw scores best is a legitimate strategy, not risky overfitting — but any *single* score (ours or a public notebook's self-reported title, e.g. "LB 6.40") should be treated as one noisy sample, not a stable fact, until repeated.
 
+## Public-notebook survey 2026-07-29: the noise floor is quantified, and a seeded/deterministic version exists
+
+Surveyed the current top public kernels (by votes and recency). Most high-vote notebooks (`blacklions/well-level-gbdt-gate`, `johnjanson/hahaha-nondet-agi`, `lucifer19/rogii-geoanchor`, `tamerlanomralinov/hahaha-det-agi`, and the physics `evgendvorkin/roggi-physics-lb-7-872-v48`) are all the **same `vp_balanced_modelpkg_005` pipeline** we already run — forks differing by a config cell. Two notebooks are genuinely different and change our strategy:
+
+### 1. `tamerlanomralinov/hahaha-det-agi` — a SEEDED, deterministic version of the PF (fixes our #1 pain point)
+
+Diffing `hahaha-det-agi` against `hahaha-nondet-agi` (same author-collective, deliberate det-vs-nondet pair) isolates the change: the numba PF `_pf_lik_allseeds` adds **`np.random.seed(seed_base + s)` at the top of each seed's loop** (plus a `seed_base` param threaded through), so all 128 PF seeds are seeded deterministically. This makes the whole pipeline **reproducible across runs** — the single biggest fix for the grading-instability/variance problem documented all through this file (the 7.097→20.067→exception swings and our 6.474/6.505/6.558/6.562 spread). Porting this one change onto our clean GS1.30 notebook converts our lottery config into a fixed, reproducible number.
+- **Trade-off**: seeding locks in the config's *mean* (~6.5), which forfeits the lucky-low-draw upside. The right way to use it is a **seed search**: run many `seed_base` values, pick the one with the best *visible-prefix holdout* RMSE (legal self-calibration, NOT public-LB probing), then submit that fixed seed. Gives a reproducible pick without chasing LB noise.
+
+### 2. `georgymamarin/measure-your-noise-floor-before-believing-a-lever` (88 votes) — the most useful strategic doc on the board
+
+A rigorous diagnostic (public data only, seeded). Key numbers, all directly load-bearing for us:
+- **Measured noise floor: sd ≈ 0.037 ft.** One kernel resubmitted 4× unchanged: 6.700 · 6.726 · 6.641 · 6.671. So the run-to-run standard deviation of this pipeline family is ~0.037 — **our own 6.474/6.505/6.558/6.562 draws (mean ~6.52, sd ~0.04) are statistically the same config ~1sd apart, not four different things.**
+- **Statistical significance bar**: to believe a "lever" helps, the delta must exceed ~2×SE where SE = 0.037×sqrt(1/n₁+1/n₂). Two single draws → need >~0.10 ft; single-vs-4-draw-mean → >~0.08 ft. **This retroactively explains why every single-flag ablation in this file was "inconclusive" — they were all inside the noise band.**
+- **The board is a precise ruler**: forum 728477 (souldrive) fits another team's CV-vs-LB at r=0.999, slope 1.01 — the apparent LB noise is the *submitter's own nondeterminism*, not board noise. Corroborates the det-agi seeding fix.
+- **Oracle ladder**: flat/carry-last ~16 (live baseline 15.883) → per-well offset ~9 → per-well **line** oracle ~6.6, which sits *above* today's fork cluster (~6.3–6.5). So the fork cluster has already captured offset + dominant dip + some wiggle; easy wells reach 3–5 ft.
+- **The real levers it identifies** (all target the irreducible bimodal-datum tail, where the leverage is): (a) **GR-rotation denoise** — a 7-pt rolling-median (crude proxy for a proper FFT-rotation notch) lifts datum localization from ~80%→84%; (b) **LGB+CatBoost tail blend** instead of XGB — ~0.8 ft on heavy-tail folds; (c) legal **heel-calibration** recovers ~80% of the datum (vs 8% for a flat fit). The bimodal hedge helps only ~0.7 ft and only directionally (wide temperature over-hedges easy wells — over *all* wells, committing slightly edges hedging, 5.2 vs 5.7 ft).
+
+### Strategic consequence (important): resubmission alone probably won't reach bronze
+
+Our config's true **mean is ~6.52, but bronze is ≤6.457** — i.e. the cutoff is ~1.7 sd *below* our mean. P(a single draw ≤6.457) ≈ 4–5%. Across many draws we'll likely *flash* a sub-6.457 **public** score eventually, but that's public-LB-noise chasing and needn't hold on the private split. **The robust path to bronze is a real improvement that moves the config mean down ~0.1+ ft** (the GR-denoise / LGB+CatBoost-tail levers above, or pilkwang's newer `dual_track_prefix_modelpkg` profile), *then* optionally seed-lock it. Treat the "resubmit and bank the best draw" tactic as a cheap side-bet, not the primary plan.
+
+### Also new: `pilkwang/rogii-dual-track-prefix-calibrated-geosteering` (347 votes, lineage originator)
+Uses a distinct `SUBMISSION_PROFILE = 'dual_track_prefix_modelpkg'` (not our `vp_balanced_modelpkg_005`). Untested by us — worth a submission as a genuinely different profile from the person who originated this whole approach.
+
 ## Leaderboard Notes
 
 - Full public LB CSVs saved at `references/rogii-wellbore-geology-prediction-publicleaderboard-2026-07-23T08:29:24.csv` (5504 teams, stale baseline) and `references/rogii-wellbore-geology-prediction-publicleaderboard-2026-07-24T05:15:25.csv` (5572 teams, current).
