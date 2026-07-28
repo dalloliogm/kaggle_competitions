@@ -15,3 +15,4 @@ a9adfc43cfec82de9a85a37bf90d067c917eba7e6b67a55bb20f536a74f461dc  dalloliogm/bio
 052a4d5807210868de98fad7c26f0d25bd831a460a3183c5af6fd7d9520146d8  dalloliogm/biohub-exp148-adaptive-edge-fusion v1  exp148 fixed detection blend 0.475 with adaptive two-seed edge fusion; submission 55029450
 78598f236bee33d2228096f4a4c19286e9a53cd49f2bcdf9eca2c652283fea3d  dalloliogm/biohub-exp144-two-seed-blend v1  exp144 pilkwang TWO-SEED logit blend (seed A incumbent + seed B 314159, det w=0.
 bf4184016317269932cf179c8ef6455c79d01ca8f7911168b4be855490858a05  dalloliogm/biohub-exp145-twoseed-detw040 v2  exp145 two-seed blend, secondary DETECTION weight 0.40 (favor incumbent seed A) 
+c8bb6bd846e4671fc4d1f4121931e3425502be82dc914795f430f5eed45abc43  dalloliogm/biohub-exp149-adaptive-edge-w025 v2  exp149 adaptive edge fusion, secondary EDGE weight 0.15->0.25 (more second-seed 
