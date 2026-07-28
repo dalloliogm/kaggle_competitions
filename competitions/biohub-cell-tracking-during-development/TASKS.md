@@ -83,6 +83,10 @@ Submission slots on 2026-07-28: 2 used (Exp149 `55046291` at 05:39 UTC; Exp151
     COMPLETE, so the output exists; only grading is stuck. Candidate remedy:
     resubmit the same kernel version as a fresh slot to dislodge it (as done for
     exp133), which costs 1 of the 3 remaining slots today. Awaiting user decision.
+  - UPDATE 2026-07-28 ~19:52 UTC: user approved resubmit. Same kernel v1 output
+    resubmitted as `55063831` (PENDING) to dislodge the queue-hang; original
+    `55056483` still PENDING. Slots today now 3 used, 2 left. Whichever grades
+    first gives the temp-0.85 score.
 
 ## CURRENT STATUS - 2026-07-27
 
