@@ -99,8 +99,9 @@ Capture durable information learned while working on this competition. This is f
 
 ## Leaderboard Notes
 
-- Submission `55030429`: `PENDING`; v9 restores the v5 control shell and makes
-  adaptive feature engineering optional after the first valid submission.
+- Submission `55045683`: `COMPLETE`, public score `0.819`; `official-demo-v9-pick-best-model` (pairwise interactions + pick-best-of-4-models-by-OOF-AUC) tied v6 exactly despite scoring higher offline (0.828 vs 0.826 average on `train_01`–`train_03`). Submitted 2026-07-28 after being blocked by the daily quota since 2026-07-25. Reinforces the existing note below that the 3-folder sample is too small to reliably discriminate small AUC differences — treat ~0.002 offline deltas on that sample as noise, not signal, for future close calls.
+- Submission `55030429`: `COMPLETE`, public score `0.818`; v9 (v5-shell adaptive recovery) restored the v5 control shell and made
+  adaptive feature engineering optional after the first valid submission, but did not improve on v6.
 - Submission `55029319`: `ERROR`; `Agent completed without submitting any valid
   predictions (submit_predictions was never called).` Kaggle refunded its
   2026-07-27 slot.

@@ -2,12 +2,12 @@
 
 ## Current Goal
 
-- Improve on completed submission `54972472` (`official-demo-v6-blended-baseline`, public score `0.819`) without losing the known-good official demo submission behavior.
+- Improve on completed submission `54972472` (`official-demo-v6-blended-baseline`, public score `0.819`) without losing the known-good official demo submission behavior. **Still the live best as of 2026-07-28** — four follow-up attempts (v5-retry, v9-v5-shell-adaptive-recovery, v9-pick-best-model) have all completed at 0.818-0.819, none beating it.
 - Submission `55011609` (`official-demo-v5-model-recipe-retry-20260726`) completed at 0.818 and did not improve on v6.
 - Submission `55029319` (`official-demo-v8-adaptive-feature-gate-llm-advisory`)
   errored because `submit_predictions` was never called.
-- Submission `55030429` (`official-demo-v9-v5-shell-adaptive-recovery`) is
-  pending after Kaggle refunded the failed v8 slot.
+- Submission `55030429` (`official-demo-v9-v5-shell-adaptive-recovery`) completed 2026-07-27 at `0.818`; did not improve on v6.
+- Submission `55045683` (`official-demo-v9-pick-best-model`, a separate branch built 2026-07-25, queued behind the daily quota until today) completed 2026-07-28 at `0.819` — **tied v6 exactly** despite scoring higher offline (0.828 vs 0.826 on the 3-folder sample). See LEARNINGS.md/APPROACHES.md: this is evidence the 3-folder offline sample can't reliably discriminate small AUC deltas; prefer the full 16-task replay set for future close calls.
 
 ## Next Experiments
 
