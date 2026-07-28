@@ -64,7 +64,19 @@ Conclusions:
   sharpens the post-mix edge logits via `SECONDARY_MIX_TEMPERATURE` 1.0 -> 0.85.
   NOT yet run/submitted.
 
-Submission slots on 2026-07-28: 1 used (Exp149 `55046291` at 05:39 UTC), 4 left.
+Submission slots on 2026-07-28: 2 used (Exp149 `55046291` at 05:39 UTC; Exp151
+`55056483` at 13:44 UTC), 3 left.
+
+- `55056483` Exp151: Exp148 backbone (det 0.475, adaptive edge fusion, edge weight
+  0.15) with post-mix `SECONDARY_MIX_TEMPERATURE` 1.0 -> 0.85 (sharpen blended
+  edge logits). Kaggle kernel v1 `dalloliogm/biohub-exp151-adaptive-temp085` ran
+  to COMPLETE and was submitted directly via the code-submission API. Local
+  re-validation was skipped because `www.kaggleusercontent.com` (the kernel
+  output CDN) is egress-blocked in this environment; the in-kernel structural
+  harness ran before writing `submission.csv`, and temp=0.85 is a distinct config
+  so a byte-duplicate is impossible. Kaggle grading PENDING at submit time.
+  If it beats `0.913`, sharpen further (temp 0.75); if it regresses, try softening
+  (temp 1.15) instead.
 
 ## CURRENT STATUS - 2026-07-27
 
