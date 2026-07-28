@@ -87,6 +87,21 @@ Submission slots on 2026-07-28: 2 used (Exp149 `55046291` at 05:39 UTC; Exp151
     resubmitted as `55063831` (PENDING) to dislodge the queue-hang; original
     `55056483` still PENDING. Slots today now 3 used, 2 left. Whichever grades
     first gives the temp-0.85 score.
+  - RESOLVED: Exp151 (temp 0.85) scored **`0.912`** (`55056483` graded; resubmit
+    `55063831` redundant, echoes it). That is `-0.001` vs the temp 1.0 baseline
+    (exp148 = 0.913): mild sharpening of the blended edge logits REGRESSES.
+    Incumbent best stays **`0.913`** (Exp148).
+
+Temperature axis so far: temp 1.0 = 0.913 (exp148), temp 0.85 = 0.912 (worse).
+End-of-day bracket to map the rest of the axis (last 2 slots of 2026-07-28):
+- Exp152 `dalloliogm/biohub-exp152-adaptive-temp075` temp 0.75 (sharpen more) -
+  expected <= 0.912 given 0.85 already regressed; confirms the sharpen direction.
+- Exp153 `dalloliogm/biohub-exp153-adaptive-temp115` temp 1.15 (soften) - the more
+  promising side; the only untested direction on this axis.
+Both same backbone (det 0.475, adaptive edge fusion, edge 0.15); only
+SECONDARY_MIX_TEMPERATURE differs. Auto-submitted on kernel COMPLETE. If softening
+helps (Exp153 > 0.913), next probe is temp 1.3; if the whole axis is flat/worse,
+temperature is exhausted and 1.0 is optimal - move to a new axis.
 
 ## CURRENT STATUS - 2026-07-27
 
