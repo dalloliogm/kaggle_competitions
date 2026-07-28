@@ -77,6 +77,12 @@ Submission slots on 2026-07-28: 2 used (Exp149 `55046291` at 05:39 UTC; Exp151
   so a byte-duplicate is impossible. Kaggle grading PENDING at submit time.
   If it beats `0.913`, sharpen further (temp 0.75); if it regresses, try softening
   (temp 1.15) instead.
+  - UPDATE 2026-07-28 ~15:17 UTC: still PENDING ~93 min after submit, well past the
+    sub-hour grading every other Exp got today. Matches the known queue-hang mode
+    (cf. `54894521`, which sat PENDING and never scored). The kernel v1 ran to
+    COMPLETE, so the output exists; only grading is stuck. Candidate remedy:
+    resubmit the same kernel version as a fresh slot to dislodge it (as done for
+    exp133), which costs 1 of the 3 remaining slots today. Awaiting user decision.
 
 ## CURRENT STATUS - 2026-07-27
 
