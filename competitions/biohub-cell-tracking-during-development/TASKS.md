@@ -187,6 +187,11 @@ Interpretation when it scores:
 - Exp135 ~= 0.910 (flat) -> v34 redundant -> skip the graft; alternate
   architectures (nnU-Net flow detector / Trackastra) become the only levers.
 
+UPDATE 2026-07-29 ~19:33 UTC: Exp135 still PENDING ~3.5h after submit (queue-hang
+mode again). Auto-recheck loop stopped; score expected later. Decision logic
+unchanged (Exp155 v34 graft if >0.910, else architectural detector). Trackastra
+kickoff prompt saved at references/trackastra-kickoff-prompt.md.
+
 When the score lands:
 - Exp154 > 0.913 -> the guard stacks; sweep the retention floor (try 0.85 and
   0.95 around 0.90).
