@@ -1,6 +1,14 @@
 # Tasks
 
-## Current Goal
+## Current Goal (updated 2026-07-29)
+
+**Status:** GS1.30 is our reliable config, confirmed across 6 draws (6.473 / 6.474 / 6.503 / 6.505 / 6.558 / 6.562; mean ~6.51, sd ~0.04) + 1 exception. Fresh LB (5822 teams): **bronze ≤6.457** — best draw 6.473 is 0.016 short and **no draw has cracked it**. Per the `georgymamarin` noise-floor analysis (see `LEARNINGS.md`), the config mean (~6.51) sits ~1.7 sd *above* bronze, so **resubmission alone won't reliably get there** — need a real ~0.1 ft lever. Two experiments submitted 2026-07-29, both grading:
+- **Exp1 dual-track** (`55073497`): pilkwang's `dual_track_prefix_modelpkg` profile — a genuinely different config = the score play. Runs only on CPU (GPU hit `cudaErrorNoKernelImageForDevice` in its model-package TCN).
+- **Exp2 seeded GS1.30** (`55072827`): det-agi's seeded numba PF, Q0522 removed = the reliability play (a reproducible config for a safe Final Submission, immune to the 7→20→exception risk).
+
+**Next:** (a) read both scores; if dual-track < ~6.4 it's a real lever, iterate on it. (b) If Exp2 reproduces cleanly, seed-search over `seed_base` picking by visible-prefix holdout RMSE (legal) for a good *fixed* seed. (c) Select 2 Final Submissions before deadline (2026-08-05) — favor one reliable (seeded) + best-scoring draw. See `LEARNINGS.md` "Public-notebook survey 2026-07-29" for the real levers (GR-rotation denoise, LGB+CatBoost tail blend).
+
+## (Prior goal, superseded above)
 
 **Catch-up strategy, updated 2026-07-28 (~8 days left, deadline 2026-08-05 23:59:00).** Major pivot on 2026-07-27: while this session was mid-flight on the neighbor-transfer/bimodal-hedge levers below, work happened directly on Kaggle from another machine and found something much bigger — **`dalloliogm/rogii-public-score-frontier-lab-visuals` scored 6.474**, our best result of the entire session (previous best ~7.1). Rank ~718/5793 (top 12.4%), bronze ≤6.463 (0.011 away), silver ≤6.427. Full writeup in `LEARNINGS.md` under "BREAKTHROUGH". Reproducibility check still in flight (`55038368`, pending >8h as of 2026-07-28 morning — longer than any prior observed pending time, but not yet alarming since grading has taken 6+ hours before).
 
