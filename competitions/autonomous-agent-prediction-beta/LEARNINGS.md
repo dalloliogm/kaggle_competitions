@@ -53,6 +53,30 @@ Capture durable information learned while working on this competition. This is f
   emitting an allowlisted JSON recommendation. It should never generate
   executable feature code, inspect solution files, transform the binary target,
   or override the mandatory first baseline.
+- **The v8/v9 "LLM advisory" was a no-op in the submitted packages.** The
+  `--feature-mode plan` machinery in `autopredict.py` was fully implemented and
+  allowlist-safe, but no system prompt ever instructed the agent to generate a
+  profile, request a plan, or pass `--plan`. The profile even told the model
+  "the live predictor ... does not execute arbitrary plan changes." That is the
+  most likely reason the v9 v5-shell adaptive run scored exactly in line with
+  the non-LLM v5 (0.818): the LLM never influenced features at all. Check that
+  a feature is actually *wired to the prompt*, not merely implemented, before
+  attributing a score to it.
+- **Measured noise floor on a single mini-competition is about 0.0004 AUC.**
+  Running an empty plan (informationally identical to the plain baseline) still
+  produced OOF AUC 0.95929 versus the baseline's 0.95886 on the same data and
+  seed, because the plan path changes feature column ordering and CatBoost
+  tie-breaking follows it. Any accept/reject rule comparing two feature sets by
+  OOF AUC therefore needs a margin comfortably above ~0.0004; a zero-margin gate
+  accepted a kitchen-sink plan on a +0.0003 delta that was pure noise. The
+  shipped default is `--gate-margin 0.002`, consistent with the existing
+  "treat ~0.002 offline deltas as noise" note from the 3-folder analysis.
+- Gating an LLM feature plan on out-of-fold AUC converts it from a coin flip
+  into a bounded bet: the runner fits both the plan and the plain baseline and
+  keeps the plan only when it clears the margin, so a bad plan costs runtime
+  rather than score. This is the safe way to let an LLM touch features given
+  that blind transform bundles measured *worse* than baseline (0.7981 vs
+  0.7990) in replay.
 
 ## Models
 
