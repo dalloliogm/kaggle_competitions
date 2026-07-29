@@ -113,6 +113,25 @@ temperature is exhausted and 1.0 is optimal - move to a new axis.
     temperature axis is exhausted (1.0 optimal) -> pivot to the new detection-side
     axis: Exp154 = Exp148 backbone + indarkarhana framewise retention guard (see
     references/public-notebooks-scan-2026-07-28.md).
+  - RESOLVED 2026-07-29: bracket scored. Exp152 (temp 0.75) = **0.913** (ties
+    incumbent), Exp153 (temp 1.15) = **0.909** (softening hurts -0.004).
+
+TEMPERATURE AXIS FULLY MAPPED and EXHAUSTED: 0.75=0.913, 0.85=0.912, 1.0=0.913,
+1.15=0.909. Nothing beats 0.913; softening clearly worse, sharpening only ties.
+All three linking/blend knobs are now pinned at Exp148 (det weight 0.475, edge
+weight 0.15, temperature 1.0). DO NOT probe temperature further.
+
+NEXT DIRECTION - new orthogonal DETECTION-SIDE axis:
+- Exp154 = Exp148 backbone + indarkarhana framewise detection-field retention
+  guard (per-frame: if blended local-max candidates / primary candidates < 0.90,
+  that frame falls back to primary-only detection). Detection-side, orthogonal to
+  every knob tuned so far; independently scores 0.913. Graft the runtime patch
+  onto our cell 10 det-blend block, gated by
+  BIOHUB_DUAL_SEED_MIN_CANDIDATE_RETENTION=0.90. Details in
+  references/public-notebooks-scan-2026-07-28.md.
+- Secondary options if the guard is flat: alternate architectures
+  (justinkim1216 nnU-Net flow detector, subinium Trackastra linker) or the v34
+  independent-ensemble Exp135.
 
 ## CURRENT STATUS - 2026-07-27
 
