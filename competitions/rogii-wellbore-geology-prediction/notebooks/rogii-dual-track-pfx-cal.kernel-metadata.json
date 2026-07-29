@@ -5,7 +5,7 @@
   "language": "python",
   "kernel_type": "notebook",
   "is_private": true,
-  "enable_gpu": true,
+  "enable_gpu": false,
   "enable_tpu": false,
   "enable_internet": false,
   "keywords": [],
@@ -22,6 +22,5 @@
   "competition_sources": [
     "rogii-wellbore-geology-prediction"
   ],
-  "model_sources": [],
-  "machine_shape": "Gpu"
+  "model_sources": []
 }
