@@ -105,6 +105,14 @@ temperature is exhausted and 1.0 is optimal - move to a new axis.
 - Both auto-submitted 2026-07-28 ~20:20 UTC: Exp153 (1.15) = `55064248`, Exp152
   (0.75) = `55064277`, both PENDING. All 5 slots for 2026-07-28 used (none wasted).
   Scores expected 2026-07-29 given today's slow grading queue.
+  - UPDATE 2026-07-29 ~02:26 UTC: both Exp152/Exp153 STILL PENDING ~6h after
+    submit; the 2026-07-28 grading queue never caught up (queue-hang mode). The
+    Exp151 resubmit `55063831` did complete = 0.912 (echoes the original).
+    Auto-recheck loop stopped; bracket scores expected 2026-07-29. When they land:
+    if Exp153 (1.15 soften) > 0.913 -> next probe temp 1.3; if both <= 0.913 the
+    temperature axis is exhausted (1.0 optimal) -> pivot to the new detection-side
+    axis: Exp154 = Exp148 backbone + indarkarhana framewise retention guard (see
+    references/public-notebooks-scan-2026-07-28.md).
 
 ## CURRENT STATUS - 2026-07-27
 
