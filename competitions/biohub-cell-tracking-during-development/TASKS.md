@@ -37,6 +37,79 @@ the old no-safe-divisions test (`0.886` vs `0.893`) points the same way. Exp117'
 "zero division TPs" was a local artifact - the labelled split has only `3`
 annotated divisions, so it had no power to measure this.
 
+## CURRENT STATUS - 2026-07-29 (Exp156 Trackastra linker probe)
+
+Best public LB is **`0.913`** (Exp148, tied by Exp152 and Exp154). Every cheap
+knob around it is exhausted, so Exp156 opens the model-diversity axis by
+replacing the LINKER rather than the detector.
+
+**Exp156 - Trackastra association transformer.** Kernel
+`dalloliogm/biohub-exp156-trackastra-linker-headtohead`. Diagnostic, writes no
+submission, costs no slot. It links one identical set of cached detections
+three ways and scores every arm with the official metric on the labelled train
+movies: `ilp_only`, `incumbent_full` (Exp110-family post-processing), and
+`trackastra_s{2,3,4}`.
+
+### CORRECTION to the 2026-07-22 model survey
+
+That survey recorded `subinium/biohub-trackastra-public-weights-mirror` as
+"real Trackastra weights, but 2D/CTC and needs segmentation masks we do not
+have. Poor architectural fit." Two of the three claims are wrong.
+
+- **The `ctc` checkpoint is natively 3D.** Its `config.yaml` has
+  `coord_dim: 3`, `feat_dim: 12`; its `train_config.yaml` has `ndim: 3` and
+  lists `Fluo-N3DH-CE` (a 3D+time developing embryo), `Fluo-C3DH-*`,
+  `Fluo-N3DH-SIM+` and `synthetic3d` in `input_train`. Only `general_2d` is 2D.
+  There is no per-slice-and-stitch or maximum-projection problem to solve.
+- **Masks are not required.** `WRFeatures` is a plain container of coords,
+  labels, timepoints and a region-property table. `from_mask_img` is only one
+  constructor; the container can be built straight from our centroids. The 12
+  ctc features are `equivalent_diameter_area`, `intensity_mean`,
+  `inertia_tensor` (9), `border_dist` - all obtainable from a nearest-seed
+  segmentation grown from our detections.
+- **Offline packaging is a non-problem.** The mirror already ships
+  `trackastra-0.5.3-py3-none-any.whl`. A pure-python wheel does not need
+  installing; unpack it onto `sys.path`. Only `edt` and `lz4.frame` are
+  imported at module scope without being reachable from our path, and those are
+  stubbed. Do NOT stub `lz4` before importing `joblib` and `fsspec` - both
+  validate `lz4.frame` while registering compression backends and will raise.
+
+### The real risk is scale, not dimensionality
+
+Trackastra reasons in the raw pixel units it was trained on: `spatial_pos_cutoff`
+is `256` of them and the rotary spatial bias is bucketed in them. Feeding
+micrometres directly puts the whole embryo inside the cutoff. Our coordinates
+are therefore rescaled by `coord_scale` units/um, and that is the one knob the
+transfer turns on.
+
+### Local prototype evidence (synthetic 3D, real ctc weights)
+
+Plumbing is proven: recall `1.000`, precision `1.000`, all planted divisions
+recovered, structural harness clean. But the competitive picture is not
+encouraging. On synthetic movies at our physical density, with a plain
+Hungarian physical-distance linker as reference:
+
+| regime | Hungarian | Trackastra (best scale) |
+| --- | ---: | ---: |
+| coherent flow, 5 um spacing, 2.0 um motion | `0.991` | `0.971` |
+| coherent flow, 5 um spacing, 3.5 um motion | `0.933` | `0.857` |
+| coherent flow, 7 um spacing, 3.0 um motion | `0.991` | `0.971` |
+| half-coherent, 5 um spacing, 3.5 um motion | `0.596` | `0.451` |
+
+Trackastra never beat a trivial distance baseline, and our incumbent linker is
+much stronger than that baseline. The acceptance threshold was ruled out as the
+cause (flat from `0.5` down to `0.01`). Caveat: the synthetic nuclei are
+identical blobs, so Trackastra's appearance pathway has nothing to work with -
+this understates it, which is why Exp156 re-runs the comparison on real movies.
+
+**Decision rule for Exp156:** only spend a submission slot if a Trackastra arm
+lands within ~`0.01` of `incumbent_full` on local adjusted edge Jaccard.
+
+Real-data movie geometry (useful independent of Trackastra): volumes are
+`64 x 256 x 256` raw, `64^3` after the `[1, 4, 4]` subsample, i.e. a ~104 um
+isotropic cube at `1.625 um`. At `6bba_05db0fb1`'s ~757 detections/frame that
+is a median nearest-neighbour spacing near `6 um`.
+
 ## CURRENT STATUS - 2026-07-27
 
 Best public LB is now **`0.912`** from Exp144:
