@@ -106,7 +106,35 @@ this understates it, which is why Exp156 re-runs the comparison on real movies.
 Trackastra arm lands within ~`0.01` of `incumbent_full` on local adjusted edge
 Jaccard.
 
-### RESULT: rejected, no slot spent
+### SUBMITTED anyway as 55092602 (2026-07-29 21:39 UTC)
+
+Exp156's local verdict was negative (below), but the slot was free, the GPU cost
+was ~15 min, and the local harness is known to invert for graph-construction
+choices - so the leaderboard number is genuine information the local number
+cannot supply. Kernel v2 `dalloliogm/biohub-exp157-trackastra-linker-candidate`.
+
+Output SHA256 `2f999c18309ba9e6d72426384b798e8ed1f0b78a41b3834d32607b620a8d8e23`:
+`216,675` rows, `111,225` nodes, `105,450` edges, `2,132` division-like sources,
+4/4 datasets, max indegree `1`, max outdegree `2`, no dangling edges, no
+negative coordinates - structural harness PASSED. Against Exp148: `-10,882`
+nodes, `-12,463` edges, `+1,799` divisions.
+
+Two caveats recorded before the score lands:
+
+1. **`2,132` divisions is 6.4x the incumbent's `333`.** The rescore CAPPED
+   division credit (division-bearing went `0.910 -> 0.908`), so the extra
+   divisions are mostly downside risk, not upside.
+2. **Exp157 is NOT the configuration Exp156 scored.** Exp157 adds
+   `TRACKASTRA_MIN_TRACK_LEN=6` short-track filtering, which Exp156's Trackastra
+   arms did not have. On `44b6_0b24845f` that removed `6,480` of `22,201` nodes
+   (29%) and dropped agreement-with-ILP to `0.672` - Trackastra fragments that
+   movie badly and the filter then deletes the fragments. So the LB number maps
+   onto Exp156's `0.8631` only loosely. Per-movie agreement with our ILP edges
+   on test: `0.917` / `0.672` / `0.927` / `0.800`.
+
+Expectation is below `0.913`. Record the score when it lands.
+
+### Exp156 local result: negative, and it is what drove the caveats above
 
 Kernel v1 COMPLETE. Evidence:
 `references/exp156-trackastra-headtohead-v1-output/`.
