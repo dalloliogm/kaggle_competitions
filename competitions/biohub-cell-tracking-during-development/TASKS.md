@@ -149,6 +149,10 @@ exceeds 0.913.
 Push note: hit the account-wide 2-concurrent-GPU-session cap; a background retry
 loop pushed once a slot freed (~10 min). Slots today (2026-07-29): 1 used, 4 left.
 
+UPDATE 2026-07-29 ~09:13 UTC: Exp154 still PENDING ~3h20m after submit (queue-hang
+mode again). Auto-recheck loop stopped; score expected later. Decision logic
+unchanged (see "When the score lands" below).
+
 When the score lands:
 - Exp154 > 0.913 -> the guard stacks; sweep the retention floor (try 0.85 and
   0.95 around 0.90).
