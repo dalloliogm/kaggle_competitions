@@ -113,6 +113,7 @@ _sys.modules["biohub_trackastra_link"] = btl
 # only the genuinely unused native imports get stubbed.
 TRACKASTRA_PKG_ROOT = btl.bootstrap_trackastra(WHEELS[0], "/kaggle/working/trackastra_pkg")
 import trackastra  # noqa: E402
+import torch  # the inference cell above imports it as _torch, so bind it here too
 
 TRACKASTRA_DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 TRACKASTRA_MODEL = btl.load_trackastra_transformer(CTC_DIR, device=TRACKASTRA_DEVICE)

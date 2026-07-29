@@ -123,6 +123,57 @@ that notebook, not the Exp073/Exp110 lineage.
 | Frozen-transition-aware relink/gap repair | Forum evidence reports systematic exact duplicate adjacent frames in `6bba`; condition motion relinking and gap closing on detected frozen transitions | Medium | Medium | P0 |
 | Original-branch diagnostic-driven tuning | Exp111 measures where the 0.903-family branch is fragile before spending more submission slots | Medium | Low | P0 |
 
+## Exp156/157 - Trackastra linker swap: MEASURED AND REJECTED (2026-07-29)
+
+The only pipeline stage never varied was the linker. Exp156 replaced it with
+the pretrained Trackastra association transformer (`ctc` checkpoint) over
+byte-identical detections and scored every arm with the official metric on the
+labelled train movies. Evidence:
+`references/exp156-trackastra-headtohead-v1-output/`.
+
+| arm | adjJ all | adjJ 6bba | edges | forks | agreement with ILP |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| `ilp_only` | **`0.9099`** | `0.9030` | 138,671 | `0` | `1.000` |
+| `incumbent_full` | `0.8936` | `0.8877` | 140,022 | `363` | `0.891` |
+| `trackastra_s2` | `0.8304` | `0.8207` | 138,321 | `2,485` | `0.912` |
+| `trackastra_s3` | `0.8631` | `0.8567` | 140,488 | `1,678` | `0.926` |
+| `trackastra_s4` | `0.8596` | `0.8555` | 139,059 | `1,376` | `0.919` |
+
+The best Trackastra arm is `-0.031` against `incumbent_full` and `-0.047`
+against `ilp_only`. The pre-registered decision rule was "submit only if within
+~`0.01` of `incumbent_full`", so **no submission slot was spent.**
+
+Per movie, the loss concentrates exactly where the metric weight is. On
+`6bba_05db0fb1` (700 detections/frame, ~56% of local weight) Trackastra scores
+`0.786` against `ilp_only`'s `0.859`. It does not win on any movie at its best
+overall scale.
+
+**Mechanism: division over-firing, not bad associations.** Trackastra emits
+`1,376`-`2,485` forks where the incumbent emits `363` and the raw ILP emits
+`0`. `track_greedy` accepts a second child whenever its weight clears the
+threshold, and at our nucleus density many neighbours do. Every spurious fork
+also steals an edge from a true parent, so edge quality and division quality
+degrade together. Edge false positives on the dense movie rise from `88`
+(`ilp_only`) to `163` (`trackastra_s3`).
+
+A second contributing factor is sequence length: `6bba_05db0fb1` puts ~2,900
+tokens in each 4-frame window against the `max_tokens: 1024` the model was
+trained with. Local agreement with our ILP edges falls from `0.96` on the
+sparse movie to `0.72`-`0.80` on the dense one.
+
+**What was NOT the problem** (so nobody re-tests it): the 2D/3D question - the
+`ctc` checkpoint is natively 3D; offline packaging - the mirror ships a
+pure-python wheel; masks - `WRFeatures` builds fine from centroids; and the
+greedy acceptance threshold - inert from `0.5` down to `0.01`.
+
+Exp157 (`notebooks/biohub-exp157-trackastra-linker-candidate.ipynb`) is the
+submission-shaped version: the Exp148 backbone with only the association stage
+swapped, behind `BIOHUB_USE_TRACKASTRA_LINKER`. Its v1 run failed on a scope
+bug (`torch` unbound in the bootstrap cell), now fixed. **It is deliberately
+left un-run and un-submitted** - Exp156 already answered the question it would
+have asked, at no slot cost. Revive it only if the division gating is replaced
+(e.g. our own safe-division policy on top of `greedy_nodiv` associations).
+
 ## Abandoned
 
 | Approach | Why dropped | Evidence | Revisit if |

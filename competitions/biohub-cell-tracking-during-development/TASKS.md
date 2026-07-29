@@ -102,8 +102,52 @@ cause (flat from `0.5` down to `0.01`). Caveat: the synthetic nuclei are
 identical blobs, so Trackastra's appearance pathway has nothing to work with -
 this understates it, which is why Exp156 re-runs the comparison on real movies.
 
-**Decision rule for Exp156:** only spend a submission slot if a Trackastra arm
-lands within ~`0.01` of `incumbent_full` on local adjusted edge Jaccard.
+**Decision rule for Exp156 (pre-registered):** only spend a submission slot if a
+Trackastra arm lands within ~`0.01` of `incumbent_full` on local adjusted edge
+Jaccard.
+
+### RESULT: rejected, no slot spent
+
+Kernel v1 COMPLETE. Evidence:
+`references/exp156-trackastra-headtohead-v1-output/`.
+
+| arm | adjJ all | adjJ 6bba | edges | forks | agreement with ILP |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| `ilp_only` | **`0.9099`** | `0.9030` | 138,671 | `0` | `1.000` |
+| `incumbent_full` | `0.8936` | `0.8877` | 140,022 | `363` | `0.891` |
+| `trackastra_s2` | `0.8304` | `0.8207` | 138,321 | `2,485` | `0.912` |
+| `trackastra_s3` | `0.8631` | `0.8567` | 140,488 | `1,678` | `0.926` |
+| `trackastra_s4` | `0.8596` | `0.8555` | 139,059 | `1,376` | `0.919` |
+
+Best Trackastra arm is `-0.031` against `incumbent_full`, three times outside
+the decision rule. **No submission was made.** Public LB stays `0.913`
+(Exp148/152/154).
+
+The loss concentrates where the metric weight is: on `6bba_05db0fb1` (700
+detections/frame, ~56% of local weight) Trackastra scores `0.786` versus
+`ilp_only`'s `0.859`. It wins on no movie at its best overall scale.
+
+Mechanism is division over-firing, not bad association: `1,376`-`2,485` forks
+against the incumbent's `363` and the ILP's `0`. `track_greedy` takes a second
+child whenever its weight clears threshold, and at our density many neighbours
+do. Each spurious fork also steals an edge, so dense-movie edge false positives
+rise from `88` to `163`.
+
+**Caveat, stated honestly:** `LEARNINGS.md` records that this local harness
+INVERTS leaderboard ranking for graph-construction choices (`ilp_only` scores
+`0.908` locally but `0.877` on the LB, while the post-processed branch scores
+`0.888` locally and `0.909` on the LB). A linker swap is arguably in that same
+class, so a `-0.031` local gap is not proof of a `-0.031` leaderboard gap. What
+makes the rejection safe anyway is the fork explosion: it is a mechanism-level
+defect visible independently of the metric, and the rescore capped division
+credit, so 4-7x the incumbent's divisions is downside risk rather than upside.
+
+### Where this could still be revived
+
+Not "Trackastra is useless" but "its greedy division gate is wrong at our
+density". The version worth building, if anyone returns to this, is
+`greedy_nodiv` associations with OUR safe-division policy layered on top, so
+the transformer only supplies parent assignment and never decides to divide.
 
 Real-data movie geometry (useful independent of Trackastra): volumes are
 `64 x 256 x 256` raw, `64^3` after the `[1, 4, 4]` subsample, i.e. a ~104 um
