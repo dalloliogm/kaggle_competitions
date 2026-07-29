@@ -88,9 +88,17 @@ worth remembering:
 - `track_greedy`'s acceptance threshold is INERT here - sweeping `0.5` down to
   `0.01` moves edge Jaccard by under `0.01`. Do not tune it.
 - On synthetic movies Trackastra never beat a plain Hungarian physical-distance
-  linker. But those movies have identical intensity blobs, so its appearance
-  pathway has nothing to work with. On REAL detections it does much better,
-  which is the evidence that matters.
+  linker. **Do not read much into that** - the synthetic benchmark was too easy
+  to discriminate linkers, and the Hungarian reference was flattered three ways:
+  it ran only on synthetic data with planted ground truth, it forces a full
+  one-to-one assignment (my synthetic movies had no cells entering, leaving or
+  missed, so "match everything" was nearly the correct prior), and being
+  one-to-one it cannot represent a division at all - it structurally missed all
+  6 planted divisions and still scored `0.99`, because 6 links out of ~1100 is
+  noise. The real calibration for that linker class is already on this
+  workspace's leaderboard: DoG + Hungarian scored `0.827`, and `0.834` with NMS
+  `3.8 um`. Synthetic edge Jaccard is not comparable to the official metric.
+  Only the real-detection numbers below and Exp156's official scores count.
 
 Agreement with our own ILP edges on real cached detections, features analytic
 (no image channel), `coord_scale = 3.0`:
@@ -128,6 +136,28 @@ every fork and changes edge agreement by `+0.002`:
 So the parent assignments themselves degrade in dense frames. Do not spend
 effort on `greedy_nodiv` plus our own safe-division policy - it recovers
 nothing.
+
+### The coordinate-scale axis is EXHAUSTED (2026-07-29)
+
+Scale looked like the live knob, but it is already at its ceiling. The official
+metric weight-averages by `TP+FP+FN`, and the two `6bba` movies carry **93.5%**
+of it (`6bba_05db0fb1` `56.1%`, `6bba_05b6850b` `37.4%`); the three `44b6`
+movies carry `2.2%` each. Both `6bba` movies prefer scale `3.0`, so the
+aggregate is essentially decided by that one choice:
+
+| scale policy | aggregate adjJ |
+| --- | ---: |
+| fixed `2.0` | `0.8304` |
+| fixed `3.0` | `0.8631` |
+| fixed `4.0` | `0.8596` |
+| motion-adaptive (`4.8 / median_motion_um`, a selectable rule) | `0.8642` |
+| **per-movie ORACLE** (unreachable, upper bound) | **`0.8642`** |
+
+The oracle equals the adaptive rule and beats fixed `3.0` by `0.0011`. So even
+perfect per-movie scale selection lands `0.029` below `incumbent_full`
+(`0.8936`). **Do not build per-movie or density-adaptive scale selection** - the
+entire axis is worth about `0.001`. The `44b6` movies do prefer scale `2.0`, but
+at `2.2%` weight each that preference is irrelevant to the score.
 
 ## Kernel outputs ARE retrievable from the Codex/Claude container (2026-07-29)
 

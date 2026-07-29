@@ -168,6 +168,11 @@ credit, so 4-7x the incumbent's divisions is downside risk rather than upside.
 Do **not** try `greedy_nodiv` plus our own safe-division policy: the probe above
 shows removing divisions recovers essentially nothing.
 
+Do **not** build per-movie or density-adaptive coordinate scaling either. The
+two `6bba` movies carry `93.5%` of the metric weight and both prefer scale
+`3.0`, so a per-movie ORACLE scores `0.8642` against fixed-`3.0`'s `0.8631` -
+the entire scale axis is worth `0.001`.
+
 The only lead with any support is sequence length. Trackastra holds up on the
 sparse movies (`44b6_33b596bf` `0.9953`, matching `ilp_only`; `6bba_05b6850b`
 `0.968`) and collapses only where windows run ~3x over its trained token

@@ -165,8 +165,10 @@ from `88` (`ilp_only`) to `163` (`trackastra_s3`). Trackastra essentially ties
 
 **What was NOT the problem** (so nobody re-tests it): the 2D/3D question - the
 `ctc` checkpoint is natively 3D; offline packaging - the mirror ships a
-pure-python wheel; masks - `WRFeatures` builds fine from centroids; and the
-greedy acceptance threshold - inert from `0.5` down to `0.01`.
+pure-python wheel; masks - `WRFeatures` builds fine from centroids; the greedy
+acceptance threshold - inert from `0.5` down to `0.01`; and coordinate scale -
+a per-movie ORACLE scores `0.8642` against fixed-`3.0`'s `0.8631`, so the whole
+axis is worth `0.001` and adaptive scale selection is not worth building.
 
 Exp157 (`notebooks/biohub-exp157-trackastra-linker-candidate.ipynb`) is the
 submission-shaped version: the Exp148 backbone with only the association stage
