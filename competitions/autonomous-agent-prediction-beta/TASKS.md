@@ -9,22 +9,32 @@
 - Submission `55030429` (`official-demo-v9-v5-shell-adaptive-recovery`) completed 2026-07-27 at `0.818`; did not improve on v6.
 - Submission `55045683` (`official-demo-v9-pick-best-model`, a separate branch built 2026-07-25, queued behind the daily quota until today) completed 2026-07-28 at `0.819` — **tied v6 exactly** despite scoring higher offline (0.828 vs 0.826 on the 3-folder sample). See LEARNINGS.md/APPROACHES.md: this is evidence the 3-folder offline sample can't reliably discriminate small AUC deltas; prefer the full 16-task replay set for future close calls.
 
-- Submission `55072857` (`official-demo-v10-llm-plan-gated`) uploaded 2026-07-29,
-  consuming today's slot. First package in which the LLM feature plan is
-  actually executed (v8/v9 implemented the machinery but never wired it to the
-  prompt). Poll for its score and record the outcome.
+- Submission `55072857` (`official-demo-v10-llm-plan-gated`) completed
+  2026-07-29 at **`0.808`** — a regression, and it consumed the 2026-07-29 slot.
+  The LLM plan really did execute this time, but the package pushed
+  `autopredict.py`'s CatBoost-primary output into the submission pool and told
+  the agent to submit it even on a gate rejection. Do not build on v10.
 
 ## Next Experiments
 
-- If `55072857` completes at or above 0.819, inspect whether the gate accepted
-  or rejected the plan before drawing conclusions — a rejected plan means the
-  run is effectively the v5-shell baseline and says nothing about the LLM idea.
+- **Next slot (2026-07-30): return to the 0.819 lineage.** The live best remains
+  `official-demo-v6-blended-baseline` / `official-demo-v9-pick-best-model`, both
+  at 0.819. Any further experiment should start from
+  `official-demo-v9-pick-best-model`, whose sklearn pick-best-of-K selector — not
+  `autopredict.py` — produces the good scores.
+- If the LLM-plan idea is revisited, restructure it so the plan changes the
+  features used by the **agent's own ensemble script** (the pick-best-of-K
+  selector), rather than introducing `autopredict.py` as a second submission
+  candidate. Keep v9's rule: submit the optional candidate **only** when it shows
+  positive evidence of being better, never "once anyway."
 - `official-demo-v10-pick-best-plus-catboost` (pick-best-of-K selector plus a
   gated CatBoost candidate, `thread_count=1`, 400 iterations) was built and
-  validated locally on 2026-07-29 but was not submitted; the LLM-plan branch
-  took the slot. It was removed from the tree pending a rebuild — recreate it
-  from `official-demo-v9-pick-best-model` if the CatBoost-in-selector idea is
-  revisited.
+  validated locally on 2026-07-29 but was not submitted, then removed from the
+  tree. It kept the proven sklearn selector as primary and only let CatBoost win
+  on OOF AUC, so it does not share v10's flaw — recreate it from
+  `official-demo-v9-pick-best-model` if that idea is revisited.
+- Deadline is 2026-08-06; roughly one slot per day remains. Prefer one
+  well-motivated change per slot over compounding several.
 
 - Defer the schema-adaptive specialist ensemble until the exact v6 source package is recovered.
 - Do not submit the independent CatBoost specialist as a standalone agent: its 16-task replay mean was 0.7990, with three tasks below 0.70.

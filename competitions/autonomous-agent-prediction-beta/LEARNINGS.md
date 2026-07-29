@@ -71,12 +71,38 @@ Capture durable information learned while working on this competition. This is f
   accepted a kitchen-sink plan on a +0.0003 delta that was pure noise. The
   shipped default is `--gate-margin 0.002`, consistent with the existing
   "treat ~0.002 offline deltas as noise" note from the 3-folder analysis.
-- Gating an LLM feature plan on out-of-fold AUC converts it from a coin flip
-  into a bounded bet: the runner fits both the plan and the plain baseline and
-  keeps the plan only when it clears the margin, so a bad plan costs runtime
-  rather than score. This is the safe way to let an LLM touch features given
-  that blind transform bundles measured *worse* than baseline (0.7981 vs
-  0.7990) in replay.
+- Gating an LLM feature plan on out-of-fold AUC bounds the *feature* choice, but
+  it does **not** bound the score. Submission `55072857` shipped exactly this
+  gate and regressed to `0.808`, the worst completed score since the v4 demo.
+- **The gate was placed on the wrong comparison.** The OOF gate is *intra-script*
+  (plan features vs baseline features inside `autopredict.py`). The decision that
+  actually sets the score is *inter-submission*: which candidate the agent passes
+  to `select_submission`. Adding any new candidate to the session creates a fresh
+  chance for the agent to select something worse, and no amount of intra-script
+  gating touches that risk. Gate the thing that determines the score, not a
+  sub-decision upstream of it.
+- **`autopredict.py` is CatBoost-primary, and CatBoost is a known weak default
+  here** (0.7990 mean over 16 replay tasks, 0.7424 on small tasks, three below
+  0.70). The 0.818-0.819 scores come from the *sklearn ensemble* the agent
+  writes itself, not from `autopredict.py`. So any prompt that pushes
+  `autopredict.py` output into the submission pool is offering the agent a
+  historically weaker candidate to select. `0.808` is squarely in the range that
+  a CatBoost-primary final selection would produce.
+- **Do not remove a guard without first establishing why it exists.** v9's prompt
+  said: *"Submit it only when its final JSON report lists at least one
+  `feature_metadata.engineered_features` entry."* That guard's purpose was to keep
+  a no-op candidate out of the submission pool entirely. The v10 rewrite replaced
+  it with "if `gate.decision` says `rejected_plan_kept_baseline` ... that is
+  expected and still worth submitting once" — which instructs the agent to submit
+  the plain CatBoost baseline precisely when the plan added nothing. Worse, the
+  conservative 0.002 margin makes rejection the *likely* branch, so the most
+  probable outcome of the design was "submit a weak CatBoost candidate," and the
+  prompt actively encouraged it. Two individually reasonable choices (a safe
+  margin; an instruction to always submit once) combined into a bad default path.
+- Net rule for this competition: an optional post-baseline candidate must be
+  submitted **only when it has positive evidence of being better**, never
+  "submitted once anyway for information." Session submission slots are also
+  final-selection candidates.
 
 ## Models
 
@@ -123,6 +149,17 @@ Capture durable information learned while working on this competition. This is f
 
 ## Leaderboard Notes
 
+- Submission `55072857`: `COMPLETE`, public score **`0.808`** — a ~0.011
+  regression and the worst completed score since the v4 demo baseline.
+  `official-demo-v10-llm-plan-gated` was the first package to actually execute
+  the LLM feature plan (v8/v9 implemented the machinery but never wired it to a
+  prompt). The OOF gate worked as designed in local testing, but it guarded the
+  wrong decision: it bounded plan-vs-baseline *features* inside `autopredict.py`
+  while the prompt simultaneously pushed `autopredict.py`'s CatBoost-primary
+  output into the session's submission pool, and instructed the agent to submit
+  it even when the gate rejected the plan. See the Ensembling section — the
+  removed v9 `engineered_features` guard existed to prevent exactly this. Do not
+  build on v10; revert to the v6 / v9-pick-best lineage.
 - Submission `55045683`: `COMPLETE`, public score `0.819`; `official-demo-v9-pick-best-model` (pairwise interactions + pick-best-of-4-models-by-OOF-AUC) tied v6 exactly despite scoring higher offline (0.828 vs 0.826 average on `train_01`–`train_03`). Submitted 2026-07-28 after being blocked by the daily quota since 2026-07-25. Reinforces the existing note below that the 3-folder sample is too small to reliably discriminate small AUC differences — treat ~0.002 offline deltas on that sample as noise, not signal, for future close calls.
 - Submission `55030429`: `COMPLETE`, public score `0.818`; v9 (v5-shell adaptive recovery) restored the v5 control shell and made
   adaptive feature engineering optional after the first valid submission, but did not improve on v6.
