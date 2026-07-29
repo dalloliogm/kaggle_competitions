@@ -133,6 +133,29 @@ NEXT DIRECTION - new orthogonal DETECTION-SIDE axis:
   (justinkim1216 nnU-Net flow detector, subinium Trackastra linker) or the v34
   independent-ensemble Exp135.
 
+## CURRENT STATUS - 2026-07-29 (Exp154 detection retention guard SUBMITTED)
+
+Exp154 built and submitted: `55073211` (PENDING). Kernel
+`dalloliogm/biohub-exp154-retention-guard` v1 ran to COMPLETE and produced
+submission.csv, confirming the guard graft is valid (repo symbols
+`_detect_cells_pooled`/`pool_k`/`frame_indices` present). It grafts indarkarhana's
+framewise detection-field retention guard onto the Exp148 incumbent
+(det 0.475, adaptive edge fusion, edge 0.15, temp 1.0); env var
+`BIOHUB_DUAL_SEED_MIN_CANDIDATE_RETENTION=0.90`. First DETECTION-SIDE probe,
+orthogonal to the now-exhausted linking/blend knobs. Guard scores 0.913
+standalone (indarkarhana); the bet is that stacking with adaptive edge fusion
+exceeds 0.913.
+
+Push note: hit the account-wide 2-concurrent-GPU-session cap; a background retry
+loop pushed once a slot freed (~10 min). Slots today (2026-07-29): 1 used, 4 left.
+
+When the score lands:
+- Exp154 > 0.913 -> the guard stacks; sweep the retention floor (try 0.85 and
+  0.95 around 0.90).
+- Exp154 <= 0.913 -> detection-side guard does not stack with adaptive fusion;
+  move to an alternate architecture (nnU-Net flow detector / Trackastra) or the
+  v34 ensemble (Exp135).
+
 ## CURRENT STATUS - 2026-07-27
 
 Best public LB is now **`0.912`** from Exp144:
