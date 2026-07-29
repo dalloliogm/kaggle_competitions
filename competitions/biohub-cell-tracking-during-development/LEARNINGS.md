@@ -2,6 +2,123 @@
 
 Capture durable information learned while working on this competition. This is for insights that should guide future modeling and prevent repeated mistakes.
 
+## Trackastra linker: what is actually true about it (2026-07-29, Exp156/157)
+
+The 2026-07-22 model survey dismissed
+`subinium/biohub-trackastra-public-weights-mirror` as "real Trackastra weights,
+but 2D/CTC and needs segmentation masks we do not have. Poor architectural
+fit." Read directly from the artifacts, two of those three claims are wrong.
+
+- **The `ctc` checkpoint is natively 3D.** `ctc/config.yaml`: `coord_dim: 3`,
+  `feat_dim: 12`, `d_model: 512`, `window: 4`, `spatial_pos_cutoff: 256`.
+  `ctc/train_config.yaml`: `ndim: 3`, `features: wrfeat`, and `input_train`
+  includes `Fluo-N3DH-CE` (a 3D+time developing embryo - our exact problem),
+  `Fluo-C3DH-A549/H157`, `Fluo-N3DH-CHO`, `Fluo-N3DH-SIM+` and `synthetic3d`.
+  Only `general_2d` is 2D (`coord_dim: 2`, `feat_dim: 7`). **There is no
+  2D->3D adaptation problem.** Do not spend effort on per-slice stitching or
+  maximum projection.
+- **Segmentation masks are NOT required.** `WRFeatures` is a plain container of
+  `coords`, `labels`, `timepoints` and an `OrderedDict` of feature blocks;
+  `from_mask_img` is only one constructor. Building it directly from centroids
+  is legitimate and is what our linker does. The 12 ctc features, in the order
+  `features_stacked` concatenates them, are `equivalent_diameter_area` (1),
+  `intensity_mean` (1), `inertia_tensor` (9), `border_dist` (1). The 2D
+  checkpoint's 7 = 1 + 1 + 4 + 1, which confirms the layout.
+- **`Trackastra.track()` is the wrong entry point** because it demands dense
+  `(T, Z, Y, X)` masks and then calls `apply_solution_graph_to_masks`. Go one
+  level down: `build_windows` -> `predict_windows` -> `build_graph` ->
+  `track_greedy`. None of those touch a mask.
+- **`track_greedy` already enforces our submission invariants**: in-degree <= 1
+  and out-degree <= 2, with divisions modelled explicitly.
+
+### Offline packaging is a non-problem
+
+The mirror ships `trackastra-0.5.3-py3-none-any.whl`, a *pure-python* wheel.
+It does not need installing - unzip it and put the directory on `sys.path`.
+Its `packages/` folder carries cp312 wheels which will not match a different
+interpreter, and they are not needed anyway.
+
+Only two dependencies are imported at module scope without being reachable
+from our code path: `edt` (used by the slow `_border_dist`) and `lz4.frame`
+(used by the CTC dataset cache). Both can be stubbed. Two traps:
+
+- **The stub must resolve arbitrary attributes**, not a fixed list. `fsspec`
+  reads `lz4.frame.open` while registering compression codecs.
+- **`joblib` and `fsspec` must be imported BEFORE the `lz4` stub is
+  registered.** `joblib.register_compressor` type-checks `lz4.frame`'s file
+  object factory and raises `ValueError` on a placeholder. Importing them
+  first makes them see the genuine absence and skip lz4 cleanly.
+
+### The real risk is coordinate scale
+
+Trackastra reasons in the raw pixel units it was trained on: `spatial_pos_cutoff`
+is `256` of them, and the rotary spatial bias is bucketed in them. Feeding raw
+micrometres puts the entire embryo inside the cutoff and collapses the
+positional bias. Coordinates must be rescaled by a `units/um` factor.
+
+Density-adaptive normalisation (scale so median nearest-neighbour spacing hits
+a fixed target) is WORSE than a fixed factor, because the model's notion of
+"cell-sized" is absolute in its input units. Measured optimum is near
+`3.0 units/um` and it is stable across movies of very different density.
+
+### Measured movie geometry (useful beyond Trackastra)
+
+Volumes are `64 x 256 x 256` raw; after the `[1, 4, 4]` detector subsample they
+are exactly `64^3`, i.e. a ~104 um cube at an isotropic `1.625 um`. From the
+Exp121 ILP cache:
+
+| movie | frames | detections | det/frame | median NN | median motion | motion/NN |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| `44b6_0113de3b` | 100 | 25,533 | 255 | `8.75 um` | `2.30 um` | `0.26` |
+| `44b6_0b24845f` | 100 | 22,937 | 229 | `9.33 um` | `2.30 um` | `0.25` |
+| `6bba_05b6850b` | 100 | 6,311 | 63 | `11.94 um` | `1.62 um` | `0.14` |
+| `6bba_05db0fb1` | 100 | 69,962 | 700 | `7.45 um` | `1.62 um` | `0.22` |
+
+A motion/spacing ratio of `0.14`-`0.26` is a comparatively EASY linking regime.
+Synthetic probes built at ratios of `0.4`-`0.7` are far harder than the real
+data and should not be used to predict real performance - they badly
+understated Trackastra.
+
+### Local prototype results (real ctc weights)
+
+Synthetic 3D movies verify the plumbing: recall `1.000`, precision `1.000`, all
+planted divisions recovered, structural harness clean. Two negative controls
+worth remembering:
+
+- `track_greedy`'s acceptance threshold is INERT here - sweeping `0.5` down to
+  `0.01` moves edge Jaccard by under `0.01`. Do not tune it.
+- On synthetic movies Trackastra never beat a plain Hungarian physical-distance
+  linker. But those movies have identical intensity blobs, so its appearance
+  pathway has nothing to work with. On REAL detections it does much better,
+  which is the evidence that matters.
+
+Agreement with our own ILP edges on real cached detections, features analytic
+(no image channel), `coord_scale = 3.0`:
+
+| movie | edges | Jaccard vs ILP | ILP edge recall |
+| --- | ---: | ---: | ---: |
+| `6bba_05b6850b` | 5,939 | `0.958` | `0.979` |
+| `44b6_0113de3b` | 23,830 | `0.928` | `0.948` |
+
+Both movies independently select `3.0`; `1.5`/`2.0` are clearly worse and `4.0`
+is slightly worse. Note the double edge of high agreement: a linker that
+reproduces ~95% of our edges is a weak diversity probe, not an independent
+model.
+
+## Kernel outputs ARE retrievable from the Codex/Claude container (2026-07-29)
+
+Earlier notes assumed `www.kaggleusercontent.com` was egress-blocked and that
+candidates could only be validated in-kernel. That is not true in this
+environment: `kaggle kernels output <owner>/<slug> -p DIR` downloads both the
+kernel log and every output file. This was verified by pulling
+`biohub-exp121-postprocessing-ablation`, which returned its `.log`, its
+ablation CSV, and the four cached `ilp_cache/*.npz` detection graphs.
+
+Consequences: kernel failures can be diagnosed from the log rather than guessed
+at, submissions can be checked byte-for-byte before spending a slot, and the
+cached ILP detection graphs can be reused for local linker experiments with no
+GPU at all.
+
 ## Data
 
 - Inputs are anisotropic 3D+time OME-Zarr movies. Physical scale is `(z, y, x) =
