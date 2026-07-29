@@ -177,6 +177,16 @@ tweak. In effort order (all ship PRETRAINED weights - no training from scratch):
    the trackastra package + a detection/mask input; biggest build.
 Recommend (1) first: it is the cheapest diversity play and already coded.
 
+UPDATE 2026-07-29 ~16:00 UTC: Exp135 (v34 independent-ensemble) RUN + SUBMITTED as
+`55086681` (PENDING). NOTE it runs on the STALE Exp126 recipe (0.910), NOT the
+current two-seed 0.913 backbone - so it is a SCREEN for whether v34 adds signal,
+not a direct attempt to beat 0.913. Slots today (2026-07-29): 2 used, 3 left.
+Interpretation when it scores:
+- Exp135 clearly > 0.910 -> v34 is decorrelated/useful -> build Exp155 = graft v34
+  as a third detection seed into the Exp148 backbone (the real >0.913 attempt).
+- Exp135 ~= 0.910 (flat) -> v34 redundant -> skip the graft; alternate
+  architectures (nnU-Net flow detector / Trackastra) become the only levers.
+
 When the score lands:
 - Exp154 > 0.913 -> the guard stacks; sweep the retention floor (try 0.85 and
   0.95 around 0.90).
