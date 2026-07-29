@@ -127,11 +127,32 @@ The loss concentrates where the metric weight is: on `6bba_05db0fb1` (700
 detections/frame, ~56% of local weight) Trackastra scores `0.786` versus
 `ilp_only`'s `0.859`. It wins on no movie at its best overall scale.
 
-Mechanism is division over-firing, not bad association: `1,376`-`2,485` forks
-against the incumbent's `363` and the ILP's `0`. `track_greedy` takes a second
-child whenever its weight clears threshold, and at our density many neighbours
-do. Each spurious fork also steals an edge, so dense-movie edge false positives
-rise from `88` to `163`.
+Mechanism: **association quality on dense frames**, not the division gate.
+
+The obvious hypothesis was division over-firing - Trackastra emits
+`1,376`-`2,485` forks against the incumbent's `363` and the ILP's `0`, and
+`track_greedy` takes a second child whenever its weight clears threshold. That
+hypothesis was TESTED and REJECTED. Re-running the dense movie with
+`allow_divisions=False` removes every fork and barely moves edge agreement:
+
+| divisions | scale | edges | Jaccard vs ILP | forks |
+| --- | ---: | ---: | ---: | ---: |
+| on | `3.0` | 5,785 | `0.723` | `27` |
+| off | `3.0` | 5,758 | `0.725` | `0` |
+| on | `4.0` | 6,586 | `0.800` | `46` |
+| off | `4.0` | 6,540 | `0.803` | `0` |
+
+So the forks are a real risk under capped division credit, but they are not
+what costs the edge score - the parent assignments themselves are worse in
+dense frames. (Probe caveat: analytic features and a 12-frame slice, which
+shows a lower fork rate than the full run's image-feature pass; it is still a
+direct test of the causal claim on the same detections.)
+
+The dense-frame failure tracks sequence length: `6bba_05db0fb1` puts ~2,900
+tokens in each 4-frame window against the `max_tokens: 1024` the model was
+trained with. Agreement with our ILP edges falls from `0.96` on the sparse
+movie to `0.72`-`0.80` on the dense one. Edge false positives on the dense
+movie rise from `88` (`ilp_only`) to `163` (`trackastra_s3`).
 
 **Caveat, stated honestly:** `LEARNINGS.md` records that this local harness
 INVERTS leaderboard ranking for graph-construction choices (`ilp_only` scores
@@ -142,12 +163,18 @@ makes the rejection safe anyway is the fork explosion: it is a mechanism-level
 defect visible independently of the metric, and the rescore capped division
 credit, so 4-7x the incumbent's divisions is downside risk rather than upside.
 
-### Where this could still be revived
+### Where this could still be revived - and what will NOT work
 
-Not "Trackastra is useless" but "its greedy division gate is wrong at our
-density". The version worth building, if anyone returns to this, is
-`greedy_nodiv` associations with OUR safe-division policy layered on top, so
-the transformer only supplies parent assignment and never decides to divide.
+Do **not** try `greedy_nodiv` plus our own safe-division policy: the probe above
+shows removing divisions recovers essentially nothing.
+
+The only lead with any support is sequence length. Trackastra holds up on the
+sparse movies (`44b6_33b596bf` `0.9953`, matching `ilp_only`; `6bba_05b6850b`
+`0.968`) and collapses only where windows run ~3x over its trained token
+budget. A version that tiled dense frames into spatially local sub-windows of
+<=1024 tokens before association would be a genuine test rather than a repeat.
+That is a real build, and it should be weighed against the fact that even a
+perfect fix only buys back parity with `ilp_only`, which we already have.
 
 Real-data movie geometry (useful independent of Trackastra): volumes are
 `64 x 256 x 256` raw, `64^3` after the `[1, 4, 4]` subsample, i.e. a ~104 um

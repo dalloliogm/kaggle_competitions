@@ -148,18 +148,20 @@ Per movie, the loss concentrates exactly where the metric weight is. On
 `0.786` against `ilp_only`'s `0.859`. It does not win on any movie at its best
 overall scale.
 
-**Mechanism: division over-firing, not bad associations.** Trackastra emits
-`1,376`-`2,485` forks where the incumbent emits `363` and the raw ILP emits
-`0`. `track_greedy` accepts a second child whenever its weight clears the
-threshold, and at our nucleus density many neighbours do. Every spurious fork
-also steals an edge from a true parent, so edge quality and division quality
-degrade together. Edge false positives on the dense movie rise from `88`
-(`ilp_only`) to `163` (`trackastra_s3`).
+**Mechanism: association quality in dense frames.** The natural hypothesis was
+division over-firing - Trackastra emits `1,376`-`2,485` forks where the
+incumbent emits `363` and the raw ILP emits `0`. That was tested directly and
+rejected: re-linking the dense movie with `allow_divisions=False` drops forks to
+zero and moves edge agreement by `+0.002` (`0.723 -> 0.725` at scale `3.0`,
+`0.800 -> 0.803` at scale `4.0`). The forks are a genuine risk under capped
+division credit, but they are not what costs the score.
 
-A second contributing factor is sequence length: `6bba_05db0fb1` puts ~2,900
+What does track the failure is sequence length. `6bba_05db0fb1` puts ~2,900
 tokens in each 4-frame window against the `max_tokens: 1024` the model was
-trained with. Local agreement with our ILP edges falls from `0.96` on the
-sparse movie to `0.72`-`0.80` on the dense one.
+trained with. Agreement with our ILP edges falls from `0.96` on the sparse
+movie to `0.72`-`0.80` on the dense one, and edge false positives there rise
+from `88` (`ilp_only`) to `163` (`trackastra_s3`). Trackastra essentially ties
+`ilp_only` on the sparse movies (`44b6_33b596bf` `0.9953` vs `0.9953`).
 
 **What was NOT the problem** (so nobody re-tests it): the 2D/3D question - the
 `ctc` checkpoint is natively 3D; offline packaging - the mirror ships a
@@ -171,8 +173,10 @@ submission-shaped version: the Exp148 backbone with only the association stage
 swapped, behind `BIOHUB_USE_TRACKASTRA_LINKER`. Its v1 run failed on a scope
 bug (`torch` unbound in the bootstrap cell), now fixed. **It is deliberately
 left un-run and un-submitted** - Exp156 already answered the question it would
-have asked, at no slot cost. Revive it only if the division gating is replaced
-(e.g. our own safe-division policy on top of `greedy_nodiv` associations).
+have asked, at no slot cost. Reviving it via division gating is ruled out by the
+probe above; the only lead with support is spatially tiling dense frames into
+sub-windows within the model's ~1024-token budget - a real build, and one whose
+upside is parity with `ilp_only` rather than a gain over it.
 
 ## Abandoned
 

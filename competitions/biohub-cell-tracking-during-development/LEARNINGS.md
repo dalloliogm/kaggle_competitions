@@ -105,6 +105,30 @@ is slightly worse. Note the double edge of high agreement: a linker that
 reproduces ~95% of our edges is a weak diversity probe, not an independent
 model.
 
+The DENSE movie breaks this pattern and is where the method fails.
+`6bba_05db0fb1` carries ~700 detections/frame, so a 4-frame window holds ~2,900
+tokens against the `max_tokens: 1024` the checkpoint was trained with. Agreement
+with our ILP edges there is only `0.72`-`0.80`, and the best scale shifts from
+`3.0` to `4.0`. Scale `2.0` collapses outright (`0.04`). Any future attempt
+should tile dense frames into spatially local sub-windows inside the token
+budget rather than feeding whole frames.
+
+**Division gating is NOT the problem - tested and rejected.** Trackastra emits
+4-7x the incumbent's forks, so the natural theory was that spurious divisions
+steal edges. Re-linking the dense movie with `allow_divisions=False` removes
+every fork and changes edge agreement by `+0.002`:
+
+| divisions | scale | edges | Jaccard vs ILP | forks |
+| --- | ---: | ---: | ---: | ---: |
+| on | `3.0` | 5,785 | `0.723` | `27` |
+| off | `3.0` | 5,758 | `0.725` | `0` |
+| on | `4.0` | 6,586 | `0.800` | `46` |
+| off | `4.0` | 6,540 | `0.803` | `0` |
+
+So the parent assignments themselves degrade in dense frames. Do not spend
+effort on `greedy_nodiv` plus our own safe-division policy - it recovers
+nothing.
+
 ## Kernel outputs ARE retrievable from the Codex/Claude container (2026-07-29)
 
 Earlier notes assumed `www.kaggleusercontent.com` was egress-blocked and that
