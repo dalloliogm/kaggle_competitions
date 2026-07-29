@@ -150,8 +150,32 @@ Push note: hit the account-wide 2-concurrent-GPU-session cap; a background retry
 loop pushed once a slot freed (~10 min). Slots today (2026-07-29): 1 used, 4 left.
 
 UPDATE 2026-07-29 ~09:13 UTC: Exp154 still PENDING ~3h20m after submit (queue-hang
-mode again). Auto-recheck loop stopped; score expected later. Decision logic
-unchanged (see "When the score lands" below).
+mode again). Auto-recheck loop stopped; score expected later.
+
+RESOLVED 2026-07-29: Exp154 = **0.913**, exactly TIES the incumbent. The framewise
+detection retention guard is NEUTRAL on our backbone - layered on adaptive edge
+fusion it neither helps nor hurts (rarely triggers on the test movies, or the
+effect is below public-LB precision). The guard does NOT stack.
+
+ALL CHEAP INCREMENTAL KNOBS ARE NOW EXHAUSTED at 0.913:
+- detection blend weight (0.475 optimal), edge weight (0.15 floor), post-mix
+  temperature (1.0 optimal), framewise detection retention guard (neutral).
+Everything reachable by tuning the pilkwang two-seed backbone tops out at 0.913.
+Public LB shows no movement from any single-knob change since Exp148.
+
+NEXT DIRECTION - MODEL DIVERSITY (requires more than a one-param graft):
+The only remaining lever is a genuinely different model, not a post-processing
+tweak. In effort order (all ship PRETRAINED weights - no training from scratch):
+1. v34 independent-ensemble (Exp135, already built): average an INDEPENDENTLY
+   retrained unet_transformer (subinium/biohub-v34-retrain-weights-mirror) into
+   the detection field. Same architecture => drop-in; highest chance of a clean
+   +epsilon from decorrelated errors. Start here.
+2. Alternate detector architecture: justinkim1216/biohub-nnunet-flow-support-v1
+   (flow/center nnU-Net, ships source/model.py) or drkongvis 3D U-Net - needs
+   pipeline plumbing to convert their output into our detection format.
+3. Trackastra LINKER (subinium/biohub-trackastra-public-weights-mirror) - needs
+   the trackastra package + a detection/mask input; biggest build.
+Recommend (1) first: it is the cheapest diversity play and already coded.
 
 When the score lands:
 - Exp154 > 0.913 -> the guard stacks; sweep the retention floor (try 0.85 and
