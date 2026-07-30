@@ -2,7 +2,7 @@
 
 ## Current Goal
 
-- Improve on completed submission `54972472` (`official-demo-v6-blended-baseline`, public score `0.819`) without losing the known-good official demo submission behavior. **Still the live best as of 2026-07-28** — four follow-up attempts (v5-retry, v9-v5-shell-adaptive-recovery, v9-pick-best-model) have all completed at 0.818-0.819, none beating it.
+- Improve on completed submission `54972472` (`official-demo-v6-blended-baseline`, public score `0.819`) without losing the known-good official demo submission behavior. **Still tied for the live best as of 2026-07-30** with `official-demo-v9-pick-best-model`; later v10 and v11 experiments regressed to 0.808 and 0.810.
 - Submission `55011609` (`official-demo-v5-model-recipe-retry-20260726`) completed at 0.818 and did not improve on v6.
 - Submission `55029319` (`official-demo-v8-adaptive-feature-gate-llm-advisory`)
   errored because `submit_predictions` was never called.
@@ -14,10 +14,15 @@
   The LLM plan really did execute this time, but the package pushed
   `autopredict.py`'s CatBoost-primary output into the submission pool and told
   the agent to submit it even on a gate rejection. Do not build on v10.
+- Submission `55105170` (`official-demo-v11-pick-best-plus-catboost`) completed
+  2026-07-30 at **`0.810`**. It repaired v10's candidate-selection flaw by
+  placing CatBoost inside the proven pick-best selector, but the synthetic
+  categorical gain did not generalize to the hidden evaluation. Do not promote
+  CatBoost into the live default from these local regimes.
 
 ## Next Experiments
 
-- **Next slot (2026-07-30): return to the 0.819 lineage.** The live best remains
+- **Next slot (2026-07-31): return to the 0.819 lineage.** The live best remains
   `official-demo-v6-blended-baseline` / `official-demo-v9-pick-best-model`, both
   at 0.819. Any further experiment should start from
   `official-demo-v9-pick-best-model`, whose sklearn pick-best-of-K selector — not
@@ -27,12 +32,9 @@
   selector), rather than introducing `autopredict.py` as a second submission
   candidate. Keep v9's rule: submit the optional candidate **only** when it shows
   positive evidence of being better, never "once anyway."
-- `official-demo-v10-pick-best-plus-catboost` (pick-best-of-K selector plus a
-  gated CatBoost candidate, `thread_count=1`, 400 iterations) was built and
-  validated locally on 2026-07-29 but was not submitted, then removed from the
-  tree. It kept the proven sklearn selector as primary and only let CatBoost win
-  on OOF AUC, so it does not share v10's flaw — recreate it from
-  `official-demo-v9-pick-best-model` if that idea is revisited.
+- Do not retry the v11 gated-CatBoost direction without broader replay evidence.
+  Its native-categorical view and 0.003 OOF promotion margin improved the
+  selected synthetic categorical task, but the live score still fell to 0.810.
 - Deadline is 2026-08-06; roughly one slot per day remains. Prefer one
   well-motivated change per slot over compounding several.
 

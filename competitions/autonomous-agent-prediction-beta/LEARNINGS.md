@@ -160,6 +160,12 @@ Capture durable information learned while working on this competition. This is f
   including the official agent identity, generation settings, initial
   `data_analyst` delegation, and explicit warning that a text-only response ends
   the session. Modeling improvements should live underneath that shell.
+- **Putting the gate on the correct final model decision was necessary but not
+  sufficient.** Submission `55105170` kept CatBoost inside the proven
+  pick-best-of-K script and required a 0.003 OOF advantage before promotion, yet
+  scored only `0.810` versus `0.819` for the sklearn lineage. A +0.0051
+  held-out gain on one synthetic categorical regime was not broad enough
+  evidence for hidden-task generalization.
 - A failed daily submission can be refunded even though a conservative
   submission-history counter still reports the nominal 1/day allowance as
   exhausted. On 2026-07-27, Kaggle accepted recovery submission `55030429`
@@ -167,6 +173,11 @@ Capture durable information learned while working on this competition. This is f
 
 ## Leaderboard Notes
 
+- Submission `55105170`: `COMPLETE`, public score **`0.810`**;
+  `official-demo-v11-pick-best-plus-catboost` repaired v10's submission-choice
+  flaw and used native categorical CatBoost with a 0.003 OOF promotion margin,
+  but still regressed 0.009 from the v6/v9 live best. Do not promote this
+  direction without broader replay evidence.
 - Submission `55072857`: `COMPLETE`, public score **`0.808`** — a ~0.011
   regression and the worst completed score since the v4 demo baseline.
   `official-demo-v10-llm-plan-gated` was the first package to actually execute
