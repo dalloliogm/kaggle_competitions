@@ -252,6 +252,46 @@ C. LEGITIMATE DIVISION RECALL: metric has a 0.1*division_jaccard term; the hack 
    post-patch.
 Recommend A first (cheapest, drop-in, directly targets detection quality).
 
+### A IS DEAD - VERIFIED 2026-07-30, DO NOT RETRY
+The hongdaekim "300ep"/"350ep" checkpoint pins are NOT stronger than our incumbent.
+Their README states they pin `pilkwang/biohub-tracking-support-pack-50ep-v1`
+**version 8** = artifact `biohub-tracking-support-pack-300ep-snapshot-v1`, weight
+sha256 `12b5d32ad8982e4736f74c41bc54403094917fe75f5a9f78b1b5aad41de26877`.
+The CURRENT pilkwang pack that Exp148 already uses is artifact
+`biohub-tracking-support-pack-400ep-snapshot-v1`, weight sha256
+`12f6881ee3620a831697ca098ff8f48e687a24225f4e048b538deec3562fe771`.
+Same run, same config (unet_out_channels 32, layers [32,64,128], downsample
+[1,4,4], window_size 2, pool_kernel_um 5.0) - the pins are EARLIER, LESS-trained
+snapshots. Swapping them in is a DOWNGRADE. No higher-epoch checkpoint than our
+400ep incumbent exists in the public pool.
+
+### B IS LARGELY DEAD TOO (measured, pre-existing evidence)
+Direct ILP graph export was already measured: Exp116 (clean minimal, ILP exported
+verbatim, no post-processing) = 0.877 vs Exp110 post-processing = 0.909. Our
+post-processing ADDS +0.032. Do not "just export the ILP graph".
+
+## LEVER C IN FLIGHT - Exp155 division budget 2x (2026-07-30)
+
+Submitted `55104669` (PENDING). Kernel `dalloliogm/biohub-exp155-division-budget-2x`
+v1 ran to COMPLETE. Rationale: the metric is
+`adjusted_edge_jaccard + 0.1*division_jaccard` and the division term is the ONLY
+part of the objective never optimized POST-PATCH. Our safe-division policy is still
+tuned from the hack era and is very conservative (Exp148 emitted only 333
+division-like sources). Exp155 doubles ONLY the budget caps
+(`frame_frac_cap 0.0076->0.0152`, `global_frac_cap 0.00375->0.0075`) and leaves all
+geometric gates unchanged (`max_um 4.66`, `sister 8.5`, `existing_child 7.65`), so
+it admits more candidates of the same plausibility class. Still 2 models => no
+timeout risk. Slots 2026-07-30: 1 used, 4 left.
+
+Follow-ups when it scores:
+- Exp155 > 0.913 -> division recall is live headroom; push further (3x budget, then
+  loosen the geometry gate) - this is the plateau-breaking axis.
+- Exp155 < 0.913 -> the conservative cap was load-bearing (extra divisions are FPs);
+  pivot from BUDGET to better division CANDIDATE GENERATION/scoring rather than
+  simply allowing more.
+- Exp155 == 0.913 -> the budget was not the binding constraint (few candidates
+  exist); go to candidate generation directly.
+
 When the score lands:
 - Exp154 > 0.913 -> the guard stacks; sweep the retention floor (try 0.85 and
   0.95 around 0.90).
