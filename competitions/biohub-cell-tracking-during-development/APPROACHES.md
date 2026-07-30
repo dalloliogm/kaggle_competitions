@@ -123,6 +123,68 @@ that notebook, not the Exp073/Exp110 lineage.
 | Frozen-transition-aware relink/gap repair | Forum evidence reports systematic exact duplicate adjacent frames in `6bba`; condition motion relinking and gap closing on detected frozen transitions | Medium | Medium | P0 |
 | Original-branch diagnostic-driven tuning | Exp111 measures where the 0.903-family branch is fragile before spending more submission slots | Medium | Low | P0 |
 
+## Exp156/157 - Trackastra linker swap: MEASURED AND REJECTED (2026-07-29)
+
+The only pipeline stage never varied was the linker. Exp156 replaced it with
+the pretrained Trackastra association transformer (`ctc` checkpoint) over
+byte-identical detections and scored every arm with the official metric on the
+labelled train movies. Evidence:
+`references/exp156-trackastra-headtohead-v1-output/`.
+
+| arm | adjJ all | adjJ 6bba | edges | forks | agreement with ILP |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| `ilp_only` | **`0.9099`** | `0.9030` | 138,671 | `0` | `1.000` |
+| `incumbent_full` | `0.8936` | `0.8877` | 140,022 | `363` | `0.891` |
+| `trackastra_s2` | `0.8304` | `0.8207` | 138,321 | `2,485` | `0.912` |
+| `trackastra_s3` | `0.8631` | `0.8567` | 140,488 | `1,678` | `0.926` |
+| `trackastra_s4` | `0.8596` | `0.8555` | 139,059 | `1,376` | `0.919` |
+
+The best Trackastra arm is `-0.031` against `incumbent_full` and `-0.047`
+against `ilp_only`. The pre-registered decision rule was "submit only if within
+~`0.01` of `incumbent_full`, so Exp156 itself remained diagnostic and spent no
+slot. Exp157 was later submitted because the local harness is known to invert
+some graph-construction rankings; its live `0.898` result confirmed the local
+rejection.
+
+Per movie, the loss concentrates exactly where the metric weight is. On
+`6bba_05db0fb1` (700 detections/frame, ~56% of local weight) Trackastra scores
+`0.786` against `ilp_only`'s `0.859`. It does not win on any movie at its best
+overall scale.
+
+**Mechanism: association quality in dense frames.** The natural hypothesis was
+division over-firing - Trackastra emits `1,376`-`2,485` forks where the
+incumbent emits `363` and the raw ILP emits `0`. That was tested directly and
+rejected: re-linking the dense movie with `allow_divisions=False` drops forks to
+zero and moves edge agreement by `+0.002` (`0.723 -> 0.725` at scale `3.0`,
+`0.800 -> 0.803` at scale `4.0`). The forks are a genuine risk under capped
+division credit, but they are not what costs the score.
+
+What does track the failure is sequence length. `6bba_05db0fb1` puts ~2,900
+tokens in each 4-frame window against the `max_tokens: 1024` the model was
+trained with. Agreement with our ILP edges falls from `0.96` on the sparse
+movie to `0.72`-`0.80` on the dense one, and edge false positives there rise
+from `88` (`ilp_only`) to `163` (`trackastra_s3`). Trackastra essentially ties
+`ilp_only` on the sparse movies (`44b6_33b596bf` `0.9953` vs `0.9953`).
+
+**What was NOT the problem** (so nobody re-tests it): the 2D/3D question - the
+`ctc` checkpoint is natively 3D; offline packaging - the mirror ships a
+pure-python wheel; masks - `WRFeatures` builds fine from centroids; the greedy
+acceptance threshold - inert from `0.5` down to `0.01`; and coordinate scale -
+a per-movie ORACLE scores `0.8642` against fixed-`3.0`'s `0.8631`, so the whole
+axis is worth `0.001` and adaptive scale selection is not worth building.
+
+Exp157 (`notebooks/biohub-exp157-trackastra-linker-candidate.ipynb`) is the
+submission-shaped version: the Exp148 backbone with only the association stage
+swapped, behind `BIOHUB_USE_TRACKASTRA_LINKER`. Its v1 run failed on a scope
+bug (`torch` unbound in the bootstrap cell), which was fixed in v2. Because the
+local harness can invert graph-construction rankings, v2 was submitted as
+`55092602`; its public LB score was **`0.898`**, decisively below Exp148's
+`0.913`. The live result confirms the diagnostic rejection. Reviving it via
+division gating is ruled out by the probe above; the only lead with support is
+spatially tiling dense frames into sub-windows within the model's ~1024-token
+budget - a real build whose likely upside is parity with `ilp_only`, not a gain
+over the incumbent post-processing stack.
+
 ## Abandoned
 
 | Approach | Why dropped | Evidence | Revisit if |

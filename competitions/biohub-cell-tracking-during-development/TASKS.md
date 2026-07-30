@@ -296,12 +296,32 @@ UPDATE 2026-07-30 ~12:22 UTC: Exp155 still PENDING ~3.5h after submit (queue-han
 mode, seen every day this week). Auto-recheck loop STOPPED; score expected later.
 Decision rules above are unchanged and still apply when it grades.
 
-When the score lands:
-- Exp154 > 0.913 -> the guard stacks; sweep the retention floor (try 0.85 and
-  0.95 around 0.90).
-- Exp154 <= 0.913 -> detection-side guard does not stack with adaptive fusion;
-  move to an alternate architecture (nnU-Net flow detector / Trackastra) or the
-  v34 ensemble (Exp135).
+## EXP156/157 TRACKASTRA LINKER - MEASURED AND REJECTED (2026-07-29/30)
+
+The parallel Trackastra branch is now reconciled into this history. Exp156 is a
+diagnostic head-to-head on byte-identical cached detections. It compares
+`ilp_only`, `incumbent_full`, and Trackastra coordinate scales `2`, `3`, and `4`
+using the official local metric. The best Trackastra arm (`scale=3`) scored
+`0.8631`, versus `0.8936` for `incumbent_full` and `0.9104` for `ilp_only`.
+Evidence is under `references/exp156-trackastra-headtohead-v1-output/`.
+
+The failure is concentrated in dense-frame association. `6bba_05db0fb1` puts
+about `2,900` tokens into each four-frame window, well above Trackastra's
+training limit of `1,024`; agreement with our ILP edges falls to `0.72-0.80`.
+Two plausible repairs were measured and rejected:
+
+- Disabling Trackastra divisions removes the excess forks but changes edge
+  agreement by only about `+0.002`; division gating is not the cause.
+- Per-movie coordinate-scale selection is worth only about `+0.001`; the scale
+  axis is closed.
+
+Because the local harness can invert graph-construction rankings, Exp157
+submitted the Trackastra replacement anyway as `55092602`. The live public LB
+score is **`0.898`**, decisively below the Exp148 incumbent at `0.913`. This
+confirms that Trackastra linker replacement is closed. Spatially tiling dense
+frames into <=`1,024`-token windows is the only technically supported revival,
+but its likely upside is parity with the raw ILP rather than a gain over the
+incumbent post-processing stack.
 
 ## CURRENT STATUS - 2026-07-27
 
