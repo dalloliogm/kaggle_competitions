@@ -37,6 +37,272 @@ the old no-safe-divisions test (`0.886` vs `0.893`) points the same way. Exp117'
 "zero division TPs" was a local artifact - the labelled split has only `3`
 annotated divisions, so it had no power to measure this.
 
+## CURRENT STATUS - 2026-07-28 (live scores confirmed)
+
+Best public LB is now **`0.913`** from Exp148 (adaptive two-seed edge fusion).
+Live submission scores pulled from Kaggle on 2026-07-28:
+
+| Sub | Exp | Change | Public LB |
+| --- | --- | --- | ---: |
+| `54996564` | Exp144 | det weight 0.475, edge 0.15, low_margin fusion | `0.912` |
+| `55007462` | Exp145 | det weight 0.40 | `0.910` |
+| `55019565` | Exp146 | det weight 0.325 | `0.909` |
+| `55026280` | Exp147 | det weight 0.55 | `0.909` |
+| `55029450` | Exp148 | det 0.475 + **adaptive** edge fusion, edge weight 0.15 | **`0.913`** |
+| `55046291` | Exp149 | adaptive, edge weight 0.15->0.25 | `0.912` (regressed) |
+
+Conclusions:
+- Detection blend weight `0.475` is the confirmed optimum (0.40/0.325/0.55 all
+  worse). Do not re-sweep it.
+- Adaptive edge fusion beats low_margin_consensus by `+0.001` (Exp148 vs Exp144).
+- **Edge-weight axis peaked at the 0.15 adaptive floor**: 0.25 regressed `-0.001`.
+  Do not push edge weight higher.
+- `notebooks/biohub-exp150-adaptive-edge-w035.ipynb` (edge weight 0.35) is BUILT
+  but should NOT be submitted - it continues the regressed direction. Hold/retire.
+- Next probe is orthogonal: `notebooks/biohub-exp151-adaptive-temp085.ipynb`
+  keeps the Exp148 confirmed-best config (det 0.475, adaptive, edge 0.15) and only
+  sharpens the post-mix edge logits via `SECONDARY_MIX_TEMPERATURE` 1.0 -> 0.85.
+  NOT yet run/submitted.
+
+Submission slots on 2026-07-28: 2 used (Exp149 `55046291` at 05:39 UTC; Exp151
+`55056483` at 13:44 UTC), 3 left.
+
+- `55056483` Exp151: Exp148 backbone (det 0.475, adaptive edge fusion, edge weight
+  0.15) with post-mix `SECONDARY_MIX_TEMPERATURE` 1.0 -> 0.85 (sharpen blended
+  edge logits). Kaggle kernel v1 `dalloliogm/biohub-exp151-adaptive-temp085` ran
+  to COMPLETE and was submitted directly via the code-submission API. Local
+  re-validation was skipped because `www.kaggleusercontent.com` (the kernel
+  output CDN) is egress-blocked in this environment; the in-kernel structural
+  harness ran before writing `submission.csv`, and temp=0.85 is a distinct config
+  so a byte-duplicate is impossible. Kaggle grading PENDING at submit time.
+  If it beats `0.913`, sharpen further (temp 0.75); if it regresses, try softening
+  (temp 1.15) instead.
+  - UPDATE 2026-07-28 ~15:17 UTC: still PENDING ~93 min after submit, well past the
+    sub-hour grading every other Exp got today. Matches the known queue-hang mode
+    (cf. `54894521`, which sat PENDING and never scored). The kernel v1 ran to
+    COMPLETE, so the output exists; only grading is stuck. Candidate remedy:
+    resubmit the same kernel version as a fresh slot to dislodge it (as done for
+    exp133), which costs 1 of the 3 remaining slots today. Awaiting user decision.
+  - UPDATE 2026-07-28 ~19:52 UTC: user approved resubmit. Same kernel v1 output
+    resubmitted as `55063831` (PENDING) to dislodge the queue-hang; original
+    `55056483` still PENDING. Slots today now 3 used, 2 left. Whichever grades
+    first gives the temp-0.85 score.
+  - RESOLVED: Exp151 (temp 0.85) scored **`0.912`** (`55056483` graded; resubmit
+    `55063831` redundant, echoes it). That is `-0.001` vs the temp 1.0 baseline
+    (exp148 = 0.913): mild sharpening of the blended edge logits REGRESSES.
+    Incumbent best stays **`0.913`** (Exp148).
+
+Temperature axis so far: temp 1.0 = 0.913 (exp148), temp 0.85 = 0.912 (worse).
+End-of-day bracket to map the rest of the axis (last 2 slots of 2026-07-28):
+- Exp152 `dalloliogm/biohub-exp152-adaptive-temp075` temp 0.75 (sharpen more) -
+  expected <= 0.912 given 0.85 already regressed; confirms the sharpen direction.
+- Exp153 `dalloliogm/biohub-exp153-adaptive-temp115` temp 1.15 (soften) - the more
+  promising side; the only untested direction on this axis.
+Both same backbone (det 0.475, adaptive edge fusion, edge 0.15); only
+SECONDARY_MIX_TEMPERATURE differs. Auto-submitted on kernel COMPLETE. If softening
+helps (Exp153 > 0.913), next probe is temp 1.3; if the whole axis is flat/worse,
+temperature is exhausted and 1.0 is optimal - move to a new axis.
+- Both auto-submitted 2026-07-28 ~20:20 UTC: Exp153 (1.15) = `55064248`, Exp152
+  (0.75) = `55064277`, both PENDING. All 5 slots for 2026-07-28 used (none wasted).
+  Scores expected 2026-07-29 given today's slow grading queue.
+  - UPDATE 2026-07-29 ~02:26 UTC: both Exp152/Exp153 STILL PENDING ~6h after
+    submit; the 2026-07-28 grading queue never caught up (queue-hang mode). The
+    Exp151 resubmit `55063831` did complete = 0.912 (echoes the original).
+    Auto-recheck loop stopped; bracket scores expected 2026-07-29. When they land:
+    if Exp153 (1.15 soften) > 0.913 -> next probe temp 1.3; if both <= 0.913 the
+    temperature axis is exhausted (1.0 optimal) -> pivot to the new detection-side
+    axis: Exp154 = Exp148 backbone + indarkarhana framewise retention guard (see
+    references/public-notebooks-scan-2026-07-28.md).
+  - RESOLVED 2026-07-29: bracket scored. Exp152 (temp 0.75) = **0.913** (ties
+    incumbent), Exp153 (temp 1.15) = **0.909** (softening hurts -0.004).
+
+TEMPERATURE AXIS FULLY MAPPED and EXHAUSTED: 0.75=0.913, 0.85=0.912, 1.0=0.913,
+1.15=0.909. Nothing beats 0.913; softening clearly worse, sharpening only ties.
+All three linking/blend knobs are now pinned at Exp148 (det weight 0.475, edge
+weight 0.15, temperature 1.0). DO NOT probe temperature further.
+
+NEXT DIRECTION - new orthogonal DETECTION-SIDE axis:
+- Exp154 = Exp148 backbone + indarkarhana framewise detection-field retention
+  guard (per-frame: if blended local-max candidates / primary candidates < 0.90,
+  that frame falls back to primary-only detection). Detection-side, orthogonal to
+  every knob tuned so far; independently scores 0.913. Graft the runtime patch
+  onto our cell 10 det-blend block, gated by
+  BIOHUB_DUAL_SEED_MIN_CANDIDATE_RETENTION=0.90. Details in
+  references/public-notebooks-scan-2026-07-28.md.
+- Secondary options if the guard is flat: alternate architectures
+  (justinkim1216 nnU-Net flow detector, subinium Trackastra linker) or the v34
+  independent-ensemble Exp135.
+
+## CURRENT STATUS - 2026-07-29 (Exp154 detection retention guard SUBMITTED)
+
+Exp154 built and submitted: `55073211` (PENDING). Kernel
+`dalloliogm/biohub-exp154-retention-guard` v1 ran to COMPLETE and produced
+submission.csv, confirming the guard graft is valid (repo symbols
+`_detect_cells_pooled`/`pool_k`/`frame_indices` present). It grafts indarkarhana's
+framewise detection-field retention guard onto the Exp148 incumbent
+(det 0.475, adaptive edge fusion, edge 0.15, temp 1.0); env var
+`BIOHUB_DUAL_SEED_MIN_CANDIDATE_RETENTION=0.90`. First DETECTION-SIDE probe,
+orthogonal to the now-exhausted linking/blend knobs. Guard scores 0.913
+standalone (indarkarhana); the bet is that stacking with adaptive edge fusion
+exceeds 0.913.
+
+Push note: hit the account-wide 2-concurrent-GPU-session cap; a background retry
+loop pushed once a slot freed (~10 min). Slots today (2026-07-29): 1 used, 4 left.
+
+UPDATE 2026-07-29 ~09:13 UTC: Exp154 still PENDING ~3h20m after submit (queue-hang
+mode again). Auto-recheck loop stopped; score expected later.
+
+RESOLVED 2026-07-29: Exp154 = **0.913**, exactly TIES the incumbent. The framewise
+detection retention guard is NEUTRAL on our backbone - layered on adaptive edge
+fusion it neither helps nor hurts (rarely triggers on the test movies, or the
+effect is below public-LB precision). The guard does NOT stack.
+
+ALL CHEAP INCREMENTAL KNOBS ARE NOW EXHAUSTED at 0.913:
+- detection blend weight (0.475 optimal), edge weight (0.15 floor), post-mix
+  temperature (1.0 optimal), framewise detection retention guard (neutral).
+Everything reachable by tuning the pilkwang two-seed backbone tops out at 0.913.
+Public LB shows no movement from any single-knob change since Exp148.
+
+NEXT DIRECTION - MODEL DIVERSITY (requires more than a one-param graft):
+The only remaining lever is a genuinely different model, not a post-processing
+tweak. In effort order (all ship PRETRAINED weights - no training from scratch):
+1. v34 independent-ensemble (Exp135, already built): average an INDEPENDENTLY
+   retrained unet_transformer (subinium/biohub-v34-retrain-weights-mirror) into
+   the detection field. Same architecture => drop-in; highest chance of a clean
+   +epsilon from decorrelated errors. Start here.
+2. Alternate detector architecture: justinkim1216/biohub-nnunet-flow-support-v1
+   (flow/center nnU-Net, ships source/model.py) or drkongvis 3D U-Net - needs
+   pipeline plumbing to convert their output into our detection format.
+3. Trackastra LINKER (subinium/biohub-trackastra-public-weights-mirror) - needs
+   the trackastra package + a detection/mask input; biggest build.
+Recommend (1) first: it is the cheapest diversity play and already coded.
+
+UPDATE 2026-07-29 ~16:00 UTC: Exp135 (v34 independent-ensemble) RUN + SUBMITTED as
+`55086681` (PENDING). NOTE it runs on the STALE Exp126 recipe (0.910), NOT the
+current two-seed 0.913 backbone - so it is a SCREEN for whether v34 adds signal,
+not a direct attempt to beat 0.913. Slots today (2026-07-29): 2 used, 3 left.
+Interpretation when it scores:
+- Exp135 clearly > 0.910 -> v34 is decorrelated/useful -> build Exp155 = graft v34
+  as a third detection seed into the Exp148 backbone (the real >0.913 attempt).
+- Exp135 ~= 0.910 (flat) -> v34 redundant -> skip the graft; alternate
+  architectures (nnU-Net flow detector / Trackastra) become the only levers.
+
+UPDATE 2026-07-29 ~19:33 UTC: Exp135 still PENDING ~3.5h after submit (queue-hang
+mode again). Auto-recheck loop stopped; score expected later. Decision logic
+unchanged (Exp155 v34 graft if >0.910, else architectural detector). Trackastra
+kickoff prompt saved at references/trackastra-kickoff-prompt.md.
+
+RESOLVED 2026-07-29 (late): both diversity screens graded, BOTH FAILED to beat
+0.913.
+- Exp135 (v34 reseed ensemble) = **0.908** on the 0.910 recipe -> BELOW baseline.
+  v34 is redundant with our incumbent detector and slightly hurts. DECISION: do
+  NOT build the Exp155 v34-into-Exp148 graft; reseed diversity is a dead end.
+- Exp157 (Trackastra ctc transformer REPLACING our linker, ref 55092602) = **0.898**
+  (built by a parallel Trackastra session from references/trackastra-kickoff-
+  prompt.md). Well under the 0.913 incumbent; local exp156 head-to-head had it
+  -0.031 under our linker. Trackastra's 2D ctc linker does not transfer to this 3D
+  data - matches the pre-flagged 2D/3D risk. DECISION: Trackastra linker-
+  replacement is a dead end; do not pursue further unless a 3D-native variant
+  appears.
+
+STATE OF PLAY: incumbent 0.913 (Exp148) is unbeaten. Exhausted so far - all
+linking/blend knobs (det weight, edge weight, temperature, retention guard), v34
+reseed ensemble, and the Trackastra linker swap.
+
+## STRATEGIC RESET 2026-07-30 (corrects stale "rank ~200 / cliff 0.950" framing)
+
+TWO facts change everything:
+
+1. LEADERBOARD WAS RESCORED (division-hack patch). The 0.950 cluster COLLAPSED.
+   Downloaded public LB 2026-07-30: 1768 teams. Top = 0.942 (ONE team), only 3 at
+   >=0.930, 15 at >=0.920, 44 at >=0.915. Our 0.913 ranks ~#62 = TOP 3.5%, NOT
+   rank 200. 0.913 is a TIED PLATEAU of ~117 teams = the public two-seed notebook
+   ceiling. Approx medals (1768 teams): gold ~top14 (~0.921+), silver ~top88
+   (~0.914+), bronze ~top177 (~0.913). We are on the silver/bronze bubble; +0.007
+   reaches gold territory. This is a real, winnable position - do NOT give up.
+
+2. ENSEMBLES TIME OUT (LEARNINGS.md CRITICAL 2026-07-23): the kernel RE-RUNS on
+   the hidden test with a time limit; >=3-model sequential inference times out
+   (Exp133 scored blank). So "more models" is a dead path. Budget = ~2 models +
+   post-processing. This is WHY v34-as-3rd-seed (Exp155) is doubly wrong (redundant
+   AND risks timeout), and why the alternate-detector ensemble idea is dead.
+
+ALTERNATE-DETECTOR PROBE - INVESTIGATED, NOT VIABLE (2026-07-30):
+- justinkim1216 center/flow nnU-Net: ships model.py but the WEIGHTS ARE A 1-EPOCH
+  x 4-STEP CPU/P100 SMOKE-RUN SCAFFOLD (per its DATACARD: "rerun training for
+  competitive weights"). Untrained - would inject noise. Not usable without
+  training from scratch.
+- drkongvis 3D U-Net: has 16MB/49MB weights but NO model.py, NO datacard -
+  undocumented blackbox; integrating means reverse-engineering the state_dict with
+  unknown quality/IO. High risk, low expected value.
+Conclusion: no clean competitive drop-in alternate detector exists in the public
+pool. Do not spend a slot here.
+
+NEW DIRECTION - break the 0.913 plateau within the ~2-model time budget:
+A. STRONGER SINGLE DETECTOR (drop-in, same architecture, fits budget): swap the
+   pilkwang 50ep pack for a HIGHER-EPOCH checkpoint of the same net -
+   hongdaekim/biohub-300ep-checkpoint-pin-v1 / -350ep. Same unet_transformer =>
+   loads into our existing dual-seed machinery. Most promising cheap probe.
+B. ILP GRAPH EXPORT vs our greedy edge rebuild: the old unresolved clue was that
+   our filter_output_graph rebuilds edges greedily and discards the ILP optimum.
+   Re-test exporting the ILP graph more directly now that the hack is patched.
+C. LEGITIMATE DIVISION RECALL: metric has a 0.1*division_jaccard term; the hack is
+   patched so REAL divisions now count. Our safe-division insertion is very
+   conservative. A clean division-recall improvement is on-strategy and untried
+   post-patch.
+Recommend A first (cheapest, drop-in, directly targets detection quality).
+
+### A IS DEAD - VERIFIED 2026-07-30, DO NOT RETRY
+The hongdaekim "300ep"/"350ep" checkpoint pins are NOT stronger than our incumbent.
+Their README states they pin `pilkwang/biohub-tracking-support-pack-50ep-v1`
+**version 8** = artifact `biohub-tracking-support-pack-300ep-snapshot-v1`, weight
+sha256 `12b5d32ad8982e4736f74c41bc54403094917fe75f5a9f78b1b5aad41de26877`.
+The CURRENT pilkwang pack that Exp148 already uses is artifact
+`biohub-tracking-support-pack-400ep-snapshot-v1`, weight sha256
+`12f6881ee3620a831697ca098ff8f48e687a24225f4e048b538deec3562fe771`.
+Same run, same config (unet_out_channels 32, layers [32,64,128], downsample
+[1,4,4], window_size 2, pool_kernel_um 5.0) - the pins are EARLIER, LESS-trained
+snapshots. Swapping them in is a DOWNGRADE. No higher-epoch checkpoint than our
+400ep incumbent exists in the public pool.
+
+### B IS LARGELY DEAD TOO (measured, pre-existing evidence)
+Direct ILP graph export was already measured: Exp116 (clean minimal, ILP exported
+verbatim, no post-processing) = 0.877 vs Exp110 post-processing = 0.909. Our
+post-processing ADDS +0.032. Do not "just export the ILP graph".
+
+## LEVER C IN FLIGHT - Exp155 division budget 2x (2026-07-30)
+
+Submitted `55104669` (PENDING). Kernel `dalloliogm/biohub-exp155-division-budget-2x`
+v1 ran to COMPLETE. Rationale: the metric is
+`adjusted_edge_jaccard + 0.1*division_jaccard` and the division term is the ONLY
+part of the objective never optimized POST-PATCH. Our safe-division policy is still
+tuned from the hack era and is very conservative (Exp148 emitted only 333
+division-like sources). Exp155 doubles ONLY the budget caps
+(`frame_frac_cap 0.0076->0.0152`, `global_frac_cap 0.00375->0.0075`) and leaves all
+geometric gates unchanged (`max_um 4.66`, `sister 8.5`, `existing_child 7.65`), so
+it admits more candidates of the same plausibility class. Still 2 models => no
+timeout risk. Slots 2026-07-30: 1 used, 4 left.
+
+Follow-ups when it scores:
+- Exp155 > 0.913 -> division recall is live headroom; push further (3x budget, then
+  loosen the geometry gate) - this is the plateau-breaking axis.
+- Exp155 < 0.913 -> the conservative cap was load-bearing (extra divisions are FPs);
+  pivot from BUDGET to better division CANDIDATE GENERATION/scoring rather than
+  simply allowing more.
+- Exp155 == 0.913 -> the budget was not the binding constraint (few candidates
+  exist); go to candidate generation directly.
+
+UPDATE 2026-07-30 ~12:22 UTC: Exp155 still PENDING ~3.5h after submit (queue-hang
+mode, seen every day this week). Auto-recheck loop STOPPED; score expected later.
+Decision rules above are unchanged and still apply when it grades.
+
+When the score lands:
+- Exp154 > 0.913 -> the guard stacks; sweep the retention floor (try 0.85 and
+  0.95 around 0.90).
+- Exp154 <= 0.913 -> detection-side guard does not stack with adaptive fusion;
+  move to an alternate architecture (nnU-Net flow detector / Trackastra) or the
+  v34 ensemble (Exp135).
+
 ## CURRENT STATUS - 2026-07-27
 
 Best public LB is now **`0.912`** from Exp144:
