@@ -8,9 +8,13 @@
   do not continue to a 3x budget.
 - Exp158 is a one-factor precision response on the Exp148 backbone:
   `BIOHUB_DEEPCENTER_SAFE_DIV_VETO=1` requires independent image evidence for
-  newly proposed division children. Kaggle kernel v1 was launched as
-  `dalloliogm/biohub-exp158-deepcenter-division-veto`; validate its output and
-  submit only if structurally valid and distinct from Exp148.
+  newly proposed division children. Its output was valid and distinct, but the
+  veto rejected all candidate divisions (`0` remained), making it equivalent to
+  a known weak no-division direction. Do not submit it.
+- Exp159 instead halves Exp148's frame/global safe-division caps to
+  `0.0038` / `0.001875`. This preserves the strongest division candidates while
+  testing the precision side of the budget bracket. Kaggle v1 is running as
+  `dalloliogm/biohub-exp159-half-division-budget`.
 
 ## READ FIRST - 2026-07-20 CORRECTION (supersedes the earlier "strategic reset")
 
