@@ -207,13 +207,50 @@ RESOLVED 2026-07-29 (late): both diversity screens graded, BOTH FAILED to beat
 
 STATE OF PLAY: incumbent 0.913 (Exp148) is unbeaten. Exhausted so far - all
 linking/blend knobs (det weight, edge weight, temperature, retention guard), v34
-reseed ensemble, and the Trackastra linker swap. The ONE untried lever is an
-alternate architectural DETECTOR fused at the detection level (not a reseed, not a
-linker swap): justinkim1216 center nnU-Net (biohub_center_unet.pt) or drkongvis
-3D U-Net - decode their output to centroids and fuse like the existing DeepCenter
-veto. Expectations LOW: two diversity plays already failed, and the medal cliff is
-~0.950 (far above 0.913). This is the last cheap-ish probe before the backbone is
-tapped out.
+reseed ensemble, and the Trackastra linker swap.
+
+## STRATEGIC RESET 2026-07-30 (corrects stale "rank ~200 / cliff 0.950" framing)
+
+TWO facts change everything:
+
+1. LEADERBOARD WAS RESCORED (division-hack patch). The 0.950 cluster COLLAPSED.
+   Downloaded public LB 2026-07-30: 1768 teams. Top = 0.942 (ONE team), only 3 at
+   >=0.930, 15 at >=0.920, 44 at >=0.915. Our 0.913 ranks ~#62 = TOP 3.5%, NOT
+   rank 200. 0.913 is a TIED PLATEAU of ~117 teams = the public two-seed notebook
+   ceiling. Approx medals (1768 teams): gold ~top14 (~0.921+), silver ~top88
+   (~0.914+), bronze ~top177 (~0.913). We are on the silver/bronze bubble; +0.007
+   reaches gold territory. This is a real, winnable position - do NOT give up.
+
+2. ENSEMBLES TIME OUT (LEARNINGS.md CRITICAL 2026-07-23): the kernel RE-RUNS on
+   the hidden test with a time limit; >=3-model sequential inference times out
+   (Exp133 scored blank). So "more models" is a dead path. Budget = ~2 models +
+   post-processing. This is WHY v34-as-3rd-seed (Exp155) is doubly wrong (redundant
+   AND risks timeout), and why the alternate-detector ensemble idea is dead.
+
+ALTERNATE-DETECTOR PROBE - INVESTIGATED, NOT VIABLE (2026-07-30):
+- justinkim1216 center/flow nnU-Net: ships model.py but the WEIGHTS ARE A 1-EPOCH
+  x 4-STEP CPU/P100 SMOKE-RUN SCAFFOLD (per its DATACARD: "rerun training for
+  competitive weights"). Untrained - would inject noise. Not usable without
+  training from scratch.
+- drkongvis 3D U-Net: has 16MB/49MB weights but NO model.py, NO datacard -
+  undocumented blackbox; integrating means reverse-engineering the state_dict with
+  unknown quality/IO. High risk, low expected value.
+Conclusion: no clean competitive drop-in alternate detector exists in the public
+pool. Do not spend a slot here.
+
+NEW DIRECTION - break the 0.913 plateau within the ~2-model time budget:
+A. STRONGER SINGLE DETECTOR (drop-in, same architecture, fits budget): swap the
+   pilkwang 50ep pack for a HIGHER-EPOCH checkpoint of the same net -
+   hongdaekim/biohub-300ep-checkpoint-pin-v1 / -350ep. Same unet_transformer =>
+   loads into our existing dual-seed machinery. Most promising cheap probe.
+B. ILP GRAPH EXPORT vs our greedy edge rebuild: the old unresolved clue was that
+   our filter_output_graph rebuilds edges greedily and discards the ILP optimum.
+   Re-test exporting the ILP graph more directly now that the hack is patched.
+C. LEGITIMATE DIVISION RECALL: metric has a 0.1*division_jaccard term; the hack is
+   patched so REAL divisions now count. Our safe-division insertion is very
+   conservative. A clean division-recall improvement is on-strategy and untried
+   post-patch.
+Recommend A first (cheapest, drop-in, directly targets detection quality).
 
 When the score lands:
 - Exp154 > 0.913 -> the guard stacks; sweep the retention floor (try 0.85 and
