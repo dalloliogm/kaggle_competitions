@@ -292,6 +292,10 @@ Follow-ups when it scores:
 - Exp155 == 0.913 -> the budget was not the binding constraint (few candidates
   exist); go to candidate generation directly.
 
+UPDATE 2026-07-30 ~12:22 UTC: Exp155 still PENDING ~3.5h after submit (queue-hang
+mode, seen every day this week). Auto-recheck loop STOPPED; score expected later.
+Decision rules above are unchanged and still apply when it grades.
+
 When the score lands:
 - Exp154 > 0.913 -> the guard stacks; sweep the retention floor (try 0.85 and
   0.95 around 0.90).
