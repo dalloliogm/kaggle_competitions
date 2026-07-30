@@ -53,6 +53,56 @@ Capture durable information learned while working on this competition. This is f
   emitting an allowlisted JSON recommendation. It should never generate
   executable feature code, inspect solution files, transform the binary target,
   or override the mandatory first baseline.
+- **The v8/v9 "LLM advisory" was a no-op in the submitted packages.** The
+  `--feature-mode plan` machinery in `autopredict.py` was fully implemented and
+  allowlist-safe, but no system prompt ever instructed the agent to generate a
+  profile, request a plan, or pass `--plan`. The profile even told the model
+  "the live predictor ... does not execute arbitrary plan changes." That is the
+  most likely reason the v9 v5-shell adaptive run scored exactly in line with
+  the non-LLM v5 (0.818): the LLM never influenced features at all. Check that
+  a feature is actually *wired to the prompt*, not merely implemented, before
+  attributing a score to it.
+- **Measured noise floor on a single mini-competition is about 0.0004 AUC.**
+  Running an empty plan (informationally identical to the plain baseline) still
+  produced OOF AUC 0.95929 versus the baseline's 0.95886 on the same data and
+  seed, because the plan path changes feature column ordering and CatBoost
+  tie-breaking follows it. Any accept/reject rule comparing two feature sets by
+  OOF AUC therefore needs a margin comfortably above ~0.0004; a zero-margin gate
+  accepted a kitchen-sink plan on a +0.0003 delta that was pure noise. The
+  shipped default is `--gate-margin 0.002`, consistent with the existing
+  "treat ~0.002 offline deltas as noise" note from the 3-folder analysis.
+- Gating an LLM feature plan on out-of-fold AUC bounds the *feature* choice, but
+  it does **not** bound the score. Submission `55072857` shipped exactly this
+  gate and regressed to `0.808`, the worst completed score since the v4 demo.
+- **The gate was placed on the wrong comparison.** The OOF gate is *intra-script*
+  (plan features vs baseline features inside `autopredict.py`). The decision that
+  actually sets the score is *inter-submission*: which candidate the agent passes
+  to `select_submission`. Adding any new candidate to the session creates a fresh
+  chance for the agent to select something worse, and no amount of intra-script
+  gating touches that risk. Gate the thing that determines the score, not a
+  sub-decision upstream of it.
+- **`autopredict.py` is CatBoost-primary, and CatBoost is a known weak default
+  here** (0.7990 mean over 16 replay tasks, 0.7424 on small tasks, three below
+  0.70). The 0.818-0.819 scores come from the *sklearn ensemble* the agent
+  writes itself, not from `autopredict.py`. So any prompt that pushes
+  `autopredict.py` output into the submission pool is offering the agent a
+  historically weaker candidate to select. `0.808` is squarely in the range that
+  a CatBoost-primary final selection would produce.
+- **Do not remove a guard without first establishing why it exists.** v9's prompt
+  said: *"Submit it only when its final JSON report lists at least one
+  `feature_metadata.engineered_features` entry."* That guard's purpose was to keep
+  a no-op candidate out of the submission pool entirely. The v10 rewrite replaced
+  it with "if `gate.decision` says `rejected_plan_kept_baseline` ... that is
+  expected and still worth submitting once" — which instructs the agent to submit
+  the plain CatBoost baseline precisely when the plan added nothing. Worse, the
+  conservative 0.002 margin makes rejection the *likely* branch, so the most
+  probable outcome of the design was "submit a weak CatBoost candidate," and the
+  prompt actively encouraged it. Two individually reasonable choices (a safe
+  margin; an instruction to always submit once) combined into a bad default path.
+- Net rule for this competition: an optional post-baseline candidate must be
+  submitted **only when it has positive evidence of being better**, never
+  "submitted once anyway for information." Session submission slots are also
+  final-selection candidates.
 
 ## Models
 
@@ -65,6 +115,24 @@ Capture durable information learned while working on this competition. This is f
 - Mitra zero-shot CPU inference was 28x to 173x slower than AutoGluon classical on identical 1,000-row samples while remaining within 0.003 AUC on all three completed comparisons. AutoGluon estimated about 7 GB RAM, and one 3,501-row task did not fit under the available memory.
 - AutoGluon, Mitra, and TabPFN are absent from the current official Kaggle Python image. The offline evaluator cannot install them or download model weights. TPOT, H2O, Optuna, and CatBoost are present.
 - Current TabPFN is not a safe submission dependency: its documentation recommends GPU use, the default weights have a non-commercial license, and the older v2 license has an additional attribution provision that needs competition-rule clearance.
+- **Do not hand CatBoost the target/frequency-encoded matrix — give it raw
+  categoricals via `cat_features`.** Measured 2026-07-30 on a high-cardinality
+  categorical synthetic task: CatBoost scored 0.80087 OOF on the encoded view
+  (losing to LogisticRegression's 0.80625) and 0.81568 on the native view
+  (winning by +0.0094, and +0.0051 on held-out test). Ordered target statistics
+  are the one thing CatBoost does better than the sklearn trees; pre-encoding
+  removes it and leaves "just another GBDT on identical features." This casts
+  some doubt on the earlier "CatBoost/AutoGluon effectively tie" conclusion from
+  2026-07-27 — that comparison may have been partly an artifact of the encoded
+  feature view rather than a property of the models.
+- **A bare argmax over K models is exposed to winner's curse; require a margin
+  for any fragile candidate.** Measured 2026-07-30 on a 900-row task: CatBoost
+  won out-of-fold by 0.00044 and then *lost* 0.0028 on held-out test. Measured
+  OOF noise here is ~0.0004, so argmax can promote a fragile model on noise
+  alone. Genuine CatBoost wins were ~0.01 — two orders of magnitude larger — so
+  a 0.003 margin separates signal from noise without blocking real gains. Apply
+  the margin only to the *newly added* candidate so the proven selector's
+  behavior is preserved when the candidate does not clear the bar.
 - **Blending diverse-quality models by weighted OOF AUC can hurt more than help.** On a separate 2026-07-25 branch (LR + HistGradientBoostingClassifier + RandomForest + ExtraTrees, all sklearn/in-process/`n_jobs=1`), a weighted blend regressed 3-folder average offline AUC from 0.826 (LR+HGB only) to 0.820, because RF/ET were consistently weaker than HGB (e.g. one task: HGB alone 0.960 vs RF 0.903, ET 0.878) and diluted it even under `(auc-0.5)`-weighting; squaring or raising the weight to the 4th power only clawed back to roughly parity with the 2-model baseline. Switching to **picking the single best-OOF-AUC model instead of blending** recovered a real gain (0.828 avg, beating the 2-model baseline). If ever adding more candidate models to an ensemble here, prefer a best-of-K selector over a weighted blend unless the weighting scheme is proven to suppress weak members much harder than `(auc-0.5)^1`. An untested `official-demo-v9-pick-best-model` package built on this approach lives at `submissions/agent-configs/official-demo-v9-pick-best-model/` (validated structurally + offline, never submitted live due to hitting the daily quota).
 - **Hazard — do not use `n_jobs=-1`/`thread_count=-1` with LightGBM/XGBoost/CatBoost in this kind of script, and do not try to fix it with fork-based multiprocessing timeouts.** In local testing (2026-07-25, `uv`-managed environment): (1) `n_jobs=-1` caused a single `LGBMClassifier.fit()` call on a ~15k-row fold to take over 1,000s (one fold took 9,236s), versus ~1-2s for the same fold with `HistGradientBoostingClassifier` — presumed thread-count autodetection misbehaving in a constrained/virtualized CPU environment. (2) A follow-up fix — pin `n_jobs=1`, wrap every model's per-fold `fit()`/`predict_proba()` in a `multiprocessing.Process` (fork context) with a hard `.join(timeout)` + `.terminate()` — itself deadlocked: even plain `LogisticRegression`/`HistGradientBoostingClassifier` with zero GBDT libraries involved hung for the full 30s timeout inside the forked subprocess (vs. ~1-2s unwrapped), a classic fork-after-multi-threaded-process deadlock (numpy/scipy BLAS/OpenMP thread pools initialized at import time leave the forked child with inconsistent lock state). If a hard per-model timeout is ever needed, use `multiprocessing.set_start_method("spawn")` instead of fork (requires picklable, non-lambda model factories, and adds real per-process interpreter-startup overhead), and test it in isolation before combining with GBDT libraries. Given zero measured AUC benefit from GBDT even when partially working, this whole direction was abandoned rather than pursued further.
 
@@ -92,6 +160,12 @@ Capture durable information learned while working on this competition. This is f
   including the official agent identity, generation settings, initial
   `data_analyst` delegation, and explicit warning that a text-only response ends
   the session. Modeling improvements should live underneath that shell.
+- **Putting the gate on the correct final model decision was necessary but not
+  sufficient.** Submission `55105170` kept CatBoost inside the proven
+  pick-best-of-K script and required a 0.003 OOF advantage before promotion, yet
+  scored only `0.810` versus `0.819` for the sklearn lineage. A +0.0051
+  held-out gain on one synthetic categorical regime was not broad enough
+  evidence for hidden-task generalization.
 - A failed daily submission can be refunded even though a conservative
   submission-history counter still reports the nominal 1/day allowance as
   exhausted. On 2026-07-27, Kaggle accepted recovery submission `55030429`
@@ -99,6 +173,22 @@ Capture durable information learned while working on this competition. This is f
 
 ## Leaderboard Notes
 
+- Submission `55105170`: `COMPLETE`, public score **`0.810`**;
+  `official-demo-v11-pick-best-plus-catboost` repaired v10's submission-choice
+  flaw and used native categorical CatBoost with a 0.003 OOF promotion margin,
+  but still regressed 0.009 from the v6/v9 live best. Do not promote this
+  direction without broader replay evidence.
+- Submission `55072857`: `COMPLETE`, public score **`0.808`** — a ~0.011
+  regression and the worst completed score since the v4 demo baseline.
+  `official-demo-v10-llm-plan-gated` was the first package to actually execute
+  the LLM feature plan (v8/v9 implemented the machinery but never wired it to a
+  prompt). The OOF gate worked as designed in local testing, but it guarded the
+  wrong decision: it bounded plan-vs-baseline *features* inside `autopredict.py`
+  while the prompt simultaneously pushed `autopredict.py`'s CatBoost-primary
+  output into the session's submission pool, and instructed the agent to submit
+  it even when the gate rejected the plan. See the Ensembling section — the
+  removed v9 `engineered_features` guard existed to prevent exactly this. Do not
+  build on v10; revert to the v6 / v9-pick-best lineage.
 - Submission `55045683`: `COMPLETE`, public score `0.819`; `official-demo-v9-pick-best-model` (pairwise interactions + pick-best-of-4-models-by-OOF-AUC) tied v6 exactly despite scoring higher offline (0.828 vs 0.826 average on `train_01`–`train_03`). Submitted 2026-07-28 after being blocked by the daily quota since 2026-07-25. Reinforces the existing note below that the 3-folder sample is too small to reliably discriminate small AUC differences — treat ~0.002 offline deltas on that sample as noise, not signal, for future close calls.
 - Submission `55030429`: `COMPLETE`, public score `0.818`; v9 (v5-shell adaptive recovery) restored the v5 control shell and made
   adaptive feature engineering optional after the first valid submission, but did not improve on v6.
