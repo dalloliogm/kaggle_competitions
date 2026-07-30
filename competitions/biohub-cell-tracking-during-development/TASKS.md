@@ -13,8 +13,10 @@
   a known weak no-division direction. Do not submit it.
 - Exp159 instead halves Exp148's frame/global safe-division caps to
   `0.0038` / `0.001875`. This preserves the strongest division candidates while
-  testing the precision side of the budget bracket. Kaggle v1 is running as
-  `dalloliogm/biohub-exp159-half-division-budget`.
+  testing the precision side of the budget bracket. Kaggle v1 completed with
+  `122,020` nodes, `117,728` edges, and `213` divisions; exact structural and
+  duplicate-output checks passed. Submitted as `55120117` at 22:01 UTC; public
+  score is pending.
 
 ## READ FIRST - 2026-07-20 CORRECTION (supersedes the earlier "strategic reset")
 
