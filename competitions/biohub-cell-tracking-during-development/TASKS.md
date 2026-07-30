@@ -1,5 +1,17 @@
 # Tasks
 
+## CURRENT STATUS - 2026-07-30
+
+- Exp148 remains best at **`0.913`**.
+- Exp155 (`55104669`) doubled the safe-division budget with unchanged geometry
+  and scored **`0.912`**. More division proposals therefore hurt slightly;
+  do not continue to a 3x budget.
+- Exp158 is a one-factor precision response on the Exp148 backbone:
+  `BIOHUB_DEEPCENTER_SAFE_DIV_VETO=1` requires independent image evidence for
+  newly proposed division children. Kaggle kernel v1 was launched as
+  `dalloliogm/biohub-exp158-deepcenter-division-veto`; validate its output and
+  submit only if structurally valid and distinct from Exp148.
+
 ## READ FIRST - 2026-07-20 CORRECTION (supersedes the earlier "strategic reset")
 
 **The earlier reset was wrong and is retracted. See the RETRACTION section at the

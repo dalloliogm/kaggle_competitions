@@ -13,12 +13,14 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | 2026-07-08 | LB893 minus safe-division insertion | 0.960641 on selected exact split | 0.886 | TBD | `notebooks/biohub-lb893-no-safe-divisions-candidate.ipynb` | Novel variant, but public LB -0.007 versus copied LB893; selected validation split underweights true divisions |
 | 2026-07-16 | Exp073 public graph calibration | Test-only public run; exact train validation not yet reproduced | 0.903 | TBD | `dalloliogm/biohub-exp073-gap-5-8-public` / `references/own-kernels-2026-07-16/` | New working baseline; lower detection threshold, short-track filtering, gap2 disabled, two-frame gap close |
 | 2026-07-19 | Exp110 ILP birth/death costs | Test-only public run; exact train validation not yet reproduced | 0.909 user-reported | TBD | `notebooks/biohub-exp110-ilp-birth-death-cost-candidate.ipynb` / submission `54826078` | Current best; conservative ILP appearance/disappearance costs `0.0` / `1.4` reduced graph size substantially and broke the 0.903 plateau |
+| 2026-07-27 | Exp148 adaptive two-seed edge fusion | Test-only structural harness | **0.913** | TBD | `notebooks/biohub-exp148-adaptive-edge-fusion.ipynb` / submission `55029450` | Current best; fixed 0.475 detection blend and confidence-adaptive edge fusion |
 
 ## Tried
 
 | Date | Approach | Changes | Local CV | Public LB | Outcome | Follow-up |
 | --- | --- | --- | --- | --- | --- | --- |
 | 2026-07-03 | Exact DoG/Hungarian baseline | Offline exact evaluator, physical NMS, centroid refinement, 8 um linking, gap-1 interpolation, pruning | Completed on Kaggle; API output throttled | 0.827 | Successful first submission | Test one conservative gap-2 recovery pass |
+| 2026-07-30 | Exp155 doubled safe-division budget | Exp148 backbone; frame cap 0.0076 to 0.0152 and global cap 0.00375 to 0.0075; geometry unchanged | Kaggle structural harness passed | 0.912 | Rejected: additional division proposals cost 0.001 | Move to division precision/evidence, not a 3x budget |
 | 2026-07-03 | Conservative velocity-aware gap-2 recovery | Added capped `t -> t+3` bridges with two inserted nodes | 0.793540 vs 0.794304 baseline | Not submitted | Rejected: same 761/63/134 edge counts, more nodes, delta -0.000764 | Move to detector threshold/NMS sweep |
 | 2026-07-03 | Detector one-factor screen | Threshold 0.030/0.060 and NMS 2.8/3.8 um | Best 0.810458 at NMS 3.8 vs 0.794304 baseline | Not submitted | NMS 3.8 improved both embryos; lower threshold and NMS 2.8 hurt | Build dedicated candidate kernel |
 | 2026-07-03 | NMS 3.8 submission | Stronger suppression; otherwise frozen rule-based pipeline | 0.810458 | 0.834 | Improved LB +0.007 but remains outside medal range | Pivot to learned/global tracking |
