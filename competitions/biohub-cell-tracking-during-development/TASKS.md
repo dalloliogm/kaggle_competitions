@@ -192,6 +192,29 @@ mode again). Auto-recheck loop stopped; score expected later. Decision logic
 unchanged (Exp155 v34 graft if >0.910, else architectural detector). Trackastra
 kickoff prompt saved at references/trackastra-kickoff-prompt.md.
 
+RESOLVED 2026-07-29 (late): both diversity screens graded, BOTH FAILED to beat
+0.913.
+- Exp135 (v34 reseed ensemble) = **0.908** on the 0.910 recipe -> BELOW baseline.
+  v34 is redundant with our incumbent detector and slightly hurts. DECISION: do
+  NOT build the Exp155 v34-into-Exp148 graft; reseed diversity is a dead end.
+- Exp157 (Trackastra ctc transformer REPLACING our linker, ref 55092602) = **0.898**
+  (built by a parallel Trackastra session from references/trackastra-kickoff-
+  prompt.md). Well under the 0.913 incumbent; local exp156 head-to-head had it
+  -0.031 under our linker. Trackastra's 2D ctc linker does not transfer to this 3D
+  data - matches the pre-flagged 2D/3D risk. DECISION: Trackastra linker-
+  replacement is a dead end; do not pursue further unless a 3D-native variant
+  appears.
+
+STATE OF PLAY: incumbent 0.913 (Exp148) is unbeaten. Exhausted so far - all
+linking/blend knobs (det weight, edge weight, temperature, retention guard), v34
+reseed ensemble, and the Trackastra linker swap. The ONE untried lever is an
+alternate architectural DETECTOR fused at the detection level (not a reseed, not a
+linker swap): justinkim1216 center nnU-Net (biohub_center_unet.pt) or drkongvis
+3D U-Net - decode their output to centroids and fuse like the existing DeepCenter
+veto. Expectations LOW: two diversity plays already failed, and the medal cliff is
+~0.950 (far above 0.913). This is the last cheap-ish probe before the backbone is
+tapped out.
+
 When the score lands:
 - Exp154 > 0.913 -> the guard stacks; sweep the retention floor (try 0.85 and
   0.95 around 0.90).
