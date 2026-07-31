@@ -148,7 +148,12 @@ Capture durable information learned while working on this competition. This is f
 - Validate both the source folder and the final `submission.zip`; a valid folder can still produce a stale or malformed archive.
 - Upload filename matters in this beta: uploading the same valid archive as `baseline-autonomous-tabular-20260709.zip` returned a generic `400 Bad Request`, while naming it exactly `submission.zip` succeeded.
 - The live tool registry exposed by the harness is: `edit_file`, `get_status`, `read_file`, `run_command`, `select_submission`, `submit_predictions`, `write_file`.
-- `run_skill_script` is not currently available in the live runtime, despite appearing in some public notebooks.
+- Historical submission `54491555` failed when `run_skill_script` was requested
+  as a normal registry tool. The newer ADK validator now enables the
+  experimental skill toolset when a config declares `skills`, and same-day
+  public submissions using this portfolio architecture score 0.822–0.823.
+  Treat that as strong evidence—but not proof—that the skill-provided
+  `run_skill_script` path now works in the live evaluator.
 - Custom prompts that only tell the agent to run a bundled script did not lead to a valid `submit_predictions` call in submissions `54491451` and `54491615`; the next strategy should either use the official demo workflow or make the first tool calls even more constrained through official-compatible structure.
 - The official-demo structure is the only package so far that completed evaluation; preserve it when iterating.
 - A v5 package that preserved official structure but changed prompt/resources was rejected at upload with generic `400 Bad Request` and created no row. This may be daily-limit behavior or stricter package validation.
@@ -171,8 +176,36 @@ Capture durable information learned while working on this competition. This is f
   exhausted. On 2026-07-27, Kaggle accepted recovery submission `55030429`
   after `55029319` errored.
 
+## V12 Portfolio Replay
+
+- The full solution-blind replay materially favors diversity over another
+  single-model specialist. Across all 16 tasks, mean full AUC was 0.80243 for
+  rank-top-two, 0.79984 for portfolio CatBoost, 0.79930 for rank-all, 0.79679
+  for the quick CatBoost baseline, and 0.79374 for LightGBM.
+- Simulating the live public-feedback policy selected a candidate with mean
+  0.80288 full AUC and 0.80379 private AUC. This was within 0.00003 of the
+  per-task full-data oracle and beat v8 adaptive by 0.00276 on average, with 13
+  task wins and 3 losses. Public selection did not create an aggregate private
+  penalty in this fixed replay, although individual tasks still varied.
+- Runtime is normally small (median portfolio time 10.8 seconds), but
+  `train_11` took 859 seconds. The quick stage had already written a valid
+  prediction before the expensive portfolio began. If the portfolio finishes
+  with less than four minutes left, its controller skips those candidates; the
+  Pro stage also stops below twelve minutes. Keep those guards unchanged.
+- Detailed evidence is in `references/v12-portfolio-candidate-replay.csv`,
+  `references/v12-portfolio-selection-replay.csv`, and
+  `references/v12-portfolio-replay-summary.txt`.
+
 ## Leaderboard Notes
 
+- Submission `55130084`: `COMPLETE`, public score **`0.822`**; v12
+  deterministic portfolio plus bounded Gemini Pro freeroll. This improved the
+  previous 0.819 live best and confirms that the newer skill-provided
+  `run_skill_script` path executes successfully in the evaluator. Uploaded
+  2026-07-31 after all 16 solution-blind replays completed and both
+  source/extracted archives passed the official compiler.
+  Archive SHA-256:
+  `50dea3b9d661c9ef80eac505ddcade41a2a18596cbe704d34e0ffe4375eff34c`.
 - Submission `55105170`: `COMPLETE`, public score **`0.810`**;
   `official-demo-v11-pick-best-plus-catboost` repaired v10's submission-choice
   flaw and used native categorical CatBoost with a 0.003 OOF promotion margin,

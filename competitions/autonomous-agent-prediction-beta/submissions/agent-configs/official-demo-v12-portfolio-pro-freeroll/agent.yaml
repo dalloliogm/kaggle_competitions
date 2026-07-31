@@ -1,0 +1,6 @@
+agent_class: SequentialAgent
+name: v12_portfolio_pro_freeroll
+sub_agents:
+  - config_path: agents/quick.yaml
+  - config_path: agents/portfolio.yaml
+  - config_path: agents/pro.yaml

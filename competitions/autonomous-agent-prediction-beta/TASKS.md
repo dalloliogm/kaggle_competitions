@@ -2,7 +2,9 @@
 
 ## Current Goal
 
-- Improve on completed submission `54972472` (`official-demo-v6-blended-baseline`, public score `0.819`) without losing the known-good official demo submission behavior. **Still tied for the live best as of 2026-07-30** with `official-demo-v9-pick-best-model`; later v10 and v11 experiments regressed to 0.808 and 0.810.
+- Preserve and understand the new live best, submission `55130084`
+  (`official-demo-v12-portfolio-pro-freeroll`, public score **0.822**), while
+  keeping the exact validated archive and replay evidence reproducible.
 - Submission `55011609` (`official-demo-v5-model-recipe-retry-20260726`) completed at 0.818 and did not improve on v6.
 - Submission `55029319` (`official-demo-v8-adaptive-feature-gate-llm-advisory`)
   errored because `submit_predictions` was never called.
@@ -19,14 +21,20 @@
   placing CatBoost inside the proven pick-best selector, but the synthetic
   categorical gain did not generalize to the hidden evaluation. Do not promote
   CatBoost into the live default from these local regimes.
+- The 2026-07-31 quota refresh was verified live: **0 used, 1 remaining**.
+  `official-demo-v12-portfolio-pro-freeroll` passed source and extracted-ZIP
+  compilation, then completed a solution-blind replay over all 16 official
+  tasks. Public-selected full AUC averaged **0.80288** and private AUC averaged
+  **0.80379**, improving on the previous best full replay (v8 adaptive,
+  0.80013). Submission `55130084` completed at **0.822**, improving the
+  previous live best by 0.003; today's quota is now exhausted.
 
 ## Next Experiments
 
-- **Next slot (2026-07-31): return to the 0.819 lineage.** The live best remains
-  `official-demo-v6-blended-baseline` / `official-demo-v9-pick-best-model`, both
-  at 0.819. Any further experiment should start from
-  `official-demo-v9-pick-best-model`, whose sklearn pick-best-of-K selector — not
-  `autopredict.py` — produces the good scores.
+- **Submission `55130084` is complete at 0.822; do not resubmit it.** It is the
+  new live best and validates both the deterministic portfolio and the newer
+  skill-tool execution path. The exact uploaded archive hash is
+  `50dea3b9d661c9ef80eac505ddcade41a2a18596cbe704d34e0ffe4375eff34c`.
 - If the LLM-plan idea is revisited, restructure it so the plan changes the
   features used by the **agent's own ensemble script** (the pick-best-of-K
   selector), rather than introducing `autopredict.py` as a second submission
@@ -76,6 +84,10 @@
 - Confirmed Kaggle metadata on 2026-07-09: `userHasEntered=True`, deadline `2026-08-06 23:59:00`, 43 teams, reward `Swag`.
 - Pulled official description, evaluation, rules, and file listing into `references/`.
 - Confirmed Kaggle CLI data access by downloading `data/train_01/DATA.md` and `data/train_01/sample_submission.csv`.
+- Replayed the v12 quick baseline and deterministic six-candidate portfolio on
+  all 16 official tasks with `solution.csv` absent from every modeling
+  directory. Saved 112 candidate scores, public/private selection diagnostics,
+  and the scorer under `references/v12-portfolio-*`.
 - Pulled public notebooks:
   - `sidhaarthshree/autonomous-agent-prediction-a-to-z-guide`
   - `nursrijan/agent-starter-dynamic-automl-guide`

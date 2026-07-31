@@ -1,0 +1,42 @@
+CANDIDATE MEANS
+            full_auc          public_auc          private_auc
+                mean      std       mean      std        mean      std
+candidate
+rank_top2   0.802426 0.090053   0.801382 0.091710    0.803480 0.088690
+catboost    0.799838 0.091185   0.798796 0.092819    0.800899 0.089839
+rank_all    0.799298 0.087961   0.798134 0.089606    0.800482 0.086632
+quick       0.796791 0.092425   0.795679 0.094108    0.797877 0.091049
+lightgbm    0.793743 0.091356   0.792635 0.092882    0.794887 0.090117
+extra_trees 0.782514 0.088169   0.780978 0.089971    0.784061 0.086669
+logistic    0.730146 0.079331   0.729359 0.079419    0.730961 0.079517
+
+PUBLIC-SELECTION SUMMARY
+    task public_selected_candidate  selected_public_auc  selected_private_auc  selected_full_auc  rank_all_full_auc  oracle_full_auc  portfolio_seconds
+train_01                  logistic             0.722137              0.713024           0.717525           0.715516         0.717525          18.261000
+train_02                 rank_top2             0.970299              0.968854           0.969546           0.962295         0.969546          37.427000
+train_03                 rank_top2             0.809058              0.820054           0.814482           0.814115         0.814482           7.846000
+train_04                 rank_top2             0.834673              0.835889           0.835385           0.831154         0.835385          10.545000
+train_05                 rank_top2             0.680340              0.689467           0.684823           0.684084         0.684823           2.656000
+train_06                  catboost             0.801623              0.814505           0.808010           0.807990         0.808010          10.810000
+train_07                 rank_top2             0.832365              0.832869           0.832557           0.827529         0.832557          24.281000
+train_08                 rank_top2             0.855330              0.850526           0.852864           0.851918         0.852864           8.373000
+train_09                 rank_top2             0.640194              0.656945           0.648618           0.647235         0.648618           2.812000
+train_10                  catboost             0.844843              0.856171           0.850476           0.845716         0.850849          20.452000
+train_11                 rank_top2             0.833476              0.819626           0.826595           0.824432         0.826595         859.441000
+train_12                  lightgbm             0.796163              0.772616           0.784467           0.781577         0.784616          38.948000
+train_13                  rank_all             0.635048              0.644777           0.639939           0.639939         0.639939           2.047000
+train_14                 rank_top2             0.801725              0.811152           0.806398           0.800599         0.806398          26.720000
+train_15                 rank_top2             0.863051              0.867059           0.865170           0.861238         0.865170           4.367000
+train_16                  catboost             0.911397              0.907132           0.909277           0.893437         0.909277           5.391000
+
+AGGREGATES
+selected_public_auc=0.801982746
+selected_private_auc=0.803791661
+selected_full_auc=0.802883190
+top2_best_private_auc=0.803986382
+top2_mean_private_auc=0.803241760
+rank_all_full_auc=0.799298424
+rank_all_private_auc=0.800481705
+oracle_full_auc=0.802915847
+portfolio_seconds_total=1080.377
+portfolio_seconds_max=859.441

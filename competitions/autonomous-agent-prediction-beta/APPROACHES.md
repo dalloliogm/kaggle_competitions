@@ -6,8 +6,9 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 
 | Date | Approach | Local CV | Public LB | Private LB | Notebook/commit | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-07-25 | `official-demo-v6-blended-baseline` | 0.826 average on `train_01`–`train_03` | 0.819 | Pending | Kaggle submission `54972472` | Current live best (tied with v9); proven demo skeleton plus schema-agnostic logistic-regression and histogram-gradient-boosting blend. |
-| 2026-07-28 | `official-demo-v9-pick-best-model` | 0.828 average on `train_01`–`train_03` | 0.819 | Pending | Kaggle submission `55045683` | Ties v6 live despite a higher offline average. Built/validated 2026-07-25, blocked by the daily quota until 2026-07-28. Same v6 skeleton plus pairwise interactions and a 4-model (LR/HGB/RF/ET) pick-best-OOF-AUC selector instead of blending. See "Tried" below for the tie analysis. |
+| 2026-07-31 | `official-demo-v12-portfolio-pro-freeroll` | 0.80288 mean full AUC after public-half selection over all 16 tasks | **0.822** | Pending | Kaggle submission `55130084` | New live best; deterministic portfolio plus bounded Gemini Pro freeroll. |
+| 2026-07-25 | `official-demo-v6-blended-baseline` | 0.826 average on `train_01`–`train_03` | 0.819 | Pending | Kaggle submission `54972472` | Previous live best (tied with v9); proven demo skeleton plus schema-agnostic logistic-regression and histogram-gradient-boosting blend. |
+| 2026-07-28 | `official-demo-v9-pick-best-model` | 0.828 average on `train_01`–`train_03` | 0.819 | Pending | Kaggle submission `55045683` | Tied v6 but is now superseded by v12. Same v6 skeleton plus pairwise interactions and a 4-model (LR/HGB/RF/ET) pick-best-OOF-AUC selector instead of blending. |
 | 2026-07-26 | `official-demo-v5-model-recipe-retry-20260726` | n/a | 0.818 | Pending | Kaggle submission `55011609` | Completed successfully but did not improve on v6. |
 | 2026-07-09 | `official-demo-v4-extracted-reference-agent` | n/a | 0.815 | Pending | Kaggle submission `54491765` | First completed submission. Extracted directly from official demo notebook because custom prompt variants failed to call `submit_predictions`. |
 
@@ -44,6 +45,12 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 
 1. **Target-encoding categoricals before CatBoost wastes it.** On the categorical task, CatBoost scored 0.80087 OOF on the encoded view (losing to LR's 0.80625) and 0.81568 on the native view (winning by +0.0094). Handing CatBoost the same encoded matrix as the sklearn trees makes it "just another GBDT" — which is exactly the configuration that measured a tie with AutoGluon in the 2026-07-27 work. The earlier "CatBoost ties everything else" conclusion may have been partly an artifact of the encoded feature view.
 2. **A bare argmax over K models is exposed to winner's curse.** On the 900-row task CatBoost won OOF by 0.00044 and *lost* 0.0028 on held-out test. Measured OOF noise here is ~0.0004, so an argmax can promote a fragile model on noise alone. Genuine CatBoost wins were ~0.01, two orders larger, so a 0.003 margin separates signal from noise cleanly.
+
+### 2026-07-31 — v12 deterministic portfolio plus bounded Pro freeroll
+
+| Date | Approach | Changes | Local validation | Public LB | Outcome | Follow-up |
+| --- | --- | --- | --- | --- | --- | --- |
+| 2026-07-31 | `official-demo-v12-portfolio-pro-freeroll` | Adapted Naji's public 0.823 freeroll and Kun Zhang's public 0.822 deterministic portfolio. Phase 1 writes a quick CatBoost submission; Phase 2 submits CatBoost, LightGBM, ExtraTrees, logistic, rank-top-two, and rank-all candidates; Phase 3 gives Gemini 3.1 Pro a bounded, target-blind feature loop and leaves final selection to the harness. | All 16 official tasks ran solution-blind in separate processes. All 112 prediction files passed schema, ordered-ID, row-count, and finite-value checks. Rank-top-two mean full AUC was **0.80243**. Selecting by the held-out public half gave **0.80288 full / 0.80379 private**, versus **0.80013** for v8 adaptive; 13 wins and 3 losses task-by-task. Official source and extracted-ZIP compilation passed. One outlier task took 859 seconds; the quick baseline was already written and the prompt's time guards prevent starting Pro afterward. Detailed results: `references/v12-portfolio-candidate-replay.csv` and `references/v12-portfolio-selection-replay.csv`. | **0.822** | Submission `55130084` completed on 2026-07-31, improving the previous live best by 0.003. Exact archive SHA-256: `50dea3b9d661c9ef80eac505ddcade41a2a18596cbe704d34e0ffe4375eff34c`. |
 
 ## Backlog
 
