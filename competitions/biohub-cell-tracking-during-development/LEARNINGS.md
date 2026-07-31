@@ -2,6 +2,24 @@
 
 Capture durable information learned while working on this competition. This is for insights that should guide future modeling and prevent repeated mistakes.
 
+## Division quantity versus identity (2026-07-31, Exp155/159/160/161)
+
+- Exp159 retained 213 divisions and tied Exp148's `0.913` with 333 divisions;
+  Exp155 expanded the budget and regressed to `0.912`. Do not keep sweeping
+  division caps: the useful range is quantity-insensitive until excess
+  proposals begin to hurt.
+- Exp158's absolute DeepCenter threshold of `0.12` rejected every proposed
+  division, but Exp160 successfully produced continuous scores for all 367
+  candidates. The model is active; its absolute calibration is the problem.
+  Use ranking or quantile calibration rather than a hard threshold.
+- Transformer edge probabilities cover only 60/367 safe-division proposals in
+  Exp161. They are useful evidence where present, but cannot replace geometry
+  for the majority of candidates.
+- Preserve the 333-division budget while changing candidate identity. Exp160
+  changes 16 sources, Exp161 changes 3, and Exp162 changes 7 versus Exp148;
+  this isolates division selection while leaving more than 99.95% of the full
+  edge graph unchanged.
+
 ## Trackastra linker: what is actually true about it (2026-07-29, Exp156/157)
 
 The 2026-07-22 model survey dismissed

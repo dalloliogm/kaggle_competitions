@@ -21,6 +21,9 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | --- | --- | --- | --- | --- | --- | --- |
 | 2026-07-03 | Exact DoG/Hungarian baseline | Offline exact evaluator, physical NMS, centroid refinement, 8 um linking, gap-1 interpolation, pruning | Completed on Kaggle; API output throttled | 0.827 | Successful first submission | Test one conservative gap-2 recovery pass |
 | 2026-07-30 | Exp155 doubled safe-division budget | Exp148 backbone; frame cap 0.0076 to 0.0152 and global cap 0.00375 to 0.0075; geometry unchanged | Kaggle structural harness passed | 0.912 | Rejected: additional division proposals cost 0.001 | Move to division precision/evidence, not a 3x budget |
+| 2026-07-31 | Exp159 half safe-division budget | Exp148 backbone; caps halved; 213 divisions | Exact output harness passed | 0.913 | Tied Exp148: quantity is flat from 213 to 333 divisions | Improve candidate identity rather than count |
+| 2026-07-31 | Exp160 continuous DeepCenter division ranking | Same Exp148 caps; image evidence re-ranks all 367 proposals; 16/333 division sources changed | Exact output harness passed | Pending (`55130094`) | Valid, active learned-image intervention | Compare LB with Exp148/161 |
+| 2026-07-31 | Exp161 transformer-probability division ranking | Same Exp148 caps; transformer scores cover 60/367 proposals; 3/333 division sources changed | Exact output harness passed | Pending (`55129038`) | Valid but deliberately small learned-edge intervention | Compare LB with Exp148/160 |
 | 2026-07-03 | Conservative velocity-aware gap-2 recovery | Added capped `t -> t+3` bridges with two inserted nodes | 0.793540 vs 0.794304 baseline | Not submitted | Rejected: same 761/63/134 edge counts, more nodes, delta -0.000764 | Move to detector threshold/NMS sweep |
 | 2026-07-03 | Detector one-factor screen | Threshold 0.030/0.060 and NMS 2.8/3.8 um | Best 0.810458 at NMS 3.8 vs 0.794304 baseline | Not submitted | NMS 3.8 improved both embryos; lower threshold and NMS 2.8 hurt | Build dedicated candidate kernel |
 | 2026-07-03 | NMS 3.8 submission | Stronger suppression; otherwise frozen rule-based pipeline | 0.810458 | 0.834 | Improved LB +0.007 but remains outside medal range | Pivot to learned/global tracking |
@@ -34,6 +37,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 
 | Date | Approach | Notebook | Validation status | Next action |
 | --- | --- | --- | --- | --- |
+| 2026-07-31 | Exp162 symmetry-aware division ranking | `notebooks/biohub-exp162-symmetry-division-rank.ipynb` | Kaggle v1 complete; exact checks passed; 333 divisions and 7 division sources changed versus Exp148 | Hold as reserve; do not submit while Exp160/161 are pending |
 | 2026-07-04 | Prefix-aware classical/learned hybrid | `notebooks/biohub-prefix-hybrid-candidate.ipynb` | Exact hybrid 0.842616; Kaggle v2 completed with a validated 260,287-row output identical to local | Manually submit version 2 and record LB |
 | 2026-07-07 | LB893 exact-validation ablation runner | `notebooks/biohub-lb893-validation-ablation.ipynb` | JSON/Python syntax checked locally; requires Kaggle T4 plus `biohub-tracking-support-pack-50ep-v1` | Upload/run `full_lb893` validation, then one-factor ablations |
 | 2026-07-08 | LB893 no-safe-divisions test candidate | `notebooks/biohub-lb893-no-safe-divisions-candidate.ipynb` | Kaggle v1 completed; 283,092-row output passed structural checks; public LB 0.886 | Superseded by copied LB893 0.893; use as negative control for division tuning |

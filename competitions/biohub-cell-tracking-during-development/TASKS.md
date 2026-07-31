@@ -1,6 +1,6 @@
 # Tasks
 
-## CURRENT STATUS - 2026-07-30
+## CURRENT STATUS - 2026-07-31
 
 - Exp148 remains best at **`0.913`**.
 - Exp155 (`55104669`) doubled the safe-division budget with unchanged geometry
@@ -15,8 +15,20 @@
   `0.0038` / `0.001875`. This preserves the strongest division candidates while
   testing the precision side of the budget bracket. Kaggle v1 completed with
   `122,020` nodes, `117,728` edges, and `213` divisions; exact structural and
-  duplicate-output checks passed. Submitted as `55120117` at 22:01 UTC; public
-  score is pending.
+  duplicate-output checks passed. Submission `55120117` scored **`0.913`**,
+  tying Exp148. Division count alone is flat between 213 and 333; 2x is worse.
+- Exp160 uses continuous DeepCenter evidence to rank the same bounded division
+  proposals. It retains 333 divisions, scores all 367 candidates, and changes
+  16 division sources versus Exp148. Exact output checks passed; submitted as
+  `55130094`, public score pending.
+- Exp161 ranks division proposals by transformer edge probability, then
+  geometry. Learned scores cover 60/367 candidates; the output retains 333
+  divisions and changes 3 division sources. Exact output checks passed;
+  submitted as `55129038`, public score pending.
+- Exp162 is the geometry-only symmetry fallback. Its valid output retains 333
+  divisions and changes 7 division sources versus Exp148. Kernel v1 is complete
+  but deliberately **not submitted** because both learned-evidence branches
+  activated; keep it as a reserve rather than spending a third slot.
 
 ## READ FIRST - 2026-07-20 CORRECTION (supersedes the earlier "strategic reset")
 

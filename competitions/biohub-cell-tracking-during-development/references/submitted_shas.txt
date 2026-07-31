@@ -17,3 +17,5 @@ a9adfc43cfec82de9a85a37bf90d067c917eba7e6b67a55bb20f536a74f461dc  dalloliogm/bio
 bf4184016317269932cf179c8ef6455c79d01ca8f7911168b4be855490858a05  dalloliogm/biohub-exp145-twoseed-detw040 v2  exp145 two-seed blend, secondary DETECTION weight 0.40 (favor incumbent seed A) 
 c8bb6bd846e4671fc4d1f4121931e3425502be82dc914795f430f5eed45abc43  dalloliogm/biohub-exp149-adaptive-edge-w025 v2  exp149 adaptive edge fusion, secondary EDGE weight 0.15->0.25 (more second-seed 
 b4ec8373db07b4fa43319a61835c8083a2456bde2f3d62b3af8cccaa7817edf6  dalloliogm/biohub-exp159-half-division-budget v1  exp159 Exp148 backbone with half safe-division budget (frame 0.0038, global 0.00
+184001a896ce8381ac55485fde26fac88bcec76a0df2d1c999a9e3e26f9b902a  dalloliogm/biohub-exp161-learned-division-rank v1  exp161 Exp148 backbone; rank safe-division candidates by transformer edge probab
+4691b1b3249623b05406b045f4edf2edd21bbbb1634c41d5423e6229d6d7467b  dalloliogm/biohub-exp160-deepcenter-division-rank v1  exp160 Exp148 backbone; rank safe-division candidates by continuous DeepCenter e
