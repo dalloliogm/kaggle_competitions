@@ -20,15 +20,21 @@
 - Exp160 uses continuous DeepCenter evidence to rank the same bounded division
   proposals. It retains 333 divisions, scores all 367 candidates, and changes
   16 division sources versus Exp148. Exact output checks passed; submitted as
-  `55130094`, public score pending.
+  `55130094`; public LB **`0.913`**, tying Exp148.
 - Exp161 ranks division proposals by transformer edge probability, then
   geometry. Learned scores cover 60/367 candidates; the output retains 333
   divisions and changes 3 division sources. Exact output checks passed;
-  submitted as `55129038`, public score pending.
+  submitted as `55129038`; public LB **`0.913`**, tying Exp148.
 - Exp162 is the geometry-only symmetry fallback. Its valid output retains 333
   divisions and changes 7 division sources versus Exp148. Kernel v1 is complete
   but deliberately **not submitted** because both learned-evidence branches
   activated; keep it as a reserve rather than spending a third slot.
+- Exp163 changes the main association graph only for geometrically ambiguous
+  targets: when the best two parent costs are within `0.75 um`, the learned
+  bonus rises from `1.0` to `3.0`. The rule activated on 1,656 targets and
+  replaced 637/117,913 Exp148 edges (edge Jaccard `0.9892`). Exact checks passed
+  with 122,103 nodes, 117,914 edges, and 335 divisions. Submitted as `55141367`;
+  public score pending. Two daily slots remain after submission.
 
 ## READ FIRST - 2026-07-20 CORRECTION (supersedes the earlier "strategic reset")
 

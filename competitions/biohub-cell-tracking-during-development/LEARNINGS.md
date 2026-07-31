@@ -2,6 +2,20 @@
 
 Capture durable information learned while working on this competition. This is for insights that should guide future modeling and prevent repeated mistakes.
 
+## Ambiguity-gated main-graph association (2026-07-31, Exp163)
+
+- Global learned-bonus sweeps are low-information; apply extra learned influence
+  only where geometry is uncertain. Exp163 defines uncertainty as the two best
+  motion-based parent costs being within `0.75 um` for one target.
+- A learned bonus of `3.0` on those targets activated 1,656 times and replaced
+  637 of Exp148's 117,913 final edges, giving edge Jaccard `0.9892`. This is a
+  useful bounded intervention: broader than division-only changes but still
+  preserves more than 98.9% of the association graph.
+- The output remained structurally valid with max in-degree 1, max out-degree 2,
+  consecutive-frame edges, 122,103 nodes, 117,914 edges, and 335 divisions.
+  Use the public LB result to choose whether to strengthen or weaken ambiguity
+  arbitration; do not sweep before that signal arrives.
+
 ## Division quantity versus identity (2026-07-31, Exp155/159/160/161)
 
 - Exp159 retained 213 divisions and tied Exp148's `0.913` with 333 divisions;
