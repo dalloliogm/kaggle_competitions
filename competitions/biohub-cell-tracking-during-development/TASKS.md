@@ -50,6 +50,11 @@
   so it is diagnostic only and must not be submitted. The run statistics also
   reveal a stale `experiment_tag` label (`exp148_adaptive_edge_fusion`), which
   should be corrected before any rerun.
+- Exp164 v2 corrected that label and widened the gates to `0.3 um` / `0.95`.
+  It still accepted **0 swaps** (`0` proposals from `966` feasible pairs) and
+  reproduced Exp148 exactly (`122,107` nodes, `117,913` edges, `333` divisions).
+  Do not submit either version. Instrument the best candidate cost before any
+  further widening.
 
 ## READ FIRST - 2026-07-20 CORRECTION (supersedes the earlier "strategic reset")
 

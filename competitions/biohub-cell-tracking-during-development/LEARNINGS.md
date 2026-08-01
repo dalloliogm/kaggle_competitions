@@ -26,6 +26,12 @@ Capture durable information learned while working on this competition. This is f
   clean negative diagnostic, not evidence that future context is useless. Any
   follow-up should widen the gate deliberately and compare the number and
   location of proposed swaps before considering a submission.
+- Exp164 v2 widened the activation thresholds to `0.3 um` and `0.95`, yet still
+  produced zero proposals from `966` feasible pairs. This rules out the simple
+  explanation that the v1 thresholds alone were too strict. Before changing the
+  thresholds again, log the maximum feasible improvement and the corresponding
+  cost ratio; the ratio may be suppressing candidates because the base cost can
+  be close to zero after the learned-probability term.
 
 ## Division quantity versus identity (2026-07-31, Exp155/159/160/161)
 
