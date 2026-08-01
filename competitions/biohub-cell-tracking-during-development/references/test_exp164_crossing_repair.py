@@ -50,6 +50,8 @@ stats = {
     "bidirectional_swaps_accepted": 0,
     "bidirectional_edges_changed": 0,
     "bidirectional_improvement_milli_sum": 0,
+    "bidirectional_best_improvement_milli": -1000000000,
+    "bidirectional_best_ratio_milli": 1000000000,
 }
 repaired = bidirectional_crossing_repair(nodes, edges, stats)
 edge_pairs = {(edge["source_id"], edge["target_id"]) for edge in repaired}

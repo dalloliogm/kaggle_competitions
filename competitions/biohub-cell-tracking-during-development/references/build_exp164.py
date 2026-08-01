@@ -229,6 +229,12 @@ def bidirectional_crossing_repair(
                 improvement = current_cost - swapped_cost
                 ratio = swapped_cost / max(current_cost, 1e-9)
                 stats["bidirectional_swap_pairs_feasible"] += 1
+                stats["bidirectional_best_improvement_milli"] = max(
+                    stats["bidirectional_best_improvement_milli"], int(round(improvement * 1000.0))
+                )
+                stats["bidirectional_best_ratio_milli"] = min(
+                    stats["bidirectional_best_ratio_milli"], int(round(ratio * 1000.0))
+                )
                 if improvement < BIDIRECTIONAL_SWAP_MIN_IMPROVEMENT_UM:
                     continue
                 if ratio > BIDIRECTIONAL_SWAP_MAX_COST_RATIO:
@@ -284,7 +290,9 @@ def bidirectional_crossing_repair(
         "bidirectional_swap_proposals": 0,
         "bidirectional_swaps_accepted": 0,
         "bidirectional_edges_changed": 0,
-        "bidirectional_improvement_milli_sum": 0,''',
+        "bidirectional_improvement_milli_sum": 0,
+        "bidirectional_best_improvement_milli": -1000000000,
+        "bidirectional_best_ratio_milli": 1000000000,''',
     )
     source = source.replace(
         '''        motion_edges = motion_relink_edges(nodes_by_id, stats, learned_edge_probs)
