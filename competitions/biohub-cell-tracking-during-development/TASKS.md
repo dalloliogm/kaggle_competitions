@@ -37,14 +37,19 @@
   submitted as `55141367`; public LB **`0.913`**, tying Exp148. Replacing 637
   association edges was therefore not enough to move the three-decimal score;
   do not continue with stronger/weaker learned-bonus brackets.
-- Exp164 is the next structurally different test. It keeps Exp148 fixed, then
+- Exp164 was the next structurally different test. It keeps Exp148 fixed, then
   considers pairwise assignment swaps only when complete four-frame context is
   available (predecessor, source, target, successor). A swap must improve the
   combined acceleration/geometry/learned cost by at least `1.0 um`, reduce it
   to at most `80%` of the incumbent cost, and not overlap another accepted
   repair. A synthetic crossing unit test passed. Private Kaggle v1 was launched
-  as `dalloliogm/biohub-exp164-bidirectional-crossing-repair`; do not submit
-  unless it changes `20-2,000` edges and the exact output harness passes.
+  as `dalloliogm/biohub-exp164-bidirectional-crossing-repair`. The kernel
+  completed with exact structural output, but accepted **0 swaps**: 0 of 5,842
+  examined pairs survived the `1.0 um` / `0.80` cost gates. Its output counts
+  are identical to Exp148 (`122,107` nodes, `117,913` edges, `333` divisions),
+  so it is diagnostic only and must not be submitted. The run statistics also
+  reveal a stale `experiment_tag` label (`exp148_adaptive_edge_fusion`), which
+  should be corrected before any rerun.
 
 ## READ FIRST - 2026-07-20 CORRECTION (supersedes the earlier "strategic reset")
 

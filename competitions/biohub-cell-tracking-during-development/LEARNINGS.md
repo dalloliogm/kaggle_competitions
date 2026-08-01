@@ -20,6 +20,12 @@ Capture durable information learned while working on this competition. This is f
   frame-pair objective. Exp164 tests future-aware trajectory continuity: local
   identity crossings can be ambiguous from `t -> t+1` while becoming clear
   once the `t-1` predecessor and `t+2` successor are included.
+- Exp164's first calibration was too conservative to activate on test data:
+  `5,842` candidate pairs were examined, `966` were geometrically feasible,
+  but none met the `1.0 um` improvement and `0.80` cost-ratio gates. This is a
+  clean negative diagnostic, not evidence that future context is useless. Any
+  follow-up should widen the gate deliberately and compare the number and
+  location of proposed swaps before considering a submission.
 
 ## Division quantity versus identity (2026-07-31, Exp155/159/160/161)
 
