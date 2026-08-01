@@ -13,8 +13,13 @@ Capture durable information learned while working on this competition. This is f
   preserves more than 98.9% of the association graph.
 - The output remained structurally valid with max in-degree 1, max out-degree 2,
   consecutive-frame edges, 122,103 nodes, 117,914 edges, and 335 divisions.
-  Use the public LB result to choose whether to strengthen or weaken ambiguity
-  arbitration; do not sweep before that signal arrives.
+  Its public LB was still `0.913`. A 637-edge identity rewrite is large enough
+  to prove the rule activated, but not enough to prove those were scoring
+  errors. Close the learned-bonus strength axis rather than sweeping it.
+- The remaining association hypothesis must use information missing from the
+  frame-pair objective. Exp164 tests future-aware trajectory continuity: local
+  identity crossings can be ambiguous from `t -> t+1` while becoming clear
+  once the `t-1` predecessor and `t+2` successor are included.
 
 ## Division quantity versus identity (2026-07-31, Exp155/159/160/161)
 

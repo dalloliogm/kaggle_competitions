@@ -645,3 +645,22 @@
   and `0` selected.
 - Interpretation: do not submit Exp096 as-is. It does not test a new submission
   because the bridge extension did not alter the density-adaptive output.
+# Recent public notebook scan - 2026-08-01
+
+- [Clean Public-Frontier Lineage Tracker](https://www.kaggle.com/code/prvsiyan/biohub-clean-public-frontier-lineage-tracker)
+  adds a 90% per-frame detection-retention fallback to the same public two-seed
+  family. Its own notebook labels the evidence local-only. We already tested
+  the equivalent retention-guard axis in Exp154 and tied `0.913`, so this is
+  corroboration rather than a new submission direction.
+- [Learned Graph with Gap Recovery](https://www.kaggle.com/code/chukkkk/biohub-cell-tracking-learned-graph-w-gap-recovery)
+  remains the TemporalUNet3D, transformer, ILP, motion-relink, gap, safe-division,
+  and line-fit family. Its newer changes primarily tighten repair caps; our
+  cap, gap, and division sweeps already show this neighborhood is saturated.
+- [StarDist and btrack pipeline](https://www.kaggle.com/code/aaaa1597/s1-06-stardist-btrack-pipeline)
+  is genuinely different but currently reads as an integrated validation and
+  visualization pipeline, without evidence that it beats the two-seed public
+  frontier. Keep it as a longer detector/tracker replacement study rather than
+  spending a quick leaderboard slot.
+- Practical conclusion: use Exp148's strong detections but change the temporal
+  information available to association. Exp164 therefore tests a conservative
+  four-frame crossing repair instead of another parameter sweep.
