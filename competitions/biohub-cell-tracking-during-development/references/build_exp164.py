@@ -38,16 +38,17 @@ it accepts the exchange only if both resulting four-frame paths are substantiall
 smoother. This targets identity swaps at crossings without changing node detections or
 division counts by design.
 
-Pre-registered output gate: the repair must change at least 20 and at most 2,000 edges,
-retain exact submission invariants, and produce an output distinct from Exp148. A zero-
-change run is diagnostic only; a broader rewrite is considered unsafe.
+Calibration v2 deliberately widens the activation gate to `0.3 um` improvement and
+`0.95` relative cost. The repair must still change at least 20 and at most 2,000 edges,
+retain exact submission invariants, and produce an output distinct from Exp148. This is
+still diagnostic; no leaderboard submission is implied by the run.
 """,
         )
         continue
 
     if cell.get("id") == "ff65b520":
         source = source.replace(
-            "BIOHUB_PRESET = 'dual_seed_near_balanced_adaptive_edges'\nBIOHUB_SCORE_AXIS = 'confidence-adaptive aligned two-seed edge fusion'",
+            "BIOHUB_PRESET = 'dual_seed_near_balanced_center_confirmed_synthetic_gap'\nBIOHUB_SCORE_AXIS = 'fixed 0.475 shared detections with confidence-adaptive two-seed edge fusion'",
             "BIOHUB_PRESET = 'dual_seed_bidirectional_crossing_repair'\nBIOHUB_SCORE_AXIS = 'four-frame trajectory evidence for ambiguous identity crossings'",
         )
         source = source.replace(
@@ -55,14 +56,18 @@ change run is diagnostic only; a broader rewrite is considered unsafe.
             '''os.environ["BIOHUB_MOTION_RELINK_LEARNED_BONUS"] = '1.0'
 os.environ["BIOHUB_BIDIRECTIONAL_SWAP_REPAIR"] = "1"
 os.environ["BIOHUB_BIDIRECTIONAL_SWAP_GATE_UM"] = "6.0"
-os.environ["BIOHUB_BIDIRECTIONAL_SWAP_MIN_IMPROVEMENT_UM"] = "1.0"
-os.environ["BIOHUB_BIDIRECTIONAL_SWAP_MAX_COST_RATIO"] = "0.80"
+os.environ["BIOHUB_BIDIRECTIONAL_SWAP_MIN_IMPROVEMENT_UM"] = "0.3"
+os.environ["BIOHUB_BIDIRECTIONAL_SWAP_MAX_COST_RATIO"] = "0.95"
 os.environ["BIOHUB_BIDIRECTIONAL_SWAP_LEARNED_BONUS"] = "0.50"''',
         )
         set_source(cell, source)
         continue
 
     if cell.get("id") == "22d9fcd5":
+        source = source.replace(
+            'EXPERIMENT_TAG = "exp148_adaptive_edge_fusion"',
+            'EXPERIMENT_TAG = "exp164_bidirectional_crossing_repair_v2"',
+        )
         source = source.replace(
             'MOTION_RELINK_MAX_FRAME_NODES = int(os.environ.get("BIOHUB_MOTION_RELINK_MAX_FRAME_NODES", "2600"))',
             '''MOTION_RELINK_MAX_FRAME_NODES = int(os.environ.get("BIOHUB_MOTION_RELINK_MAX_FRAME_NODES", "2600"))
