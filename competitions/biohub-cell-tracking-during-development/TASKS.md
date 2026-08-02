@@ -59,12 +59,20 @@
   `+0.066 um` improvement at ratio `0.996` in `6bba_05db0fb1`; all other
   datasets had negative best improvements. This closes the crossing-repair
   hypothesis; do not spend another Kaggle run on threshold calibration.
-- Exp165 is the next structural test. It keeps Exp148 unchanged on the three
-  sparse movies and uses overlapping `48 um` XY tiles with `12 um` overlap for
-  Hungarian motion relinking only on `6bba_05db0fb1`. Synthetic tile tests and
-  notebook syntax checks passed. Kaggle v1 is running as
-  `dalloliogm/biohub-exp165-tiled-dense-relink`; do not submit unless the dense
-  movie changes meaningfully and exact validation passes.
+- Exp165 completed as `dalloliogm/biohub-exp165-tiled-dense-relink`. It keeps
+  the three sparse movies graph-identical to Exp164/Exp148 and changes only the
+  dense movie: 687 incumbent edges are removed and 652 replacements added
+  (edge Jaccard `0.9807`), with 8 fewer nodes and 6 more division-like sources.
+  The output has 239,977 rows and passes the dependency-light harness with no
+  schema, dangling-edge, duplicate-frame-pair, or degree-invariant errors. It
+  is a genuinely distinct, targeted candidate. It was submitted as Kaggle
+  reference `55184986`; the public score is pending.
+- Public notebook review: `zoli800/biohub-cell-another-approch-2nd` has verified
+  version scores `0.914, 0.911, 0.914, 0.914, 0.913`. Its useful mechanism is
+  calibrated reverse-time association fused through a weighted harmonic mean;
+  this is orthogonal to Exp165's tiled dense relinking. Do not copy the whole
+  notebook. If Exp165 disappoints, isolate that reverse-time fusion as the next
+  experiment.
 
 ## READ FIRST - 2026-07-20 CORRECTION (supersedes the earlier "strategic reset")
 
