@@ -253,9 +253,38 @@ Capture durable information learned while working on this competition. This is f
   emitted an 882-row CSV exactly equal to the completed local audit, with 16
   tasks, 3 model families, 3 seeds, and finite numeric values.
 
+## Public Freeroll Reproduction and Model Choice
+
+- Our v12 was not an exact reproduction of Naji's public 0.823 package. It
+  lowered Pro temperature from 0.7 to 0.55, halved the thinking budget from
+  4096 to 2048, capped the loop at eight iterations, restricted feature
+  families, forbade target-derived features, and added tighter file/command
+  guards. Those changes improved safety and auditability but confound any
+  comparison with the public 0.823 result.
+- The 2026-08-02 official `models.yaml` permits Anthropic, Google, open-source,
+  xAI, and Qwen models. It does not list a frontier hosted OpenAI GPT model;
+  only `gpt-oss-20b` and `gpt-oss-120b` are available from OpenAI's family.
+- `claude-sonnet-5` is the cleanest higher-capability challenger under the $4
+  session budget: $2/M input and $10/M output, compared with Gemini 3.1 Pro
+  Preview at $2/M input and $12/M output. Claude Opus 4.5-4.8 is allowed but
+  costs $5/M input and $25/M output, which sharply reduces iteration room.
+- Stronger on general benchmarks does not imply stronger here. The freeroll's
+  critical behavior is reliable tool use, safe Python editing, and rapid
+  feedback-driven iteration. Run the exact Gemini package as the control before
+  spending a separate daily slot on the Claude-only swap.
+- The pulled public notebook exposes no explicit license. Preserve attribution,
+  avoid publishing unattributed derivatives, and prefer static extraction plus
+  official compiler validation over executing the third-party agent locally.
+
 ## Leaderboard Notes
 
-- Submission `55171041`: `PENDING`; v13 target-blind JSON feature planner over
+- Submission `55180862`: `ERROR`; the first Sonnet package failed before agent
+  execution because the OpenAI-compatible proxy rejects the `temperature` field
+  for Claude Sonnet 5. LiteLLM retried the same invalid request 100 times.
+  Remove `temperature` as well as `top_p`/`top_k` from the provider-specific
+  config before retry. Corrected retry submission `55183078` is now `PENDING`.
+  The exact Gemini control remains unaffected.
+- Submission `55171041`: `COMPLETE`, public score **`0.822`**; v13 target-blind JSON feature planner over
   the proven v12 quick/portfolio fallbacks. Uploaded 2026-08-01 after archive,
   include/tool, extracted-Python, and 10,000-row portfolio-output validation.
   Archive SHA-256:

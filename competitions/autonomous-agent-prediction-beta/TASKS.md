@@ -2,6 +2,14 @@
 
 ## Current Goal
 
+- Reproduce the public 0.823 Gemini Pro freeroll exactly, then isolate whether a
+  model-only switch to `claude-sonnet-5` improves it. Both v14 packages are
+  built and pass the official compiler. The user chose Sonnet first: submission
+  `55180862` failed before agent execution because Claude rejected the
+  `temperature` field. Corrected retry `55183078` is now `PENDING`, and the
+  exact Gemini control remains unsubmitted.
+- Submission `55171041` (`official-demo-v13-profile-planner`) completed at
+  **0.822**, tying v12 rather than improving it.
 - Preserve and understand the new live best, submission `55130084`
   (`official-demo-v12-portfolio-pro-freeroll`, public score **0.822**), while
   keeping the exact validated archive and replay evidence reproducible.
@@ -31,6 +39,14 @@
 
 ## Next Experiments
 
+- Revalidate the corrected Sonnet package, then ask before resubmitting it. At
+  the next daily reset, submit
+  `public-naji-v14-gemini-pro-exact` as the required control. Do not infer model
+  quality from Sonnet versus v12: the exact public strategy also differs
+  materially from our bounded v12 derivative.
+- Do not use Claude Opus for this freeroll. It is allowed, but its official
+  $5/M input and $25/M output pricing is too expensive for the $4 session
+  budget. `claude-sonnet-5` is the credible higher-capability budget match.
 - **Submission `55130084` is complete at 0.822; do not resubmit it.** It is the
   new live best and validates both the deterministic portfolio and the newer
   skill-tool execution path. The exact uploaded archive hash is
