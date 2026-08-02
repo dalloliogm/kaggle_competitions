@@ -59,6 +59,12 @@
   `+0.066 um` improvement at ratio `0.996` in `6bba_05db0fb1`; all other
   datasets had negative best improvements. This closes the crossing-repair
   hypothesis; do not spend another Kaggle run on threshold calibration.
+- Exp165 is the next structural test. It keeps Exp148 unchanged on the three
+  sparse movies and uses overlapping `48 um` XY tiles with `12 um` overlap for
+  Hungarian motion relinking only on `6bba_05db0fb1`. Synthetic tile tests and
+  notebook syntax checks passed. Kaggle v1 is running as
+  `dalloliogm/biohub-exp165-tiled-dense-relink`; do not submit unless the dense
+  movie changes meaningfully and exact validation passes.
 
 ## READ FIRST - 2026-07-20 CORRECTION (supersedes the earlier "strategic reset")
 
