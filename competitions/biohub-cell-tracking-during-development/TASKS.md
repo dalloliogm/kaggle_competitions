@@ -1,5 +1,59 @@
 # Tasks
 
+## CURRENT STATUS - 2026-08-02 (bidirectional fusion axis opened)
+
+Exp165 scored **`0.913`**, tying Exp148 - so the pre-registered trigger fired:
+port the reverse-time harmonic fusion. Ten consecutive experiments (Exp155-165)
+now tie at `0.913`; Exp163 replaced 637 associations and Exp165 replaced 687 and
+neither moved the third decimal. Post-processing on this backbone is saturated.
+
+LEADERBOARD MOVED AGAINST US (pulled 2026-08-02): **1898 teams** (was 1768), top
+`0.944`. Our `0.913` best-rank slipped **~#62 -> ~#138**. But the plateau is
+dense and that is leverage: 149 teams sit at exactly `0.913` and 71 at `0.914`,
+so **`0.913` -> `0.914` alone jumps ~#138 -> ~#67**, i.e. into silver territory
+(silver ~top 95, bronze ~top 190). One thousandth is worth a medal tier here.
+
+### Exp166/167/168 - reverse-time harmonic fusion + weight bracket (IN FLIGHT)
+
+Model-level change, not post-processing - the first such probe since Exp148.
+For each adjacent frame pair the PRIMARY model is re-evaluated with source/target
+swapped; forward and reverse logits are calibrated to a common scale, converted
+to probabilities, fused with a weighted HARMONIC mean (penalizes any link that
+either temporal direction doubts), then rescaled to the forward logit scale so
+the candidate threshold, dual-seed fusion and ILP are untouched.
+
+Ported from `zoli800/biohub-cell-another-approch-2nd` (public versions `0.914`,
+`0.914`, `0.914`). Their backbone is WEAKER than ours - they use
+`low_margin_consensus` (our Exp144 = 0.912) and disable DeepCenter, while we keep
+`adaptive` fusion (Exp148 = 0.913) plus DeepCenter gap confirmation. So we graft
+only their orthogonal idea onto our better base.
+
+Cost is ONE extra `predict_edges` call on the SAME primary model - no third model
+is loaded, so the >=3-model rerun-timeout failure mode does not apply.
+
+- Exp166 `dalloliogm/biohub-exp166-bidirectional-harmonic` weight **0.20**
+  (zoli's value). Pushed v1, auto-submit on completion.
+- Exp167 `dalloliogm/biohub-exp167-bidirectional-w030` weight **0.30** (stronger).
+- Exp168 `dalloliogm/biohub-exp168-bidirectional-w010` weight **0.10** (weaker).
+
+All three banked the SAME day deliberately: the grading queue has hung 3h+ every
+day this week, so waiting for Exp166's score before bracketing would waste slots
+that expire at UTC midnight. Same tactic that mapped the temperature axis on
+2026-07-28. Slots 2026-08-02: Exp165 used 1; these three take it to 4 of 5.
+
+When they score:
+- Any > `0.913` -> reverse-time fusion is the plateau breaker; refine the weight
+  around the winner and consider stacking with Exp165's tiled dense relinking
+  (the two are orthogonal: model-level vs dense spatial).
+- All == `0.913` -> even a model-level change cannot move this backbone; the
+  remaining honest options are a genuinely different detector (none competitive
+  in the public pool - see the 2026-07-30 investigation) or accepting the plateau.
+
+Reserve, NOT submitted: Exp162 symmetry-aware division ranking (kernel complete,
+changes only 7 division sources). The division axis is closed - Exp155 2x = 0.912,
+Exp159 half = 0.913, Exp160/161 evidence-ranked = 0.913 - so Exp162 is a
+near-certain tie and is not worth a slot.
+
 ## CURRENT STATUS - 2026-08-01
 
 - Exp148 remains best at **`0.913`**.
