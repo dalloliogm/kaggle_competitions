@@ -197,7 +197,35 @@ The forum has extensive, directly on-point discussion of this exact phenomenon:
 
 **Bottom line**: our 7.097 → 20.067 swing is an extreme instance of a well-documented, community-understood phenomenon (unseeded PF randomness resampled fresh on every grading execution), not a bug specific to our forks or a Kaggle platform failure. Given this, resubmitting a promising, already-verified-format candidate multiple times near the final-submission deadline and keeping whichever draw scores best is a legitimate strategy, not risky overfitting — but any *single* score (ours or a public notebook's self-reported title, e.g. "LB 6.40") should be treated as one noisy sample, not a stable fact, until repeated.
 
+## Parallel final-week research (2026-08-01)
+
+The notebook titled "ROGII Physics LB 7.872 v48" is not the independent model family its title suggested. Timestamp-matched version archaeology points to upstream v65 as the likely source of our 6.505 fork: it contains all 104 functions from clean GS1.30, 102 with exact normalized AST matches, and adds the active hard-coded Q0522 correction. Do not treat it as an ensemble-diversity candidate.
+
+A refresh of 120 recently updated discussion topics and 825 comments found stronger evidence for whole-well CV and model diversity than for public-LB selection. It found no new measured azimuth ablation and no deployable-RMSE evidence for median/FFT denoising. Azimuth remains a clean hypothesis, but it must earn deployment through paired whole-well and masked-prefix validation.
+
+The current learned branch loads fixed external boosters: exactly 196 ordered features and three root-level LightGBM regressors averaged without a scaler. Adding direction columns to the inference notebook alone would therefore do nothing. A valid azimuth experiment requires paired newly trained control/conditioned artifacts built from the same feature frame, folds, and seeds; otherwise retraining and PF randomness confound the comparison.
+
+The paired azimuth builder completed on all 773 wells and 3,783,989 rows. The result is a clean rejection: pooled final-proxy OOF worsened from 11.408466 to 11.408850, only folds 3 and 4 improved, and the well-bootstrap improvement was −0.00041 with a 95% interval of [−0.01184, +0.01023]. Although two of three 60-well masked-prefix fractions improved, that secondary screen cannot override the flat full OOF result. Do not spend compute on the all-eligible run or submission inference; direction as four global features adds no credible signal to this learner.
+
+## GR denoising experiments (2026-07-31 to 2026-08-01)
+
+Applying a centered rolling median (window 7) to the GR signal used by the selector PF, beam tracker, and learned-trajectory PF was a strong regression: submission `55141310` scored **9.325** versus the usual GS1.30 band near 6.5. Broad local GR smoothing is therefore not a safe improvement on this stack.
+
+The FFT-notch experiment exposed a separate operational issue: Kaggle may mount identical declared inputs under either the namespaced paths (`/kaggle/input/competitions/...`, `/kaggle/input/datasets/...`) or legacy paths (`/kaggle/input/...`). New forks should resolve both layouts before constructing `CFG`; otherwise a kernel can fail with an empty training-well list even when its metadata declares the competition source correctly.
+
+The completed FFT grading rerun scored **10.819** (`55157951`), worse than rolling median's 9.325 and far outside the clean GS1.30 band. Together these two isolated tests reject broad local GR denoising for this stack; do not spend further slots on smoothing or frequency-notch variants.
+
+On the three visible placeholder wells, median and FFT produced byte-identical final `submission.csv` files even though their upstream trajectories differed materially. The visible-prefix/model-package/branch-gating stack can collapse genuinely different upstream signals to the same final choice. Inspect intermediate artifacts before declaring a code variant a no-op, while remembering that the grading rerun may make different gate decisions on hidden wells.
+
 ## Leaderboard Notes
+
+### s4000 and lateral self-alignment (2026-08-02)
+
+The clean GS1.30 seed-offset +4000 submission `55170737` scored **6.435**, improving the account best from 6.473 by 0.038 ft. This makes it the leading Final Submission candidate, but the known PF grading variance means the score should be treated as an empirical draw rather than proof that offset +4000 is intrinsically better.
+
+Discussion 698825 supplied a legitimate geological hypothesis: when a lateral path moves backward through TVT, its hidden GR may align better to the same well's higher-resolution pre-boundary GR than to the typewell. A standalone reverse-beam implementation was tested with nested prefix calibration on 60 deterministic wells at three mask fractions. The strict gate improved the negative-tail diagnostic by 0.2947 ft but gained only 0.0259 ft pooled; its 2,000-draw well-bootstrap interval was [-0.1995,+0.2700], and only the 0.75 fraction improved. It therefore failed the predeclared integration gates.
+
+The more permissive correlation-only gate activated on 97.2% of cases and regressed by roughly 48.8 ft. Lateral GR is highly autocorrelated even when the inferred TVT path is wrong; high GR correlation alone is not evidence of correct stratigraphic alignment. Any future version needs repeated nested-cut consistency and must be evaluated on fresh wells after gate design. Do not modify s4000 with the current implementation.
 
 - Full public LB CSVs saved at `references/rogii-wellbore-geology-prediction-publicleaderboard-2026-07-23T08:29:24.csv` (5504 teams, stale baseline) and `references/rogii-wellbore-geology-prediction-publicleaderboard-2026-07-24T05:15:25.csv` (5572 teams, current).
 - Rank history: 3504/5504 at 11.107 (stale, from a 2026-05-10 submission — missed ~2.5 months of meta evolution) → **~1317/5572 at 7.097** (2026-07-24, top 23.6%) after one day of catch-up work.

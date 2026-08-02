@@ -1,0 +1,712 @@
+{
+  "kernel_slug": "rogii-physics-lb-7-872-v48",
+  "owner_slug": "evgendvorkin",
+  "selected_version": {
+    "best_submission_score_for_kernel": {
+      "kernelSessionUrl": "/code/evgendvorkin/rogii-physics-lb-7-872-v48?scriptVersionId=338134500",
+      "kernelVersionName": "Version 59",
+      "kernelVersionNumber": 59,
+      "scoreFormatted": "6.361"
+    },
+    "date_created": "2026-07-22T14:29:49.823Z",
+    "kernel_id": 118077501,
+    "kernel_session_id": 337187628,
+    "kernel_slug": "rogii-physics-lb-7-872-v48",
+    "language": "LANGUAGE_PYTHON",
+    "owner_slug": "evgendvorkin",
+    "public_lb": "7.872",
+    "public_lb_numeric": 7.872,
+    "selection_reason": "explicit version 48",
+    "status": "COMPLETE",
+    "title": "ROGGI Physics LB 8.777",
+    "version_id": 200301106,
+    "version_name": "Version 48",
+    "version_number": 48
+  },
+  "source": {
+    "bytes": 79023,
+    "path": "competitions/rogii-wellbore-geology-prediction/references/physics-kernel-2026-08-01/v048__scriptVersionId-337187628/source.ipynb"
+  },
+  "versions": [
+    {
+      "date_created": "2026-05-06T10:03:27.433Z",
+      "public_lb": null,
+      "public_lb_numeric": null,
+      "status": "COMPLETE",
+      "title": "ROGIIBaseline",
+      "version_number": 1
+    },
+    {
+      "date_created": "2026-05-06T11:11:14.817Z",
+      "public_lb": null,
+      "public_lb_numeric": null,
+      "status": "COMPLETE",
+      "title": "ROGIIBaseline",
+      "version_number": 2
+    },
+    {
+      "date_created": "2026-05-06T11:38:35.147Z",
+      "public_lb": "161.404",
+      "public_lb_numeric": 161.404,
+      "status": "COMPLETE",
+      "title": "Baseline",
+      "version_number": 3
+    },
+    {
+      "date_created": "2026-05-06T12:10:20.567Z",
+      "public_lb": "161.404",
+      "public_lb_numeric": 161.404,
+      "status": "COMPLETE",
+      "title": "Baseline CatBoost",
+      "version_number": 4
+    },
+    {
+      "date_created": "2026-05-06T13:26:57.630Z",
+      "public_lb": "164.865",
+      "public_lb_numeric": 164.865,
+      "status": "COMPLETE",
+      "title": "Baseline CatBoost",
+      "version_number": 5
+    },
+    {
+      "date_created": "2026-05-07T13:49:01.683Z",
+      "public_lb": "159.929",
+      "public_lb_numeric": 159.929,
+      "status": "COMPLETE",
+      "title": "Baseline CatBoost",
+      "version_number": 6
+    },
+    {
+      "date_created": "2026-05-07T14:41:18.470Z",
+      "public_lb": "118.640",
+      "public_lb_numeric": 118.64,
+      "status": "COMPLETE",
+      "title": "Baseline CatBoost",
+      "version_number": 7
+    },
+    {
+      "date_created": "2026-05-07T17:13:10.827Z",
+      "public_lb": "176.153",
+      "public_lb_numeric": 176.153,
+      "status": "COMPLETE",
+      "title": "Baseline CatBoost",
+      "version_number": 8
+    },
+    {
+      "date_created": "2026-05-07T20:52:45.197Z",
+      "public_lb": "212.750",
+      "public_lb_numeric": 212.75,
+      "status": "COMPLETE",
+      "title": "Baseline CatBoost",
+      "version_number": 9
+    },
+    {
+      "date_created": "2026-05-08T08:13:02.933Z",
+      "public_lb": "21.047",
+      "public_lb_numeric": 21.047,
+      "status": "COMPLETE",
+      "title": "Baseline CatBoost",
+      "version_number": 10
+    },
+    {
+      "date_created": "2026-05-08T09:30:31.760Z",
+      "public_lb": "19.921",
+      "public_lb_numeric": 19.921,
+      "status": "COMPLETE",
+      "title": "Baseline CatBoost",
+      "version_number": 11
+    },
+    {
+      "date_created": "2026-05-08T11:58:38.197Z",
+      "public_lb": "19.061",
+      "public_lb_numeric": 19.061,
+      "status": "COMPLETE",
+      "title": "Baseline CatBoost",
+      "version_number": 12
+    },
+    {
+      "date_created": "2026-05-08T14:37:54.983Z",
+      "public_lb": "20.343",
+      "public_lb_numeric": 20.343,
+      "status": "COMPLETE",
+      "title": "Baseline CatBoost",
+      "version_number": 13
+    },
+    {
+      "date_created": "2026-05-09T11:19:44.833Z",
+      "public_lb": "19.218",
+      "public_lb_numeric": 19.218,
+      "status": "COMPLETE",
+      "title": "Baseline CatBoost",
+      "version_number": 14
+    },
+    {
+      "date_created": "2026-05-10T10:57:38.143Z",
+      "public_lb": "18.784",
+      "public_lb_numeric": 18.784,
+      "status": "COMPLETE",
+      "title": "Baseline CatBoost",
+      "version_number": 15
+    },
+    {
+      "date_created": "2026-05-13T21:23:47.847Z",
+      "public_lb": "19.331",
+      "public_lb_numeric": 19.331,
+      "status": "COMPLETE",
+      "title": "Baseline CatBoost",
+      "version_number": 16
+    },
+    {
+      "date_created": "2026-05-14T08:46:50.447Z",
+      "public_lb": "18.780",
+      "public_lb_numeric": 18.78,
+      "status": "COMPLETE",
+      "title": "Baseline CatBoost",
+      "version_number": 17
+    },
+    {
+      "date_created": "2026-05-14T10:30:13.330Z",
+      "public_lb": "17.882",
+      "public_lb_numeric": 17.882,
+      "status": "COMPLETE",
+      "title": "Baseline CatBoost",
+      "version_number": 18
+    },
+    {
+      "date_created": "2026-05-14T13:15:28.397Z",
+      "public_lb": "17.943",
+      "public_lb_numeric": 17.943,
+      "status": "COMPLETE",
+      "title": "Baseline CatBoost",
+      "version_number": 19
+    },
+    {
+      "date_created": "2026-05-14T14:02:12.627Z",
+      "public_lb": "17.882",
+      "public_lb_numeric": 17.882,
+      "status": "COMPLETE",
+      "title": "Baseline CatBoost",
+      "version_number": 20
+    },
+    {
+      "date_created": "2026-06-30T12:39:27.090Z",
+      "public_lb": "14.122",
+      "public_lb_numeric": 14.122,
+      "status": "COMPLETE",
+      "title": "Baseline CatBoost",
+      "version_number": 21
+    },
+    {
+      "date_created": "2026-06-30T13:06:16.453Z",
+      "public_lb": "12.182",
+      "public_lb_numeric": 12.182,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 22
+    },
+    {
+      "date_created": "2026-06-30T13:58:29.023Z",
+      "public_lb": "13.406",
+      "public_lb_numeric": 13.406,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 23
+    },
+    {
+      "date_created": "2026-07-05T13:54:55.670Z",
+      "public_lb": "11.874",
+      "public_lb_numeric": 11.874,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 24
+    },
+    {
+      "date_created": "2026-07-05T19:08:36.357Z",
+      "public_lb": "11.933",
+      "public_lb_numeric": 11.933,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 25
+    },
+    {
+      "date_created": "2026-07-05T21:31:39.393Z",
+      "public_lb": "11.581",
+      "public_lb_numeric": 11.581,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 26
+    },
+    {
+      "date_created": "2026-07-06T18:29:34.407Z",
+      "public_lb": "11.298",
+      "public_lb_numeric": 11.298,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 27
+    },
+    {
+      "date_created": "2026-07-07T13:06:00.753Z",
+      "public_lb": "13.121",
+      "public_lb_numeric": 13.121,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 28
+    },
+    {
+      "date_created": "2026-07-07T18:11:46.107Z",
+      "public_lb": null,
+      "public_lb_numeric": null,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 29
+    },
+    {
+      "date_created": "2026-07-07T20:39:11.857Z",
+      "public_lb": "36.142",
+      "public_lb_numeric": 36.142,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 30
+    },
+    {
+      "date_created": "2026-07-17T13:29:04.463Z",
+      "public_lb": null,
+      "public_lb_numeric": null,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 31
+    },
+    {
+      "date_created": "2026-07-18T11:12:53.763Z",
+      "public_lb": "36.142",
+      "public_lb_numeric": 36.142,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 32
+    },
+    {
+      "date_created": "2026-07-18T14:39:26.330Z",
+      "public_lb": null,
+      "public_lb_numeric": null,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 33
+    },
+    {
+      "date_created": "2026-07-19T11:35:22.263Z",
+      "public_lb": "35.154",
+      "public_lb_numeric": 35.154,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 34
+    },
+    {
+      "date_created": "2026-07-19T17:15:39.260Z",
+      "public_lb": "14.813",
+      "public_lb_numeric": 14.813,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 35
+    },
+    {
+      "date_created": "2026-07-19T17:29:48.973Z",
+      "public_lb": "14.971",
+      "public_lb_numeric": 14.971,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 36
+    },
+    {
+      "date_created": "2026-07-19T17:54:56.937Z",
+      "public_lb": "15.074",
+      "public_lb_numeric": 15.074,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 37
+    },
+    {
+      "date_created": "2026-07-20T14:59:13.053Z",
+      "public_lb": null,
+      "public_lb_numeric": null,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 38
+    },
+    {
+      "date_created": "2026-07-20T16:21:50.150Z",
+      "public_lb": null,
+      "public_lb_numeric": null,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 39
+    },
+    {
+      "date_created": "2026-07-20T17:16:39.697Z",
+      "public_lb": "12.470",
+      "public_lb_numeric": 12.47,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 40
+    },
+    {
+      "date_created": "2026-07-20T17:57:59.120Z",
+      "public_lb": "9.150",
+      "public_lb_numeric": 9.15,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 41
+    },
+    {
+      "date_created": "2026-07-20T18:22:22.353Z",
+      "public_lb": "9.150",
+      "public_lb_numeric": 9.15,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 42
+    },
+    {
+      "date_created": "2026-07-21T13:08:10.780Z",
+      "public_lb": "10.784",
+      "public_lb_numeric": 10.784,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 43
+    },
+    {
+      "date_created": "2026-07-21T13:52:25.073Z",
+      "public_lb": "16.120",
+      "public_lb_numeric": 16.12,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 44
+    },
+    {
+      "date_created": "2026-07-21T14:52:28.060Z",
+      "public_lb": "13.283",
+      "public_lb_numeric": 13.283,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 45
+    },
+    {
+      "date_created": "2026-07-21T18:05:58.990Z",
+      "public_lb": "16.100",
+      "public_lb_numeric": 16.1,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 46
+    },
+    {
+      "date_created": "2026-07-21T18:28:13.410Z",
+      "public_lb": "8.777",
+      "public_lb_numeric": 8.777,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 47
+    },
+    {
+      "date_created": "2026-07-22T14:29:49.823Z",
+      "public_lb": "7.872",
+      "public_lb_numeric": 7.872,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 8.777",
+      "version_number": 48
+    },
+    {
+      "date_created": "2026-07-22T17:41:43.220Z",
+      "public_lb": null,
+      "public_lb_numeric": null,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 49
+    },
+    {
+      "date_created": "2026-07-22T19:40:55.243Z",
+      "public_lb": "10.321",
+      "public_lb_numeric": 10.321,
+      "status": "COMPLETE",
+      "title": "Single CatBoost",
+      "version_number": 50
+    },
+    {
+      "date_created": "2026-07-22T20:21:46.980Z",
+      "public_lb": "7.970",
+      "public_lb_numeric": 7.97,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 51
+    },
+    {
+      "date_created": "2026-07-23T14:18:17.253Z",
+      "public_lb": "6.858",
+      "public_lb_numeric": 6.858,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 52
+    },
+    {
+      "date_created": "2026-07-23T15:00:34.767Z",
+      "public_lb": null,
+      "public_lb_numeric": null,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 53
+    },
+    {
+      "date_created": "2026-07-23T15:10:51.920Z",
+      "public_lb": null,
+      "public_lb_numeric": null,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 54
+    },
+    {
+      "date_created": "2026-07-24T14:19:12.790Z",
+      "public_lb": "6.519",
+      "public_lb_numeric": 6.519,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 55
+    },
+    {
+      "date_created": "2026-07-25T09:02:26.007Z",
+      "public_lb": "6.545",
+      "public_lb_numeric": 6.545,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 56
+    },
+    {
+      "date_created": "2026-07-25T21:05:54.140Z",
+      "public_lb": "6.509",
+      "public_lb_numeric": 6.509,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 57
+    },
+    {
+      "date_created": "2026-07-26T07:11:09.637Z",
+      "public_lb": "6.491",
+      "public_lb_numeric": 6.491,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 58
+    },
+    {
+      "date_created": "2026-07-26T18:15:54.327Z",
+      "public_lb": "6.361",
+      "public_lb_numeric": 6.361,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 59
+    },
+    {
+      "date_created": "2026-07-26T18:55:18.827Z",
+      "public_lb": "6.419",
+      "public_lb_numeric": 6.419,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 60
+    },
+    {
+      "date_created": "2026-07-27T06:31:40.663Z",
+      "public_lb": "6.430",
+      "public_lb_numeric": 6.43,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 61
+    },
+    {
+      "date_created": "2026-07-27T07:03:18.930Z",
+      "public_lb": "6.436",
+      "public_lb_numeric": 6.436,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 62
+    },
+    {
+      "date_created": "2026-07-27T16:36:53.627Z",
+      "public_lb": "6.473",
+      "public_lb_numeric": 6.473,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 63
+    },
+    {
+      "date_created": "2026-07-27T17:11:26.950Z",
+      "public_lb": "6.405",
+      "public_lb_numeric": 6.405,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 64
+    },
+    {
+      "date_created": "2026-07-27T17:43:52.423Z",
+      "public_lb": "6.400",
+      "public_lb_numeric": 6.4,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 65
+    },
+    {
+      "date_created": "2026-07-28T10:12:46.673Z",
+      "public_lb": "6.440",
+      "public_lb_numeric": 6.44,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 66
+    },
+    {
+      "date_created": "2026-07-28T10:50:20.227Z",
+      "public_lb": "6.478",
+      "public_lb_numeric": 6.478,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 67
+    },
+    {
+      "date_created": "2026-07-28T18:55:46.227Z",
+      "public_lb": "6.453",
+      "public_lb_numeric": 6.453,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 68
+    },
+    {
+      "date_created": "2026-07-28T19:39:19.973Z",
+      "public_lb": null,
+      "public_lb_numeric": null,
+      "status": "ERROR",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 69
+    },
+    {
+      "date_created": "2026-07-28T20:28:37.023Z",
+      "public_lb": "6.766",
+      "public_lb_numeric": 6.766,
+      "status": "ERROR",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 70
+    },
+    {
+      "date_created": "2026-07-29T10:12:04.757Z",
+      "public_lb": "7.893",
+      "public_lb_numeric": 7.893,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 71
+    },
+    {
+      "date_created": "2026-07-29T10:43:45.520Z",
+      "public_lb": "6.457",
+      "public_lb_numeric": 6.457,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 72
+    },
+    {
+      "date_created": "2026-07-29T11:44:49.893Z",
+      "public_lb": "6.491",
+      "public_lb_numeric": 6.491,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 73
+    },
+    {
+      "date_created": "2026-07-29T12:20:20.737Z",
+      "public_lb": "6.465",
+      "public_lb_numeric": 6.465,
+      "status": "ERROR",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 74
+    },
+    {
+      "date_created": "2026-07-29T12:52:52.293Z",
+      "public_lb": "7.346",
+      "public_lb_numeric": 7.346,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 75
+    },
+    {
+      "date_created": "2026-07-30T10:21:06.973Z",
+      "public_lb": "6.497",
+      "public_lb_numeric": 6.497,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 76
+    },
+    {
+      "date_created": "2026-07-30T11:13:45.730Z",
+      "public_lb": "6.510",
+      "public_lb_numeric": 6.51,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 77
+    },
+    {
+      "date_created": "2026-07-30T12:11:54.720Z",
+      "public_lb": "8.314",
+      "public_lb_numeric": 8.314,
+      "status": "COMPLETE",
+      "title": "ROGII Physics LB 7.872 v48!",
+      "version_number": 78
+    },
+    {
+      "date_created": "2026-07-30T12:59:33.437Z",
+      "public_lb": "6.534",
+      "public_lb_numeric": 6.534,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 79
+    },
+    {
+      "date_created": "2026-07-30T13:38:21.307Z",
+      "public_lb": "6.464",
+      "public_lb_numeric": 6.464,
+      "status": "COMPLETE",
+      "title": "ROGGI Physics LB 7.872 v48!",
+      "version_number": 80
+    },
+    {
+      "date_created": "2026-07-31T09:19:39.813Z",
+      "public_lb": "6.506",
+      "public_lb_numeric": 6.506,
+      "status": "COMPLETE",
+      "title": "ROGII Physics LB 7.872 v48!",
+      "version_number": 81
+    },
+    {
+      "date_created": "2026-07-31T10:01:07.023Z",
+      "public_lb": "6.576",
+      "public_lb_numeric": 6.576,
+      "status": "COMPLETE",
+      "title": "ROGII Physics LB 7.872 v48!",
+      "version_number": 82
+    },
+    {
+      "date_created": "2026-07-31T11:12:35.270Z",
+      "public_lb": "6.475",
+      "public_lb_numeric": 6.475,
+      "status": "COMPLETE",
+      "title": "ROGII Physics LB 7.872 v48!",
+      "version_number": 83
+    },
+    {
+      "date_created": "2026-07-31T12:26:23.953Z",
+      "public_lb": "6.484",
+      "public_lb_numeric": 6.484,
+      "status": "COMPLETE",
+      "title": "ROGII Physics LB 7.872 v48!",
+      "version_number": 84
+    },
+    {
+      "date_created": "2026-07-31T13:30:22.430Z",
+      "public_lb": "6.546",
+      "public_lb_numeric": 6.546,
+      "status": "COMPLETE",
+      "title": "ROGII Physics LB 7.872 v48!",
+      "version_number": 85
+    }
+  ]
+}
