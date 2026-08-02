@@ -222,6 +222,15 @@ Our config's true **mean is ~6.52, but bronze is ≤6.457** — i.e. the cutoff 
 ### Also new: `pilkwang/rogii-dual-track-prefix-calibrated-geosteering` (347 votes, lineage originator)
 Uses a distinct `SUBMISSION_PROFILE = 'dual_track_prefix_modelpkg'` (not our `vp_balanced_modelpkg_005`). Untested by us — worth a submission as a genuinely different profile from the person who originated this whole approach.
 
+## Determinism check FAILED (2026-07-30/31): seeding the PF is NOT enough
+
+The seeded GS1.30 notebook (`rogii-det-gs1-30-seeded-no-q0522`, which adds `np.random.seed(seed_base+s)` inside the numba PF) was submitted twice, identical kernel v1: first run `55072827` = **6.476**, repeat run `55101247` = **6.506**. **Two grading runs of the same "seeded" kernel gave different scores → the pipeline is not actually deterministic.** Seeding the PF's `np.random` does not pin the other randomness sources (LightGBM/CatBoost training, numba parallel threads, or other PF stages). **Consequence: the "seeded = reproducible/safe Final Submission" premise is disproven.** A lucky public draw is still just a lucky draw — if Kaggle re-executes the notebook for private scoring, it will produce a fresh (different) prediction, so a good public score need not carry to private. The seed variants (s1000..s5000) are therefore just controlled draw-banking, not a way to lock a fixed result.
+
+## Draw-banking outcome + moving bronze cutoff (2026-07-30 → 08-02)
+
+- Extensive draw-banking (my 5 seed draws 6.506/6.509/6.514/6.519/6.527, plus the other machine's many more) caught two sub-6.457 public draws: **6.435** (`55170737`, best) and **6.454** (`55185345`). But the **bronze cutoff tightened from 6.457 (07-30) → 6.416 (08-02)** as the field tuned near the deadline (6072 teams). Best draw 6.435 is rank ~775, top 12.8%, **still ~0.02 outside bronze.** The distribution mean (~6.51) is now ~2.5 sd above the bronze bar, so reaching 6.416 by draw-banking alone is a <1%-per-draw long shot.
+- **GR-rotation denoise lever FAILED in practice**: two isolated implementations (centered rolling-median `55141310` = 9.325; FFT dominant-frequency notch `55157951` = 10.819) both regressed catastrophically vs ~6.5. The noise-floor notebook's theoretical +4pts localization did not translate — this specific lever, as implemented, hurts. Don't pursue these two variants further.
+
 ## Leaderboard Notes
 
 - Full public LB CSVs saved at `references/rogii-wellbore-geology-prediction-publicleaderboard-2026-07-23T08:29:24.csv` (5504 teams, stale baseline) and `references/rogii-wellbore-geology-prediction-publicleaderboard-2026-07-24T05:15:25.csv` (5572 teams, current).
