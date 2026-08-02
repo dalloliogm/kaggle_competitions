@@ -55,6 +55,10 @@
   reproduced Exp148 exactly (`122,107` nodes, `117,913` edges, `333` divisions).
   Do not submit either version. Instrument the best candidate cost before any
   further widening.
+- Exp164 v3 logged the best feasible costs. The strongest candidate was only
+  `+0.066 um` improvement at ratio `0.996` in `6bba_05db0fb1`; all other
+  datasets had negative best improvements. This closes the crossing-repair
+  hypothesis; do not spend another Kaggle run on threshold calibration.
 
 ## READ FIRST - 2026-07-20 CORRECTION (supersedes the earlier "strategic reset")
 

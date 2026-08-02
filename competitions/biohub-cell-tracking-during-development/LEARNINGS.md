@@ -32,6 +32,11 @@ Capture durable information learned while working on this competition. This is f
   thresholds again, log the maximum feasible improvement and the corresponding
   cost ratio; the ratio may be suppressing candidates because the base cost can
   be close to zero after the learned-probability term.
+- Exp164 v3 measured the concern directly. The maximum feasible improvement was
+  only `0.066 um` with a `0.996` cost ratio in the dominant dense movie, while
+  every other movie's best candidate made the objective worse. This is not a
+  threshold-calibration miss: the proposed four-frame swap objective has no
+  useful activation signal on the test graph. Close the branch.
 
 ## Division quantity versus identity (2026-07-31, Exp155/159/160/161)
 
