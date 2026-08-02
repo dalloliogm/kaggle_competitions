@@ -31,10 +31,21 @@ only their orthogonal idea onto our better base.
 Cost is ONE extra `predict_edges` call on the SAME primary model - no third model
 is loaded, so the >=3-model rerun-timeout failure mode does not apply.
 
+ALL THREE RAN TO COMPLETE AND ARE SUBMITTED (2026-08-02, PENDING):
 - Exp166 `dalloliogm/biohub-exp166-bidirectional-harmonic` weight **0.20**
-  (zoli's value). Pushed v1, auto-submit on completion.
-- Exp167 `dalloliogm/biohub-exp167-bidirectional-w030` weight **0.30** (stronger).
-- Exp168 `dalloliogm/biohub-exp168-bidirectional-w010` weight **0.10** (weaker).
+  (zoli's value) -> submission `55195447`.
+- Exp167 `dalloliogm/biohub-exp167-bidirectional-w030` weight **0.30** (stronger)
+  -> submission `55195539`.
+- Exp168 `dalloliogm/biohub-exp168-bidirectional-w010` weight **0.10** (weaker)
+  -> submission `55195793`.
+
+The port is VERIFIED APPLIED, not silently skipped: each notebook carries a
+runtime guard that raises `Bidirectional fusion patch expected one anchor` if the
+anchor block is missing, and additionally validates
+`0 < BIOHUB_BIDIRECTIONAL_EDGE_WEIGHT <= 0.35`. All three kernels reached
+COMPLETE, so the anchor matched and the fusion ran in every case. Runtime was
+~22 min per kernel, comparable to Exp148, confirming the extra `predict_edges`
+call does not approach the rerun timeout.
 
 All three banked the SAME day deliberately: the grading queue has hung 3h+ every
 day this week, so waiting for Exp166's score before bracketing would waste slots
