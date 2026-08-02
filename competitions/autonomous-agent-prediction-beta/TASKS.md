@@ -147,6 +147,56 @@
   finite predictions.
 - Submitted v9 as `55030429`; Kaggle accepted the refunded slot and evaluation
   is pending.
+- Built the local v13 target-blind JSON planner prototype on 2026-08-01:
+  - retained v12 quick/portfolio fallbacks;
+  - added a solution-blind predictor profiler and strict one-family JSON DSL;
+  - gated the actual planned model against the best portfolio OOF prediction;
+  - ensured rejected plans produce no submission candidate;
+  - ran the compact six-family opportunity screen over all 16 official tasks;
+  - saved `references/v13-planner-opportunity-replay.csv` and the executed
+    `notebooks/autonomous-agent-v13-llm-feature-planner.ipynb`.
+- Held v13 from Kaggle upload/submission because the current single-seed gate
+  accepted two harmful false positives in the opportunity screen.
+- Completed the multi-seed, multi-model v13 stability experiment on 2026-08-01:
+  - 3 CV seeds, HGB, ExtraTrees, and one-hot logistic regression;
+  - 882 scored rows across all 16 practice tasks;
+  - strict cross-model/cross-seed family agreement removed the measured false
+    positives;
+  - the final-model gate retained one positive held-out specialist;
+  - saved `references/v13-planner-stability-replay.csv` and runner
+    `references/v13_planner_stability_replay.py`.
+- Private Kaggle notebook
+  `dalloliogm/autonomous-agent-v13-stable-llm-feature-planning`:
+  - version 1 failed after 3,403 seconds with `DeadKernelError` after completing
+    `train_01` through `train_12`; the single long cell exceeded the practical
+    hosted runtime/resource envelope before writing its final CSV;
+  - version 2 used two CV seeds across the same three model families and
+    checkpointed after every task. It preserved 468 valid rows through
+    `train_12`, then failed after 1,999 seconds with the same `DeadKernelError`
+    as `train_13` began, identifying cumulative process memory as the likely
+    constraint rather than total wall time;
+  - an attempted version 3 push accidentally reused the stale version-2 staging
+    folder after `kaggle_push_notebook.sh` exited before copying (the local
+    Kaggle executable was absent). Pulling the remote source proved that v3 did
+    not contain the repair;
+  - version 4 genuinely ran the isolated-worker code and crossed the previous
+    boundary, checkpointing all 468 rows through `train_13`; the `train_14`
+    worker then segfaulted with exit code `-11`;
+  - version 5 defaults to the exact embedded 882-row completed three-seed audit
+    and retains the full replay as an explicit `RUN_HOSTED_REPLAY=True` stress
+    test. The embedded frame matches the repository CSV exactly, and the full
+    default notebook executes locally without cell errors;
+  - hosted version 5 completed successfully on 2026-08-01. Its downloaded CSV
+    has 882 rows, 16 tasks, all 3 model families and all 3 seeds, finite numeric
+    values, and matches the repository audit exactly.
+- Packaged and submitted `official-demo-v13-profile-planner` on 2026-08-01:
+  - final archive SHA-256:
+    `17ca4e362835c5001f3f1ec011ee2bd331353fcb597c6fc25982ce6621582b8d`;
+  - archive integrity, YAML includes/tools, and extracted Python compilation
+    passed; the extracted portfolio smoke produced six 10,000-row candidates
+    with exact sample schema/ID order and finite predictions;
+  - Kaggle submission `55171041` was accepted and is `PENDING`; today's single
+    submission slot is consumed.
 
 ## Questions
 

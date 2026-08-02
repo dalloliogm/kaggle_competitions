@@ -196,8 +196,70 @@ Capture durable information learned while working on this competition. This is f
   `references/v12-portfolio-selection-replay.csv`, and
   `references/v12-portfolio-replay-summary.txt`.
 
+## V13 LLM Planner Opportunity Screen
+
+- A target-blind LLM planner has something real to choose: the hindsight-best
+  single feature family improved mean held-out AUC by 0.00280 across the 16
+  official tasks and improved 15 tasks. This is a ceiling, not a deployable
+  policy, because it uses solutions only after prediction to identify the best
+  family.
+- OOF argmax captured less than half the ceiling (+0.00131 held-out mean), and
+  the seemingly strict gate (at least +0.0015 OOF, all 3 screen folds positive,
+  no fold below -0.002) still accepted two harmful false positives out of three
+  accepted tasks. Fold consistency under one CV seed is not enough.
+- Frequency counts were the only broadly positive universal family (+0.00082
+  mean held-out AUC). Signed logs were approximately neutral; missingness,
+  interactions, polynomial terms, and row statistics regressed on average even
+  though some had large task-specific wins.
+- The next safety layer should require repeat-seed and cross-model agreement.
+  Prompt cleverness cannot repair a noisy promotion statistic.
+- The v13 executor gates the final planned model directly against the best
+  deterministic portfolio OOF prediction. A rejected plan writes no CSV and is
+  never offered to `submit_predictions`, fixing v10's wrong-level gate.
+- The 3-seed × 3-model follow-up produced 882 task/model/seed/family rows. A
+  strict agreement rule (mean OOF gain >= 0.0015, at least 7/9 positive runs,
+  all three model means positive, all three seed means positive, and a
+  non-negative weakest-model mean) retained only `train_10` signed logs and
+  `train_13` frequency features. Both had positive mean held-out gains.
+- Adding the correct final-model comparison retained only `train_13` frequency
+  features with logistic regression: +0.00654 three-seed OOF and +0.00281
+  three-seed held-out AUC versus the best baseline model. Spread over all 16
+  tasks, that is only about +0.00018, so the LLM branch is a rare specialist.
+- Model diversity mattered more than seed repetition alone. A cheaper HGB +
+  ExtraTrees audit still admitted one false positive when selecting the final
+  model; adding one-hot logistic removed it, but made several task audits take
+  minutes. Replacing logistic with a faster diverse auditor is the next design
+  problem.
+- Kaggle notebook version 1 ran for 3,403 seconds, completed 12/16 tasks, then
+  died without a model traceback (`DeadKernelError`). Long replay cells must
+  checkpoint after every task. The two-seed subset retains the same two stable
+  families and final positive specialist as the three-seed audit, while cutting
+  expected hosted runtime by roughly one third.
+- Version 2 disproved wall time as the main failure mode: it reached the same
+  task boundary in only 1,999 seconds and checkpointed 468 rows before the
+  kernel died. `gc.collect()` could not release model-library allocations still
+  retained by the process. Run each task in a fresh worker process; process exit
+  gives Kaggle a hard memory-reclamation boundary between schemas.
+- A failed notebook-push helper must not be followed by a blind direct push of
+  its staging directory: the folder may still contain an older version. After
+  any helper failure, copy the notebook and metadata explicitly and inspect the
+  staged code (or pull the remote source) before pushing with `uvx kaggle`.
+- Fresh forked workers fixed cumulative memory retention and carried hosted v4
+  through `train_13`, but `train_14` still produced a native exit `-11`. A
+  tutorial notebook should not make a 30+ minute native-library stress test its
+  default save path. Embed the exact completed audit for stable rendering and
+  keep expensive recomputation explicit and opt-in.
+- Hosted notebook version 5 confirmed that design: it completed in seconds and
+  emitted an 882-row CSV exactly equal to the completed local audit, with 16
+  tasks, 3 model families, 3 seeds, and finite numeric values.
+
 ## Leaderboard Notes
 
+- Submission `55171041`: `PENDING`; v13 target-blind JSON feature planner over
+  the proven v12 quick/portfolio fallbacks. Uploaded 2026-08-01 after archive,
+  include/tool, extracted-Python, and 10,000-row portfolio-output validation.
+  Archive SHA-256:
+  `17ca4e362835c5001f3f1ec011ee2bd331353fcb597c6fc25982ce6621582b8d`.
 - Submission `55130084`: `COMPLETE`, public score **`0.822`**; v12
   deterministic portfolio plus bounded Gemini Pro freeroll. This improved the
   previous 0.819 live best and confirms that the newer skill-provided
