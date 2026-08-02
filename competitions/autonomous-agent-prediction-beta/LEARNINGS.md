@@ -276,6 +276,44 @@ Capture durable information learned while working on this competition. This is f
   avoid publishing unattributed derivatives, and prefer static extraction plus
   official compiler validation over executing the third-party agent locally.
 
+## Headroom Analysis (2026-08-02, offline, zero slots spent)
+
+Computed directly from `references/v12-portfolio-candidate-replay.csv` (16 tasks
+x 7 candidates) plus fresh runs on the downloaded practice data. These bound how
+much is left in the current approach, and they are mostly negative results.
+
+- **Candidate selection is saturated — stop working on it.** Over v12's pool:
+  always-`rank_top2` private mean 0.80348; selecting by public feedback 0.80379
+  (+0.00031); selecting by solution-blind CV 0.80369; a cheating oracle 0.80401.
+  So the *entire* selection apparatus has a ceiling of **+0.0005**, and the
+  realized gain (+0.0003) sits below the ~0.0004 single-task noise floor. Public
+  and CV selection each pick the private-optimal candidate on only 10/16 tasks.
+  No gate, margin, or feedback rule can be worth much here.
+- **Public-feedback selection is partly an illusion.** It buys +0.00060 on the
+  public half but only +0.00031 on private, so **+0.00029 of the public gain does
+  not transfer.** Leaderboard positions may be inflated by how aggressively a
+  team selects on public feedback; the prize-relevant private ranking is a
+  different session. Do not chase public-score deltas of this size.
+- **The candidates are highly correlated, so adding another GBDT is futile.**
+  Mean per-task max-min spread across all 7 candidates is 0.0831, but that is
+  driven almost entirely by `logistic`; excluding it the spread collapses to
+  **0.0215**. `catboost`, `lightgbm`, `quick`, `rank_all`, and `rank_top2` are
+  near-duplicates in ranking terms.
+- **Multi-seed averaging helps only very small tasks.** Same folds/params,
+  3 seeds vs 1 (CatBoost, native categoricals): train_13 (500 rows) **+0.0037**,
+  train_15 (500 rows) **+0.0052**, train_05 (1060) -0.0002, train_09 (1109)
+  -0.0019, train_03 (3501) -0.0001, train_16 (1809) +0.0001. Gated to roughly
+  n_train < 800 this is worth about **+0.0006 on the 16-task mean** — real, but
+  small. Ungated it is noise.
+- **v12 has no runtime cap.** `run_portfolio.py` measures elapsed time but never
+  bounds it; the `train_11` portfolio took **859 seconds**. This is an unguarded
+  tail risk on a larger hidden task, and probably matters more than any of the
+  AUC deltas above.
+- **Net:** no lever currently in evidence reliably buys the ~+0.004 needed to go
+  from 0.822 to the 0.826+ range. Treat further single-slot modeling tweaks as
+  roughly coin flips, and prioritize the final-submission choice (private,
+  different session) over public-score chasing.
+
 ## Leaderboard Notes
 
 - Submission `55180862`: `ERROR`; the first Sonnet package failed before agent
