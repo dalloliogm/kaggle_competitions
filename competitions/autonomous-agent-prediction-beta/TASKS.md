@@ -7,7 +7,8 @@
   averaging gated to tasks under 800 training rows and a hard wall-clock deadline
   checked between folds. **Submitted as runtime insurance, not an expected score
   gain**: offline it is identical to v12 above the threshold and worth roughly
-  +0.0001 on the 16-task mean below it. Poll and record the outcome.
+  +0.0001 on the 16-task mean below it. **Completed at 0.822**, tying v12 and
+  v13 and matching the pre-registered "no change" band (0.820-0.823) exactly.
 - Six independent levers were measured on 2026-08-03 and all came back null or
   negative (see LEARNINGS "Saturation Evidence"). Do not spend further slots on
   modelling variants without new evidence.

@@ -391,6 +391,18 @@ v12/v13. Recorded so nobody spends another slot rediscovering this.
 
 ## Leaderboard Notes
 
+- Submission `55214880`: `COMPLETE`, public score **`0.822`** — `v15
+  seedbag+timecap` ties v12 and v13 at the live best. This is the first
+  prediction in this workspace that was made *before* submitting and then held:
+  the offline analysis said v15 is identical to v12 above 800 training rows and
+  worth ~+0.0001 below it, so 0.820-0.823 was called out in advance as the
+  "no change" band. Landing at 0.822 confirms both the package's safety property
+  and that the 16-task replay harness now predicts live behaviour well enough to
+  screen candidates without spending slots.
+- The tie also adds a third independent data point to the saturation evidence: a
+  deterministic portfolio (v12), an LLM feature planner (v13), and a
+  variance-reduced portfolio (v15) all land on exactly 0.822.
+
 - Submission `55180862`: `ERROR`; the first Sonnet package failed before agent
   execution because the OpenAI-compatible proxy rejects the `temperature` field
   for Claude Sonnet 5. LiteLLM retried the same invalid request 100 times.
