@@ -350,6 +350,45 @@ much is left in the current approach, and they are mostly negative results.
   behaves identically to v12 above 800 training rows and buys bounded runtime
   at a cost of ~0 AUC.
 
+## Saturation Evidence (2026-08-03) — six independent levers, all null
+
+Measured on the real 16-task practice data with a harness verified to reproduce
+the recorded v12 replay exactly. Every remaining idea was tested and none beats
+v12/v13. Recorded so nobody spends another slot rediscovering this.
+
+| Lever | Measured effect | Note |
+| --- | --- | --- |
+| Candidate selection / gating | **+0.0005 ceiling** (cheating oracle) | realized +0.0003, below noise |
+| LLM feature planner (v13) | **+0.00018** | live 0.822, tied v12 |
+| Multi-seed averaging (v15) | **+0.0001** on 16-task mean | rank blending is a substitute |
+| CatBoost hyperparameter tuning | **-0.00104** | 25-trial Optuna, inner-CV overfit |
+| Pseudo-labelling / transductive | **-0.00015** | no confident rows where it matters |
+| Extra gated model class (v11) | **live -0.009** | synthetic gain did not generalize |
+
+- **Hyperparameter tuning actively hurts.** 25-trial Optuna on CatBoost, tuned on
+  solution-blind inner 3-fold CV: train_13 +0.00088, train_03 +0.00026, train_08
+  +0.00093, but train_05 **-0.00622**, for a mean of **-0.00104**. The tuner wins
+  the inner CV and loses the test set. v12's hand-picked constants are not a
+  weakness — at this data scale they are near the useful limit.
+- **Pseudo-labelling cannot help the tasks that need it.** For small tasks the
+  test set dwarfs train (train_13: 500 train vs 10,000 test), which looks like
+  free signal. But at a 0.90 confidence threshold, train_13, train_05 and
+  train_09 yielded **zero** confident test rows, because their AUC is only
+  0.64-0.68. Confidence-based semi-supervision needs a confident model, and the
+  weak tasks are weak precisely because the signal is low. Where it did apply it
+  was noise (train_16 +0.00056, train_15 -0.00085).
+- **Conclusion: the tabular modelling is saturated at this data scale.** Six
+  independent levers all land inside +/-0.001 while the gap to the leaderboard
+  top is ~0.008. That gap is unlikely to be a modelling gap we can close by
+  tweaking; with 440 teams scored on a single public mini-competition, the top
+  of the public board is partly an order statistic over noisy draws. Our own
+  reasonable packages span 0.818-0.822 with no clear modelling difference
+  between several of them, which is a rough gauge of per-session noise.
+- **Practical implication:** stop spending slots on modelling variants. The
+  private leaderboard is a *different session*, so the prize-relevant decision
+  is which two packages become finals, not squeezing +0.001 out of the public
+  score.
+
 ## Leaderboard Notes
 
 - Submission `55180862`: `ERROR`; the first Sonnet package failed before agent
