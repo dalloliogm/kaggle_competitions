@@ -314,6 +314,42 @@ much is left in the current approach, and they are mostly negative results.
   roughly coin flips, and prioritize the final-submission choice (private,
   different session) over public-score chasing.
 
+## v15 Seed-Bagging And Runtime Cap (2026-08-03, offline)
+
+- **A latent failure mode in the live-best package: `pandas` 3.x silently
+  destroys categorical handling.** `common.py` reads CSVs with
+  `pd.read_csv(..., engine="pyarrow")`. Under pandas 3.x that returns the new
+  pyarrow-backed `str` dtype, which `categorical_columns()` does not recognise,
+  so it returns `[]`: CatBoost gets no `cat_features`, LightGBM gets no
+  `categorical_feature`, and the logistic candidate crashes on its numeric
+  imputer. Measured effect on train_13: **0.639 -> 0.503** (random). Under
+  pandas 2.3.3 the same code returns `object` and reproduces the recorded replay
+  exactly. Kaggle's image is currently on pandas 2.x so v12/v13/v15 are fine
+  today, but a base-image upgrade would silently gut every categorical task.
+  Any future package should type-check features explicitly rather than relying
+  on `object` dtype. Pin `pandas<3` in any local replay environment or the
+  numbers are meaningless.
+- **Seed-averaging does not survive contact with the portfolio.** Standalone
+  CatBoost gained +0.0037 (train_13) and +0.0052 (train_15) from 3-seed
+  averaging, but inside the v12 portfolio the *selected* candidate gained only
+  +0.0016 on train_13 and -0.00001 on train_15. The reason is that the selected
+  candidate is almost always a rank blend (`rank_top2`/`rank_all`), and
+  averaging across models already performs the variance reduction that
+  averaging across seeds would provide — the two are substitutes, not
+  complements. Expected gain over the 16-task mean is roughly +0.0001, i.e.
+  below the ~0.0004 noise floor. Do not expect a live gain from this.
+- **The 859-second train_11 portfolio was environment-specific, not intrinsic.**
+  The same task ran in 79 seconds here on the same code. The tail risk is real
+  but smaller than the recorded figure suggested.
+- **A hard runtime cap is nearly free.** Capping train_11 at 25 seconds (vs 79
+  unbounded) skipped `extra_trees` and `logistic` for budget, still produced
+  four valid candidates, and moved the selected candidate only 0.82662 ->
+  0.82650. Because the portfolio runs strongest-first, the models a cap drops
+  are the ones that were not going to be selected anyway.
+- Net: v15 is best understood as **insurance, not a score improvement** — it
+  behaves identically to v12 above 800 training rows and buys bounded runtime
+  at a cost of ~0 AUC.
+
 ## Leaderboard Notes
 
 - Submission `55180862`: `ERROR`; the first Sonnet package failed before agent
