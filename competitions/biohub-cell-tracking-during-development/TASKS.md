@@ -39,6 +39,11 @@ ALL THREE RAN TO COMPLETE AND ARE SUBMITTED (2026-08-02, PENDING):
 - Exp168 `dalloliogm/biohub-exp168-bidirectional-w010` weight **0.10** (weaker)
   -> submission `55195793`.
 
+UPDATE 2026-08-03 ~02:00 UTC: all three still PENDING ~4h after submit
+(queue-hang, as every day this week). Auto-recheck loop STOPPED - no further
+polling scheduled. Scores will appear later; the decision rules below still
+apply unchanged when they do.
+
 The port is VERIFIED APPLIED, not silently skipped: each notebook carries a
 runtime guard that raises `Bidirectional fusion patch expected one anchor` if the
 anchor block is missing, and additionally validates
