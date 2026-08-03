@@ -2,6 +2,21 @@
 
 ## Current Goal
 
+- Submission `55214880` (`official-demo-v15-seedbag-timecap`) uploaded 2026-08-03,
+  consuming the day's slot. Archive sha256 `bc0d88ac...`. It is v12 plus 3-seed
+  averaging gated to tasks under 800 training rows and a hard wall-clock deadline
+  checked between folds. **Submitted as runtime insurance, not an expected score
+  gain**: offline it is identical to v12 above the threshold and worth roughly
+  +0.0001 on the 16-task mean below it. Poll and record the outcome.
+- Six independent levers were measured on 2026-08-03 and all came back null or
+  negative (see LEARNINGS "Saturation Evidence"). Do not spend further slots on
+  modelling variants without new evidence.
+- **Remaining prize-relevant action: choose the two final submissions.** Private
+  is a different session from the public leaderboard, so the finals choice
+  matters more than any public-score delta. Current recommendation is
+  `55130084` (v12, 0.822) and `55171041` (v13, 0.822) — the two best packages,
+  built on different mechanisms (deterministic portfolio vs LLM planner).
+
 - Reproduce the public 0.823 Gemini Pro freeroll exactly, then isolate whether a
   model-only switch to `claude-sonnet-5` improves it. Both v14 packages are
   built and pass the official compiler. The user chose Sonnet first: submission
