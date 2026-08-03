@@ -56,14 +56,46 @@ Thirteen consecutive experiments now land on exactly `0.913` (Exp159, 160, 161,
 - Exp165 replacing **687** edges in the dense movie (edge Jaccard 0.9807),
 - Exp166-168 a genuine model-level bidirectional fusion at three weights.
 
-WHY THE SCORE WILL NOT MOVE - resolution analysis. The public LB reports three
-decimals over roughly `118,000` edges, so one displayed step (`0.001`) needs a
-NET improvement of about `118` correct edges. Changing 637-687 edges only moves
-the third decimal if the hit rate is far above break-even; at a realistic
-near-even rate the net change is below display resolution. Every axis we have
-left perturbs a few hundred edges. **These experiments are structurally incapable
-of showing a gain even when slightly positive.** That, not bad luck, explains the
-run of identical scores.
+### CORRECTION 2026-08-03: the two paragraphs originally written here were WRONG
+
+Retracted claim 1 - "one 0.001 step needs ~118 net correct edges out of ~118,000".
+FALSE. The GT is SPARSE. Per the harness table in `LEARNINGS.md` only about
+**2,258 edges are scored in total** across the five labelled movies, with
+**167 total errors**, and `6bba_05db0fb1` alone carries **56%** of the weight
+(`1,095` TP / `79` FP / `88` FN, `D = 1,262`). Using this repo's own derivation
+(`d(J)` per mis-link fixed `= (1+J)/D`, mis-links counting double because edge FP
+and FN are coupled), one mis-link fixed in that movie is worth
+`1.867/1262 * 0.559` = about **`+0.0008` aggregate**. So roughly **1-2 mis-links
+= `+0.001`**, and clearing all 167 errors is worth about `+0.07`. The metric is
+extremely SENSITIVE, not insensitive.
+
+Retracted claim 2 - "only a better DETECTOR can move this". FALSE, and it
+contradicts a measurement already in `LEARNINGS.md`:
+**`node_recall` is `1.0000` and `0.9988` - detection is saturated and ALL edge
+loss is linking loss.** A better detector has essentially no headroom. Do not
+start a from-scratch detector training project on this basis.
+
+### THE ACTUAL REASON FOR THE 13 TIES
+
+We have been editing edges the metric never scores. `6bba_05db0fb1` contains
+about `70,000` PREDICTED edges but only `1,262` SCORED ones (~1.8%). Exp165
+replaced `687` edges there, which in expectation touches only about
+`687 * 1262/70000` = **~12 scored edges**; if those break about as many as they
+fix, the aggregate change is zero - exactly what was observed. Exp163's 637
+replacements have the same problem. The perturbations were large in absolute
+terms and negligible in scored terms.
+
+IMPLICATION - change the METHOD, not the axis. Blind LB submissions that reshuffle
+hundreds of unscored edges are near-guaranteed ties. The local harness reports
+per-movie edge TP/FP/FN, so it can say directly whether a change fixes any of the
+`167` known errors. Use it as the gate BEFORE spending a submission slot: require
+a candidate to reduce FP+FN on `6bba_05db0fb1` locally, then submit.
+
+Caveats to respect: the harness under-reads absolute score by about `0.035` and is
+a RANKING signal only; the labelled set has just `3` annotated divisions so the
+division term is nearly unmeasurable locally; and the hidden test movies differ,
+so a local fix must be a general linking improvement rather than an overfit to
+these `167` cases.
 
 CAUTION ON THE PUBLIC 0.914 CLAIM: zoli800's own versions scored
 `0.914, 0.911, 0.914, 0.914, 0.913` - a `0.003` spread across their own runs. Their
@@ -71,22 +103,28 @@ CAUTION ON THE PUBLIC 0.914 CLAIM: zoli800's own versions scored
 `+0.001`; it is within their own run-to-run variation. We ported the mechanism
 correctly (kernels completed, guard verified) and it is neutral on our backbone.
 
-WHAT WOULD ACTUALLY MOVE 0.913 -> 0.914+: only a change touching THOUSANDS of
-edges correctly, which means DETECTION quality or a fundamentally better
-association model - not post-processing. Concretely that is a better-trained
-detector, and the 2026-07-30 investigation established none exists in the public
-pool (justinkim = 1-epoch smoke scaffold; drkongvis = undocumented blackbox;
-hongdaekim pins = EARLIER 300ep snapshots of our own 400ep weights, sha-verified;
-v34 reseed = 0.908; Trackastra 2D linker = 0.898). Training a competitive 3D
-detector from scratch is the only remaining honest lever and is a multi-day GPU
-project against a weekly quota.
+WHAT WOULD ACTUALLY MOVE `0.913` -> `0.914+`: fixing MIS-LINKS, specifically in
+`6bba_05db0fb1`. Only 1-2 corrected mis-links are needed per displayed step. This
+is a LINKING problem, not a detection or model-capacity problem, and it is
+concentrated in dense regions of one movie.
 
-RECOMMENDATION: stop the incremental hunt. Exp148 at `0.913` is the final
-submission unless a genuinely new public artifact appears. Continuing to spend
-daily slots on few-hundred-edge perturbations has a measured 13-for-13 record of
-producing no change and should not continue. Monitor public notebooks/datasets
-periodically for a genuinely better DETECTOR; that is the only trigger worth
-reopening this for.
+NEXT SESSION SHOULD START HERE (not with another blind submission):
+1. Re-run the local harness on Exp148 and DUMP THE 167 ERRORS individually
+   (`79` FP + `88` FN in `6bba_05db0fb1`, plus `3`/`24` in `6bba_05b6850b`) with
+   their coordinates, frames, and the competing candidate parents.
+2. Inspect them for a common failure mode - crossing trajectories, dense-cluster
+   ambiguity, division neighbourhoods, frame-to-frame velocity outliers. Exp164
+   already showed generic pair-swapping finds nothing, so the fix must be
+   targeted at whatever pattern the errors actually show.
+3. Gate any candidate on reducing local FP+FN BEFORE spending a submission slot.
+
+Still-dead axes (do not revisit): division budget/ranking, ILP costs, learned
+bonus strength, post-mix temperature, edge/detection blend weights, reseed
+ensembles, Trackastra linker swap, alternate public detectors.
+
+STATUS: Exp148 `0.913` remains the standing submission and is safe. The deadline
+is 2026-09-29, so there is ample time to do the error-analysis work properly
+rather than continuing to spend slots on unscored-edge perturbations.
 
 The port is VERIFIED APPLIED, not silently skipped: each notebook carries a
 runtime guard that raises `Bidirectional fusion patch expected one anchor` if the
