@@ -39,10 +39,54 @@ ALL THREE RAN TO COMPLETE AND ARE SUBMITTED (2026-08-02, PENDING):
 - Exp168 `dalloliogm/biohub-exp168-bidirectional-w010` weight **0.10** (weaker)
   -> submission `55195793`.
 
-UPDATE 2026-08-03 ~02:00 UTC: all three still PENDING ~4h after submit
-(queue-hang, as every day this week). Auto-recheck loop STOPPED - no further
-polling scheduled. Scores will appear later; the decision rules below still
-apply unchanged when they do.
+### RESOLVED 2026-08-03: ALL THREE WEIGHTS TIE AT `0.913`
+
+`55195447` w0.20 = **0.913**; `55195539` w0.30 = **0.913**; `55195793` w0.10 =
+**0.913**. Case (b) of the pre-registered rule: even a MODEL-LEVEL change cannot
+move this backbone. The reverse-time harmonic fusion axis is CLOSED - do not
+probe further weights (0.05/0.35), and do not stack it with Exp165.
+
+## THE PLATEAU IS REAL - STOP MICRO-OPTIMIZING (2026-08-03)
+
+Thirteen consecutive experiments now land on exactly `0.913` (Exp159, 160, 161,
+162-held, 163, 164-diagnostic, 165, 166, 167, 168), with Exp155 the only mover at
+`0.912`. These were NOT trivial variations - they include:
+- division budget 2x / 0.5x and two evidence-ranked division orderings,
+- Exp163 replacing **637** association edges (edge Jaccard 0.9892),
+- Exp165 replacing **687** edges in the dense movie (edge Jaccard 0.9807),
+- Exp166-168 a genuine model-level bidirectional fusion at three weights.
+
+WHY THE SCORE WILL NOT MOVE - resolution analysis. The public LB reports three
+decimals over roughly `118,000` edges, so one displayed step (`0.001`) needs a
+NET improvement of about `118` correct edges. Changing 637-687 edges only moves
+the third decimal if the hit rate is far above break-even; at a realistic
+near-even rate the net change is below display resolution. Every axis we have
+left perturbs a few hundred edges. **These experiments are structurally incapable
+of showing a gain even when slightly positive.** That, not bad luck, explains the
+run of identical scores.
+
+CAUTION ON THE PUBLIC 0.914 CLAIM: zoli800's own versions scored
+`0.914, 0.911, 0.914, 0.914, 0.913` - a `0.003` spread across their own runs. Their
+`0.914` is therefore not solid evidence that bidirectional fusion is worth
+`+0.001`; it is within their own run-to-run variation. We ported the mechanism
+correctly (kernels completed, guard verified) and it is neutral on our backbone.
+
+WHAT WOULD ACTUALLY MOVE 0.913 -> 0.914+: only a change touching THOUSANDS of
+edges correctly, which means DETECTION quality or a fundamentally better
+association model - not post-processing. Concretely that is a better-trained
+detector, and the 2026-07-30 investigation established none exists in the public
+pool (justinkim = 1-epoch smoke scaffold; drkongvis = undocumented blackbox;
+hongdaekim pins = EARLIER 300ep snapshots of our own 400ep weights, sha-verified;
+v34 reseed = 0.908; Trackastra 2D linker = 0.898). Training a competitive 3D
+detector from scratch is the only remaining honest lever and is a multi-day GPU
+project against a weekly quota.
+
+RECOMMENDATION: stop the incremental hunt. Exp148 at `0.913` is the final
+submission unless a genuinely new public artifact appears. Continuing to spend
+daily slots on few-hundred-edge perturbations has a measured 13-for-13 record of
+producing no change and should not continue. Monitor public notebooks/datasets
+periodically for a genuinely better DETECTOR; that is the only trigger worth
+reopening this for.
 
 The port is VERIFIED APPLIED, not silently skipped: each notebook carries a
 runtime guard that raises `Bidirectional fusion patch expected one anchor` if the
