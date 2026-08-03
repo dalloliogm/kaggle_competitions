@@ -12,6 +12,19 @@
 - Six independent levers were measured on 2026-08-03 and all came back null or
   negative (see LEARNINGS "Saturation Evidence"). Do not spend further slots on
   modelling variants without new evidence.
+- **Queued for the 2026-08-04 slot: `public-naji-v14-gemini-pro-exact`.** Archive
+  built and validated (sha256 `4fe5ea5c...`), submission scheduled for 00:05 UTC.
+  Diffing it against our v12 showed the two are the *same pipeline*:
+  `common.py` and `quick_baseline.py` are byte-identical, and `run_portfolio.py`
+  differs only in scaffold comments plus two CatBoost kwargs. The entire
+  difference is Pro-stage governance — v12 forbids target encoding and any
+  y-derived feature and caps the agent at one unsupervised family per iteration,
+  while the public version tells an "elite Kaggle Grandmaster" to iterate freely,
+  at temperature 0.7 vs 0.55 and thinking_budget 4096 vs 2048. So this slot
+  tests **unconstrained vs constrained LLM feature engineering**, which is the
+  open question v13 only answered for the constrained case. Note the public
+  0.823 is within the ~±0.002 session noise of our 0.822: expect a variance
+  outcome, not a gain.
 - **Remaining prize-relevant action: choose the two final submissions.** Private
   is a different session from the public leaderboard, so the finals choice
   matters more than any public-score delta. Current recommendation is
