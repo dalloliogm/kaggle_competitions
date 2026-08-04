@@ -12,8 +12,11 @@
 - Six independent levers were measured on 2026-08-03 and all came back null or
   negative (see LEARNINGS "Saturation Evidence"). Do not spend further slots on
   modelling variants without new evidence.
-- **Queued for the 2026-08-04 slot: `public-naji-v14-gemini-pro-exact`.** Archive
-  built and validated (sha256 `4fe5ea5c...`), submission scheduled for 00:05 UTC.
+- **Submitted 2026-08-04 as `55224297`: `public-naji-v14-gemini-pro-exact`**
+  (archive sha256 `4fe5ea5c...` re-verified byte-for-byte at upload, agent name
+  `weighted_cv_pipeline_with_pro_freeroll` and Pro temperature 0.7 both
+  confirming the unconstrained variant). Result PENDING; the 2026-08-04 slot is
+  spent.
   Diffing it against our v12 showed the two are the *same pipeline*:
   `common.py` and `quick_baseline.py` are byte-identical, and `run_portfolio.py`
   differs only in scaffold comments plus two CatBoost kwargs. The entire
