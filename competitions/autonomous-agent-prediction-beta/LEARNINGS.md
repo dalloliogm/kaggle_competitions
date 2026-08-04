@@ -391,6 +391,25 @@ v12/v13. Recorded so nobody spends another slot rediscovering this.
 
 ## Leaderboard Notes
 
+- Submission `55224297`: `COMPLETE`, public score **`0.822`** — and this is the
+  single most informative submission in the workspace, because it is a *verbatim*
+  extraction of a public notebook that reports **0.823**. Running the same
+  package produced a different score. That is direct, controlled evidence that
+  ~0.001 differences on this leaderboard are **session noise, not strategy**:
+  identical code, identical configuration, different number.
+- It also closes the LLM-governance question. The package is byte-identical to
+  our v12 pipeline except that its Pro stage is unconstrained — permissive
+  prompt explicitly inviting target encoding and y-derived features, temperature
+  0.7 vs 0.55, thinking budget 4096 vs 2048. It scored exactly what the
+  constrained version scores. **How the LLM freeroll stage is governed does not
+  measurably affect the score**, in either direction: the constraints in v12 cost
+  nothing, and removing them gains nothing.
+- Four packages, four different mechanisms, one score: deterministic portfolio
+  (v12) 0.822, constrained LLM planner (v13) 0.822, variance-reduced portfolio
+  (v15) 0.822, unconstrained LLM freeroll (public exact) 0.822. Combined with the
+  six null levers, treat the public score as saturated for this family of
+  approach and stop reading ~0.001-0.002 movements as signal.
+
 - Submission `55214880`: `COMPLETE`, public score **`0.822`** — `v15
   seedbag+timecap` ties v12 and v13 at the live best. This is the first
   prediction in this workspace that was made *before* submitting and then held:

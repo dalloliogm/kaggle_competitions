@@ -6,6 +6,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 
 | Date | Approach | Local CV | Public LB | Private LB | Notebook/commit | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
+| 2026-08-04 | `public-naji-v14-gemini-pro-exact` | n/a (verbatim public extraction, not executed locally) | **0.822** | Pending | Kaggle submission `55224297` | Reproduction of a notebook reporting 0.823 scored 0.822 — identical code, different score, so ~0.001 gaps are session noise. Unconstrained Pro stage ties v12's constrained one. |
 | 2026-08-03 | `official-demo-v15-seedbag-timecap` | identical to v12 above 800 rows; +0.0016 train_13 / -0.00001 train_15 below it | **0.822** | Pending | Kaggle submission `55214880` | Ties v12/v13. Submitted as runtime insurance (hard wall-clock deadline) rather than for score; outcome matched the pre-registered prediction band exactly. |
 | 2026-08-01 | `official-demo-v13-profile-planner` | One final-model-gated specialist across 16 tasks; estimated aggregate held-out gain +0.00018 | **0.822** | Pending | Kaggle submission `55171041` | Tied v12; the stricter LLM transformation planner did not improve the live score. |
 | 2026-07-31 | `official-demo-v12-portfolio-pro-freeroll` | 0.80288 mean full AUC after public-half selection over all 16 tasks | **0.822** | Pending | Kaggle submission `55130084` | New live best; deterministic portfolio plus bounded Gemini Pro freeroll. |

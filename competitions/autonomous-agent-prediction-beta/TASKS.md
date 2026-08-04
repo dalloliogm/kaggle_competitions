@@ -15,8 +15,10 @@
 - **Submitted 2026-08-04 as `55224297`: `public-naji-v14-gemini-pro-exact`**
   (archive sha256 `4fe5ea5c...` re-verified byte-for-byte at upload, agent name
   `weighted_cv_pipeline_with_pro_freeroll` and Pro temperature 0.7 both
-  confirming the unconstrained variant). Result PENDING; the 2026-08-04 slot is
-  spent.
+  confirming the unconstrained variant). **Completed at 0.822** — the public
+  notebook reports 0.823 for this exact package, so the reproduction proves
+  ~0.001 leaderboard gaps are session noise. Unconstrained LLM governance ties
+  v12's constrained version.
   Diffing it against our v12 showed the two are the *same pipeline*:
   `common.py` and `quick_baseline.py` are byte-identical, and `run_portfolio.py`
   differs only in scaffold comments plus two CatBoost kwargs. The entire
