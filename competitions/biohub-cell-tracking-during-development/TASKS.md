@@ -1,5 +1,43 @@
 # Tasks
 
+## CURRENT STATUS - 2026-08-04 (Exp170: the plateau is self-inflicted)
+
+**Exp170 v2 changed the picture.** Scoring the ILP-solved graph and the final
+submission against the same ground truth shows that **42 of 97 missed GT edges
+(43%) were CORRECT IN THE ILP and were destroyed by our own post-processing**
+(32 of 80 in the dense movie). This loss class sits entirely in code we control,
+and it refutes the pessimistic reading of Exp169 that the plateau is a
+linker-model limit. Full write-up:
+`references/exp170-origin-analysis-2026-08-04.md`.
+
+Mechanism: 33 of the 42 keep exactly one predicted child, so a step *replaced*
+the correct ILP child - and the substitute sits at a median **128.8 deg** from
+the true step, i.e. roughly the opposite direction. 8 more end with zero
+children (a correct edge deleted). The true child node still exists in our
+output in 39 of 42 cases, so detection is not involved, and all 42 have
+`gt_parent_n_children == 1`, so division ambiguity is not involved either.
+
+**Exp170 also solved the FP accounting.** The `source_or_target` rule (a
+predicted edge is FP when *either* endpoint matched an annotated GT node)
+reproduces the official FP count exactly on all five movies - 2/3/0/19/138.
+Exp169's open trust boundary is closed; FP conclusions are now usable.
+
+Local baseline for ablations, per-dataset edge Jaccard under current Exp148:
+`0.9038 / 0.9038 / 1.0000 / 0.9641 / 0.8350`, mean **`0.9213`**.
+
+### In flight - Exp171 post-processing ablation (no submission slot)
+
+All post-processing steps are env-gated, so ablation needs no code edits.
+`biohub-exp171a-motion-relink-off` (`BIOHUB_OUTPUT_MOTION_RELINK=0`) and
+`biohub-exp171b-linefit-off` (`BIOHUB_OUTPUT_LINEFIT_SMOOTH=0`) are the prime
+suspects for the 33 replacements; the short-track filter
+(`BIOHUB_OUTPUT_MIN_TRACK_LEN`) is the suspect for the 8 deletions.
+
+**Caveat that must not be dropped:** a local win is a hypothesis, not proof.
+No-safe-divisions improved local validation (`0.9548 -> 0.9606`) and *lost* on
+the LB (`0.893 -> 0.886`). Verify any ablation winner on the leaderboard.
+
+
 ## CURRENT STATUS - 2026-08-02 (bidirectional fusion axis opened)
 
 Exp165 scored **`0.913`**, tying Exp148 - so the pre-registered trigger fired:
