@@ -389,6 +389,55 @@ v12/v13. Recorded so nobody spends another slot rediscovering this.
   is which two packages become finals, not squeezing +0.001 out of the public
   score.
 
+## Finals Selection (2026-08-04) — the mechanic, and what it implies
+
+- **The two-session mechanic, stated exactly.** From the official description:
+  "Each agent submission runs through two mini-competition sessions, one that
+  populates the Public Leaderboard and another that populates the Private
+  Leaderboard." So **every submission already has a private score**, computed in
+  its own separate agent session and hidden from us. Selecting finals does not
+  cause anything to be re-run; it only chooses which two already-computed
+  private results count.
+- **Consequence: a submission's public score is a weak predictor of its own
+  private score.** The two come from independent agent sessions with independent
+  LLM stochasticity. The naji-exact reproduction already showed the size of that
+  noise directly (identical code, reported 0.823, scored 0.822 here). So among
+  packages whose public scores sit inside the noise band — v12, v13, v15 and the
+  naji-exact all at 0.822, Sonnet at 0.821 — **the public ranking carries almost
+  no information about which will do better privately**. Do not pick finals by
+  public score; pick by expected package quality plus completion reliability.
+- **There is no Kaggle API for selecting final submissions.** Checked directly:
+  `KaggleApi` exposes no such method (`_select_models_interactively` is
+  unrelated, it is for Kaggle Models). Finals must be selected in the web UI, on
+  the competition's *My Submissions* page, before the deadline. If the user
+  selects nothing, **Kaggle auto-selects** — by best public score, which given
+  the point above is effectively an arbitrary tie-break among our 0.822s.
+- **v15 dominates v12 by construction, so it replaces v12 as the first pick.**
+  Diffed the two packages directly: they differ only in `agent.yaml`'s `name`
+  and in `run_portfolio.py`. At or above 800 training rows v15 executes the same
+  single-seed code path as v12, i.e. it *is* v12 there. Below 800 rows it adds
+  the measured-positive 3-seed bag (+0.0037 and +0.0052 on the two 500-row
+  tasks). It also adds the wall-clock `Deadline` that v12 lacks — the tail risk
+  flagged above, where `train_11` ran 859 unbounded seconds. So v15 is weakly
+  better on score and strictly better on tail behaviour, and it has *already
+  proven it completes live* (55214880, 0.822).
+- **Second pick is for package-level risk, not for score.** The private
+  mini-competition is different data. Two draws of one package share any
+  systematic misfit to that data; two different packages do not. v13's
+  target-blind JSON planner is the most mechanistically distinct of the strong
+  packages (LLM planner vs deterministic portfolio), and it completed live at
+  0.822.
+- **Recommended finals: `55214880` (v15) and `55171041` (v13).** This supersedes
+  the earlier "v12 + v13" recommendation; the change is v15 in place of v12, on
+  the dominance argument above.
+- **Why more submissions cannot help much.** With two finals, the private board
+  shows the better of the two. Selecting any two independent, equal-quality
+  draws gives the same expectation (about `mu + 0.56*sigma` for two iid draws).
+  We already hold five completed packages inside the noise band, so an extra
+  slot adds essentially nothing to the expected private score. That is the
+  honest reason the remaining slots are low-value — not that they are wasted,
+  but that no available action moves the expectation.
+
 ## Leaderboard Notes
 
 - Submission `55224297`: `COMPLETE`, public score **`0.822`** — and this is the

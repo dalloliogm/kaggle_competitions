@@ -30,11 +30,32 @@
   open question v13 only answered for the constrained case. Note the public
   0.823 is within the ~±0.002 session noise of our 0.822: expect a variance
   outcome, not a gain.
-- **Remaining prize-relevant action: choose the two final submissions.** Private
-  is a different session from the public leaderboard, so the finals choice
-  matters more than any public-score delta. Current recommendation is
-  `55130084` (v12, 0.822) and `55171041` (v13, 0.822) — the two best packages,
-  built on different mechanisms (deterministic portfolio vs LLM planner).
+- **OPEN — USER ACTION REQUIRED, deadline 2026-08-06 23:59 UTC: select the two
+  final submissions in the Kaggle web UI.** There is **no API for this** —
+  verified against `KaggleApi`, which exposes no finals-selection method — so it
+  cannot be automated from this workspace. Go to the competition's *My
+  Submissions* page and select:
+  - **`55214880`** — `official-demo-v15-seedbag-timecap`, public 0.822
+  - **`55171041`** — `official-demo-v13-profile-planner`, public 0.822
+
+  If nothing is selected, Kaggle auto-selects by best public score, which is an
+  arbitrary tie-break across our five packages that all sit inside the noise
+  band.
+
+  **This replaces the earlier `55130084` (v12) + `55171041` (v13)
+  recommendation.** The change is v15 in place of v12, on a dominance argument
+  verified by diffing the two packages on 2026-08-04: they differ only in
+  `agent.yaml`'s `name` field and in `run_portfolio.py`. At or above 800
+  training rows v15 runs the identical single-seed path, i.e. it *is* v12 there;
+  below 800 rows it adds the measured-positive 3-seed bag (+0.0037 / +0.0052 on
+  the two 500-row tasks); and it adds the wall-clock deadline v12 lacks, closing
+  the unbounded-runtime tail risk (v12's `train_11` portfolio ran 859 seconds).
+  Both packages completed live at 0.822, so v15 is weakly better on score,
+  strictly better on tail behaviour, and equally proven. `55171041` is kept as
+  the second pick for package-level diversification, not for its score: the
+  private mini-competition is different data, and v13's target-blind JSON
+  planner is the most mechanistically distinct strong package we have.
+  See LEARNINGS "Finals Selection" for the full argument.
 
 - Reproduce the public 0.823 Gemini Pro freeroll exactly, then isolate whether a
   model-only switch to `claude-sonnet-5` improves it. Both v14 packages are
@@ -81,19 +102,41 @@
 - Do not use Claude Opus for this freeroll. It is allowed, but its official
   $5/M input and $25/M output pricing is too expensive for the $4 session
   budget. `claude-sonnet-5` is the credible higher-capability budget match.
-- **Deliberate exception to the "do not resubmit" rule below:** v12 is being
-  resubmitted once on 2026-08-05 as a *variance measurement*, not as a strategy.
-  The package was verified byte-for-byte unchanged since commit `c0b6312`, so
-  identical code goes through a fresh public session. Combined with the
-  naji-exact result (a package reporting 0.823 scored 0.822 here), this gives a
-  direct read on session-to-session noise, which every score comparison in this
-  workspace has been implicitly assuming. Expect ~0.822 +/- 0.002; a result
-  outside that band is itself the finding.
-- **Submission `55130084` is complete at 0.822; do not resubmit it** (superseded
-  for the single deliberate variance run described above). It is the
-  new live best and validates both the deterministic portfolio and the newer
-  skill-tool execution path. The exact uploaded archive hash is
+- **STAGED for the 2026-08-05 slot: an identical `v15` resubmission as a variance
+  measurement.** `submissions/submission.zip` now holds v15, sha256
+  `d2bd6ebc2538a2eb20721c4907cd4382bcfef9ce560fea6eb6067a9048e87e13`. Every one
+  of its 13 entries was hash-compared against
+  `agent-configs/official-demo-v15-seedbag-timecap/` and matches; that source
+  tree is unchanged since commit `c8f7917`, the commit that recorded its
+  validation and that produced live 0.822 as `55214880`. The archive also passes
+  a fresh check: `agent.yaml` at the root, all scripts compile, all YAML parses,
+  and all six `!include` targets resolve relative to their including file.
+  (`PROVENANCE.md` is excluded from the archive, matching the v12 packaging
+  convention.) The zip hash differs from the recorded `bc0d88ac...` only because
+  zip entry timestamps follow file mtimes, which a git checkout rewrites — the
+  *content* is identical, which is what matters.
+- **This re-targets the variance run from v12 onto v15, deliberately.** The
+  measurement is identical either way — same code, fresh session, expect ~0.822
+  +/- 0.002, and a result outside that band is itself the finding. But v15 is the
+  package we intend to make a final, so a bad outcome (an error, or a sharp
+  drop) is *decision-relevant* in a way the same outcome on v12 would not be. It
+  buys a second reliability observation on the leading finals candidate at no
+  extra cost.
+- **Set expectations honestly: this slot cannot meaningfully raise the expected
+  private score.** With two finals the private board shows the better of the
+  two, and any two independent equal-quality draws have the same expectation. We
+  already hold five completed packages inside the noise band. The slot is being
+  spent because nothing better exists, not because it is expected to gain.
+- **Submissions `55130084` (v12) and `55214880` (v15) are complete at 0.822; do
+  not resubmit v12.** The single deliberate variance run described above now
+  uses v15 instead. v12 remains the package that first validated the
+  deterministic portfolio and the newer skill-tool execution path; its exact
+  uploaded archive hash is
   `50dea3b9d661c9ef80eac505ddcade41a2a18596cbe704d34e0ffe4375eff34c`.
+- **2026-08-06 slot: hold by default.** Spend it only if the v15 re-run produces
+  something outside the +/-0.002 band, which would mean session noise is larger
+  than assumed and would call for a third draw. Otherwise the deadline-day
+  priority is confirming the finals selection is actually saved in the UI.
 - If the LLM-plan idea is revisited, restructure it so the plan changes the
   features used by the **agent's own ensemble script** (the pick-best-of-K
   selector), rather than introducing `autopredict.py` as a second submission
