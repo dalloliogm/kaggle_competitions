@@ -113,10 +113,31 @@ had almost no statistical power (3 annotated divisions); the 42 edges here are a
 far larger sample, but the inversion risk is real and any local win should be
 treated as a hypothesis to be tested on the LB, not as proof.
 
-## Next step - Exp171 ablation (no slot)
+## RESULT - the ablation ladder (Exp171/173/175/176, no slots)
 
-`biohub-exp171a-motion-relink-off` (`BIOHUB_OUTPUT_MOTION_RELINK=0`) and
-`biohub-exp171b-linefit-off` (`BIOHUB_OUTPUT_LINEFIT_SMOOTH=0`) run the same
-staged-labelled-movie harness and report official `evaluate()` counts. Compare
-their per-dataset TP/FP/FN against the baseline table above. A step that is net
-negative should show FN falling by more than FP rises.
+All runs use the staged-labelled-movie harness and official `evaluate()` counts.
+
+| config | mean edge J | vs baseline | dense J | dense TP/FP/FN | post-proc FN |
+| --- | ---: | ---: | ---: | --- | ---: |
+| baseline (Exp148, LB `0.913`) | 0.9214 | - | 0.8350 | 1103/138/80 | 42 |
+| `MOTION_RELINK=0` | 0.9476 | **+0.0263** | 0.8831 | 1118/83/65 | 20 |
+| **+ `MIN_TRACK_LEN=1`** | **0.9558** | **+0.0345** | 0.8899 | 1123/79/60 | **12** |
+| + `GAP_CLOSE=0` | 0.9545 | +0.0331 | 0.8831 | 1118/83/65 | - |
+| + `DEEPCENTER_GAP_VETO=0` | 0.9556 | +0.0342 | 0.8884 | 1123/81/60 | - |
+| `LINEFIT_SMOOTH=0` | 0.9044 | **-0.0169** | 0.8321 | 1100/139/83 | 30 |
+
+**Motion relink is actively harmful and the short-track filter is mildly so.**
+Removing motion relink improves TP, FP *and* FN simultaneously on the dense
+movie - the signature of deleting a step that makes genuinely wrong edits, not a
+precision/recall trade. This matches the 128.8 deg mis-direction finding above.
+Post-processing-caused FN fall 42 -> 20 -> 12.
+
+**Line-fit smoothing, gap close and the DeepCenter veto all earn their keep** -
+ablating each of them costs score. The ladder converged at
+`MOTION_RELINK=0 + MIN_TRACK_LEN=1`; the remaining 12 post-processing FN are not
+attributable to any single remaining step.
+
+Submitted as `exp172` (relink off alone) and `exp174` (the converged config).
+Leaderboard verdict pending - see `TASKS.md` for the outcome, and remember the
+standing caveat above: the local number is a hypothesis until the LB confirms
+it.
