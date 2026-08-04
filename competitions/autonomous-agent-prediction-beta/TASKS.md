@@ -81,7 +81,16 @@
 - Do not use Claude Opus for this freeroll. It is allowed, but its official
   $5/M input and $25/M output pricing is too expensive for the $4 session
   budget. `claude-sonnet-5` is the credible higher-capability budget match.
-- **Submission `55130084` is complete at 0.822; do not resubmit it.** It is the
+- **Deliberate exception to the "do not resubmit" rule below:** v12 is being
+  resubmitted once on 2026-08-05 as a *variance measurement*, not as a strategy.
+  The package was verified byte-for-byte unchanged since commit `c0b6312`, so
+  identical code goes through a fresh public session. Combined with the
+  naji-exact result (a package reporting 0.823 scored 0.822 here), this gives a
+  direct read on session-to-session noise, which every score comparison in this
+  workspace has been implicitly assuming. Expect ~0.822 +/- 0.002; a result
+  outside that band is itself the finding.
+- **Submission `55130084` is complete at 0.822; do not resubmit it** (superseded
+  for the single deliberate variance run described above). It is the
   new live best and validates both the deterministic portfolio and the newer
   skill-tool execution path. The exact uploaded archive hash is
   `50dea3b9d661c9ef80eac505ddcade41a2a18596cbe704d34e0ffe4375eff34c`.
