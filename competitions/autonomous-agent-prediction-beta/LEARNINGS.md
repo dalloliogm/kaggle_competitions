@@ -491,6 +491,53 @@ v12/v13. Recorded so nobody spends another slot rediscovering this.
   small public-session noise does not imply the private score will sit near the
   public one.
 
+## v16 Dtype Hardening (2026-08-05, offline, measured on all 16 practice tasks)
+
+- **The pandas-3 failure is much larger than previously recorded.** LEARNINGS had
+  it as "train_13: 0.639 -> 0.503". Measured properly on pandas 3.0.5 vs 2.3.3,
+  **12 of the 16 tasks lose every categorical column** — `categorical_columns()`
+  returns `[]` because `read_csv(engine="pyarrow")` yields the arrow-backed `str`
+  dtype instead of `object`. End-to-end quick-baseline AUC:
+
+  | task | v15 / pandas 2 | v15 / pandas 3 |
+  | --- | --- | --- |
+  | train_06 (all 9 features text) | 0.80759 | **0.50000** |
+  | train_08 (all 12 features text) | 0.85119 | **0.50000** |
+  | train_13 | 0.63233 | 0.50510 |
+  | train_15 | 0.84435 | 0.59656 |
+
+  In the full portfolio the same break also *errors out* candidates outright —
+  `logistic` dies with "Cannot use median strategy with non-numeric data" and
+  `extra_trees` with "invalid or constant OOF predictions".
+- **Two fixes were needed, not one.** The dtype predicate was the obvious half.
+  The other half is that `cv_logistic` is the one candidate fed the **raw**
+  frame, bypassing `native_frames`/`encoded_frames`, so fixing detection alone
+  still left it different.
+- **The subtle part: the missing-value sentinel has to be `None`, not `np.nan`.**
+  Under pandas 2 + pyarrow, object columns carry `None` for missing.
+  `SimpleImputer` detects NaN with `X != X`, which is **False for `None`**, so on
+  the current image those entries are *never imputed* and reach `OneHotEncoder`
+  as a category of their own. Normalising to `np.nan` "fixes" that — and thereby
+  **changes** behaviour on the current image: measured logistic CV AUC on
+  train_08 moved 0.85434 -> 0.84671. The hardening must reproduce pandas 2's
+  quirks, not improve on them. Normalising to `None` restores exact equality.
+- **`.to_numpy(dtype=object)` can be read-only on pandas 3.** Assigning into it
+  raises `ValueError: assignment destination is read-only`, which surfaced as a
+  silently-dropped `logistic` candidate. Copy explicitly.
+- **Verification standard used: identical model inputs, not just similar
+  scores.** Fingerprinted the native and encoded frames for all 16 tasks, plus
+  every one of the six portfolio candidates' CV AUCs, the selected candidate, and
+  the error dict on 4 tasks:
+  - `v16 / pandas 2` == `v15 / pandas 2` — **exactly, all 16 tasks.** So
+    submitting v16 to the current image is behaviourally indistinguishable from
+    v15, which is what makes it safe to spend the last slot on.
+  - `v16 / pandas 3` == `v15 / pandas 2` — **exactly, all 16 tasks.** The
+    insurance actually works rather than merely avoiding a crash.
+- **Caveat worth keeping.** This was validated against pandas 3.0.5 specifically.
+  It is insurance against the *known* dtype-container change, not proof against
+  every future pandas release. The `_coerces_entirely_to_nan` backstop is the
+  part that is dtype-agnostic and should survive renames of the string dtype.
+
 ## Leaderboard Notes
 
 - Submission `55224297`: `COMPLETE`, public score **`0.822`** — and this is the

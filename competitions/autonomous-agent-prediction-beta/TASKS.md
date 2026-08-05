@@ -145,10 +145,26 @@
   slot was spent for the measurement, not for a gain.
 - **Submissions `55130084` (v12) and `55214880` (v15) are complete at 0.822.**
   Beyond the single deliberate variance run above, do not resubmit either.
-- **2026-08-06 slot: HOLD — the condition for spending it was not met.**
-  `55253408` landed at 0.822, inside the band, so no third draw is warranted. The
-  deadline-day priority is confirming the finals selection is actually saved in
-  the UI. Deadline 2026-08-06 23:59 UTC.
+- **2026-08-06 slot: STAGED — `official-demo-v16-dtype-hardened`.** The user chose
+  on 2026-08-05 to spend the final slot on dtype hardening rather than hold it or
+  take a third variance draw. `submissions/submission.zip` holds v16, sha256
+  `51a44e9e8ce049ea685af8ac2cdd78f41bb23050bbc04b1094b99ae11622b15e`, 19 entries
+  / 13 files matching the v15 layout, `agent.yaml` name `v16_dtype_hardened`, Pro
+  temperature 0.55, scripts compile, YAML parses, all `!include` targets resolve.
+  - **Why it is safe to spend the last slot on.** v16 is v15 plus dtype-container
+    handling only — no modelling change. Verified as *identical model inputs*:
+    frame fingerprints match v15 exactly on all 16 tasks under pandas 2.3.3, and
+    the full portfolio's six candidate CV AUCs, selected candidate and error dict
+    match on train_03/06/08/15. On the current Kaggle image it is
+    indistinguishable from the package that scored 0.822.
+  - **What it buys.** Under pandas 3.0.5, v15 collapses on 12 of 16 tasks —
+    train_06 and train_08 fall to AUC **0.500** and two candidates error out. v16
+    reproduces the pandas-2 results exactly there. This is insurance against a
+    base-image upgrade between now and whenever the private sessions run.
+  - **Selection rule: only make v16 a final if it completes at ~0.822.** If it
+    errors or drops, keep `55214880` (v15) + `55171041` (v13).
+- **Submit at the 2026-08-06 00:00 UTC reset.** Deadline 2026-08-06 23:59 UTC, so
+  submit early — the last run took 12 minutes, but leave room for a retry.
 - If the LLM-plan idea is revisited, restructure it so the plan changes the
   features used by the **agent's own ensemble script** (the pick-best-of-K
   selector), rather than introducing `autopredict.py` as a second submission
