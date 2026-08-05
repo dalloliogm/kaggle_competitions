@@ -454,12 +454,42 @@ v12/v13. Recorded so nobody spends another slot rediscovering this.
   The archive was also rebuilt to carry the original's 6 explicit directory
   entries, so that archive structure was not left as an uncontrolled difference
   in an experiment whose premise is that nothing changed.
-- **Pre-registered expectation: ~0.822 +/- 0.002**, i.e. 0.820-0.824. Recording
-  the prediction before the result so the outcome cannot be rationalised
-  afterwards. A result outside that band is the real finding: it would mean the
-  noise band is wider than assumed, and every ~0.001-0.002 comparison in this
-  workspace — including the "six null levers" and the naji-exact reproduction —
-  would need re-reading as an even weaker signal than already stated.
+- **Pre-registered expectation: ~0.822 +/- 0.002**, i.e. 0.820-0.824. Recorded
+  before the result so the outcome could not be rationalised afterwards.
+- **RESULT: `0.822`, completed 12 minutes after upload — inside the band, and at
+  its exact centre.** Identical code, fresh public session, identical reported
+  score.
+- **What this does and does not establish.** The leaderboard reports three
+  decimals, so two runs both reading 0.822 means both landed in `[0.8215,
+  0.8225)` — the pair differs by **less than ~0.001**. That is a *tighter* bound
+  than the +/-0.002 the workspace has been assuming, and it points to
+  session-to-session noise being at the small end of that band rather than the
+  large end. But this is **one paired observation**: it bounds this pair, it does
+  not estimate a standard deviation, and a single pair landing in one rounding
+  bucket is also consistent with occasional larger excursions. Do not restate
+  this as "noise is under 0.001" — state it as one identical-code pair that
+  reproduced.
+- **It weakens, rather than confirms, the naji-exact noise reading.** LEARNINGS
+  previously treated the public notebook's reported 0.823 versus our 0.822 for
+  the same package as direct evidence of ~0.001 session noise. Now that our *own*
+  identical-code rerun reproduced its score exactly, pure session noise is a less
+  comfortable explanation for that 0.823/0.822 gap; a package-version or
+  reporting difference on the public notebook's side is at least as plausible.
+  The honest position is that the naji gap is unexplained, not that it measures
+  noise.
+- **Practical implication, and it points the same way as before.** If
+  identical-code noise really is small, then v12, v13, v15 and the naji-exact
+  package all landing on 0.822 is more likely to mean those packages are
+  *genuinely equivalent* on the public subset than that noise is masking real
+  differences. Either way the conclusion is unchanged: the public score cannot
+  discriminate them, so finals must be chosen on mechanism and robustness. Small
+  noise also *shrinks* the `mu + 0.56*sigma` benefit of holding two independent
+  draws, which is a further reason the remaining slot has little expected value.
+- **Scope limit worth keeping straight.** This measures session noise on the
+  *public* subset only. The public/private difference is not the same quantity:
+  it combines a different session *and* a different subset of test labels, so a
+  small public-session noise does not imply the private score will sit near the
+  public one.
 
 ## Leaderboard Notes
 

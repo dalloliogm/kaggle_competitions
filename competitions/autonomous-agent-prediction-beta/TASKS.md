@@ -127,9 +127,17 @@
     `50dea3b9d661c9ef80eac505ddcade41a2a18596cbe704d34e0ffe4375eff34c`**, because
     zip entries embed file mtimes and a git checkout rewrites them. Verify this
     package by content, never by archive hash.
-  - **Expected result ~0.822 +/- 0.002.** Anything outside 0.820-0.824 is the
-    real finding and must be called out prominently, because every score
-    comparison in this workspace assumes that noise band.
+  - **Expected result ~0.822 +/- 0.002.** Anything outside 0.820-0.824 would
+    have been the real finding, because every score comparison in this workspace
+    assumes that noise band.
+  - **RESULT: `0.822` — `COMPLETE` 12 minutes after upload, inside the band and
+    at its exact centre.** Identical code reproduced its score. Since the
+    leaderboard shows three decimals, the two runs differ by less than ~0.001,
+    which is tighter than the assumed +/-0.002 — but this is one paired
+    observation and does not estimate a standard deviation. See LEARNINGS
+    "Identical-Code Variance Run" for what it does and does not establish,
+    including that it makes the naji-exact 0.823/0.822 gap *harder* to explain as
+    session noise rather than easier.
 - **Set expectations honestly: this slot could not meaningfully raise the
   expected private score.** With two finals the private board shows the better of
   the two, and any two independent equal-quality draws have the same
@@ -137,10 +145,10 @@
   slot was spent for the measurement, not for a gain.
 - **Submissions `55130084` (v12) and `55214880` (v15) are complete at 0.822.**
   Beyond the single deliberate variance run above, do not resubmit either.
-- **2026-08-06 slot: hold by default.** Spend it only if `55253408` lands outside
-  the +/-0.002 band, which would mean session noise is larger than assumed and
-  would call for a third draw. Otherwise the deadline-day priority is confirming
-  the finals selection is actually saved in the UI.
+- **2026-08-06 slot: HOLD — the condition for spending it was not met.**
+  `55253408` landed at 0.822, inside the band, so no third draw is warranted. The
+  deadline-day priority is confirming the finals selection is actually saved in
+  the UI. Deadline 2026-08-06 23:59 UTC.
 - If the LLM-plan idea is revisited, restructure it so the plan changes the
   features used by the **agent's own ensemble script** (the pick-best-of-K
   selector), rather than introducing `autopredict.py` as a second submission
