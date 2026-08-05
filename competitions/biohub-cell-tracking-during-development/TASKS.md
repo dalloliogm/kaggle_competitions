@@ -1,5 +1,29 @@
 # Tasks
 
+## CURRENT STATUS - 2026-08-05 (the ablation ladder INVERTED; local harness is anti-predictive)
+
+`exp172` (motion relink off) scored **`0.911`** and `exp174` (relink off +
+short-track off) scored **`0.909`**, against the Exp148 baseline of **`0.913`**.
+Local mean edge Jaccard for those same two configs was `0.9476` and `0.9558`
+versus a `0.9214` baseline - so **the bigger the local gain, the bigger the
+leaderboard loss, monotone across all three points.**
+
+**Do not use the labelled-movie harness to guide post-processing changes.** It
+is anti-predictive, not merely weak. The steps we ablated were calibrated
+against the leaderboard in the first place, so they are fitted to the hidden
+test and look harmful on the five labelled movies. Full analysis and the list of
+quality signals that were all present and all useless:
+`references/exp170-origin-analysis-2026-08-04.md`.
+
+Exp170's measurement stands (43% of labelled-movie misses were correct in the
+ILP and removed by post-processing); its implication does not (recovering them
+loses score). The FP rule finding - `source_or_target`, exact on all five movies
+- survives, being a measurement fact rather than a generalization.
+
+Best public LB remains **`0.913`** (Exp148). Newly closed axis: post-processing
+ablation guided by local labelled-movie score.
+
+
 ## CURRENT STATUS - 2026-08-04 (Exp170: the plateau is self-inflicted)
 
 **Exp170 v2 changed the picture.** Scoring the ILP-solved graph and the final

@@ -137,7 +137,46 @@ ablating each of them costs score. The ladder converged at
 `MOTION_RELINK=0 + MIN_TRACK_LEN=1`; the remaining 12 post-processing FN are not
 attributable to any single remaining step.
 
-Submitted as `exp172` (relink off alone) and `exp174` (the converged config).
-Leaderboard verdict pending - see `TASKS.md` for the outcome, and remember the
-standing caveat above: the local number is a hypothesis until the LB confirms
-it.
+## VERDICT (2026-08-05) - the ladder INVERTED on the leaderboard
+
+| config | local mean J | public LB |
+| --- | ---: | ---: |
+| baseline Exp148 | 0.9214 | **0.913** |
+| `exp172` relink off | 0.9476 (+0.0263) | **0.911** (-0.002) |
+| `exp174` + short-track off | 0.9558 (+0.0345) | **0.909** (-0.004) |
+
+**The larger the local gain, the larger the leaderboard loss - monotone across
+all three points.** This is not run-to-run noise; it is a systematic inversion.
+
+### What this means - the local harness is ANTI-PREDICTIVE here
+
+Do not treat the labelled-movie harness as a proxy for the leaderboard on
+post-processing changes. It is not merely uninformative, it points the wrong
+way. Every quality signal that made this look safe was present and none of them
+helped:
+
+- a large effect (+0.0345, far above any plausible noise floor)
+- a mechanism identified BEFORE the ablation (the 128.8 deg mis-direction)
+- TP, FP and FN all improving together rather than trading
+- a ladder that converged instead of drifting
+- 42 error edges of support, not the 3 that made the divisions test powerless
+
+The likely cause: motion relink, the short-track filter and the rest were
+originally calibrated AGAINST THE LEADERBOARD over many submissions, so they are
+fitted to the hidden test distribution and look actively harmful on the five
+labelled movies. Removing them recovers labelled-movie score and destroys test
+score. The 42 "self-inflicted" errors are the price those steps pay on train
+data for a gain they deliver on test data.
+
+Corollary: **Exp170's core finding stands, but its implication does not.** It is
+still true that 43% of labelled-movie misses were correct in the ILP and removed
+by post-processing. It is NOT true that recovering them improves the score.
+
+### What is still usable from this work
+
+- the FP rule (`source_or_target`, exact on all five movies) - a measurement
+  fact, independent of any train/test gap
+- the error taxonomy and the dump/baseline artifacts
+- the negative result itself: post-processing ablation guided by the labelled
+  split is a closed axis, and any future local-only evidence needs an LB probe
+  before it is believed
