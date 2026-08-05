@@ -695,6 +695,33 @@ NOT trustworthy (local only, and the harness inverts rankings):
 So MORE axes are open than previously recorded, not fewer. Do not close an axis
 on local evidence alone.
 
+### CALIBRATION UPDATE 2026-08-05: the harness does not ALWAYS invert
+
+Exp156/157 is the first case where a local prediction and the leaderboard were
+compared head to head on a genuinely different LINKER, and the harness did
+**not** invert - it agreed in direction and exaggerated the magnitude by about
+2x:
+
+| comparison | local adjusted edge Jaccard | public LB |
+| --- | ---: | ---: |
+| our linking stack | `0.8936` (`incumbent_full`) | `0.913` (Exp148) |
+| Trackastra linker | `0.8631` (`trackastra_s3`) | `0.898` (Exp157, `55092602`) |
+| **delta** | **`-0.031`** | **`-0.015`** |
+
+So the honest rule is narrower than "the harness inverts". The documented
+inversion (`ilp_only` `0.908` local / `0.877` LB versus the post-processed
+branch `0.888` local / `0.909` LB) was about **post-processing on top of a fixed
+association**, where the sparse GT covers the easy regions the raw ILP already
+gets right and hides where motion relinking earns its value. When the
+ASSOCIATION ITSELF changes, the harness ranked correctly and only overstated
+the gap. Treat "local says worse" as a real warning for linker swaps, and
+budget roughly half the local delta as the expected leaderboard delta.
+
+Also worth keeping in proportion: Exp157's `0.898` sits ABOVE the copied LB893
+branch (`0.893`) and well above the division-free minimal branch (`0.877`).
+Trackastra is a credible tracker on this data - it is simply not competitive
+with a post-processing stack that has been tuned across ~40 experiments.
+
 ### What the harness IS still good for
 
 - Structural validity (schema, dangling edges, degree caps, consecutive frames).
