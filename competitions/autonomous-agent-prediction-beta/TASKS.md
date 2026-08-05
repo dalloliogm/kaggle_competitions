@@ -102,41 +102,45 @@
 - Do not use Claude Opus for this freeroll. It is allowed, but its official
   $5/M input and $25/M output pricing is too expensive for the $4 session
   budget. `claude-sonnet-5` is the credible higher-capability budget match.
-- **STAGED for the 2026-08-05 slot: an identical `v15` resubmission as a variance
-  measurement.** `submissions/submission.zip` now holds v15, sha256
-  `d2bd6ebc2538a2eb20721c4907cd4382bcfef9ce560fea6eb6067a9048e87e13`. Every one
-  of its 13 entries was hash-compared against
-  `agent-configs/official-demo-v15-seedbag-timecap/` and matches; that source
-  tree is unchanged since commit `c8f7917`, the commit that recorded its
-  validation and that produced live 0.822 as `55214880`. The archive also passes
-  a fresh check: `agent.yaml` at the root, all scripts compile, all YAML parses,
-  and all six `!include` targets resolve relative to their including file.
-  (`PROVENANCE.md` is excluded from the archive, matching the v12 packaging
-  convention.) The zip hash differs from the recorded `bc0d88ac...` only because
-  zip entry timestamps follow file mtimes, which a git checkout rewrites — the
-  *content* is identical, which is what matters.
-- **This re-targets the variance run from v12 onto v15, deliberately.** The
-  measurement is identical either way — same code, fresh session, expect ~0.822
-  +/- 0.002, and a result outside that band is itself the finding. But v15 is the
-  package we intend to make a final, so a bad outcome (an error, or a sharp
-  drop) is *decision-relevant* in a way the same outcome on v12 would not be. It
-  buys a second reliability observation on the leading finals candidate at no
-  extra cost.
-- **Set expectations honestly: this slot cannot meaningfully raise the expected
-  private score.** With two finals the private board shows the better of the
-  two, and any two independent equal-quality draws have the same expectation. We
-  already hold five completed packages inside the noise band. The slot is being
-  spent because nothing better exists, not because it is expected to gain.
-- **Submissions `55130084` (v12) and `55214880` (v15) are complete at 0.822; do
-  not resubmit v12.** The single deliberate variance run described above now
-  uses v15 instead. v12 remains the package that first validated the
-  deterministic portfolio and the newer skill-tool execution path; its exact
-  uploaded archive hash is
-  `50dea3b9d661c9ef80eac505ddcade41a2a18596cbe704d34e0ffe4375eff34c`.
-- **2026-08-06 slot: hold by default.** Spend it only if the v15 re-run produces
-  something outside the +/-0.002 band, which would mean session noise is larger
-  than assumed and would call for a third draw. Otherwise the deadline-day
-  priority is confirming the finals selection is actually saved in the UI.
+- **SUBMITTED 2026-08-05 00:23 UTC as `55253408`: the identical-code `v12`
+  variance measurement.** This consumed the day's slot (`0 submissions remaining
+  today` confirmed at upload); one slot remains, on 2026-08-06.
+  - **Verification performed at upload.** The archive was rebuilt from
+    `agent-configs/official-demo-v12-portfolio-pro-freeroll/`, which `git status`
+    and `git log` confirm is unchanged since commit `c0b6312` — the commit that
+    recorded the original 0.822 as `55130084`. All 13 files were sha256-compared
+    against that source and match. `agent.yaml` sits at the archive root with
+    `name: v12_portfolio_pro_freeroll`, and `configs/sampling_pro.yaml` reports
+    `temperature: 0.55` with `thinking_budget: 2048`, both confirming the
+    constrained variant rather than the unconstrained public one. The extracted
+    archive additionally passes: all scripts compile, all YAML parses, and all
+    six `!include` targets resolve relative to their including file.
+  - **Archive structure was matched to the original deliberately.** The first
+    rebuild produced 13 file entries and no directory entries. The original
+    upload carried 19 entries — 13 files plus 6 explicit directory entries — so
+    the zip was rebuilt to include them. Content equality is what matters for
+    the measurement, but leaving a structural difference in place would have
+    been an uncontrolled variable in an experiment whose whole point is that
+    *nothing* changed. Final archive sha256
+    `79343a2345c76bd6176f80bba83aabb045d7b51fe7c0cc851cda91a167a223c5`.
+  - **The zip hash does not and cannot match the recorded
+    `50dea3b9d661c9ef80eac505ddcade41a2a18596cbe704d34e0ffe4375eff34c`**, because
+    zip entries embed file mtimes and a git checkout rewrites them. Verify this
+    package by content, never by archive hash.
+  - **Expected result ~0.822 +/- 0.002.** Anything outside 0.820-0.824 is the
+    real finding and must be called out prominently, because every score
+    comparison in this workspace assumes that noise band.
+- **Set expectations honestly: this slot could not meaningfully raise the
+  expected private score.** With two finals the private board shows the better of
+  the two, and any two independent equal-quality draws have the same
+  expectation. We already held five completed packages inside the noise band. The
+  slot was spent for the measurement, not for a gain.
+- **Submissions `55130084` (v12) and `55214880` (v15) are complete at 0.822.**
+  Beyond the single deliberate variance run above, do not resubmit either.
+- **2026-08-06 slot: hold by default.** Spend it only if `55253408` lands outside
+  the +/-0.002 band, which would mean session noise is larger than assumed and
+  would call for a third draw. Otherwise the deadline-day priority is confirming
+  the finals selection is actually saved in the UI.
 - If the LLM-plan idea is revisited, restructure it so the plan changes the
   features used by the **agent's own ensemble script** (the pick-best-of-K
   selector), rather than introducing `autopredict.py` as a second submission

@@ -438,6 +438,29 @@ v12/v13. Recorded so nobody spends another slot rediscovering this.
   honest reason the remaining slots are low-value — not that they are wasted,
   but that no available action moves the expectation.
 
+## Identical-Code Variance Run (2026-08-05, submission `55253408`)
+
+- **What it is.** `official-demo-v12-portfolio-pro-freeroll` resubmitted with no
+  change whatsoever, to send identical code through a fresh public agent session
+  and measure session-to-session noise *directly*. Every score comparison in this
+  workspace has been assuming a ~+/-0.002 band inferred from indirect evidence;
+  this measures it.
+- **Identity verification matters more than the archive hash here.** The zip
+  sha256 is `79343a23...` and **cannot** match the original `50dea3b9...`,
+  because zip entries embed file mtimes and a git checkout rewrites them. The
+  meaningful check is content: all 13 files sha256-match the package folder,
+  which git confirms is untouched since commit `c0b6312` — the commit that
+  recorded the original 0.822. Anyone re-running this must verify by content.
+  The archive was also rebuilt to carry the original's 6 explicit directory
+  entries, so that archive structure was not left as an uncontrolled difference
+  in an experiment whose premise is that nothing changed.
+- **Pre-registered expectation: ~0.822 +/- 0.002**, i.e. 0.820-0.824. Recording
+  the prediction before the result so the outcome cannot be rationalised
+  afterwards. A result outside that band is the real finding: it would mean the
+  noise band is wider than assumed, and every ~0.001-0.002 comparison in this
+  workspace — including the "six null levers" and the naji-exact reproduction —
+  would need re-reading as an even weaker signal than already stated.
+
 ## Leaderboard Notes
 
 - Submission `55224297`: `COMPLETE`, public score **`0.822`** — and this is the
