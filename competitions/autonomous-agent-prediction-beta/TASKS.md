@@ -145,7 +145,14 @@
   slot was spent for the measurement, not for a gain.
 - **Submissions `55130084` (v12) and `55214880` (v15) are complete at 0.822.**
   Beyond the single deliberate variance run above, do not resubmit either.
-- **2026-08-06 slot: STAGED — `official-demo-v16-dtype-hardened`.** The user chose
+- **SUBMITTED 2026-08-06 00:16:54 UTC as `55283870`: `official-demo-v16-dtype-hardened`.**
+  This was the final slot (`0 submissions remaining today`), and the competition
+  closes today at 23:59 UTC. Archive re-verified at upload: sha256
+  `51a44e9e8ce049ea685af8ac2cdd78f41bb23050bbc04b1094b99ae11622b15e`, 19 entries
+  / 13 files, `agent.yaml` at root with name `v16_dtype_hardened`, Pro
+  temperature 0.55, no `__pycache__`, every file matching the committed source.
+  Result pending; expectation ~0.822.
+- **2026-08-06 slot rationale (staged 2026-08-05).** The user chose
   on 2026-08-05 to spend the final slot on dtype hardening rather than hold it or
   take a third variance draw. `submissions/submission.zip` holds v16, sha256
   `51a44e9e8ce049ea685af8ac2cdd78f41bb23050bbc04b1094b99ae11622b15e`, 19 entries
