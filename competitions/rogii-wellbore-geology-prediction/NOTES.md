@@ -18,6 +18,23 @@ Quick facts and loose/not-yet-actioned ideas. For validated technical understand
 - **Last 3 clean draws** (`55278378` s4000, `55278379` seeded, `55278380` frontier) fired ~16:15 on 08-05 as final lottery tickets — submitted before deadline but grading ~7-8h, so may score near/after 23:59. If any landed ≤6.43 in time, auto-selection swept it in; otherwise 6.435/6.454 stand.
 - **Tomorrow:** check final private LB standing + whether any of the last 3 draws scored. Nothing left to submit (competition closed 08-05 23:59).
 
+## FINAL PRIVATE RESULTS (2026-08-06) — big shakeup, public was noise
+
+Private LB revealed. **Everyone shifted ~+3 points public→private (6.4 → 9.4)** — the private test set is genuinely harder/different (host's "placeholder wells" warning confirmed). Our submissions:
+
+| Submission | Public | Private |
+|---|---|---|
+| best public 6.435 (`55170737`, auto-selected final) | 6.435 | **9.492** (worst private!) |
+| 2nd public 6.454 (`55185345`, auto-selected final) | 6.454 | 9.466 |
+| s4000 draw `55278378` | 6.466 | 9.463 |
+| fork#2 Q0522 `55274429` | 6.509 | 9.451 |
+| frontier draw `55278380` | 6.497 | **9.435** (best private, NOT selected) |
+| seeded draw `55278379` | 6.498 | 9.475 |
+
+- **Public and private were ~uncorrelated in our tight cluster** — best public (6.435) → worst private (9.492). Definitive proof of the session-long thesis: **public-LB draw-banking was noise; the forum "board is a precise ruler" claim was wrong for private.** Picking best-public for finals was slightly *anti*-optimal (auto-selected 9.466/9.492; unselected frontier draw was 9.435 — but 0.03 = noise).
+- **Final private score = ~9.466** (Kaggle keeps the better of the 2 auto-selected finals). Exact rank not computable from CLI (only public LB downloadable; top still 4.6-6.4) — check competition page.
+- **Durable lesson for future PF/geosteering-style comps:** when a host says the visible test is placeholder and grading re-runs on hidden data, treat ALL public-LB tuning (draw-banking, Q0522-style hardcoded shifts, seed search on public) as overfitting with ~zero private value. Spend effort only on genuine mean-movers validated by grouped CV, not public-LB probing.
+
 ## Not Yet Actioned / Loose Ideas
 
 - **Tutorial notebook**: still owed (requested 2026-07-24, got sidetracked mid-build by the train/test overlap discovery — see `LEARNINGS.md`). Should walk through the actual modeling problem (GR-to-typewell alignment, PF/state-space tracking, formation-surface prior, learned residuals, model-package, guarded override) using real sample data, and include the overlap-discovery episode as a worked example of verifying an assumption empirically rather than trusting a public notebook's framing.
