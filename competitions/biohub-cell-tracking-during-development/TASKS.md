@@ -1,5 +1,219 @@
 # Tasks
 
+## CURRENT STATUS - 2026-08-05 (the ablation ladder INVERTED; local harness is anti-predictive)
+
+`exp172` (motion relink off) scored **`0.911`** and `exp174` (relink off +
+short-track off) scored **`0.909`**, against the Exp148 baseline of **`0.913`**.
+Local mean edge Jaccard for those same two configs was `0.9476` and `0.9558`
+versus a `0.9214` baseline - so **the bigger the local gain, the bigger the
+leaderboard loss, monotone across all three points.**
+
+**Do not use the labelled-movie harness to guide post-processing changes.** It
+is anti-predictive, not merely weak. The steps we ablated were calibrated
+against the leaderboard in the first place, so they are fitted to the hidden
+test and look harmful on the five labelled movies. Full analysis and the list of
+quality signals that were all present and all useless:
+`references/exp170-origin-analysis-2026-08-04.md`.
+
+Exp170's measurement stands (43% of labelled-movie misses were correct in the
+ILP and removed by post-processing); its implication does not (recovering them
+loses score). The FP rule finding - `source_or_target`, exact on all five movies
+- survives, being a measurement fact rather than a generalization.
+
+Best public LB remains **`0.913`** (Exp148). Newly closed axis: post-processing
+ablation guided by local labelled-movie score.
+
+
+## CURRENT STATUS - 2026-08-04 (Exp170: the plateau is self-inflicted)
+
+**Exp170 v2 changed the picture.** Scoring the ILP-solved graph and the final
+submission against the same ground truth shows that **42 of 97 missed GT edges
+(43%) were CORRECT IN THE ILP and were destroyed by our own post-processing**
+(32 of 80 in the dense movie). This loss class sits entirely in code we control,
+and it refutes the pessimistic reading of Exp169 that the plateau is a
+linker-model limit. Full write-up:
+`references/exp170-origin-analysis-2026-08-04.md`.
+
+Mechanism: 33 of the 42 keep exactly one predicted child, so a step *replaced*
+the correct ILP child - and the substitute sits at a median **128.8 deg** from
+the true step, i.e. roughly the opposite direction. 8 more end with zero
+children (a correct edge deleted). The true child node still exists in our
+output in 39 of 42 cases, so detection is not involved, and all 42 have
+`gt_parent_n_children == 1`, so division ambiguity is not involved either.
+
+**Exp170 also solved the FP accounting.** The `source_or_target` rule (a
+predicted edge is FP when *either* endpoint matched an annotated GT node)
+reproduces the official FP count exactly on all five movies - 2/3/0/19/138.
+Exp169's open trust boundary is closed; FP conclusions are now usable.
+
+Local baseline for ablations, per-dataset edge Jaccard under current Exp148:
+`0.9038 / 0.9038 / 1.0000 / 0.9641 / 0.8350`, mean **`0.9213`**.
+
+### In flight - Exp171 post-processing ablation (no submission slot)
+
+All post-processing steps are env-gated, so ablation needs no code edits.
+`biohub-exp171a-motion-relink-off` (`BIOHUB_OUTPUT_MOTION_RELINK=0`) and
+`biohub-exp171b-linefit-off` (`BIOHUB_OUTPUT_LINEFIT_SMOOTH=0`) are the prime
+suspects for the 33 replacements; the short-track filter
+(`BIOHUB_OUTPUT_MIN_TRACK_LEN`) is the suspect for the 8 deletions.
+
+**Caveat that must not be dropped:** a local win is a hypothesis, not proof.
+No-safe-divisions improved local validation (`0.9548 -> 0.9606`) and *lost* on
+the LB (`0.893 -> 0.886`). Verify any ablation winner on the leaderboard.
+
+
+## CURRENT STATUS - 2026-08-02 (bidirectional fusion axis opened)
+
+Exp165 scored **`0.913`**, tying Exp148 - so the pre-registered trigger fired:
+port the reverse-time harmonic fusion. Ten consecutive experiments (Exp155-165)
+now tie at `0.913`; Exp163 replaced 637 associations and Exp165 replaced 687 and
+neither moved the third decimal. Post-processing on this backbone is saturated.
+
+LEADERBOARD MOVED AGAINST US (pulled 2026-08-02): **1898 teams** (was 1768), top
+`0.944`. Our `0.913` best-rank slipped **~#62 -> ~#138**. But the plateau is
+dense and that is leverage: 149 teams sit at exactly `0.913` and 71 at `0.914`,
+so **`0.913` -> `0.914` alone jumps ~#138 -> ~#67**, i.e. into silver territory
+(silver ~top 95, bronze ~top 190). One thousandth is worth a medal tier here.
+
+### Exp166/167/168 - reverse-time harmonic fusion + weight bracket (IN FLIGHT)
+
+Model-level change, not post-processing - the first such probe since Exp148.
+For each adjacent frame pair the PRIMARY model is re-evaluated with source/target
+swapped; forward and reverse logits are calibrated to a common scale, converted
+to probabilities, fused with a weighted HARMONIC mean (penalizes any link that
+either temporal direction doubts), then rescaled to the forward logit scale so
+the candidate threshold, dual-seed fusion and ILP are untouched.
+
+Ported from `zoli800/biohub-cell-another-approch-2nd` (public versions `0.914`,
+`0.914`, `0.914`). Their backbone is WEAKER than ours - they use
+`low_margin_consensus` (our Exp144 = 0.912) and disable DeepCenter, while we keep
+`adaptive` fusion (Exp148 = 0.913) plus DeepCenter gap confirmation. So we graft
+only their orthogonal idea onto our better base.
+
+Cost is ONE extra `predict_edges` call on the SAME primary model - no third model
+is loaded, so the >=3-model rerun-timeout failure mode does not apply.
+
+ALL THREE RAN TO COMPLETE AND ARE SUBMITTED (2026-08-02, PENDING):
+- Exp166 `dalloliogm/biohub-exp166-bidirectional-harmonic` weight **0.20**
+  (zoli's value) -> submission `55195447`.
+- Exp167 `dalloliogm/biohub-exp167-bidirectional-w030` weight **0.30** (stronger)
+  -> submission `55195539`.
+- Exp168 `dalloliogm/biohub-exp168-bidirectional-w010` weight **0.10** (weaker)
+  -> submission `55195793`.
+
+### RESOLVED 2026-08-03: ALL THREE WEIGHTS TIE AT `0.913`
+
+`55195447` w0.20 = **0.913**; `55195539` w0.30 = **0.913**; `55195793` w0.10 =
+**0.913**. Case (b) of the pre-registered rule: even a MODEL-LEVEL change cannot
+move this backbone. The reverse-time harmonic fusion axis is CLOSED - do not
+probe further weights (0.05/0.35), and do not stack it with Exp165.
+
+## THE PLATEAU IS REAL - STOP MICRO-OPTIMIZING (2026-08-03)
+
+Thirteen consecutive experiments now land on exactly `0.913` (Exp159, 160, 161,
+162-held, 163, 164-diagnostic, 165, 166, 167, 168), with Exp155 the only mover at
+`0.912`. These were NOT trivial variations - they include:
+- division budget 2x / 0.5x and two evidence-ranked division orderings,
+- Exp163 replacing **637** association edges (edge Jaccard 0.9892),
+- Exp165 replacing **687** edges in the dense movie (edge Jaccard 0.9807),
+- Exp166-168 a genuine model-level bidirectional fusion at three weights.
+
+### CORRECTION 2026-08-03: the two paragraphs originally written here were WRONG
+
+Retracted claim 1 - "one 0.001 step needs ~118 net correct edges out of ~118,000".
+FALSE. The GT is SPARSE. Per the harness table in `LEARNINGS.md` only about
+**2,258 edges are scored in total** across the five labelled movies, with
+**167 total errors**, and `6bba_05db0fb1` alone carries **56%** of the weight
+(`1,095` TP / `79` FP / `88` FN, `D = 1,262`). Using this repo's own derivation
+(`d(J)` per mis-link fixed `= (1+J)/D`, mis-links counting double because edge FP
+and FN are coupled), one mis-link fixed in that movie is worth
+`1.867/1262 * 0.559` = about **`+0.0008` aggregate**. So roughly **1-2 mis-links
+= `+0.001`**, and clearing all 167 errors is worth about `+0.07`. The metric is
+extremely SENSITIVE, not insensitive.
+
+Retracted claim 2 - "only a better DETECTOR can move this". FALSE, and it
+contradicts a measurement already in `LEARNINGS.md`:
+**`node_recall` is `1.0000` and `0.9988` - detection is saturated and ALL edge
+loss is linking loss.** A better detector has essentially no headroom. Do not
+start a from-scratch detector training project on this basis.
+
+### THE ACTUAL REASON FOR THE 13 TIES
+
+We have been editing edges the metric never scores. `6bba_05db0fb1` contains
+about `70,000` PREDICTED edges but only `1,262` SCORED ones (~1.8%). Exp165
+replaced `687` edges there, which in expectation touches only about
+`687 * 1262/70000` = **~12 scored edges**; if those break about as many as they
+fix, the aggregate change is zero - exactly what was observed. Exp163's 637
+replacements have the same problem. The perturbations were large in absolute
+terms and negligible in scored terms.
+
+IMPLICATION - change the METHOD, not the axis. Blind LB submissions that reshuffle
+hundreds of unscored edges are near-guaranteed ties. The local harness reports
+per-movie edge TP/FP/FN, so it can say directly whether a change fixes any of the
+`167` known errors. Use it as the gate BEFORE spending a submission slot: require
+a candidate to reduce FP+FN on `6bba_05db0fb1` locally, then submit.
+
+Caveats to respect: the harness under-reads absolute score by about `0.035` and is
+a RANKING signal only; the labelled set has just `3` annotated divisions so the
+division term is nearly unmeasurable locally; and the hidden test movies differ,
+so a local fix must be a general linking improvement rather than an overfit to
+these `167` cases.
+
+CAUTION ON THE PUBLIC 0.914 CLAIM: zoli800's own versions scored
+`0.914, 0.911, 0.914, 0.914, 0.913` - a `0.003` spread across their own runs. Their
+`0.914` is therefore not solid evidence that bidirectional fusion is worth
+`+0.001`; it is within their own run-to-run variation. We ported the mechanism
+correctly (kernels completed, guard verified) and it is neutral on our backbone.
+
+WHAT WOULD ACTUALLY MOVE `0.913` -> `0.914+`: fixing MIS-LINKS, specifically in
+`6bba_05db0fb1`. Only 1-2 corrected mis-links are needed per displayed step. This
+is a LINKING problem, not a detection or model-capacity problem, and it is
+concentrated in dense regions of one movie.
+
+NEXT SESSION SHOULD START HERE (not with another blind submission):
+1. Re-run the local harness on Exp148 and DUMP THE 167 ERRORS individually
+   (`79` FP + `88` FN in `6bba_05db0fb1`, plus `3`/`24` in `6bba_05b6850b`) with
+   their coordinates, frames, and the competing candidate parents.
+2. Inspect them for a common failure mode - crossing trajectories, dense-cluster
+   ambiguity, division neighbourhoods, frame-to-frame velocity outliers. Exp164
+   already showed generic pair-swapping finds nothing, so the fix must be
+   targeted at whatever pattern the errors actually show.
+3. Gate any candidate on reducing local FP+FN BEFORE spending a submission slot.
+
+Still-dead axes (do not revisit): division budget/ranking, ILP costs, learned
+bonus strength, post-mix temperature, edge/detection blend weights, reseed
+ensembles, Trackastra linker swap, alternate public detectors.
+
+STATUS: Exp148 `0.913` remains the standing submission and is safe. The deadline
+is 2026-09-29, so there is ample time to do the error-analysis work properly
+rather than continuing to spend slots on unscored-edge perturbations.
+
+The port is VERIFIED APPLIED, not silently skipped: each notebook carries a
+runtime guard that raises `Bidirectional fusion patch expected one anchor` if the
+anchor block is missing, and additionally validates
+`0 < BIOHUB_BIDIRECTIONAL_EDGE_WEIGHT <= 0.35`. All three kernels reached
+COMPLETE, so the anchor matched and the fusion ran in every case. Runtime was
+~22 min per kernel, comparable to Exp148, confirming the extra `predict_edges`
+call does not approach the rerun timeout.
+
+All three banked the SAME day deliberately: the grading queue has hung 3h+ every
+day this week, so waiting for Exp166's score before bracketing would waste slots
+that expire at UTC midnight. Same tactic that mapped the temperature axis on
+2026-07-28. Slots 2026-08-02: Exp165 used 1; these three take it to 4 of 5.
+
+When they score:
+- Any > `0.913` -> reverse-time fusion is the plateau breaker; refine the weight
+  around the winner and consider stacking with Exp165's tiled dense relinking
+  (the two are orthogonal: model-level vs dense spatial).
+- All == `0.913` -> even a model-level change cannot move this backbone; the
+  remaining honest options are a genuinely different detector (none competitive
+  in the public pool - see the 2026-07-30 investigation) or accepting the plateau.
+
+Reserve, NOT submitted: Exp162 symmetry-aware division ranking (kernel complete,
+changes only 7 division sources). The division axis is closed - Exp155 2x = 0.912,
+Exp159 half = 0.913, Exp160/161 evidence-ranked = 0.913 - so Exp162 is a
+near-certain tie and is not worth a slot.
+
 ## CURRENT STATUS - 2026-08-01
 
 - Exp148 remains best at **`0.913`**.
