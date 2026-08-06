@@ -533,6 +533,13 @@ v12/v13. Recorded so nobody spends another slot rediscovering this.
     v15, which is what makes it safe to spend the last slot on.
   - `v16 / pandas 3` == `v15 / pandas 2` — **exactly, all 16 tasks.** The
     insurance actually works rather than merely avoiding a crash.
+- **Live confirmation: `55283870` completed at 0.822** on 2026-08-06, tying v12,
+  v13, v15 and the naji-exact package. The offline claim was that the hardening
+  is behaviourally invisible on the current image; the live score is consistent
+  with exactly that. Note what this does *not* show: a tie is also what a
+  saturated leaderboard produces regardless, so the live result corroborates the
+  offline fingerprints rather than independently proving equivalence. The
+  fingerprints are the real evidence.
 - **Caveat worth keeping.** This was validated against pandas 3.0.5 specifically.
   It is insurance against the *known* dtype-container change, not proof against
   every future pandas release. The `_coerces_entirely_to_nan` backstop is the

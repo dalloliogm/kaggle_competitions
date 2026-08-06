@@ -35,8 +35,14 @@
   verified against `KaggleApi`, which exposes no finals-selection method — so it
   cannot be automated from this workspace. Go to the competition's *My
   Submissions* page and select:
-  - **`55214880`** — `official-demo-v15-seedbag-timecap`, public 0.822
+  - **`55283870`** — `official-demo-v16-dtype-hardened`, public 0.822
   - **`55171041`** — `official-demo-v13-profile-planner`, public 0.822
+
+  v16 supersedes `55214880` (v15) as the first pick on the same dominance
+  argument that made v15 supersede v12: it is the identical pipeline plus
+  strictly additive protection, verified offline to produce identical model
+  inputs on the current image, and it has now completed live at the same 0.822.
+  Fall back to `55214880` only if something about v16 is later found wanting.
 
   If nothing is selected, Kaggle auto-selects by best public score, which is an
   arbitrary tie-break across our five packages that all sit inside the noise
@@ -151,7 +157,12 @@
   `51a44e9e8ce049ea685af8ac2cdd78f41bb23050bbc04b1094b99ae11622b15e`, 19 entries
   / 13 files, `agent.yaml` at root with name `v16_dtype_hardened`, Pro
   temperature 0.55, no `__pycache__`, every file matching the committed source.
-  Result pending; expectation ~0.822.
+  **RESULT: `0.822`, `COMPLETE` 15 minutes after upload.** It ties v12, v13, v15
+  and the naji-exact package exactly, confirming live what the offline
+  fingerprints predicted — the hardening is behaviourally invisible on the
+  current image. The selection rule (~0.822) is satisfied, so **v16 becomes the
+  recommended first final, superseding v15**: same pipeline, strictly additive
+  protection, and now its own proof that it completes cleanly in a live session.
 - **2026-08-06 slot rationale (staged 2026-08-05).** The user chose
   on 2026-08-05 to spend the final slot on dtype hardening rather than hold it or
   take a third variance draw. `submissions/submission.zip` holds v16, sha256
