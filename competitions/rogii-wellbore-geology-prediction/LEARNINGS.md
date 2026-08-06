@@ -231,6 +231,28 @@ The seeded GS1.30 notebook (`rogii-det-gs1-30-seeded-no-q0522`, which adds `np.r
 - Extensive draw-banking (my 5 seed draws 6.506/6.509/6.514/6.519/6.527, plus the other machine's many more) caught two sub-6.457 public draws: **6.435** (`55170737`, best) and **6.454** (`55185345`). But the **bronze cutoff tightened from 6.457 (07-30) → 6.416 (08-02)** as the field tuned near the deadline (6072 teams). Best draw 6.435 is rank ~775, top 12.8%, **still ~0.02 outside bronze.** The distribution mean (~6.51) is now ~2.5 sd above the bronze bar, so reaching 6.416 by draw-banking alone is a <1%-per-draw long shot.
 - **GR-rotation denoise lever FAILED in practice**: two isolated implementations (centered rolling-median `55141310` = 9.325; FFT dominant-frequency notch `55157951` = 10.819) both regressed catastrophically vs ~6.5. The noise-floor notebook's theoretical +4pts localization did not translate — this specific lever, as implemented, hurts. Don't pursue these two variants further.
 
+## POST-MORTEM (2026-08-06): what the winners actually did — read this first for any future PF/geosteering comp
+
+After close, the 1st-place (topic 733220) and 26th-place (733136) write-ups were posted. **The entire public meta we spent this competition on (PF / target-free geosteering) was a trap.** What actually won:
+
+### 1st place (gold, survived the shake-up) — a 2D U-Net alignment model, NOT the PF pipeline
+- **Reframed the task as 2D alignment**: a probability grid of (horizontal-well position × typewell TVT position, ±100ft @ 0.5ft), trained with **cross-entropy** on an exponentially-smoothed distribution centered on the true alignment, plus Huber loss on the expected TVT path and a small GR-gap penalty.
+- **Model: a standard 2D U-Net with a ConvNeXt backbone** (`timm/convnext_small`), BatchNorm-swapped, BF16. An image-segmentation-style approach.
+- **The PF was demoted to ONE input feature channel** (a 2D particle probability heatmap). PF standalone CV ≈ 7.4 — i.e. the thing the whole public LB obsessed over was a weak feature, not the model.
+- **XY-neighbor feature** via the formation-surface prior `S = TVT + Z + C` locally linear ⇒ `ΔTVT = aΔX + bΔY − ΔZ`, weighted-LS on (x,y) neighbors (standalone CV ≈ 11.4, used as a channel + ensemble gate for the ~10% of wells with no reliable neighbor).
+- **Heavy domain augmentation was decisive**: Z-shift (resample a TVT path keeping `TVT+Z` fixed, via block-bootstrap on real ΔTVT), GR affine transform (force reliance on shape not absolute values), reverse-path, MD-stretch, fault-jump simulation, PF-channel corruption to prevent shortcut learning.
+
+### 26th place — Stacked U-Net + Synthetic Well Pretraining (also NN + synthetic data)
+
+### THE lesson — trust grouped local CV over public LB (this is what survived the shake-up)
+The winner found XY-neighbor features **consistently improved local CV (~0.3 RMSE) but HURT the public LB**. They investigated every neighborhood-quality statistic, couldn't explain the LB degradation, **attributed it to inconsistent public labels, and chose to trust CV.** That decision is why they survived the shake-up. **We did the exact opposite** — chased public LB, draw-banked, forked a public-LB-tuned Q0522 notebook — and got shaken from public top-13% to **private rank 1571/6191 (top 25.4%), no medal.** The forum's "board is a precise ruler" claim was wrong for private; the host's "visible test is placeholder" warning was the real signal.
+
+### Concrete takeaways for next time
+1. **When a host says the visible/public test is placeholder and grading re-runs on hidden data, build a proper grouped-CV harness on day 1 and trust it over public LB — even when public disagrees.** Never draw-bank or hand-tune to public LB in that regime.
+2. **Don't get sucked into a shared public "meta" pipeline just because it dominates the public LB.** Here the PF/geosteering forks clustered at public ~6.4-6.5 but were ~9.4-9.5 private. A genuinely different, well-regularized model (2D-alignment U-Net) with strong domain augmentation was the winning path — and the signal was there mid-competition (tuckerarrants' sequence model hit CV 4.5-5.3 and was top-4; we noted it in this file but didn't pivot).
+3. **Framing matters more than tuning**: reframing regression → 2D-alignment-with-cross-entropy unlocked the gains. Look for a better problem formulation before grinding the popular one.
+4. **Domain-specific augmentation** (Z-shift preserving `TVT+Z`, GR shape transforms, synthetic wells) is what let NNs generalize where tabular/PF plateaued.
+
 ## Leaderboard Notes
 
 - Full public LB CSVs saved at `references/rogii-wellbore-geology-prediction-publicleaderboard-2026-07-23T08:29:24.csv` (5504 teams, stale baseline) and `references/rogii-wellbore-geology-prediction-publicleaderboard-2026-07-24T05:15:25.csv` (5572 teams, current).
