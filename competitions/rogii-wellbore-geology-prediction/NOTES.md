@@ -32,7 +32,7 @@ Private LB revealed. **Everyone shifted ~+3 points public→private (6.4 → 9.4
 | seeded draw `55278379` | 6.498 | 9.475 |
 
 - **Public and private were ~uncorrelated in our tight cluster** — best public (6.435) → worst private (9.492). Definitive proof of the session-long thesis: **public-LB draw-banking was noise; the forum "board is a precise ruler" claim was wrong for private.** Picking best-public for finals was slightly *anti*-optimal (auto-selected 9.466/9.492; unselected frontier draw was 9.435 — but 0.03 = noise).
-- **Final private score = ~9.466** (Kaggle keeps the better of the 2 auto-selected finals). Exact rank not computable from CLI (only public LB downloadable; top still 4.6-6.4) — check competition page.
+- **Final private score = ~9.466 → rank 1571/6191 (top 25.4%).** No medal (bronze ~top 10%, ~rank 619). The public→private shakeup cost us ~12 percentage points (public was top ~13%). Still a solid top-quartile finish.
 - **Durable lesson for future PF/geosteering-style comps:** when a host says the visible test is placeholder and grading re-runs on hidden data, treat ALL public-LB tuning (draw-banking, Q0522-style hardcoded shifts, seed search on public) as overfitting with ~zero private value. Spend effort only on genuine mean-movers validated by grouped CV, not public-LB probing.
 
 ## Not Yet Actioned / Loose Ideas
