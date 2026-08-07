@@ -41,6 +41,46 @@ where the next session should resume: do not spend slots on perturbations that
 reshuffle unscored edges, and do not use the labelled-movie harness to guide
 post-processing (it is anti-predictive for that class of change).
 
+## NEXT EXPERIMENTS - 2026-08-07 (public scan reopened the association axis)
+
+Full scan: `references/public-notebook-scan-2026-08-07.md`. The plateau story
+changes: `yusuketogashi`'s stated clean **`0.915`** stack uses the SAME
+`BIOHUB_*` codebase as ours, with the same detection threshold, the same
+division caps, the same gap geometry - and **two components we have never run**:
+
+```
+BIOHUB_USE_LOCAL_ASSOCIATION_RANKER=1  LOCAL_RANKER_MODE=full_motion_assignment
+BIOHUB_LOCAL_RANKER_FULL_WEIGHT=0.85   PRIMARY_RETAIN_WEIGHT=0.15
+BIOHUB_LOCAL_RANKER_MARGIN_UM=0.35     MIN_ADVANTAGE=0.15
+BIOHUB_EDGE_TTA_MODE=js_reliability_log_pool   BIOHUB_EDGE_TTA_VIEWS=4
+```
+
+1. **Port the local association ranker.** Artifact
+   `pilkwang/biohub-local-association-ranker-unet300-v1` is public and 19 KB - a
+   small tabular model over ~22 features (edge prob, in/out degrees, frame
+   occupancy, raw + motion-predicted distance, 7 µm neighbour density, candidate
+   rank). No extra GPU inference. It targets the wrong-partner class that Exp170
+   (33 replaced children at median 128.8°), Exp164 (0 of 5,842 swaps) and
+   `tomasa2`'s decomposition (57% of losses) all point at.
+2. **Four-view JS-reliability edge TTA** - the other missing component.
+3. **Duplicate-node audit (no slot, no kernel).** `nekkon` measured that a twin
+   detection one voxel away matches nothing and costs ~9% of the score. KD-tree
+   the node rows of the last submission for same-frame pairs under ~2 µm.
+4. **`detect_ratio` audit (no slot).** `tomasa2` measured that ALL of their
+   threshold gains were the node-count penalty, with raw edge Jaccard flat from
+   0.5 to 0.96875. `LEARNINGS.md:1045` already flags `N_pred < N_true` as an
+   untapped axis. Measure which side of 1.0 we are on before spending anything.
+5. **Divisions at the natural rate.** GT is **151 divisions in 128,883 links =
+   1 in 853**; we emit 333 in 117,913 = **1 in 354**, ~2.4x over. Exp155 (2x)
+   lost, Exp159 (half) tied, so the gradient permits going further down.
+
+Items 3 and 4 cost nothing and should run first; 4 gates whether any threshold
+change deserves a slot.
+
+Also recorded: `tomasa2` found harmonic bidirectional fusion **provably zero**
+(their hints are 100% exclusive, so the fused value is identically 1.0 at every
+lambda) - a cleaner explanation of our Exp166-168 tie than backbone saturation.
+
 ## CURRENT STATUS - 2026-08-05 (the ablation ladder INVERTED; local harness is anti-predictive)
 
 `exp172` (motion relink off) scored **`0.911`** and `exp174` (relink off +
