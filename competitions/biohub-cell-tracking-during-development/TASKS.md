@@ -1,5 +1,46 @@
 # Tasks
 
+## CURRENT STATUS - 2026-08-07 (0.913 has fallen OUT of the medal zone)
+
+Leaderboard pulled 2026-08-07 15:00 UTC: **2,095 teams** (was 1,898 on 08-02),
+top score **`0.949`**. Our standing `0.913` now ranks **#252** (best possible
+rank inside the 0.913 block is #236; ties break by earliest submission).
+
+Medal cutoffs at 2,095 teams: bronze ~top **210**, silver ~top **105**, gold
+~top **14**. **`0.913` is no longer a bronze.** The score has not changed - the
+field moved. The dense-plateau leverage noted on 08-02 is still there and is now
+the whole game:
+
+| score  | best rank | teams at that score | tier |
+|--------|-----------|---------------------|------|
+| 0.913  | 236       | 154                 | none |
+| 0.914  | 169       | 67                  | bronze |
+| 0.915  | 62        | 107                 | silver |
+| 0.916  | 45        | 17                  | silver |
+| 0.917  | 39        | 6                   | silver |
+
+`+0.001` re-enters bronze; `+0.002` is silver. Per the sensitivity derivation
+below, that is **1-2 corrected mis-links in `6bba_05db0fb1`** - the target has
+not changed, only the urgency.
+
+### Two reserve submissions were spent on 2026-08-07
+
+- `55319723` **exp162** (symmetry-aware safe-division ranking) = **`0.913`**,
+  tying Exp148 exactly as the 08-02 note predicted ("near-certain tie").
+- `55319752` **exp158** (DeepCenter safe-division veto) = **`0.905`**. TASKS.md
+  had recorded "Do not submit it" - the veto rejects *all* candidate divisions,
+  making it the known-weak no-division configuration. The `-0.008` is the
+  measured cost of that direction, now confirmed rather than inferred.
+
+Both outcomes were pre-registered here before the runs, so neither adds
+information. 3 of 5 slots remain for 2026-08-07. Deadline 2026-09-29 (~53 days).
+
+**Best public LB remains `0.913` (Exp148, submission `55029450`).** No open
+kernel is in flight. The standing advice from 08-03/08-05 is unchanged and is
+where the next session should resume: do not spend slots on perturbations that
+reshuffle unscored edges, and do not use the labelled-movie harness to guide
+post-processing (it is anti-predictive for that class of change).
+
 ## CURRENT STATUS - 2026-08-05 (the ablation ladder INVERTED; local harness is anti-predictive)
 
 `exp172` (motion relink off) scored **`0.911`** and `exp174` (relink off +
