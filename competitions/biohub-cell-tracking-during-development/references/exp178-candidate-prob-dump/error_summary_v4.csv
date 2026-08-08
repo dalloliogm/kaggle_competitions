@@ -1,0 +1,6 @@
+dataset,official_tp,official_fp,official_fn,fp_rule_src,fp_rule_src_or_tgt,fp_rule_any,fn_post_processing,fn_upstream,have_ilp,ilp_load_error,ilp_has_prob,n_err_with_both_probs,median_p_true,median_p_chosen,median_p_tp
+44b6_0113de3b,47,2,3,1,2,4,3,0,True,,True,0,,,0.9805964231491089
+44b6_0b24845f,47,3,2,2,3,7,2,0,True,,True,0,,,0.960453063249588
+44b6_33b596bf,49,0,0,0,0,1,0,0,True,,True,0,,,0.9627684354782104
+6bba_05b6850b,833,19,12,11,19,38,5,7,True,,True,1,0.8847578763961792,0.8847578763961792,0.9598104655742645
+6bba_05db0fb1,1103,138,80,69,138,216,32,48,True,,True,7,0.7975444793701172,0.7975444793701172,0.9135335087776184

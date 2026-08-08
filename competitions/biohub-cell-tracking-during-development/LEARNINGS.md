@@ -2,6 +2,115 @@
 
 Capture durable information learned while working on this competition. This is for insights that should guide future modeling and prevent repeated mistakes.
 
+## SETTLED - where the loss actually is: half model limit, half self-inflicted (2026-08-08, Exp178)
+
+Full write-up: `references/exp178-candidate-prob-analysis-2026-08-08.md`. This closes
+exp169's item 3, which exp169 itself called "the decisive one" and which Exp170 did
+not answer.
+
+Dumping the raw `(n_src, n_tgt)` probability matrix before any filtering splits the
+97 missed GT edges cleanly:
+
+| failure mode | n | p(true) median | rank of true parent |
+| --- | ---: | ---: | --- |
+| below candidate threshold (0.48) | 44 | **0.128** | rank-1 only 16% |
+| survived to ILP, killed by post-processing | 42 | **0.861** | **rank 1 in 100%** |
+| lost to greedy cap / ILP | 3 | 0.585 | rank 1 |
+| TP baseline | 2067 | **0.935** | rank 1 in 99% |
+
+- The 42 post-processing losses are **not a model problem**: the model ranked the
+  true parent first every time and the ILP kept the edge. We destroyed them.
+- The 44 threshold losses are **purely a model limit**: 0.128 vs 0.935 is a
+  sevenfold confidence gap. No graph or assignment work recovers these. Closing
+  them needs a better linker, not better post-processing.
+
+## CRITICAL - never gate on an error-derived statistic without its base rate (2026-08-08, Exp180)
+
+The 42 edges post-processing destroys have median learned prob `0.861` - **BELOW**
+the `0.935` median of ordinary correct edges. They are rank-1 in 100% of cases, but
+so are 99% of TPs. **Neither confidence nor rank separates relink's mistakes from
+the general population.** Any "protect the high-confidence edges" scheme is
+therefore built on a false premise, not just a bad threshold.
+
+Exp180 learned this by spending a slot: a protection threshold of `0.80`, picked
+from the error distribution's p25 (`0.7715`) without checking how many of ALL edges
+clear it, fired on **95,298 of 119,571 edges (80%)** - effectively relink-off, a
+config already measured at `0.911`. The TP baseline (p25 `0.883`) was already in
+hand and predicts this immediately.
+
+**Rule:** before thresholding on a statistic measured over errors, compute its
+distribution over the whole population.
+
+**Free enforcement:** a submission-shaped kernel writes `run_stats.csv` without
+costing a submission slot. Push, run, read the guard's own counters, and only
+submit if the intervention is as selective as intended. Exp181 was checked this way
+first: `1,296 / 119,311` edges (**1.09%**), 1,007 ILP edges restored.
+
+The usable discriminator is **directional, not confidence-based** - Exp170 measured
+wrong substitutes at a median `128.8 deg` from the true step (Exp181 acts on this).
+
+## The ILP geff's `edge_prob` cannot compare a source's alternative children (2026-08-08, Exp177)
+
+`save_graph()` runs AFTER `solver.solve()` in `predict_unet_transformer.py`, so the
+saved geff is the ILP **solution**, not the candidate set. A mis-link's true edge is
+by definition unselected, so its probability is absent entirely. In the 8 error rows
+where both probabilities did resolve, `p_true` and `p_chosen` were bit-identical
+while the geometry columns differed - consistent with match artifacts (line-fit
+smoothing displacing a node past the 7 um match radius), not real replacements.
+
+Any future analysis that assumes per-edge discrimination from the geff is invalid.
+To compare candidates you must hook `probs` inside `predict_video` (see Exp178).
+
+Two mechanical traps when writing that hook:
+- `for f_idx in range(W - 1)` with `W = window_size = 2` means **`f_idx` is always
+  0**. It is the within-window index, not the frame. The absolute frame is `t_src`
+  from `t_src, t_tgt = frame_indices[f_idx], frame_indices[f_idx + 1]`. Keying dumps
+  on `f_idx` silently overwrites every frame pair into one file.
+- Inference runs as two GPU subprocesses (`--slice 0::2`), but they inherit the
+  parent env via `shard_env = {**os.environ, ...}`, so notebook-set env flags do
+  reach the hook.
+
+## RETRACTED HYPOTHESIS - the node-count penalty does NOT explain the local/LB inversion (2026-08-06)
+
+The ablation ladder in `references/exp170-origin-analysis-2026-08-04.md` scores raw
+edge Jaccard `TP/(TP+FP+FN)`, while the LB metric multiplies by
+`(1 - 0.1*(N_pred-N_true)/N_true)`. Since `MIN_TRACK_LEN=1` retains many more nodes,
+it was plausible that the inversion was a metric artifact rather than a real
+train/test gap.
+
+**Tested and false.** Recomputing the ladder with the true adjusted metric, using
+node counts from the actual output files:
+
+| config | nodes | multiplier | raw J | adjusted J | LB |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Exp148 baseline | 146,107 | 1.0076 | 0.9214 | 0.9284 | 0.913 |
+| relink off (exp172) | 144,695 | 1.0084 | 0.9476 | 0.9556 (+0.027) | 0.911 |
+| + short-track off (exp174) | 151,474 | 1.0042 | 0.9558 | 0.9598 (+0.031) | 0.909 |
+
+The multiplier moves the ladder by at most `0.004` against a `~0.03` discrepancy -
+an order of magnitude too small, and the ordering does not flip. (Sanity check:
+linefit-off has exactly the same node count as baseline, `146,107`, which is correct
+since smoothing moves coordinates without adding nodes.)
+
+**So the "labelled-movie harness is anti-predictive" conclusion STANDS**, and is now
+better evidenced: the obvious confounder was checked and eliminated. Also note we
+under-predict nodes by only ~7.6% in aggregate (bonus ~`+0.008`), not the 30% the
+single-movie `44b6_0b24845f` figure suggested - the node-count axis has less headroom
+than that number implies.
+
+## Divisions ARE worth ~0.008 on the hidden test set (2026-08-07, Exp158)
+
+Exp158 vetoed all 333 safe divisions (submission produced `0` divisions, out-degree
+capped at 1) and scored **`0.905`** against the `0.913` backbone.
+
+This directly contradicts the labelled-movie reading. Exp169 found `division_tp = 0`
+on every movie with 10 FP and 3 FN, i.e. divisions looked like pure local loss. But
+the labelled split contains only **3** GT divisions, so it has no power, and the
+hidden set says divisions earn about `0.008`.
+
+**Keep divisions.** Treat any future "divisions look useless locally" argument as
+untrustworthy - that measurement cannot support the conclusion.
+
 ## Ambiguity-gated main-graph association (2026-07-31, Exp163)
 
 - Global learned-bonus sweeps are low-information; apply extra learned influence

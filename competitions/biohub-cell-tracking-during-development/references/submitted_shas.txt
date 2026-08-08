@@ -22,3 +22,8 @@ b4ec8373db07b4fa43319a61835c8083a2456bde2f3d62b3af8cccaa7817edf6  dalloliogm/bio
 031a95a0b332a36fba01bbd767fe211eb805a85e0ea2844e6148b761ee338a84  dalloliogm/biohub-exp163-ambiguity-gated-association v1  exp163 Exp148 backbone; learned bonus 1->3 only when top two geometric parents a
 b914823aaa99fbc3e8745447fdc626dbbe311c00d67e89fb9601d0520f663edf  dalloliogm/biohub-exp172-motion-relink-off v1  exp172: DISABLE motion relink on the exp148 backbone. Exp170 origin analysis fou
 e22f940cb081c1f1f8f71f3192514bfb47c09913e85b76e10911452be9b5d5f2  dalloliogm/biohub-exp174-relink-off-shorttrack-off v1  exp174: motion relink OFF + short-track filter OFF (min_track_len=1) on the exp1
+a1cb29e4825c531498991d277b0dd7af79ea5b30c751202e5626bce72368f1df  dalloliogm/biohub-exp162-symmetry-division-rank v1  exp162 Exp148 backbone; symmetry-aware safe-division ranking
+9ce88089fc048e11a78dab92adba24fa46abd2e631d2290350c0d53b071d31e0  dalloliogm/biohub-exp158-deepcenter-division-veto v1  exp158 Exp148 backbone; DeepCenter safe-division veto
+98e588849488d0c953fa6f9eb3e0abcdae623704f4cc66cb27e7687597a07e5a  dalloliogm/biohub-exp180-relink-protect-guard v1  exp180: protect ILP edges with learned prob >= 0.80 from motion relink replaceme
+085490ede6a76f3b971f9f8b6c677d3bfd443c248ce14b50c1a13223978732e7  dalloliogm/biohub-exp179-edge-threshold-030 v1  exp179: edge candidate threshold 0.48 -> 0.30 on exp148 backbone (exp178: 44/97 
+cad891269bb2009011ead3acf19f0ed99032ea789004a3cdb75a8c33e6d5ea9d  dalloliogm/biohub-exp181-relink-angle-guard v1  exp181: reject motion-relink replacements that turn >90deg from the ILP child, r

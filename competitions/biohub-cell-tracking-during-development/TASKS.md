@@ -1,5 +1,51 @@
 # Tasks
 
+## CURRENT STATUS - 2026-08-08 (Exp178 closes item 3: half the loss is a model limit)
+
+**Exp178 answered exp169's item 3**, the question exp169 called "the decisive one".
+Dumping the raw pre-filter probability matrix splits the 97 missed GT edges:
+
+- **44** die **below the 0.48 candidate threshold** at median p `0.128` (vs `0.935`
+  for correct links), rank-1 only 16% of the time. **Pure model limit** - no graph
+  or assignment work recovers these.
+- **42** were **rank-1 at p `0.861` and selected by the ILP**, then destroyed by our
+  post-processing. Not a model problem at all.
+- 3 lost to greedy cap / ILP, 8 unlocatable.
+
+Full write-up: `references/exp178-candidate-prob-analysis-2026-08-08.md`.
+Raw artifacts: `references/exp178-candidate-prob-dump/`.
+
+**Newly closed:** confidence and rank CANNOT isolate relink's mistakes. The 42
+destroyed edges sit at median `0.861`, BELOW the `0.935` TP median, and are rank-1
+in 100% of cases against 99% of TPs. Exp180 proved this the expensive way - a `0.80`
+protection threshold fired on 80% of all edges. See LEARNINGS for the base-rate rule
+and the free `run_stats.csv` selectivity check that catches it.
+
+**Also settled:** divisions are worth ~`0.008` on the hidden set (Exp158 vetoed them
+all -> `0.905`), despite looking like pure loss on the 3-division labelled split. And
+the node-count penalty does NOT explain the 08-05 ladder inversion - tested with the
+true adjusted metric, the ordering does not flip, so the anti-predictive-harness
+conclusion stands and is better evidenced.
+
+### Submitted 2026-08-08, all pending
+
+| exp | change | note |
+| --- | --- | --- |
+| exp179 | edge candidate threshold `0.48 -> 0.30` | targets the 13 of 44 misses in `[0.25,0.48)` |
+| exp180 | protect ILP edges with p >= `0.80` from relink | MIS-CALIBRATED, fires on 80% of edges, expect ~`0.909-0.911` |
+| exp181 | reject relink turns > `90 deg` from the ILP child | fires on **1.09%** of edges, restores 1,007 - the real candidate |
+
+Best public LB remains **`0.913`**; rank `277 / 2126` and still drifting as the field
+improves. Leader `0.949`.
+
+### Next, once exp181 scores
+
+- If exp181 beats `0.913`: sweep `BIOHUB_RELINK_MAX_TURN_DEG` (75 / 105) to bracket it.
+- If it does not: even a precisely targeted, geometrically motivated fix to the
+  self-inflicted class does not transfer, which points at the 44 model-limited misses
+  as the only remaining lever - i.e. a better linker, not more post-processing.
+
+
 ## CURRENT STATUS - 2026-08-05 (the ablation ladder INVERTED; local harness is anti-predictive)
 
 `exp172` (motion relink off) scored **`0.911`** and `exp174` (relink off +
