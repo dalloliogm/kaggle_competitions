@@ -55,6 +55,26 @@ Combined with Exp178's finding that 44 of 97 misses are model-limited (median p
 `0.128`), this closes post-processing as a source of gain. **The remaining lever is
 the linker model itself.** Stop designing graph-repair rules.
 
+### In flight - Exp182, threshold `0.15` (submitted 2026-08-09, pending)
+
+`BIOHUB_DUAL_SEED_EDGE_THRESHOLD` `0.48 -> 0.15` on the exp148 backbone, one env var.
+Rationale: exp179 at `0.30` TIED rather than degrading, so the ILP absorbs extra
+candidates without harm. Exp178 put the 44 model-limited misses at median p `0.128` -
+only 13/44 are in `[0.25,0.48)` but 24/44 are above `0.10`, so `0.30` could never
+reach most of them.
+
+Output: `246,649` rows / `125,400` nodes (vs exp148 `122,107`, exp179 `124,316`). Note
+the graph grew by only ~3.3k nodes despite a 3x lower threshold - **the ILP is
+admitting the extra candidates and then rejecting almost all of them**, which already
+hints the model's low scores are correct.
+
+How to read the result:
+- beats `0.913` -> low-confidence edges ARE recoverable; bracket `0.10` / `0.20`.
+- ties -> the ILP admits and correctly rejects them, i.e. the model's low scores are
+  right and those 44 edges are genuinely unrecoverable. **This confirms the linker is
+  the ceiling** and is the most likely outcome given the node-count evidence above.
+- drops -> extra false candidates outweigh recoveries; `0.30` was already the limit.
+
 ### Next - model axis only
 
 Untried and training-free: **TTA on the edge/linker stage.** The existing TTA patch

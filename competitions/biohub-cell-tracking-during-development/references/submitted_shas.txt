@@ -27,3 +27,4 @@ a1cb29e4825c531498991d277b0dd7af79ea5b30c751202e5626bce72368f1df  dalloliogm/bio
 98e588849488d0c953fa6f9eb3e0abcdae623704f4cc66cb27e7687597a07e5a  dalloliogm/biohub-exp180-relink-protect-guard v1  exp180: protect ILP edges with learned prob >= 0.80 from motion relink replaceme
 085490ede6a76f3b971f9f8b6c677d3bfd443c248ce14b50c1a13223978732e7  dalloliogm/biohub-exp179-edge-threshold-030 v1  exp179: edge candidate threshold 0.48 -> 0.30 on exp148 backbone (exp178: 44/97 
 cad891269bb2009011ead3acf19f0ed99032ea789004a3cdb75a8c33e6d5ea9d  dalloliogm/biohub-exp181-relink-angle-guard v1  exp181: reject motion-relink replacements that turn >90deg from the ILP child, r
+549776f60825920d338fc4b6c1f7c0d546f1ee82db57af04a209342a58d136d0  dalloliogm/biohub-exp182-edge-threshold-015 v1  exp182: edge candidate threshold 0.48 -> 0.15 (exp179 at 0.30 tied; exp178 put 2
