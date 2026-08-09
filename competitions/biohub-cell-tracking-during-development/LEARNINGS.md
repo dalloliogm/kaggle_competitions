@@ -24,6 +24,36 @@ Dumping the raw `(n_src, n_tgt)` probability matrix before any filtering splits 
   sevenfold confidence gap. No graph or assignment work recovers these. Closing
   them needs a better linker, not better post-processing.
 
+## SETTLED - post-processing is CLOSED as a source of gain (2026-08-08, Exp179/180/181)
+
+Three structurally different attacks on the 42 self-inflicted misses have now been
+measured on the leaderboard. None beats the `0.913` plateau:
+
+| intervention | mechanism | LB |
+| --- | --- | ---: |
+| blanket disable | `OUTPUT_MOTION_RELINK=0` (exp172) | `0.911` |
+| blanket disable + short-track off | exp174 | `0.909` |
+| confidence-gated protection | protect ILP edges p >= 0.80 (exp180, fires on 80%) | `0.913` |
+| direction-gated protection | reject relink turns > 90 deg (exp181, fires on 1.09%) | `0.912` |
+| lower candidate threshold | `0.48 -> 0.30` (exp179) | `0.913` |
+
+**Exp181 is the informative one.** It was the well-grounded candidate - surgical
+(1.09% of edges), built on a mechanism measured beforehand (Exp170's 128.8 deg
+mis-direction), and verified selective before submission. It still lost `0.001`.
+Restoring 1,007 direction-reversing relink replacements made the score WORSE, so on
+the hidden test set those replacements are on net helping even when they reverse
+direction against the ILP's choice.
+
+Combined with Exp178 (44 of 97 misses are model-limited at median p `0.128`), the
+conclusion is: **stop designing graph-repair rules. The remaining lever is the linker
+model.**
+
+Also note both pre-registered predictions were wrong: exp180 was expected at
+`0.909-0.911` (80% protection ~= relink-off, which scored `0.911`) and tied at
+`0.913`; exp181 was expected to be the best and was the worst. Intuitions about which
+post-processing intervention will transfer are not reliable here - this is the same
+lesson as the 08-05 ladder inversion, arriving from a different direction.
+
 ## CRITICAL - never gate on an error-derived statistic without its base rate (2026-08-08, Exp180)
 
 The 42 edges post-processing destroys have median learned prob `0.861` - **BELOW**

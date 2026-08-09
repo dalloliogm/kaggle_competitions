@@ -27,23 +27,43 @@ the node-count penalty does NOT explain the 08-05 ladder inversion - tested with
 true adjusted metric, the ordering does not flip, so the anti-predictive-harness
 conclusion stands and is better evidenced.
 
-### Submitted 2026-08-08, all pending
+### RESULT 2026-08-08 - all three scored, none beat the plateau
 
-| exp | change | note |
-| --- | --- | --- |
-| exp179 | edge candidate threshold `0.48 -> 0.30` | targets the 13 of 44 misses in `[0.25,0.48)` |
-| exp180 | protect ILP edges with p >= `0.80` from relink | MIS-CALIBRATED, fires on 80% of edges, expect ~`0.909-0.911` |
-| exp181 | reject relink turns > `90 deg` from the ILP child | fires on **1.09%** of edges, restores 1,007 - the real candidate |
+| exp | change | selectivity | LB |
+| --- | --- | --- | ---: |
+| exp179 | edge candidate threshold `0.48 -> 0.30` | +2.2k nodes | `0.913` (tie) |
+| exp180 | protect ILP edges with p >= `0.80` from relink | fires on **80%** of edges | `0.913` (tie) |
+| exp181 | reject relink turns > `90 deg` from the ILP child | fires on **1.09%**, restores 1,007 | **`0.912`** |
 
-Best public LB remains **`0.913`**; rank `277 / 2126` and still drifting as the field
+**Both predictions were wrong.** exp180 was expected to land ~`0.909-0.911` because
+80% protection is near relink-off (and exp172 relink-off scored `0.911`); it tied at
+`0.913` instead. exp181 was the well-grounded candidate and is the only one that
+LOST ground. Restoring 1,007 direction-reversing relink replacements cost `-0.001`,
+so on the hidden set those replacements are on net *helping*, even the ones that
+reverse direction against the ILP.
+
+### SETTLED - the post-processing axis is closed by direct experiment
+
+Three structurally different interventions on the self-inflicted error class have now
+been measured on the leaderboard, and none beats `0.913`:
+
+- blanket disable (exp172 `0.911`, exp174 `0.909`)
+- confidence-gated protection (exp180 `0.913`)
+- direction-gated protection (exp181 `0.912`)
+
+Combined with Exp178's finding that 44 of 97 misses are model-limited (median p
+`0.128`), this closes post-processing as a source of gain. **The remaining lever is
+the linker model itself.** Stop designing graph-repair rules.
+
+### Next - model axis only
+
+Untried and training-free: **TTA on the edge/linker stage.** The existing TTA patch
+augments `det_logits` (detection) only; `model.predict_edges(...)` is called once, in
+the original orientation. Averaging edge logits over D4 orientations attacks the 44
+low-confidence misses directly, which is the only class left with headroom.
+
+Best public LB remains **`0.913`**; rank `292 / 2156` and still drifting as the field
 improves. Leader `0.949`.
-
-### Next, once exp181 scores
-
-- If exp181 beats `0.913`: sweep `BIOHUB_RELINK_MAX_TURN_DEG` (75 / 105) to bracket it.
-- If it does not: even a precisely targeted, geometrically motivated fix to the
-  self-inflicted class does not transfer, which points at the 44 model-limited misses
-  as the only remaining lever - i.e. a better linker, not more post-processing.
 
 
 ## CURRENT STATUS - 2026-08-05 (the ablation ladder INVERTED; local harness is anti-predictive)
