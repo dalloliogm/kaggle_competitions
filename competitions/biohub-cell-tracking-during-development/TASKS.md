@@ -55,7 +55,33 @@ Combined with Exp178's finding that 44 of 97 misses are model-limited (median p
 `0.128`), this closes post-processing as a source of gain. **The remaining lever is
 the linker model itself.** Stop designing graph-repair rules.
 
-### In flight - Exp182, threshold `0.15` (submitted 2026-08-09, pending)
+### RESULT 2026-08-09 - Exp182 scored `0.912`. The candidate-threshold axis is CLOSED.
+
+Full sweep, all on the exp148 backbone, one env var each:
+
+| `BIOHUB_DUAL_SEED_EDGE_THRESHOLD` | nodes | LB |
+| ---: | ---: | ---: |
+| `0.48` (exp148 default) | 122,107 | **`0.913`** |
+| `0.30` (exp179) | 124,316 | `0.913` |
+| `0.15` (exp182) | 125,400 | `0.912` |
+
+Lowering the threshold does not recover the 44 model-limited misses - it costs
+`0.001`. The advance signal was right: the graph grew by only ~3.3k nodes at a 3x
+lower threshold because the ILP admits the extra low-probability candidates and then
+rejects nearly all of them. **The model's low scores on those edges are CORRECT.**
+
+### SETTLED - both post-ILP axes are now closed by direct experiment
+
+- post-processing: blanket disable `0.911`/`0.909`, confidence-gated `0.913`,
+  direction-gated `0.912` - three structurally different designs, none gains.
+- candidate admission: `0.48` and `0.30` tie, `0.15` loses.
+
+Exp178 already showed 44/97 misses sit at median p `0.128` against `0.935` for correct
+links. Both remedies for that class have now been tested and neither works. **The
+linker model is the ceiling. Do not spend further slots on graph or admission
+tuning.**
+
+### Superseded - Exp182 pre-registration (kept for the reasoning trail)
 
 `BIOHUB_DUAL_SEED_EDGE_THRESHOLD` `0.48 -> 0.15` on the exp148 backbone, one env var.
 Rationale: exp179 at `0.30` TIED rather than degrading, so the ILP absorbs extra

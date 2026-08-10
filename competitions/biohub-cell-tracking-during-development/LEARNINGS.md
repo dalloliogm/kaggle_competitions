@@ -24,6 +24,28 @@ Dumping the raw `(n_src, n_tgt)` probability matrix before any filtering splits 
   sevenfold confidence gap. No graph or assignment work recovers these. Closing
   them needs a better linker, not better post-processing.
 
+## SETTLED - the candidate-threshold axis is CLOSED too (2026-08-09, Exp179/182)
+
+| `BIOHUB_DUAL_SEED_EDGE_THRESHOLD` | nodes | LB |
+| ---: | ---: | ---: |
+| `0.48` (default) | 122,107 | **`0.913`** |
+| `0.30` (exp179) | 124,316 | `0.913` |
+| `0.15` (exp182) | 125,400 | `0.912` |
+
+Exp178 measured 44 of 97 misses dying below the `0.48` cut at median p `0.128`, with
+24 of them above `0.10` - so a lower threshold was the obvious remedy. It does not
+work: `0.30` ties and `0.15` costs `0.001`.
+
+The mechanism is visible in the node counts. A 3x lower threshold grew the graph by
+only ~3.3k nodes, because the ILP admits the extra low-probability candidates and then
+rejects nearly all of them. **The model's low scores on those edges are correct** -
+they are not under-ranked true links, they are genuinely poor candidates.
+
+**Consequence: both remedies for the model-limited class are now closed.** Combined
+with the post-processing result below, every post-ILP lever has been tested. The
+linker model is the ceiling; further gain requires a better linker (retraining, a
+stronger checkpoint, or edge-stage TTA), not graph or admission tuning.
+
 ## SETTLED - post-processing is CLOSED as a source of gain (2026-08-08, Exp179/180/181)
 
 Three structurally different attacks on the 42 self-inflicted misses have now been
