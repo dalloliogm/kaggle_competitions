@@ -28,3 +28,7 @@ a1cb29e4825c531498991d277b0dd7af79ea5b30c751202e5626bce72368f1df  dalloliogm/bio
 085490ede6a76f3b971f9f8b6c677d3bfd443c248ce14b50c1a13223978732e7  dalloliogm/biohub-exp179-edge-threshold-030 v1  exp179: edge candidate threshold 0.48 -> 0.30 on exp148 backbone (exp178: 44/97 
 cad891269bb2009011ead3acf19f0ed99032ea789004a3cdb75a8c33e6d5ea9d  dalloliogm/biohub-exp181-relink-angle-guard v1  exp181: reject motion-relink replacements that turn >90deg from the ILP child, r
 549776f60825920d338fc4b6c1f7c0d546f1ee82db57af04a209342a58d136d0  dalloliogm/biohub-exp182-edge-threshold-015 v1  exp182: edge candidate threshold 0.48 -> 0.15 (exp179 at 0.30 tied; exp178 put 2
+0f282cfd0e87274299ba5c823b78db2f6061ff8f76b6e41757675845fa5ff5ad  dalloliogm/biohub-exp183-public-ranker-fork v1  exp183: fork of public yusuketogashi no-hack-biohub-cell-another-approch-3rd (lo
+7f0186c03279fe6b29b0c5a07d45bcf435cf0baa72014fbf3e4563eb884495b3  dalloliogm/biohub-exp184-local-ranker-only v1  exp184: local association ranker (85/15 full_motion_assignment) ported onto the 
+6f4d2377d186656d3c5d679d6046da851729c335642c4b4008e56ae22b853794  dalloliogm/biohub-exp185-ranker-weight-050 v1  exp185: local association ranker at 0.50/0.50 instead of 0.85/0.15 - closer to t
+44472cec82a56b3ed7c6eb5b6cd915f867aa54a522cf2eb30bc88978305388d2  dalloliogm/biohub-exp186-edge-tta-only v1  exp186: forward-only 4-view edge-stage TTA with JS-reliability log-pooling on th

@@ -1,5 +1,59 @@
 # Tasks
 
+## CURRENT STATUS - 2026-08-10 (the public frontier passed us; adopting + decomposing it)
+
+**We are now BELOW the public baseline.** A public notebook lineage
+(`yusuketogashi/no-hack-biohub-cell-another-approch-3rd`, 127 votes) is the backbone of
+a **177-team tie block at `0.915`**, larger than the 146-team block at our `0.913`.
+**317 teams score above us.** Rank ~`332/2201` and sliding. Full scan:
+`references/public-scan-2026-08-10.md`.
+
+The one genuinely new component is **`pilkwang/biohub-local-association-ranker-unet300-v1`**
+- a 22-feature MLP reranking association candidates, blended 85/15. **It has been sitting
+in our own `public-model-inventory-2026-07-22.md` for three weeks, unused**, while
+exp158-182 spent ~15 slots proving post-processing and candidate admission are exhausted.
+It acts on exactly the stage Exp178 identified as our ceiling.
+
+### Submitted 2026-08-10 - a four-way decomposition (all pending)
+
+| exp | isolates | rows / nodes |
+| --- | --- | --- |
+| exp183 | the full public stack, forked verbatim | 242,099 / 123,090 |
+| exp184 | the ranker ALONE on our exp148 backbone | 240,041 / 122,120 |
+| exp185 | the ranker at `0.50/0.50` instead of `0.85/0.15` | 240,003 / 122,100 |
+| exp186 | forward-only 4-view edge-stage TTA, no ranker | 241,641 / 122,926 |
+
+exp184 lands within ~20 rows of the exp148 baseline (240,020), i.e. the ranker changes
+WHICH edges are chosen without changing the graph's shape - a clean substitution.
+
+### Ranker runs GLOBALLY, against its own manifest
+
+`run_stats.csv` for both exp183 and exp184 shows `local_ranker_scored` = **100%** of
+candidates (139,518 and 139,067), with `local_ranker_ambiguous_rows` = 0 and
+`local_ranker_rescue_adjustments` = 0. The constrained tie-breaker paths are dead code.
+
+The artifact manifest says: *"Use only as a constrained local association tie-breaker,
+not as a global edge veto."* Both the public notebook and our port ignore that. This is
+NOT a mis-calibration like Exp180 - `full_motion_assignment` mode is defined to score
+everything - but a component pushed outside its stated design intent is a private-LB
+risk, especially with the bronze line inside a tie block. **exp185 exists to find out
+whether the gain survives at a defensible weight.**
+
+### CAVEAT on exp186 - not a faithful port
+
+In the public notebook the edge-TTA block is **welded to the reverse-time harmonic
+fusion**: its per-view probability helper calls `predict_edges` twice (forward+reverse)
+and blends, and guards against a zero bidirectional weight. Since we exclude harmonic
+fusion (tested in isolation, exp166/167/168, all tied `0.913`), the port substitutes a
+forward-only helper. View construction, JS-reliability weighting and log-pooling are
+verbatim.
+
+**Therefore: if exp186 gains, the result is ours and clean. If it does NOT gain, the
+public edge-TTA is NOT ruled out** - only this variant. The better-posed follow-up is to
+port edge-TTA WITH harmonic as a coupled unit; since harmonic alone is neutral, a gain
+from the pair would cleanly implicate the TTA.
+
+
 ## CURRENT STATUS - 2026-08-08 (Exp178 closes item 3: half the loss is a model limit)
 
 **Exp178 answered exp169's item 3**, the question exp169 called "the decisive one".
