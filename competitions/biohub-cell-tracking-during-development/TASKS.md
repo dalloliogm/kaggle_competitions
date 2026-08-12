@@ -1,5 +1,22 @@
 # Tasks
 
+## BATCH PREP - 2026-08-12 (public model and post-processing sweep)
+
+Five owned kernels were prepared from newly discovered public notebook
+lineages, using the remaining five-slot daily plan:
+
+| exp | axis | local kernel | live state |
+| --- | --- | --- | --- |
+| exp191 | 350-epoch primary checkpoint, detector threshold 0.9825 | `dalloliogm/biohub-exp191-350ep-scale982` | running |
+| exp192 | 350-epoch primary checkpoint, detector threshold 0.975 | `dalloliogm/biohub-exp192-350ep-scale975` | running |
+| exp193 | joint monotonically decreasing Gap-2 node budget | `dalloliogm/biohub-exp193-gap2-joint` | queued behind GPU capacity |
+| exp194 | boundary/truncated-track rescue | `dalloliogm/biohub-exp194-boundary-rescue` | queued behind GPU capacity |
+| exp195 | stable public control/post-processing baseline | `dalloliogm/biohub-exp195-stable-control` | queued behind GPU capacity |
+
+The first two kernels were pushed successfully. Kaggle permits only two
+concurrent GPU sessions, so the remaining three pushes must wait for capacity;
+no duplicate runs were created.
+
 ## UPDATE - 2026-08-11 (Exp187 submitted; Exp188 was inactive)
 
 Exp187 is submitted as Kaggle submission `55428011` and is pending evaluation.
