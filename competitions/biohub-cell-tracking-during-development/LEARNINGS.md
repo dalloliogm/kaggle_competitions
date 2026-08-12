@@ -2,6 +2,20 @@
 
 Capture durable information learned while working on this competition. This is for insights that should guide future modeling and prevent repeated mistakes.
 
+## SETTLED - Exp188 lookahead control was inactive; Exp187 constrained ranker is pending (2026-08-11)
+
+Exp188 disabled `BIOHUB_USE_FORWARD_ACCELERATION_LOOKAHEAD` on the full Exp183
+stack. The output was identical in signature to Exp183 and `run_stats.csv` reported
+zero lookahead candidates and zero bonus edges. It was submitted as control
+`55428127` by explicit user decision; do not spend further slots tuning lookahead
+parameters unless a future candidate proves that the branch activates.
+
+Exp187 changed only `BIOHUB_LOCAL_RANKER_MODE` to `low_margin_top2_rescue`. It
+activated on 554 ambiguous rows and made 179 constrained rescue adjustments, while
+changing only five output rows relative to Exp183. The graph audit and structural
+harness passed; Kaggle submission `55428011` is pending. This is the first direct
+test of the ranker artifact's documented constrained-use intent.
+
 ## SETTLED - where the loss actually is: half model limit, half self-inflicted (2026-08-08, Exp178)
 
 Full write-up: `references/exp178-candidate-prob-analysis-2026-08-08.md`. This closes

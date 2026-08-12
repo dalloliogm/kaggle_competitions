@@ -1,5 +1,20 @@
 # Tasks
 
+## UPDATE - 2026-08-11 (Exp187 submitted; Exp188 was inactive)
+
+Exp187 is submitted as Kaggle submission `55428011` and is pending evaluation.
+It keeps the Exp183 harmonic-fusion / edge-TTA stack but changes the local ranker
+from global `full_motion_assignment` to `low_margin_top2_rescue`. The ranker saw
+554 ambiguous rows and made 179 constrained rescue adjustments; the output changed
+by only 5 rows versus Exp183 and passed the structural harness with 123,088 nodes,
+119,010 edges, and 309 division-like sources.
+
+Exp188 disabled forward acceleration lookahead and completed cleanly, but produced
+the exact Exp183 output signature (123,088 nodes, 119,005 edges, 311 divisions).
+`forward_lookahead_bonus_edges` was zero, proving the lookahead branch is inactive
+on the test set. It was nevertheless submitted as control `55428127` by explicit
+decision to use an additional daily slot; it is pending.
+
 ## CURRENT STATUS - 2026-08-10 (the public frontier passed us; adopting + decomposing it)
 
 **We are now BELOW the public baseline.** A public notebook lineage
