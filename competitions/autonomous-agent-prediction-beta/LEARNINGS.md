@@ -545,6 +545,66 @@ v12/v13. Recorded so nobody spends another slot rediscovering this.
   every future pandas release. The `_coerces_entirely_to_nan` backstop is the
   part that is dtype-agnostic and should survive renames of the string dtype.
 
+## FINAL OUTCOME (competition closed 2026-08-06) — read this before reusing anything here
+
+**Final placement: 168 / 570, private score 0.780.** Winner scored 0.783; ranks
+2-10 scored 0.782.
+
+Every completed submission's private score, against its public score:
+
+| ref | package | public | private |
+| --- | --- | --- | --- |
+| 55072857 | v10 llm-plan-gated ("a regression, do not build on v10") | **0.808** | **0.781** |
+| 55283870 | v16 dtype-hardened | 0.822 | 0.780 |
+| 55253408 | v12 variance rerun | 0.822 | 0.780 |
+| 55224297 | naji-exact | 0.822 | 0.780 |
+| 55214880 | v15 | 0.822 | 0.780 |
+| 55171041 | v13 | 0.822 | 0.780 |
+| 55130084 | v12 | 0.822 | 0.780 |
+| 55183078 | v14 Sonnet | 0.821 | 0.780 |
+| 55045683 | v9 pick-best | 0.819 | 0.780 |
+| 54972472 | v6 blended | 0.819 | 0.780 |
+| 55030429 | v9 shell | 0.818 | 0.780 |
+| 55105170 | v11 CatBoost | 0.810 | 0.779 |
+| 54491765 | v4 reference | 0.815 | 0.779 |
+| 55011609 | v5 recipe | 0.818 | **0.778** |
+
+- **Public score did not predict private score. At all.** Public spanned
+  0.808-0.822 (0.014); private spanned 0.778-0.781 (0.003). The relationship is
+  not merely weak, it is **inverted at the extremes**: the best private score we
+  ever obtained, 0.781, came from **v10 — our worst public submission and the one
+  this file explicitly recorded as a regression to abandon.** The worst private,
+  0.778, came from v5 at a respectable 0.818 public.
+- **The finals decision, which this workspace called "the remaining
+  prize-relevant action", was worth nothing.** All seven packages at 0.822 public
+  scored exactly 0.780 private. Any selection among them produced an identical
+  result. The extensive v12-vs-v15-vs-v16 dominance reasoning was real
+  engineering and correct on its own terms, but it optimised a quantity that had
+  no effect on the outcome.
+- **The gap from rank 1 to rank 168 is 0.003 — smaller than the spread across our
+  own submissions (0.778-0.781).** So the private leaderboard is noise-dominated
+  end to end. Placement here is close to a lottery over near-identical agents,
+  and 168th versus 1st is not a 167-place quality difference.
+- **What this invalidates.** The "six null levers" and "saturation" findings were
+  directionally right but understated: it was not that we had exhausted the
+  *public* headroom, it is that **none of the levers, including the ones that
+  moved public score by +0.014, moved the private score at all.** A month of
+  careful modelling, replay harnesses and package hardening produced zero
+  measurable private improvement.
+- **What was actually right.** Two calls hold up: stop spending slots on
+  modelling variants (correct, though for a stronger reason than given), and
+  never trust a ~0.001-0.002 public delta as signal (correct, and the true noise
+  floor was even wider than the ±0.002 we settled on).
+- **The transferable lesson for the next agent competition of this shape.**
+  Before optimising, establish whether the evaluation can *discriminate* at all.
+  Here, 570 teams were compressed into a 0.005-wide private band. When the metric
+  cannot separate submissions, effort spent on model quality is unrecoverable,
+  and the rational strategies are: submit early, submit something that reliably
+  completes, and stop. The one genuinely valuable artefact produced was the
+  dtype-hardening bug hunt (v16), because that guarded against a *catastrophic*
+  failure mode (AUC 0.500), which is the only class of difference this evaluation
+  was ever able to see.
+
 ## Leaderboard Notes
 
 - Submission `55224297`: `COMPLETE`, public score **`0.822`** — and this is the

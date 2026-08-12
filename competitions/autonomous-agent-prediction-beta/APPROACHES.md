@@ -4,16 +4,22 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 
 ## Current Best
 
+**Competition closed 2026-08-06: final 168/570, private 0.780.** Every completed
+submission scored 0.778-0.781 private regardless of public score, and the best
+private result came from v10, the worst public submission. The `Private LB`
+column below is now filled in; read LEARNINGS "FINAL OUTCOME" before treating
+any public-score ranking here as meaningful.
+
 | Date | Approach | Local CV | Public LB | Private LB | Notebook/commit | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-08-04 | `public-naji-v14-gemini-pro-exact` | n/a (verbatim public extraction, not executed locally) | **0.822** | Pending | Kaggle submission `55224297` | Reproduction of a notebook reporting 0.823 scored 0.822 — identical code, different score, so ~0.001 gaps are session noise. Unconstrained Pro stage ties v12's constrained one. |
-| 2026-08-03 | `official-demo-v15-seedbag-timecap` | identical to v12 above 800 rows; +0.0016 train_13 / -0.00001 train_15 below it | **0.822** | Pending | Kaggle submission `55214880` | Ties v12/v13. Submitted as runtime insurance (hard wall-clock deadline) rather than for score; outcome matched the pre-registered prediction band exactly. |
-| 2026-08-01 | `official-demo-v13-profile-planner` | One final-model-gated specialist across 16 tasks; estimated aggregate held-out gain +0.00018 | **0.822** | Pending | Kaggle submission `55171041` | Tied v12; the stricter LLM transformation planner did not improve the live score. |
-| 2026-07-31 | `official-demo-v12-portfolio-pro-freeroll` | 0.80288 mean full AUC after public-half selection over all 16 tasks | **0.822** | Pending | Kaggle submission `55130084` | New live best; deterministic portfolio plus bounded Gemini Pro freeroll. |
-| 2026-07-25 | `official-demo-v6-blended-baseline` | 0.826 average on `train_01`–`train_03` | 0.819 | Pending | Kaggle submission `54972472` | Previous live best (tied with v9); proven demo skeleton plus schema-agnostic logistic-regression and histogram-gradient-boosting blend. |
-| 2026-07-28 | `official-demo-v9-pick-best-model` | 0.828 average on `train_01`–`train_03` | 0.819 | Pending | Kaggle submission `55045683` | Tied v6 but is now superseded by v12. Same v6 skeleton plus pairwise interactions and a 4-model (LR/HGB/RF/ET) pick-best-OOF-AUC selector instead of blending. |
-| 2026-07-26 | `official-demo-v5-model-recipe-retry-20260726` | n/a | 0.818 | Pending | Kaggle submission `55011609` | Completed successfully but did not improve on v6. |
-| 2026-07-09 | `official-demo-v4-extracted-reference-agent` | n/a | 0.815 | Pending | Kaggle submission `54491765` | First completed submission. Extracted directly from official demo notebook because custom prompt variants failed to call `submit_predictions`. |
+| 2026-08-04 | `public-naji-v14-gemini-pro-exact` | n/a (verbatim public extraction, not executed locally) | **0.822** | 0.780 | Kaggle submission `55224297` | Reproduction of a notebook reporting 0.823 scored 0.822 — identical code, different score, so ~0.001 gaps are session noise. Unconstrained Pro stage ties v12's constrained one. |
+| 2026-08-03 | `official-demo-v15-seedbag-timecap` | identical to v12 above 800 rows; +0.0016 train_13 / -0.00001 train_15 below it | **0.822** | 0.780 | Kaggle submission `55214880` | Ties v12/v13. Submitted as runtime insurance (hard wall-clock deadline) rather than for score; outcome matched the pre-registered prediction band exactly. |
+| 2026-08-01 | `official-demo-v13-profile-planner` | One final-model-gated specialist across 16 tasks; estimated aggregate held-out gain +0.00018 | **0.822** | 0.780 | Kaggle submission `55171041` | Tied v12; the stricter LLM transformation planner did not improve the live score. |
+| 2026-07-31 | `official-demo-v12-portfolio-pro-freeroll` | 0.80288 mean full AUC after public-half selection over all 16 tasks | **0.822** | 0.780 | Kaggle submission `55130084` | New live best; deterministic portfolio plus bounded Gemini Pro freeroll. |
+| 2026-07-25 | `official-demo-v6-blended-baseline` | 0.826 average on `train_01`–`train_03` | 0.819 | 0.780 | Kaggle submission `54972472` | Previous live best (tied with v9); proven demo skeleton plus schema-agnostic logistic-regression and histogram-gradient-boosting blend. |
+| 2026-07-28 | `official-demo-v9-pick-best-model` | 0.828 average on `train_01`–`train_03` | 0.819 | 0.780 | Kaggle submission `55045683` | Tied v6 but is now superseded by v12. Same v6 skeleton plus pairwise interactions and a 4-model (LR/HGB/RF/ET) pick-best-OOF-AUC selector instead of blending. |
+| 2026-07-26 | `official-demo-v5-model-recipe-retry-20260726` | n/a | 0.818 | 0.778 | Kaggle submission `55011609` | Completed successfully but did not improve on v6. |
+| 2026-07-09 | `official-demo-v4-extracted-reference-agent` | n/a | 0.815 | 0.779 | Kaggle submission `54491765` | First completed submission. Extracted directly from official demo notebook because custom prompt variants failed to call `submit_predictions`. |
 
 ## Tried
 

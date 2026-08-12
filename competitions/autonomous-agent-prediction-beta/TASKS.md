@@ -1,6 +1,21 @@
 # Tasks
 
-## Current Goal
+## CLOSED — competition ended 2026-08-06 23:59 UTC
+
+**Final: 168 / 570, private 0.780** (winner 0.783). All work below is history.
+
+Every completed submission landed in a 0.778-0.781 private band regardless of
+its 0.808-0.822 public score, so the finals selection was immaterial — all seven
+0.822-public packages scored 0.780. The best private result we ever got (0.781)
+came from v10, the submission recorded here as a regression to abandon. See
+LEARNINGS "FINAL OUTCOME" before reusing any conclusion from this workspace: the
+public leaderboard was not a valid proxy for the private one, and the modelling
+effort produced no measurable private gain.
+
+No further action. The finals-selection item below is moot and retained only as
+a record of what was recommended at the time.
+
+## Current Goal (historical)
 
 - Submission `55214880` (`official-demo-v15-seedbag-timecap`) uploaded 2026-08-03,
   consuming the day's slot. Archive sha256 `bc0d88ac...`. It is v12 plus 3-seed
