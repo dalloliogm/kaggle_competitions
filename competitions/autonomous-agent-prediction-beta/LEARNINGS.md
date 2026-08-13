@@ -605,6 +605,67 @@ Every completed submission's private score, against its public score:
   failure mode (AUC 0.500), which is the only class of difference this evaluation
   was ever able to see.
 
+## Public Notebooks Worth Learning From (reviewed 2026-08-12, post-close)
+
+Pulled into `references/public-notebooks/`. Two are directly relevant, and one
+of them corrects a conclusion recorded in this file.
+
+### 1. Georgy Mamarin, "Your agent's selection policy is worth 0.0005 AUC"
+
+`georgymamarin/your-agent-s-selection-policy-is-worth-0-0005-auc` — the most
+valuable notebook in the competition for our purposes. Offline measurement over
+all 16 training datasets against shipped `solution.csv`, no LLM in the loop.
+
+- **Independently confirms our selection ceiling.** He measures the perfect
+  hindsight oracle at **+0.00049**; our own replay put it at **+0.0005**. Two
+  independent measurements, same number.
+- **The asymmetry we missed entirely.** We framed selection as a prize worth
+  chasing and concluded it was too small to bother with. He frames it correctly:
+  the *upside* is +0.0005 but the **worst policy forfeits 0.01664** on train_13,
+  thirty times the entire prize. Selection is about capping a downside, not
+  chasing a gain — and we never measured the downside at all.
+- **Concrete rule.** Pass **one** id to `select_submission`, or omit the call and
+  let the harness take the two best public scores. Passing two ids chosen by CV
+  lost 0.01664 on the 500-row task; passing one was never worse than 0.00098.
+  Our v12 lineage already omitted `select_submission` (see its `PROVENANCE.md`),
+  so we were on the right side of this — but by design intuition, not measurement.
+- **External confirmation of our final-outcome finding.** He cites two published
+  results: Krishna A at public 0.816 / private 0.779, and Jeki Wan Taufik at
+  public **0.826** / private **0.779**. A public score *better than our best*
+  (0.826 vs 0.822) produced a *worse* private score than ours (0.779 vs 0.780).
+  Independent evidence that the public board was not a valid proxy.
+- **CORRECTION to this file.** After the identical-code rerun (`55253408`)
+  reproduced 0.822 exactly, the "Identical-Code Variance Run" section above
+  reasoned that packages sharing a public score are therefore *"genuinely
+  equivalent"*. Mamarin measures the opposite directly: two candidates the public
+  half cannot separate sit a **median 0.00100 private AUC apart**, one pair in
+  ten more than 0.00291, and **61% of apparent ties are real differences**. A
+  public tie does not imply equivalence. Our packages did turn out equivalent
+  (all 0.780), but the general inference recorded here was wrong.
+
+### 2. prvsiyan, "The Pandas 3 Trap | Schema-Aware AutoML Agent"
+
+`prvsiyan/the-pandas-3-trap-schema-aware-automl-agent`, published 2026-07-30 —
+**a week before we built v16.** Found the same dtype bug independently and used
+`pd.api.types.is_string_dtype(dtype)` as the guard.
+
+- Our v16 went further in two respects: a dtype-agnostic backstop (a column with
+  data that coerces entirely to NaN is text, whatever the dtype is called), and
+  the `None`-vs-`np.nan` sentinel in the raw-frame logistic path, which
+  `is_string_dtype` alone does not address.
+- But the headline discovery was **not** ours and was public first. Lesson: check
+  the public notebook list for a known-failure write-up *before* spending a day
+  rediscovering it. We last pulled public notebooks on 2026-07-27 and never
+  refreshed.
+
+### 3. Unexplored: the official AIDE agent
+
+`ryanholbrook/autonomous-agent-prediction-beta-aide-agent` (41 votes) is a
+different agent architecture from the demo agent we forked for every single
+submission. We never evaluated it. Every one of our 19 submissions descends from
+the same demo skeleton, which is a real diversity failure given that the private
+metric could not separate our variants anyway.
+
 ## Leaderboard Notes
 
 - Submission `55224297`: `COMPLETE`, public score **`0.822`** — and this is the
