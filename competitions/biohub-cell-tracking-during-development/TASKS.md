@@ -1,5 +1,19 @@
 # Tasks
 
+## UPDATE - 2026-08-13 (minimal direct-export batch and count calibration)
+
+Exp116 and Exp119 were pushed as Kaggle kernel version 2 and submitted as
+`55484317` and `55484319`. Exp120 (point threshold `0.9500`) is running.
+Exp121 is held until the copied notebook's TTA selector is verified as
+`do_tta_9public` rather than the inherited 8-view selector.
+
+The new diagnostic notebook
+`notebooks/diagnostics/biohub-detection-density-count-calibration.ipynb`
+records the known per-movie estimated node counts and defines a bounded target
+ratio grid. It is intentionally diagnostic-only: first measure the direct
+export's per-movie count and edge behavior, then test threshold/pool-radius
+changes, and only afterward apply a per-movie count target if precision holds.
+
 ## BATCH PREP - 2026-08-12 (public model and post-processing sweep)
 
 Five owned kernels were prepared from newly discovered public notebook

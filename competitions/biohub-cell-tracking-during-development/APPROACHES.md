@@ -116,6 +116,24 @@ that notebook, not the Exp073/Exp110 lineage.
 
 ## Backlog
 
+### Active 2026-08-13 batch
+
+The minimal direct-export branch is being tested before further post-processing:
+
+| exp | change | status |
+| --- | --- | --- |
+| exp116 | direct ILP export, point threshold 0.9700, 8-view TTA | submitted `55484317` |
+| exp119 | direct ILP export, point threshold 0.9800 | submitted `55484319` |
+| exp120 | direct ILP export, point threshold 0.9500 | running |
+| exp121 | direct ILP export with 9-public-view TTA | held until selector is verified |
+
+The detection-density/count-calibration axis has also been started in
+`notebooks/diagnostics/biohub-detection-density-count-calibration.ipynb`.
+Its first pass is diagnostic-only and records per-movie target counts, predicted
+counts, node recall, edge metrics, and the node-count multiplier before applying
+any calibration. The under-counted `44b6_0b24845f` movie is the primary target;
+no count adjustment should be promoted without a frozen direct-export control.
+
 | Idea | Rationale | Expected impact | Cost | Priority |
 | --- | --- | --- | --- | --- |
 | Exact official evaluator + embryo-disjoint folds | Public proxies often misweight divisions or node penalties | Prevents false optimization | Medium | P0 |
