@@ -11,8 +11,10 @@
     main { max-width:1080px; margin:0 auto; padding:30px 22px 44px; }
     a { color:#075db3; } h1 { margin:0; font-size:2rem; } h2 { margin:0; font-size:1.05rem; } h3 { margin:0 0 5px; font-size:1rem; }
     .nav,.subhead { color:var(--muted); margin:6px 0 20px; } .nav { margin:0 0 10px; }
-    .context { border-left:4px solid var(--pending); background:#f4f9ff; padding:11px 14px; margin:0 0 25px; }
-    .context p { margin:0; } .legend { display:flex; flex-wrap:wrap; gap:8px 16px; color:var(--muted); font-size:.9rem; margin:0 0 22px; }
+    .context { border-left:4px solid var(--pending); background:#f4f9ff; padding:14px; margin:0 0 16px; }
+    .context p { margin:0; } .primer { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin:0 0 25px; }
+    .primer section { border:1px solid var(--line); background:var(--paper); padding:12px; } .primer h2 { font-size:.92rem; margin:0 0 5px; } .primer p { margin:0; color:#3c4b58; font-size:.9rem; }
+    .legend { display:flex; flex-wrap:wrap; gap:8px 16px; color:var(--muted); font-size:.9rem; margin:0 0 22px; }
     .key { display:inline-flex; align-items:center; gap:6px; } .dot { width:10px; height:10px; border-radius:50%; display:inline-block; } .dot.advance { background:var(--advance); } .dot.neutral { background:var(--neutral); } .dot.closed { background:var(--closed); } .dot.pending { background:var(--pending); } .dot.hold { background:var(--hold); }
     .timeline { position:relative; padding-left:36px; } .timeline::before { content:""; position:absolute; left:11px; top:8px; bottom:10px; width:2px; background:var(--line); }
     .period { position:relative; padding:0 0 28px; } .period::before { content:""; position:absolute; left:-30px; top:4px; width:14px; height:14px; border-radius:50%; background:var(--paper); border:4px solid var(--neutral); }
@@ -28,7 +30,7 @@
     .edge { display:inline-flex; align-items:center; gap:7px; background:var(--neutral-bg); border-left:2px solid var(--line); padding:5px 8px; }
     .edge-arrow { color:var(--advance); font-weight:700; font-size:1.05rem; }
     .outcome { border-top:1px solid var(--line); margin-top:2px; padding-top:20px; } .outcome strong { color:var(--advance); }
-    @media (max-width:700px) { main { padding:22px 14px 32px; } h1 { font-size:1.65rem; } .cards { grid-template-columns:1fr; } .timeline { padding-left:28px; } .period::before { left:-23px; } .timeline::before { left:4px; } }
+    @media (max-width:700px) { main { padding:22px 14px 32px; } h1 { font-size:1.65rem; } .primer,.cards { grid-template-columns:1fr; } .timeline { padding-left:28px; } .period::before { left:-23px; } .timeline::before { left:4px; } }
   </style>
 </head>
 <body>
@@ -36,16 +38,22 @@
     <p class="nav"><a href="index.html">← All competitions</a> · <a href="biohub-approach-map.html">Flow-map view</a></p>
     <h1>Biohub competition approach timeline</h1>
     <p class="subhead">Chronological decision record through 14 August 2026. The flow map shows dependencies; this view shows when evidence arrived and which paths were closed.</p>
-    <section class="context" aria-label="Competition context"><p><strong>Biohub — Cell Tracking During Development.</strong> Detect cells in 3D time-lapse microscopy, link them into lineages, and identify divisions. Ongoing; entered 3 July 2026; scheduled finish 29 September 2026. <a href="https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview">Kaggle overview</a>.</p></section>
+    <section class="context" aria-label="Competition context"><p><strong>Biohub — Cell Tracking During Development.</strong> This competition asks participants to reconstruct a family tree of cells from a sequence of 3D microscope images. It is ongoing; entered 3 July 2026; scheduled finish 29 September 2026. <a href="https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview">Kaggle overview</a>.</p></section>
+    <section class="primer" aria-label="How to read this timeline">
+      <section><h2>What is submitted?</h2><p>For every movie frame, we submit cell-centre coordinates (<em>nodes</em>) and links from each cell to its likely descendant in the next frame (<em>edges</em>). A cell with two descendants is a predicted division.</p></section>
+      <section><h2>What does the score mean?</h2><p>Higher is better. The main term rewards correct lineage links (adjusted edge Jaccard); a smaller term rewards correct division events. A public score is Kaggle’s result on a hidden subset, while local validation uses labelled training movies.</p></section>
+      <section><h2>What is the pipeline?</h2><p>Find cells in each 3D image → propose links between consecutive frames → select a biologically consistent graph → make conservative repairs. Most experiments change one of these stages rather than replacing the whole system.</p></section>
+      <section><h2>How to read the arrows</h2><p>Each arrow names the experiment that supplied the next baseline or motivated a follow-up test. Red cards are paths closed by evidence; dashed amber cards were intentionally held back rather than submitted.</p></section>
+    </section>
     <div class="legend" aria-label="Timeline status legend"><span class="key"><i class="dot advance"></i>advance / frontier</span><span class="key"><i class="dot neutral"></i>submitted comparison</span><span class="key"><i class="dot closed"></i>closed after evidence</span><span class="key"><i class="dot pending"></i>pending / unsettled</span><span class="key"><i class="dot hold"></i>held or not submitted</span></div>
 
     <section class="timeline" aria-label="Chronological experiment history">
       <section class="period">
         <p class="date">3 July — establish a working tracker</p>
         <div class="cards">
-          <article class="card"><h3>Exact DoG + Hungarian</h3><p>Physical NMS, interpolation and pruning established the first end-to-end tracker.</p><p class="score">Public 0.827</p></article>
-          <article class="card advance"><h3>NMS 3.8 µm</h3><p>A one-factor detector screen selected stronger suppression for the next backbone.</p><p class="score">Local 0.8105 · public 0.834</p></article>
-          <article class="card closed"><h3>U-Net + transformer + ILP</h3><p>A learned replacement did not transfer its local promise to the public leaderboard.</p><p class="score">Public 0.810 — closed</p></article>
+          <article class="card"><h3>Exact DoG + Hungarian</h3><p>A classical image-processing detector found bright cell-like spots; a Hungarian assignment algorithm linked each spot to one successor. This established the first complete tracker.</p><p class="score">Public 0.827</p></article>
+          <article class="card advance"><h3>NMS 3.8 µm</h3><p>Non-maximum suppression (NMS) merged nearby duplicate cell detections. A stronger 3.8 µm setting improved detection quality without changing the linker.</p><p class="score">Local 0.8105 · public 0.834</p></article>
+          <article class="card closed"><h3>U-Net + transformer + ILP</h3><p>A learned detector and learned link scorer fed an integer linear program (ILP), a global optimizer that selects a consistent lineage graph. It underperformed the simpler tracker.</p><p class="score">Public 0.810 — closed</p></article>
           <article class="card hold"><h3>Gap-2 bridges</h3><p>Local validation regressed, so this branch was deliberately not submitted.</p><p class="score">Not submitted</p></article>
         </div>
         <div class="edges" aria-label="Experiment dependencies"><span class="edge">Exact DoG + Hungarian <b class="edge-arrow">→</b> NMS 3.8 µm</span><span class="edge">NMS 3.8 µm <b class="edge-arrow">→</b> LB893 copied graph tracker</span><span class="edge">NMS 3.8 µm <b class="edge-arrow">→</b> learned replacement comparison</span></div>
@@ -54,8 +62,8 @@
       <section class="period advance">
         <p class="date">6–8 July — adopt the copied graph recipe</p>
         <div class="cards">
-          <article class="card advance"><h3>LB893 copied graph tracker</h3><p>Motion relink, gap repair, line fit and safe divisions produced the first large jump.</p><p class="score">Public 0.893</p></article>
-          <article class="card closed"><h3>No-safe-divisions comparison</h3><p>The public score contradicted the local preference, demonstrating that local ordering was unreliable.</p><p class="score">Public 0.886 — closed</p></article>
+          <article class="card advance"><h3>LB893 copied graph tracker</h3><p>A stronger learned tracker was followed by motion-based re-linking, gap repair when a cell disappears briefly, smoothing, and conservative division insertion. It produced the first large jump.</p><p class="score">Public 0.893</p></article>
+          <article class="card closed"><h3>No-safe-divisions comparison</h3><p>Removing predicted cell splits looked better on local labels but scored worse publicly. This exposed that the local movies contained too little division evidence to rank this choice safely.</p><p class="score">Public 0.886 — closed</p></article>
         </div>
         <div class="edges" aria-label="Experiment dependencies"><span class="edge">LB893 copied graph tracker <b class="edge-arrow">→</b> Exp073 calibration</span><span class="edge">Safe-divisions comparison <b class="edge-arrow">→</b> validate structural changes live</span></div>
       </section>
@@ -63,9 +71,9 @@
       <section class="period advance">
         <p class="date">16–20 July — calibrate and probe the graph</p>
         <div class="cards">
-          <article class="card advance"><h3>Exp073 calibration</h3><p>Lower threshold, short-track filtering, gap-2 off and safe divisions became the working recipe.</p><p class="score">Public 0.903</p></article>
+          <article class="card advance"><h3>Exp073 calibration</h3><p>Retuned how confidently a cell must be detected, removed implausibly short tracks, disabled longer gap repairs, and retained conservative divisions. This became the working recipe.</p><p class="score">Public 0.903</p></article>
           <article class="card closed"><h3>Exp084–108 calibration sweeps</h3><p>Threshold, density gap, short-track, gap placement and division gates plateaued.</p><p class="score">Public 0.902–0.903</p></article>
-          <article class="card advance"><h3>Exp110 ILP costs</h3><p>Conservative appearance/death costs produced a smaller, better graph.</p><p class="score">Public 0.909</p></article>
+          <article class="card advance"><h3>Exp110 ILP costs</h3><p>Changed the penalty for starting or ending a track in the global graph optimizer. The more conservative setting produced fewer links and a better lineage graph.</p><p class="score">Public 0.909</p></article>
           <article class="card closed"><h3>Exp112–116 ILP variants</h3><p>Disappearance sweeps were flat; the original direct ILP export was materially worse.</p><p class="score">Public 0.908–0.909; direct export 0.877</p></article>
         </div>
         <div class="edges" aria-label="Experiment dependencies"><span class="edge">Exp073 calibration <b class="edge-arrow">→</b> graph-calibration sweeps</span><span class="edge">Exp073 calibration <b class="edge-arrow">→</b> Exp110 ILP costs</span><span class="edge">Exp110 ILP costs <b class="edge-arrow">→</b> ILP variants</span></div>
@@ -74,8 +82,8 @@
       <section class="period advance">
         <p class="date">27 July–2 August — fusion becomes the backbone</p>
         <div class="cards">
-          <article class="card advance"><h3>Exp148 adaptive fusion</h3><p>Fixed detection blend plus confidence-adaptive two-seed edge fusion improved the backbone.</p><p class="score">Public 0.913</p></article>
-          <article class="card closed"><h3>Trackastra replacement</h3><p>Replacing the linker failed locally and on the public leaderboard.</p><p class="score">Public 0.898 — closed</p></article>
+          <article class="card advance"><h3>Exp148 adaptive fusion</h3><p>Blended cell detections from two independently trained models, then let the more reliable link prediction dominate for each ambiguous edge. This improved the backbone.</p><p class="score">Public 0.913</p></article>
+          <article class="card closed"><h3>Trackastra replacement</h3><p>Replaced the incumbent linking algorithm with a specialised tracking model. It failed both the local check and the public leaderboard.</p><p class="score">Public 0.898 — closed</p></article>
           <article class="card closed"><h3>Division quantity and ranking</h3><p>Larger division budgets lost; smaller budgets and image/transformer ranking tied the backbone.</p><p class="score">Public 0.905–0.913</p></article>
           <article class="card closed"><h3>Association repairs</h3><p>Exp163 tied after swaps; Exp164 found no viable future-aware swaps; harmonic-only tests tied.</p><p class="score">Public 0.913 or diagnostic only</p></article>
         </div>
@@ -94,7 +102,7 @@
       <section class="period advance">
         <p class="date">10–12 August — decompose the current public frontier</p>
         <div class="cards">
-          <article class="card advance"><h3>Exp183 full public stack</h3><p>85/15 association ranker, harmonic fusion and edge-stage TTA reached the high-water mark.</p><p class="score">Public 0.915 — best scored</p></article>
+          <article class="card advance"><h3>Exp183 full public stack</h3><p>Combined the original and a learned association score (85/15), fused forward/reverse scores conservatively, and used test-time augmentation (TTA: several transformed views of the same image) before selecting links.</p><p class="score">Public 0.915 — best scored</p></article>
           <article class="card"><h3>Exp184 and Exp187</h3><p>Ranker-only and constrained rescue were useful controls but did not surpass the full stack.</p><p class="score">Public 0.914 / 0.914</p></article>
           <article class="card closed"><h3>Exp185/186/188/191/192</h3><p>Partial TTA and ranker variants regressed or proved inactive; checkpoint variants regressed.</p><p class="score">0.913, 0.915 inactive control, 0.910 / 0.910</p></article>
           <article class="card advance"><h3>Exp193 / Exp195</h3><p>Joint gap-2 budget and stable control independently tied the frontier.</p><p class="score">Public 0.915 / 0.915</p></article>
