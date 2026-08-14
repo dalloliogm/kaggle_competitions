@@ -2,6 +2,10 @@
 
 Track modeling approaches, experiments, submissions, and outcomes here. Prefer short entries with enough detail that a future chat can understand what was tried and whether it is worth revisiting.
 
+## Interactive decision map
+
+Open [`docs/biohub-approach-map.html`](../../docs/biohub-approach-map.html) in a browser for a filterable overview of the main experiment branches, public scores, explicit non-submission decisions, and held paths. It is a curated index of this file and `LEARNINGS.md`, not a replacement for their detailed evidence.
+
 ## Current Best
 
 | Date | Approach | Local CV | Public LB | Private LB | Notebook/commit | Notes |

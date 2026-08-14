@@ -1,0 +1,121 @@
+<main id="biohub-map">
+  <style>
+    #biohub-map { color: #17212b; font: 15px/1.42 system-ui, sans-serif; max-width: 1440px; margin: 0 auto; padding: 24px; }
+    #biohub-map * { box-sizing: border-box; }
+    #biohub-map h1 { margin: 0; font-size: 1.8rem; }
+    #biohub-map .subhead { color: #52616e; margin: 4px 0 18px; }
+    #biohub-map .legend { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-bottom: 18px; }
+    #biohub-map label { display: inline-flex; gap: 6px; align-items: center; cursor: pointer; }
+    #biohub-map input { accent-color: #216e39; }
+    #biohub-map .map { display: grid; gap: 18px; }
+    #biohub-map .lane { border-left: 3px solid #c6d1db; padding-left: 14px; }
+    #biohub-map h2 { font-size: 1rem; margin: 0 0 10px; }
+    #biohub-map .flow { display: flex; align-items: stretch; gap: 10px; overflow-x: auto; padding-bottom: 8px; }
+    #biohub-map .arrow { align-self: center; color: #627384; font-size: 1.35rem; }
+    #biohub-map .branch { min-width: 250px; display: grid; gap: 10px; }
+    #biohub-map .node { min-width: 220px; max-width: 280px; border: 1px solid #9dacba; border-left: 6px solid #58708a; border-radius: 7px; padding: 10px 12px; background: #fff; }
+    #biohub-map .node h3 { font-size: .96rem; margin: 0 0 5px; }
+    #biohub-map .node p { margin: 0; color: #3c4b58; font-size: .88rem; }
+    #biohub-map .score { font-weight: 700; margin-top: 7px !important; }
+    #biohub-map .submitted { border-left-color: #2d7d46; }
+    #biohub-map .best { border-color: #26834a; border-left-color: #126b2c; background: #e9f8ec; }
+    #biohub-map .rejected { border-left-color: #b54242; background: #fff7f7; }
+    #biohub-map .not-submitted { border-left-color: #b36a00; background: #fff9eb; }
+    #biohub-map .pending { border-left-color: #3979b7; background: #f4f9ff; }
+    #biohub-map .untried { border-left-color: #716a80; border-style: dashed; background: #faf9fc; }
+    #biohub-map .hidden { display: none; }
+    #biohub-map .note { color: #52616e; font-size: .86rem; margin: 16px 0 0; }
+    @media (max-width: 640px) { #biohub-map { padding: 14px; } #biohub-map .node { min-width: 240px; } }
+  </style>
+
+  <h1>Biohub competition approach map</h1>
+  <p class="subhead">Experiment history and decisions as recorded on 14 August 2026. Click a status to focus the map.</p>
+  <div class="legend" aria-label="Filter experiments by status">
+    <label><input type="checkbox" data-status="submitted" checked> submitted</label>
+    <label><input type="checkbox" data-status="best" checked> best / tied frontier</label>
+    <label><input type="checkbox" data-status="rejected" checked> rejected after evidence</label>
+    <label><input type="checkbox" data-status="not-submitted" checked> not submitted</label>
+    <label><input type="checkbox" data-status="pending" checked> pending / unsettled</label>
+    <label><input type="checkbox" data-status="untried" checked> untried / held</label>
+  </div>
+
+  <section class="map" aria-label="Biohub experiment decision flow">
+    <section class="lane">
+      <h2>Backbone evolution</h2>
+      <div class="flow">
+        <article class="node submitted" data-status="submitted"><h3>Exact DoG + Hungarian</h3><p>Physical NMS, interpolation and pruning established the first working tracker.</p><p class="score">Public 0.827</p></article><span class="arrow">→</span>
+        <article class="node submitted" data-status="submitted"><h3>NMS 3.8 µm</h3><p>One-factor detector screen selected stronger suppression.</p><p class="score">Local 0.8105 · public 0.834</p></article><span class="arrow">→</span>
+        <article class="node submitted" data-status="submitted"><h3>LB893 copied graph tracker</h3><p>Motion relink, gap repair, line fit and safe divisions.</p><p class="score">Public 0.893</p></article><span class="arrow">→</span>
+        <article class="node submitted" data-status="submitted"><h3>Exp073 calibration</h3><p>Lower threshold, short-track filtering, gap-2 off and safe divisions.</p><p class="score">Public 0.903</p></article><span class="arrow">→</span>
+        <article class="node submitted" data-status="submitted"><h3>Exp110 ILP costs</h3><p>Conservative appearance/death costs produced a smaller graph.</p><p class="score">Public 0.909</p></article><span class="arrow">→</span>
+        <article class="node submitted" data-status="submitted"><h3>Exp148 adaptive fusion</h3><p>Fixed detection blend plus confidence-adaptive two-seed edge fusion.</p><p class="score">Public 0.913</p></article><span class="arrow">→</span>
+        <article class="node best" data-status="best"><h3>Exp183 full public stack</h3><p>85/15 association ranker, harmonic fusion and edge-stage TTA.</p><p class="score">Public 0.915 — scored best</p></article>
+      </div>
+    </section>
+
+    <section class="lane">
+      <h2>Branches from the Exp073 / Exp110 recipe</h2>
+      <div class="flow">
+        <div class="branch">
+          <article class="node not-submitted" data-status="not-submitted"><h3>Gap-2 bridges and Exp096 long bridge</h3><p>Local gap-2 regressed; the long-bridge branch selected zero candidates.</p><p class="score">Not submitted</p></article>
+          <article class="node rejected" data-status="rejected"><h3>Exp084–108 graph calibration</h3><p>Threshold, density gap, short-track, gap placement and division gates plateaued.</p><p class="score">Public 0.902–0.903</p></article>
+        </div><span class="arrow">→</span>
+        <div class="branch">
+          <article class="node rejected" data-status="rejected"><h3>Exp112–115 ILP sweep</h3><p>Varying disappearance cost did not improve Exp110.</p><p class="score">Public 0.908–0.909</p></article>
+          <article class="node rejected" data-status="rejected"><h3>Direct ILP export, original Exp116</h3><p>Verbatim ILP graph was materially worse than post-processing.</p><p class="score">Public 0.877</p></article>
+        </div><span class="arrow">→</span>
+        <article class="node rejected" data-status="rejected"><h3>Invalid-output paths</h3><p>Exp100 risk pruning and Exp109 CSV splicing were rejected by Kaggle despite local structural validity.</p><p class="score">Do not retry as-is</p></article>
+      </div>
+    </section>
+
+    <section class="lane">
+      <h2>Branches from Exp148 — deliberately closed</h2>
+      <div class="flow">
+        <article class="node rejected" data-status="rejected"><h3>Division quantity and ranking</h3><p>Exp155/159/160/161: larger budget lost; smaller budget and image/transformer ranking tied.</p><p class="score">Public 0.912–0.913</p></article><span class="arrow">→</span>
+        <article class="node rejected" data-status="rejected"><h3>Exp158 no divisions</h3><p>Removing all divisions established that the hidden set rewards them.</p><p class="score">Public 0.905</p></article><span class="arrow">→</span>
+        <article class="node rejected" data-status="rejected"><h3>Candidate admission and post-processing</h3><p>Exp172/174/179/180/181/182: relink removal, protection gates and lower thresholds did not beat baseline.</p><p class="score">Public 0.909–0.913</p></article><span class="arrow">→</span>
+        <article class="node rejected" data-status="rejected"><h3>Alternative association repairs</h3><p>Exp163 tied after 637 swaps; Exp164 found no viable future-aware swaps; harmonic-only tests tied.</p><p class="score">Public 0.913 or diagnostic-only</p></article><span class="arrow">→</span>
+        <article class="node rejected" data-status="rejected"><h3>Trackastra replacement</h3><p>Linker substitution failed both locally and on the public leaderboard.</p><p class="score">Public 0.898</p></article>
+      </div>
+    </section>
+
+    <section class="lane">
+      <h2>Public-stack decomposition and open work</h2>
+      <div class="flow">
+        <article class="node submitted" data-status="submitted"><h3>Exp184 ranker-only</h3><p>Global ranker on the Exp148 backbone.</p><p class="score">Public 0.914</p></article><span class="arrow">→</span>
+        <article class="node rejected" data-status="rejected"><h3>Exp185 / Exp186</h3><p>50/50 ranker blend and forward-only edge TTA did not reproduce the full-stack gain.</p><p class="score">Public 0.913 / 0.913</p></article><span class="arrow">→</span>
+        <article class="node submitted" data-status="submitted"><h3>Exp187 constrained ranker rescue</h3><p>Documented tie-breaker mode; only five output rows changed.</p><p class="score">Public 0.914</p></article><span class="arrow">→</span>
+        <article class="node rejected" data-status="rejected"><h3>Exp188 no-lookahead control</h3><p>Identical output proved the lookahead branch never activated.</p><p class="score">Public 0.915; do not tune</p></article><span class="arrow">→</span>
+        <article class="node rejected" data-status="rejected"><h3>Exp191 / Exp192 checkpoint variants</h3><p>350-epoch primary checkpoint variants regressed.</p><p class="score">Public 0.910 / 0.910</p></article><span class="arrow">→</span>
+        <article class="node best" data-status="best"><h3>Exp193 / Exp195</h3><p>Joint gap-2 budget and stable control both reached the current frontier.</p><p class="score">Public 0.915 / 0.915</p></article>
+      </div>
+      <div class="flow" style="margin-top:10px">
+        <article class="node pending" data-status="pending"><h3>Exp165 dense tiled relinking</h3><p>Isolated local Hungarian relinking on the dense movie; controls unchanged.</p><p class="score">Submitted; score pending</p></article>
+        <article class="node pending" data-status="pending"><h3>Direct-export threshold probes</h3><p>Exp116 at 0.9700 and Exp119 at 0.9800 pending; Exp120 errored.</p><p class="score">Unsettled</p></article>
+        <article class="node pending" data-status="pending"><h3>Exp194 boundary rescue</h3><p>Prepared boundary/truncated-track rescue.</p><p class="score">Unsettled</p></article>
+        <article class="node untried" data-status="untried"><h3>Exp121 nine-view TTA</h3><p>Held until the copied notebook is verified to call the intended selector.</p><p class="score">Not tried</p></article>
+        <article class="node untried" data-status="untried"><h3>Per-movie count calibration</h3><p>Diagnostic only; first validate direct-export counts and precision on real outputs.</p><p class="score">Not tried</p></article>
+        <article class="node untried" data-status="untried"><h3>Coupled harmonic + edge TTA</h3><p>Forward-only TTA was negative, but the coupled public mechanism remains unisolated.</p><p class="score">Not tried</p></article>
+      </div>
+    </section>
+  </section>
+  <p class="note">Status colors: green = submitted/frontier; red = evidence-led rejection; amber = deliberately not submitted; blue = pending; dashed grey = held or untried.</p>
+  <script>
+    (() => {
+      const checks = [...document.querySelectorAll('#biohub-map input[data-status]')];
+      const apply = () => {
+        const active = new Set(checks.filter(check => check.checked).map(check => check.dataset.status));
+        document.querySelectorAll('#biohub-map .node').forEach(node => node.classList.toggle('hidden', !active.has(node.dataset.status)));
+        document.querySelectorAll('#biohub-map .flow').forEach(flow => {
+          [...flow.querySelectorAll('.arrow')].forEach(arrow => {
+            const before = arrow.previousElementSibling;
+            const after = arrow.nextElementSibling;
+            arrow.classList.toggle('hidden', !before || !after || before.classList.contains('hidden') || after.classList.contains('hidden'));
+          });
+        });
+      };
+      checks.forEach(check => check.addEventListener('change', apply));
+      apply();
+    })();
+  </script>
+</main>
