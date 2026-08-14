@@ -2,6 +2,22 @@
 
 Track modeling approaches, experiments, submissions, and outcomes here. Prefer short entries with enough detail that a future chat can understand what was tried and whether it is worth revisiting.
 
+## Approach map
+
+- [Interactive approach map and timeline](../../docs/autonomous-agent-prediction-beta-approach-map.html) — generated from [the map data](../../docs/autonomous-agent-prediction-beta-approach-map-data.json); latest workspace-recorded evaluator state is 2026-08-04.
+
+## External provenance log
+
+| When reviewed/used | Source | Type | Material used | Affected work | Relationship |
+| --- | --- | --- | --- | --- | --- |
+| 2026-07-09 | Official Kaggle demo notebook | Official starter | Agent-package structure and known-valid tool workflow | v4 onward | Extracted/adapted |
+| 2026-07-09 | `sidhaarthshree/autonomous-agent-prediction-a-to-z-guide` | Public notebook | Schema discovery, structural validator, anti-loop prompt, fallback and bounded tabular patterns | source review; v6/v12 design | Adapted design patterns |
+| 2026-07-09 | `nursrijan/agent-starter-dynamic-automl-guide` | Public notebook | Portable package layout, path-resolution and AutoML ideas | source review | Inspiration only; hard-coded paths not reused |
+| 2026-07-31 | [Naji — LB 0.823 Freeroll Gemini Pro Strategy](https://www.kaggle.com/code/najiama/lb-0-823-the-freeroll-gemini-pro-strategy) | Public notebook | Portfolio/freeroll architecture; later exact static extraction | v12; v14 exact control | v12 adapted; v14 copied verbatim with attribution |
+| 2026-07-31 | [Kun Zhang — Deterministic Portfolio Replication s018](https://www.kaggle.com/code/beicicc/deterministic-portfolio-replication-s018) | Public notebook | Deterministic portfolio architecture | v12 | Adapted |
+
+External raw competition data use is not recorded; the local replay harness used the official practice archive only. Public source leaderboard scores are provenance context, not scores attributed to these submissions.
+
 ## Current Best
 
 | Date | Approach | Local CV | Public LB | Private LB | Notebook/commit | Notes |

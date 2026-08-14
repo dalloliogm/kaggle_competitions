@@ -1,0 +1,40 @@
+{
+  "title": "Autonomous Agent Prediction Beta — approach map",
+  "as_of": "2026-08-04 (latest workspace-recorded evaluation)",
+  "competition": {
+    "description": "Build an autonomous CPU-sandbox agent for unseen tabular binary-classification mini-competitions; metric: ROC AUC.",
+    "prediction_target": "The submitted ZIP must let an agent discover each session's train/test/sample files, write a valid row_id,target probability CSV, submit it, and select a final candidate.",
+    "models": "Official-agent shell; schema-agnostic sklearn baselines and pick-best portfolios (LR, HGB, RF, ExtraTrees); CatBoost/LightGBM specialists; bounded Gemini Pro feature planning.",
+    "url": "https://www.kaggle.com/competitions/autonomous-agent-prediction-beta/overview",
+    "started": "Not recorded",
+    "entered": "Confirmed; date not recorded",
+    "finished": "Not recorded (workspace records an official deadline of 2026-08-06)",
+    "standing": "Deadline passed. Best recorded public score: 0.822 (four packages). Final public/private scores and rank: Not recorded.",
+    "lesson": "A valid first submission and a full 16-task, solution-blind replay were more valuable than model complexity. Four materially different 0.822 packages and six null levers support treating ~0.001 score gaps as session noise, not strategy."
+  },
+  "lanes": [
+    {"id": "reliability", "title": "Submission reliability backbone"},
+    {"id": "portfolio", "title": "Portfolio and live-score evolution"},
+    {"id": "research", "title": "Offline screens, rejected branches, and held work"}
+  ],
+  "nodes": [
+    {"id": "source-review", "lane": "reliability", "title": "Official demo + public design review", "summary": "Reviewed the official demo, A-to-Z guide, and dynamic AutoML starter for schema discovery, validators, anti-loop prompts, fallback submission, and package layout.", "score": "Design evidence only", "status": "not-submitted", "parents": []},
+    {"id": "custom-v1-v3", "lane": "reliability", "title": "Custom packages v1-v3", "summary": "Synthetic smoke tests passed, but v1/v3 never called submit_predictions and v2 requested unavailable run_skill_script.", "score": "Platform errors: 54491451, 54491555, 54491615", "status": "rejected", "parents": ["source-review"]},
+    {"id": "official-v4", "lane": "reliability", "title": "v4 extracted official demo", "summary": "Extracted the official demo package and preserved its known-submit tool structure; first completed agent session.", "score": "Public 0.815 (54491765)", "status": "submitted", "parents": ["custom-v1-v3"]},
+    {"id": "v5-shell", "lane": "reliability", "title": "v5 proven-shell recovery", "summary": "Kept the official-style shell and supported-tool workflow; the validated retry completed, unlike an earlier generic 400 upload rejection.", "score": "Public 0.818 (55011609)", "status": "submitted", "parents": ["official-v4"]},
+    {"id": "v6-blend", "lane": "portfolio", "title": "v6 LR + HGB blend", "summary": "Schema-agnostic logistic-regression and histogram-gradient-boosting blend on the proven shell established the first 0.819 baseline.", "score": "Public 0.819 (54972472)", "status": "submitted", "parents": ["v5-shell"]},
+    {"id": "v9-pick-best", "lane": "portfolio", "title": "v9 pick-best OOF selector", "summary": "Replaced blending with a 4-model LR/HGB/RF/ET OOF selector and pairwise interactions. Its 3-task local edge did not transfer.", "score": "Local 0.828 vs v6 0.826 on 3 tasks; public 0.819 (55045683)", "status": "submitted", "parents": ["v6-blend"]},
+    {"id": "v12-portfolio", "lane": "portfolio", "title": "v12 deterministic portfolio + bounded Pro freeroll", "summary": "Quick fallback plus CatBoost, LightGBM, ExtraTrees, logistic, rank-top-two, and rank-all candidates; bounded target-blind Pro stage. All 16 replay tasks passed output validation.", "score": "Replay public-selected full 0.80288 / private 0.80379; public 0.822 (55130084)", "status": "best", "parents": ["v6-blend", "source-review"]},
+    {"id": "v13-planner", "lane": "portfolio", "title": "v13 target-blind JSON planner", "summary": "Strict one-family JSON DSL and deterministic executor gated against the actual best portfolio prediction. A 882-run audit retained one small specialist only.", "score": "Held-out specialist +0.00281; public 0.822 (55171041)", "status": "best", "parents": ["v12-portfolio"]},
+    {"id": "v15-insurance", "lane": "portfolio", "title": "v15 seed-bag + time cap", "summary": "Added small-task-only seed averaging and a wall-clock cap as runtime insurance; pre-registered as no expected score gain.", "score": "Expected about +0.0001 replay mean; public 0.822 (55214880)", "status": "best", "parents": ["v12-portfolio"]},
+    {"id": "v14-exact", "lane": "portfolio", "title": "Exact public Gemini freeroll control", "summary": "Static, attributed extraction of Naji's public 0.823 notebook; unbounded Pro governance differed from v12 while the core portfolio was effectively the same.", "score": "Public 0.822 (55224297; public source reported 0.823)", "status": "best", "parents": ["v12-portfolio"]},
+    {"id": "v14-sonnet", "lane": "portfolio", "title": "Claude Sonnet model-only challenger", "summary": "Swapped the Pro model after removing unsupported sampling controls. The first run failed before execution; corrected retry was still pending in the latest records.", "score": "Error 55180862; retry 55183078 pending", "status": "pending", "parents": ["v14-exact"]},
+    {"id": "v7-catboost", "lane": "research", "title": "Standalone CatBoost specialist", "summary": "Native-categorical CatBoost performed well on larger tasks but was weak on small tasks, so it was not uploaded as a default.", "score": "16-task replay 0.7990; small-task mean 0.7424", "status": "not-submitted", "parents": ["official-v4"]},
+    {"id": "automl-mitra", "lane": "research", "title": "AutoGluon and Mitra screens", "summary": "AutoGluon tied the CatBoost specialist at higher dependency cost; Mitra was 28x-173x slower and hit memory limits.", "score": "AutoGluon 0.7995 replay; Mitra rejected", "status": "rejected", "parents": ["v7-catboost"]},
+    {"id": "v8-feature-ablations", "lane": "research", "title": "v8 feature-family ablations", "summary": "Broad features regressed; numeric transforms were unstable; the adaptive gate gained slightly on replay but its agent never called submit_predictions.", "score": "0.7981 broad; 0.7994 numeric; 0.8001 adaptive; platform error 55029319", "status": "rejected", "parents": ["v7-catboost"]},
+    {"id": "v10-llm-gate", "lane": "research", "title": "v10 LLM plan with wrong-level gate", "summary": "The feature gate was sound inside the script but the agent still offered a known-weak CatBoost candidate to final selection, including on no-op plans.", "score": "Public 0.808 (55072857)", "status": "rejected", "parents": ["v8-feature-ablations", "v9-pick-best"]},
+    {"id": "v11-catboost-gate", "lane": "research", "title": "v11 gated native-CatBoost candidate", "summary": "A measured synthetic categorical win and 0.003 OOF margin did not generalize to hidden sessions.", "score": "Public 0.810 (55105170)", "status": "rejected", "parents": ["v9-pick-best", "v7-catboost"]},
+    {"id": "saturation", "lane": "research", "title": "Six-lever saturation audit", "summary": "Candidate selection, LLM planning, seed averaging, CatBoost tuning, pseudo-labelling, and an extra gated model all had null, negligible, or negative evidence against the portfolio.", "score": "No reliable route from 0.822 to about 0.826+", "status": "not-submitted", "parents": ["v12-portfolio", "v13-planner", "v15-insurance"]},
+    {"id": "h2o", "lane": "research", "title": "Bounded H2O AutoML probe", "summary": "Recorded backlog option; local Java was unavailable and no isolated Kaggle diagnostic is recorded.", "score": "Untried", "status": "untried", "parents": ["automl-mitra"]}
+  ]
+}
