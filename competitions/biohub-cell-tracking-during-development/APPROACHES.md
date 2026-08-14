@@ -4,7 +4,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 
 ## Interactive decision map
 
-Open [`docs/biohub-approach-map.html`](../../docs/biohub-approach-map.html) in a browser for a filterable overview of the competition context, main experiment branches, public scores, explicit non-submission decisions, and held paths. It is a curated index of this file and `LEARNINGS.md`, not a replacement for their detailed evidence. The repository-wide [competition index](../../docs/index.html) links this page and schedules equivalent maps for the remaining workspaces.
+Open the [flow map](../../docs/biohub-approach-map.html) for experiment relationships, or the [timeline](../../docs/biohub-approach-timeline.html) for chronological decisions, public scores, explicit non-submission decisions, and held paths. Both are curated indexes of this file and `LEARNINGS.md`, not replacements for their detailed evidence. The repository-wide [competition index](../../docs/index.html) links both views and schedules equivalent maps for the remaining workspaces.
 
 ## Current Best
 

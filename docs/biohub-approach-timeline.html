@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Biohub competition approach timeline</title>
+  <style>
+    :root { --ink:#17212b; --muted:#52616e; --line:#c6d1db; --paper:#fff; --bg:#f6f8fa; --advance:#126b2c; --advance-bg:#e9f8ec; --closed:#b54242; --closed-bg:#fff7f7; --hold:#8a5b0d; --hold-bg:#fff9eb; --pending:#3979b7; --pending-bg:#f4f9ff; --neutral:#58708a; --neutral-bg:#f4f6f8; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.45 system-ui,sans-serif; }
+    main { max-width:1080px; margin:0 auto; padding:30px 22px 44px; }
+    a { color:#075db3; } h1 { margin:0; font-size:2rem; } h2 { margin:0; font-size:1.05rem; } h3 { margin:0 0 5px; font-size:1rem; }
+    .nav,.subhead { color:var(--muted); margin:6px 0 20px; } .nav { margin:0 0 10px; }
+    .context { border-left:4px solid var(--pending); background:#f4f9ff; padding:11px 14px; margin:0 0 25px; }
+    .context p { margin:0; } .legend { display:flex; flex-wrap:wrap; gap:8px 16px; color:var(--muted); font-size:.9rem; margin:0 0 22px; }
+    .key { display:inline-flex; align-items:center; gap:6px; } .dot { width:10px; height:10px; border-radius:50%; display:inline-block; } .dot.advance { background:var(--advance); } .dot.neutral { background:var(--neutral); } .dot.closed { background:var(--closed); } .dot.pending { background:var(--pending); } .dot.hold { background:var(--hold); }
+    .timeline { position:relative; padding-left:36px; } .timeline::before { content:""; position:absolute; left:11px; top:8px; bottom:10px; width:2px; background:var(--line); }
+    .period { position:relative; padding:0 0 28px; } .period::before { content:""; position:absolute; left:-30px; top:4px; width:14px; height:14px; border-radius:50%; background:var(--paper); border:4px solid var(--neutral); }
+    .period.advance::before { border-color:var(--advance); } .period.pending::before { border-color:var(--pending); } .period.hold::before { border-color:var(--hold); }
+    .date { color:var(--muted); font-size:.88rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; margin:0 0 8px; }
+    .cards { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .card { border:1px solid var(--line); border-left:5px solid var(--neutral); background:var(--paper); padding:11px 13px; }
+    .card p { margin:0; color:#3c4b58; font-size:.92rem; } .score { margin-top:7px !important; color:var(--ink) !important; font-weight:700; font-variant-numeric:tabular-nums; }
+    .advance .card, .card.advance { border-left-color:var(--advance); } .card.advance { background:var(--advance-bg); }
+    .card.closed { border-left-color:var(--closed); background:var(--closed-bg); } .card.pending { border-left-color:var(--pending); background:var(--pending-bg); }
+    .card.hold { border-left-color:var(--hold); border-style:dashed; background:var(--hold-bg); }
+    .outcome { border-top:1px solid var(--line); margin-top:2px; padding-top:20px; } .outcome strong { color:var(--advance); }
+    @media (max-width:700px) { main { padding:22px 14px 32px; } h1 { font-size:1.65rem; } .cards { grid-template-columns:1fr; } .timeline { padding-left:28px; } .period::before { left:-23px; } .timeline::before { left:4px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="nav"><a href="index.html">← All competitions</a> · <a href="biohub-approach-map.html">Flow-map view</a></p>
+    <h1>Biohub competition approach timeline</h1>
+    <p class="subhead">Chronological decision record through 14 August 2026. The flow map shows dependencies; this view shows when evidence arrived and which paths were closed.</p>
+    <section class="context" aria-label="Competition context"><p><strong>Biohub — Cell Tracking During Development.</strong> Detect cells in 3D time-lapse microscopy, link them into lineages, and identify divisions. Ongoing; entered 3 July 2026; scheduled finish 29 September 2026. <a href="https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview">Kaggle overview</a>.</p></section>
+    <div class="legend" aria-label="Timeline status legend"><span class="key"><i class="dot advance"></i>advance / frontier</span><span class="key"><i class="dot neutral"></i>submitted comparison</span><span class="key"><i class="dot closed"></i>closed after evidence</span><span class="key"><i class="dot pending"></i>pending / unsettled</span><span class="key"><i class="dot hold"></i>held or not submitted</span></div>
+
+    <section class="timeline" aria-label="Chronological experiment history">
+      <section class="period">
+        <p class="date">3 July — establish a working tracker</p>
+        <div class="cards">
+          <article class="card"><h3>Exact DoG + Hungarian</h3><p>Physical NMS, interpolation and pruning established the first end-to-end tracker.</p><p class="score">Public 0.827</p></article>
+          <article class="card advance"><h3>NMS 3.8 µm</h3><p>A one-factor detector screen selected stronger suppression for the next backbone.</p><p class="score">Local 0.8105 · public 0.834</p></article>
+          <article class="card closed"><h3>U-Net + transformer + ILP</h3><p>A learned replacement did not transfer its local promise to the public leaderboard.</p><p class="score">Public 0.810 — closed</p></article>
+          <article class="card hold"><h3>Gap-2 bridges</h3><p>Local validation regressed, so this branch was deliberately not submitted.</p><p class="score">Not submitted</p></article>
+        </div>
+      </section>
+
+      <section class="period advance">
+        <p class="date">6–8 July — adopt the copied graph recipe</p>
+        <div class="cards">
+          <article class="card advance"><h3>LB893 copied graph tracker</h3><p>Motion relink, gap repair, line fit and safe divisions produced the first large jump.</p><p class="score">Public 0.893</p></article>
+          <article class="card closed"><h3>No-safe-divisions comparison</h3><p>The public score contradicted the local preference, demonstrating that local ordering was unreliable.</p><p class="score">Public 0.886 — closed</p></article>
+        </div>
+      </section>
+
+      <section class="period advance">
+        <p class="date">16–20 July — calibrate and probe the graph</p>
+        <div class="cards">
+          <article class="card advance"><h3>Exp073 calibration</h3><p>Lower threshold, short-track filtering, gap-2 off and safe divisions became the working recipe.</p><p class="score">Public 0.903</p></article>
+          <article class="card closed"><h3>Exp084–108 calibration sweeps</h3><p>Threshold, density gap, short-track, gap placement and division gates plateaued.</p><p class="score">Public 0.902–0.903</p></article>
+          <article class="card advance"><h3>Exp110 ILP costs</h3><p>Conservative appearance/death costs produced a smaller, better graph.</p><p class="score">Public 0.909</p></article>
+          <article class="card closed"><h3>Exp112–116 ILP variants</h3><p>Disappearance sweeps were flat; the original direct ILP export was materially worse.</p><p class="score">Public 0.908–0.909; direct export 0.877</p></article>
+        </div>
+      </section>
+
+      <section class="period advance">
+        <p class="date">27 July–2 August — fusion becomes the backbone</p>
+        <div class="cards">
+          <article class="card advance"><h3>Exp148 adaptive fusion</h3><p>Fixed detection blend plus confidence-adaptive two-seed edge fusion improved the backbone.</p><p class="score">Public 0.913</p></article>
+          <article class="card closed"><h3>Trackastra replacement</h3><p>Replacing the linker failed locally and on the public leaderboard.</p><p class="score">Public 0.898 — closed</p></article>
+          <article class="card closed"><h3>Division quantity and ranking</h3><p>Larger division budgets lost; smaller budgets and image/transformer ranking tied the backbone.</p><p class="score">Public 0.905–0.913</p></article>
+          <article class="card closed"><h3>Association repairs</h3><p>Exp163 tied after swaps; Exp164 found no viable future-aware swaps; harmonic-only tests tied.</p><p class="score">Public 0.913 or diagnostic only</p></article>
+        </div>
+      </section>
+
+      <section class="period">
+        <p class="date">8–9 August — diagnose, then close post-processing knobs</p>
+        <div class="cards">
+          <article class="card"><h3>Exp178 diagnosis</h3><p>Reviewed the suspicious-event path and focused testing on candidate admission rather than generic tuning.</p><p class="score">Diagnostic decision point</p></article>
+          <article class="card closed"><h3>Exp172/174/179–182</h3><p>Relink removal, protection gates and lower thresholds did not beat the fusion backbone.</p><p class="score">Public 0.909–0.913</p></article>
+        </div>
+      </section>
+
+      <section class="period advance">
+        <p class="date">10–12 August — decompose the current public frontier</p>
+        <div class="cards">
+          <article class="card advance"><h3>Exp183 full public stack</h3><p>85/15 association ranker, harmonic fusion and edge-stage TTA reached the high-water mark.</p><p class="score">Public 0.915 — best scored</p></article>
+          <article class="card"><h3>Exp184 and Exp187</h3><p>Ranker-only and constrained rescue were useful controls but did not surpass the full stack.</p><p class="score">Public 0.914 / 0.914</p></article>
+          <article class="card closed"><h3>Exp185/186/188/191/192</h3><p>Partial TTA and ranker variants regressed or proved inactive; checkpoint variants regressed.</p><p class="score">0.913, 0.915 inactive control, 0.910 / 0.910</p></article>
+          <article class="card advance"><h3>Exp193 / Exp195</h3><p>Joint gap-2 budget and stable control independently tied the frontier.</p><p class="score">Public 0.915 / 0.915</p></article>
+        </div>
+      </section>
+
+      <section class="period pending">
+        <p class="date">13 August onward — evidence still outstanding</p>
+        <div class="cards">
+          <article class="card pending"><h3>Exp165 dense tiled relinking</h3><p>Isolated local Hungarian relinking on the dense movie, with controls unchanged.</p><p class="score">Submitted; score pending</p></article>
+          <article class="card pending"><h3>Direct-export threshold probes</h3><p>Exp116 at 0.9700 and Exp119 at 0.9800 are pending; Exp120 errored.</p><p class="score">Unsettled</p></article>
+          <article class="card pending"><h3>Exp194 boundary rescue</h3><p>Boundary/truncated-track rescue was prepared for evaluation.</p><p class="score">Unsettled</p></article>
+          <article class="card hold"><h3>Exp121 nine-view TTA</h3><p>Held until the copied notebook is verified to call the intended selector.</p><p class="score">Not tried</p></article>
+          <article class="card hold"><h3>Per-movie count calibration</h3><p>Diagnostic only until direct-export counts and precision are validated on real outputs.</p><p class="score">Not tried</p></article>
+          <article class="card hold"><h3>Coupled harmonic + edge TTA</h3><p>Forward-only TTA was negative, but the coupled public mechanism remains unisolated.</p><p class="score">Not tried</p></article>
+        </div>
+      </section>
+    </section>
+    <section class="outcome"><h2>Current decision</h2><p><strong>Keep the 0.915 public-stack recipe as the frontier.</strong> Use local validation for invariants and diagnosis, not for deciding that a structural change is leaderboard-positive; wait for the outstanding scored probes before opening another branch.</p></section>
+  </main>
+</body>
+</html>
