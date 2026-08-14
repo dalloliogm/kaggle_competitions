@@ -6,6 +6,19 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 
 Open the [flow map](../../docs/biohub-approach-map.html) for experiment relationships, or the [timeline](../../docs/biohub-approach-timeline.html) for chronological decisions, public scores, explicit non-submission decisions, and held paths. Both are curated indexes of this file and `LEARNINGS.md`, not replacements for their detailed evidence. The repository-wide [competition index](../../docs/index.html) links both views and schedules equivalent maps for the remaining workspaces.
 
+## External provenance log
+
+Record external inputs only when their source and role are explicit. This is a use log, not an attribution of another user's leaderboard score to our work; no external raw competition-data use is recorded below.
+
+| When used | Source | Material used | Affected work |
+| --- | --- | --- | --- |
+| 2026-07-06 to 2026-07-08 | Public LB893 tracker (source slug not recorded) and `pilkwang/biohub-tracking-support-pack-50ep-v1` | Copied notebook pipeline and public model-support pack | LB893 baseline and derivatives |
+| 2026-07-16 | Recent public graph-recipe notebooks (source slugs not recorded) | Configuration pattern for thresholding, short-track filtering, gap policy, and safe divisions | Exp073 and subsequent calibration/ILP variants |
+| 2026-07-27 | Public `pilkwang` two-seed detection logit-blend notebook and support-pack assets | Two-seed detection blend | Exp148 and later backbone work |
+| 2026-08-02 reviewed; 2026-08-10 used | [`zoli800/biohub-cell-another-approch-2nd`](https://www.kaggle.com/code/zoli800/biohub-cell-another-approch-2nd) | Reverse-time harmonic association and coupled edge-TTA design, adapted rather than copied verbatim | Exp183; held coupled harmonic + edge-TTA path |
+| 2026-07-20; latest threshold probes 2026-08-13 | [`kaiwalyaatulraut/biohub-cell-tracking-solution`](https://www.kaggle.com/code/kaiwalyaatulraut/biohub-cell-tracking-solution) | Clean direct-ILP-export route; verified byte-identical after hub/fork removal | Exp116/119 and held Exp121 |
+| Metric rescore period | Official Kaggle discussion `727154` | Organizer metric-patch/rescore information; evaluation context only, not training or inference data | Patched-evaluator interpretation of division results |
+
 ## Current Best
 
 | Date | Approach | Local CV | Public LB | Private LB | Notebook/commit | Notes |
