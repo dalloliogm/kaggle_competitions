@@ -29,6 +29,7 @@
     .advance .card, .card.advance { border-left-color:var(--advance); } .card.advance { background:var(--advance-bg); }
     .card.closed { border-left-color:var(--closed); background:var(--closed-bg); } .card.pending { border-left-color:var(--pending); background:var(--pending-bg); }
     .card.hold { border-left-color:var(--hold); border-style:dashed; background:var(--hold-bg); }
+    .mini-pipeline { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:3px; margin:8px 0; } .mini-stage { position:relative; border:1px solid var(--line); background:var(--neutral-bg); color:var(--muted); padding:3px 2px; text-align:center; font-size:.68rem; line-height:1.1; } .mini-stage:not(:last-child)::after { content:"→"; position:absolute; right:-6px; top:50%; z-index:1; transform:translateY(-50%); color:var(--muted); font-weight:700; } .mini-stage.active.detect { background:#e9f3fb; border-color:#82acd1; color:#174f83; } .mini-stage.active.associate { background:#f1eef5; border-color:#aa9db9; color:#524463; } .mini-stage.active.graph { background:var(--advance-bg); border-color:#8fbd9b; color:#145b29; } .mini-stage.active.repair { background:var(--hold-bg); border-color:#d6ad60; color:#76510c; } .mini-pipeline.audit .mini-stage { opacity:.62; } .mini-pipeline.audit::before { content:"Audit / control"; grid-column:1 / -1; color:var(--muted); font-size:.7rem; }
     .edges { display:flex; flex-wrap:wrap; gap:7px 10px; margin:10px 0 0; color:var(--muted); font-size:.84rem; }
     .edge { display:inline-flex; align-items:center; gap:7px; background:var(--neutral-bg); border-left:2px solid var(--line); padding:5px 8px; }
     .edge-arrow { color:var(--advance); font-weight:700; font-size:1.05rem; }
@@ -141,5 +142,33 @@
     </section>
     <section class="outcome"><h2>Current decision</h2><p><strong>Keep the 0.915 public-stack recipe as the frontier.</strong> Use local validation for invariants and diagnosis, not for deciding that a structural change is leaderboard-positive; wait for the outstanding scored probes before opening another branch.</p></section>
   </main>
+  <script>
+    (() => {
+      const focusByTitle = {
+        'Exact DoG + Hungarian': 'd a', 'NMS 3.8 µm': 'd', 'U-Net + transformer + ILP': 'd a g', 'Gap-2 bridges': 'r',
+        'LB893 copied graph tracker': 'd a g r', 'No-safe-divisions comparison': 'r', 'Exp073 calibration': 'd r', 'Exp084–108 calibration sweeps': 'd r',
+        'Exp110 ILP costs': 'g', 'Exp112–116 ILP variants': 'g r', 'Exp148 adaptive fusion': 'd a', 'Trackastra replacement': 'a',
+        'Division quantity and ranking': 'r', 'Association repairs': 'a', 'Exp178 diagnosis': 'audit', 'Exp172/174/179–182': 'r',
+        'Exp183 full public stack': 'd a', 'Exp184 and Exp187': 'a', 'Exp185/186/188/191/192': 'd a audit', 'Exp193 / Exp195': 'r audit',
+        'Exp165 dense tiled relinking': 'a', 'Direct-export threshold probes': 'd g', 'Exp194 boundary rescue': 'r', 'Exp121 nine-view TTA': 'd g',
+        'Per-movie count calibration': 'd', 'Coupled harmonic + edge TTA': 'd a'
+      };
+      const stages = [['d', 'detect', 'Detect'], ['a', 'associate', 'Link'], ['g', 'graph', 'Graph'], ['r', 'repair', 'Repair']];
+      document.querySelectorAll('.timeline .card').forEach(card => {
+        const title = card.querySelector('h3').textContent;
+        const active = new Set((focusByTitle[title] || '').split(' '));
+        const pipeline = document.createElement('div');
+        pipeline.className = `mini-pipeline${active.has('audit') ? ' audit' : ''}`;
+        pipeline.setAttribute('aria-label', active.has('audit') ? 'Audit or control submission' : `Components changed: ${stages.filter(([code]) => active.has(code)).map(([, , label]) => label).join(', ')}`);
+        stages.forEach(([code, className, label]) => {
+          const stage = document.createElement('span');
+          stage.className = `mini-stage ${className}${active.has(code) ? ' active' : ''}`;
+          stage.textContent = label;
+          pipeline.append(stage);
+        });
+        card.querySelector('.node-detail').before(pipeline);
+      });
+    })();
+  </script>
 </body>
 </html>
