@@ -24,6 +24,9 @@
     .advance .card, .card.advance { border-left-color:var(--advance); } .card.advance { background:var(--advance-bg); }
     .card.closed { border-left-color:var(--closed); background:var(--closed-bg); } .card.pending { border-left-color:var(--pending); background:var(--pending-bg); }
     .card.hold { border-left-color:var(--hold); border-style:dashed; background:var(--hold-bg); }
+    .edges { display:flex; flex-wrap:wrap; gap:7px 10px; margin:10px 0 0; color:var(--muted); font-size:.84rem; }
+    .edge { display:inline-flex; align-items:center; gap:7px; background:var(--neutral-bg); border-left:2px solid var(--line); padding:5px 8px; }
+    .edge-arrow { color:var(--advance); font-weight:700; font-size:1.05rem; }
     .outcome { border-top:1px solid var(--line); margin-top:2px; padding-top:20px; } .outcome strong { color:var(--advance); }
     @media (max-width:700px) { main { padding:22px 14px 32px; } h1 { font-size:1.65rem; } .cards { grid-template-columns:1fr; } .timeline { padding-left:28px; } .period::before { left:-23px; } .timeline::before { left:4px; } }
   </style>
@@ -45,6 +48,7 @@
           <article class="card closed"><h3>U-Net + transformer + ILP</h3><p>A learned replacement did not transfer its local promise to the public leaderboard.</p><p class="score">Public 0.810 — closed</p></article>
           <article class="card hold"><h3>Gap-2 bridges</h3><p>Local validation regressed, so this branch was deliberately not submitted.</p><p class="score">Not submitted</p></article>
         </div>
+        <div class="edges" aria-label="Experiment dependencies"><span class="edge">Exact DoG + Hungarian <b class="edge-arrow">→</b> NMS 3.8 µm</span><span class="edge">NMS 3.8 µm <b class="edge-arrow">→</b> LB893 copied graph tracker</span><span class="edge">NMS 3.8 µm <b class="edge-arrow">→</b> learned replacement comparison</span></div>
       </section>
 
       <section class="period advance">
@@ -53,6 +57,7 @@
           <article class="card advance"><h3>LB893 copied graph tracker</h3><p>Motion relink, gap repair, line fit and safe divisions produced the first large jump.</p><p class="score">Public 0.893</p></article>
           <article class="card closed"><h3>No-safe-divisions comparison</h3><p>The public score contradicted the local preference, demonstrating that local ordering was unreliable.</p><p class="score">Public 0.886 — closed</p></article>
         </div>
+        <div class="edges" aria-label="Experiment dependencies"><span class="edge">LB893 copied graph tracker <b class="edge-arrow">→</b> Exp073 calibration</span><span class="edge">Safe-divisions comparison <b class="edge-arrow">→</b> validate structural changes live</span></div>
       </section>
 
       <section class="period advance">
@@ -63,6 +68,7 @@
           <article class="card advance"><h3>Exp110 ILP costs</h3><p>Conservative appearance/death costs produced a smaller, better graph.</p><p class="score">Public 0.909</p></article>
           <article class="card closed"><h3>Exp112–116 ILP variants</h3><p>Disappearance sweeps were flat; the original direct ILP export was materially worse.</p><p class="score">Public 0.908–0.909; direct export 0.877</p></article>
         </div>
+        <div class="edges" aria-label="Experiment dependencies"><span class="edge">Exp073 calibration <b class="edge-arrow">→</b> graph-calibration sweeps</span><span class="edge">Exp073 calibration <b class="edge-arrow">→</b> Exp110 ILP costs</span><span class="edge">Exp110 ILP costs <b class="edge-arrow">→</b> ILP variants</span></div>
       </section>
 
       <section class="period advance">
@@ -73,6 +79,7 @@
           <article class="card closed"><h3>Division quantity and ranking</h3><p>Larger division budgets lost; smaller budgets and image/transformer ranking tied the backbone.</p><p class="score">Public 0.905–0.913</p></article>
           <article class="card closed"><h3>Association repairs</h3><p>Exp163 tied after swaps; Exp164 found no viable future-aware swaps; harmonic-only tests tied.</p><p class="score">Public 0.913 or diagnostic only</p></article>
         </div>
+        <div class="edges" aria-label="Experiment dependencies"><span class="edge">Exp110 ILP costs <b class="edge-arrow">→</b> Exp148 adaptive fusion</span><span class="edge">Exp148 adaptive fusion <b class="edge-arrow">→</b> Trackastra, division and association branches</span><span class="edge">Exp148 adaptive fusion <b class="edge-arrow">→</b> public-stack decomposition</span></div>
       </section>
 
       <section class="period">
@@ -81,6 +88,7 @@
           <article class="card"><h3>Exp178 diagnosis</h3><p>Reviewed the suspicious-event path and focused testing on candidate admission rather than generic tuning.</p><p class="score">Diagnostic decision point</p></article>
           <article class="card closed"><h3>Exp172/174/179–182</h3><p>Relink removal, protection gates and lower thresholds did not beat the fusion backbone.</p><p class="score">Public 0.909–0.913</p></article>
         </div>
+        <div class="edges" aria-label="Experiment dependencies"><span class="edge">Suspicious-event diagnosis <b class="edge-arrow">→</b> candidate-admission tests</span><span class="edge">Candidate-admission tests <b class="edge-arrow">→</b> retain Exp148 backbone</span></div>
       </section>
 
       <section class="period advance">
@@ -91,6 +99,7 @@
           <article class="card closed"><h3>Exp185/186/188/191/192</h3><p>Partial TTA and ranker variants regressed or proved inactive; checkpoint variants regressed.</p><p class="score">0.913, 0.915 inactive control, 0.910 / 0.910</p></article>
           <article class="card advance"><h3>Exp193 / Exp195</h3><p>Joint gap-2 budget and stable control independently tied the frontier.</p><p class="score">Public 0.915 / 0.915</p></article>
         </div>
+        <div class="edges" aria-label="Experiment dependencies"><span class="edge">Exp148 adaptive fusion <b class="edge-arrow">→</b> Exp183 full public stack</span><span class="edge">Exp183 full public stack <b class="edge-arrow">→</b> ranker/TTA controls</span><span class="edge">Controls <b class="edge-arrow">→</b> Exp193 / Exp195 frontier tie</span></div>
       </section>
 
       <section class="period pending">
@@ -103,6 +112,7 @@
           <article class="card hold"><h3>Per-movie count calibration</h3><p>Diagnostic only until direct-export counts and precision are validated on real outputs.</p><p class="score">Not tried</p></article>
           <article class="card hold"><h3>Coupled harmonic + edge TTA</h3><p>Forward-only TTA was negative, but the coupled public mechanism remains unisolated.</p><p class="score">Not tried</p></article>
         </div>
+        <div class="edges" aria-label="Experiment dependencies"><span class="edge">0.915 frontier <b class="edge-arrow">→</b> pending direct-export and boundary probes</span><span class="edge">Pending score evidence <b class="edge-arrow">→</b> decide whether to open held paths</span></div>
       </section>
     </section>
     <section class="outcome"><h2>Current decision</h2><p><strong>Keep the 0.915 public-stack recipe as the frontier.</strong> Use local validation for invariants and diagnosis, not for deciding that a structural change is leaderboard-positive; wait for the outstanding scored probes before opening another branch.</p></section>
