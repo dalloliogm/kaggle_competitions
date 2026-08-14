@@ -1,5 +1,16 @@
 # Tasks
 
+## UPDATE - 2026-08-14 (live batch resolved except Exp124)
+
+Exp116 and Exp119 completed at public `0.877` and `0.875`; Exp120 errored on a
+missing `biohub_tracking` import and was not submitted. Exp123 completed at
+`0.908`, Exp194 at `0.914`, and Exp193/Exp195 tied the frontier at `0.915`.
+Exp124 (`55499181`) remains pending. Exp121 is held because its copied notebook
+still uses the 8-view selector rather than verified 9-public TTA. Four
+submission slots remain today. The detection-density/count-calibration notebook
+is still diagnostic-only; do not promote calibration without frozen-control
+per-movie precision and edge checks.
+
 ## UPDATE - 2026-08-13 (minimal direct-export batch and count calibration)
 
 Exp116 and Exp119 were pushed as Kaggle kernel version 2 and submitted as

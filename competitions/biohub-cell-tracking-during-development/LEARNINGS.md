@@ -2,6 +2,24 @@
 
 Capture durable information learned while working on this competition. This is for insights that should guide future modeling and prevent repeated mistakes.
 
+## SETTLED - live batch results reject clean direct export (2026-08-14)
+
+The direct-export hypothesis did not survive the leaderboard: Exp116 scored
+`0.877` at point threshold `0.9700` with 8-view TTA, and Exp119 scored `0.875`
+at `0.9800`. Exp120 was not submitted because the kernel failed with
+`ModuleNotFoundError: No module named 'biohub_tracking'`. Exp121 remains held
+because its copied notebook has not been verified to use the intended 9-public
+view selector. The earlier `~0.950` public-notebook expectation is therefore
+not evidence for this branch on our live submission path.
+
+Exp123 also regressed: adding a learned motion-relink bonus of `1.5` to the
+stronger public stack scored `0.908` (`55491405`). Exp124 tightens the motion
+gate to `5um` and is still pending (`55499181`). Exp194 boundary/truncated-track
+rescue scored `0.914`, while Exp193 joint Gap-2 and Exp195 stable control both
+scored `0.915`. Keep the Exp183-family public association stack as the baseline
+and require a measurable, selective mechanism before spending slots on further
+post-processing.
+
 ## SETTLED - Exp188 lookahead control was inactive; Exp187 constrained ranker is pending (2026-08-11)
 
 Exp188 disabled `BIOHUB_USE_FORWARD_ACCELERATION_LOOKAHEAD` on the full Exp183

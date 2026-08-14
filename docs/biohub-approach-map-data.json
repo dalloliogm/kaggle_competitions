@@ -1,0 +1,37 @@
+{
+  "title": "Biohub competition approach map",
+  "as_of": "2026-08-14",
+  "competition": {
+    "description": "3D time-lapse microscopy cell detection, lineage linking, and division reconstruction.",
+    "prediction_target": "A cell graph with detections, temporal links, and division events; metric is adjusted edge Jaccard with a division component.",
+    "models": "DoG/Hungarian; U-Net + transformer + ILP; association MLP ranker; harmonic fusion; edge-stage TTA; controlled post-processing.",
+    "url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview",
+    "started": "Not verified",
+    "entered": "2026-07-03 first scored submission",
+    "finished": "2026-09-29 23:59 UTC",
+    "standing": "Ongoing; best public 0.915; four submission slots remain on 2026-08-14; final private/rank not available",
+    "lesson": "The live leaderboard rejects the clean direct-export expectation; keep the public association stack as baseline and separate model changes from inactive or unverified controls."
+  },
+  "lanes": [
+    {"id": "backbone", "title": "Backbone and current frontier"},
+    {"id": "decomposition", "title": "Public-stack decomposition"},
+    {"id": "direct", "title": "Direct export and calibration branch"}
+  ],
+  "nodes": [
+    {"id": "exp110", "lane": "backbone", "title": "Exp110 ILP costs", "summary": "Conservative appearance/disappearance costs broke the 0.903 plateau.", "score": "Public 0.909", "status": "submitted", "parents": []},
+    {"id": "exp148", "lane": "backbone", "title": "Exp148 adaptive fusion", "summary": "Fixed detection blend plus confidence-adaptive two-seed edge fusion.", "score": "Public 0.913", "status": "submitted", "parents": ["exp110"]},
+    {"id": "exp183", "lane": "backbone", "title": "Exp183 full public stack", "summary": "Public lineage with 85/15 association ranker, harmonic fusion, and edge TTA.", "score": "Public 0.915 — current frontier", "status": "best", "parents": ["exp148"]},
+    {"id": "exp188", "lane": "backbone", "title": "Exp188 inactive lookahead control", "summary": "Identical output to Exp183; the lookahead branch produced zero bonus edges.", "score": "Public 0.915; no active mechanism", "status": "submitted", "parents": ["exp183"]},
+    {"id": "exp193195", "lane": "backbone", "title": "Exp193 / Exp195 frontier ties", "summary": "Joint Gap-2 budget and stable control both matched the current frontier.", "score": "Public 0.915 / 0.915", "status": "best", "parents": ["exp183"]},
+    {"id": "exp194", "lane": "backbone", "title": "Exp194 boundary rescue", "summary": "Boundary and truncated-track rescue did not match the frontier.", "score": "Public 0.914", "status": "submitted", "parents": ["exp183"]},
+    {"id": "exp184186", "lane": "decomposition", "title": "Exp184 / Exp186 component probes", "summary": "Ranker-only and forward-only edge TTA did not reproduce the full-stack gain.", "score": "Public 0.914 / 0.913", "status": "submitted", "parents": ["exp183"]},
+    {"id": "exp185", "lane": "decomposition", "title": "Exp185 50/50 ranker blend", "summary": "Defensible lower ranker weight regressed relative to the full stack.", "score": "Public 0.913", "status": "rejected", "parents": ["exp183"]},
+    {"id": "exp187", "lane": "decomposition", "title": "Exp187 constrained ranker rescue", "summary": "Selective low-margin rescue changed only five output rows.", "score": "Public 0.914", "status": "submitted", "parents": ["exp183"]},
+    {"id": "exp123", "lane": "decomposition", "title": "Exp123 motion bonus", "summary": "Learned motion-relink bonus 1.5 on the stronger public stack.", "score": "Public 0.908", "status": "rejected", "parents": ["exp183"]},
+    {"id": "exp124", "lane": "decomposition", "title": "Exp124 tighter motion gate", "summary": "Same stronger stack with a tighter 5um motion gate; result is not yet scored.", "score": "Submission 55499181 — pending", "status": "pending", "parents": ["exp123"]},
+    {"id": "direct116119", "lane": "direct", "title": "Exp116 / Exp119 direct ILP export", "summary": "Minimal direct-export probes at point thresholds 0.9700 and 0.9800 failed to transfer.", "score": "Public 0.877 / 0.875", "status": "rejected", "parents": []},
+    {"id": "exp120", "lane": "direct", "title": "Exp120 threshold 0.9500", "summary": "Direct-export kernel failed before submission because biohub_tracking was unavailable.", "score": "Not submitted — kernel error", "status": "not-submitted", "parents": ["direct116119"]},
+    {"id": "exp121", "lane": "direct", "title": "Exp121 nine-view TTA", "summary": "Held until the copied notebook is verified to call do_tta_9public; it currently inherits 8-view TTA.", "score": "Held; not submitted", "status": "untried", "parents": ["direct116119"]},
+    {"id": "countcal", "lane": "direct", "title": "Detection-density/count calibration", "summary": "Diagnostic notebook defines per-movie count targets and bounded ratios; no submission change yet.", "score": "Diagnostic only", "status": "untried", "parents": ["direct116119"]}
+  ]
+}

@@ -135,14 +135,24 @@ that notebook, not the Exp073/Exp110 lineage.
 
 ### Active 2026-08-13 batch
 
-The minimal direct-export branch is being tested before further post-processing:
+Live update 2026-08-14: the batch is resolved except for Exp124. The minimal
+direct-export branch did not transfer to hidden evaluation, and the stronger
+stack motion probe regressed. The current public frontier remains the
+Exp183/188/193/195 tie at `0.915`.
 
 | exp | change | status |
 | --- | --- | --- |
 | exp116 | direct ILP export, point threshold 0.9700, 8-view TTA | submitted `55484317` |
 | exp119 | direct ILP export, point threshold 0.9800 | submitted `55484319` |
-| exp120 | direct ILP export, point threshold 0.9500 | running |
-| exp121 | direct ILP export with 9-public-view TTA | held until selector is verified |
+| exp120 | direct ILP export, point threshold 0.9500 | kernel error: missing `biohub_tracking`; not submitted |
+| exp121 | direct ILP export with 9-public-view TTA | held; copied notebook still selects 8-view TTA |
+| exp123 | motion relink learned bonus 1.5 on stronger public stack | submitted `55491405`, public `0.908` |
+| exp124 | stronger public stack with tighter 5um motion gate | submitted `55499181`, pending |
+
+Completed controls: Exp116 scored `0.877`, Exp119 scored `0.875`, Exp194
+boundary rescue scored `0.914`, and Exp193/Exp195 both scored `0.915`.
+Treat the old expectation that clean direct export would approach `0.950` as
+rejected by live evidence, not as a current target.
 
 The detection-density/count-calibration axis has also been started in
 `notebooks/diagnostics/biohub-detection-density-count-calibration.ipynb`.
