@@ -2,6 +2,8 @@
 
 Track modeling approaches, experiments, submissions, and outcomes here. Prefer short entries with enough detail that a future chat can understand what was tried and whether it is worth revisiting.
 
+[Open the evidence-grounded approach map](../../docs/rogii-approach-map.html) for the compact visual lineage; this file remains the primary detailed record.
+
 ## Current Best
 
 | Date | Approach | Local CV | Public LB | Private LB | Notebook/commit | Notes |
