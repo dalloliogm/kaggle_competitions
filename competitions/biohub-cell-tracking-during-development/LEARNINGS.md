@@ -20,6 +20,13 @@ scored `0.915`. Keep the Exp183-family public association stack as the baseline
 and require a measurable, selective mechanism before spending slots on further
 post-processing.
 
+Update 2026-08-15: Exp124's tighter `5um` motion gate completed at public
+`0.907`, below Exp123's `0.908`; it does not justify another motion-gate sweep.
+The available local post-processing ablation outputs are not submission-grade
+evidence because the labelled local ranking is known to invert leaderboard
+ordering. Preserve today's five slots until a candidate has a verified selector
+and a materially distinct, structurally audited output.
+
 ## SETTLED - Exp188 lookahead control was inactive; Exp187 constrained ranker is pending (2026-08-11)
 
 Exp188 disabled `BIOHUB_USE_FORWARD_ACCELERATION_LOOKAHEAD` on the full Exp183

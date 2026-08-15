@@ -1,6 +1,6 @@
 {
   "title": "Biohub competition approach map",
-  "as_of": "2026-08-14",
+    "as_of": "2026-08-15",
   "competition": {
     "description": "3D time-lapse microscopy cell detection, lineage linking, and division reconstruction.",
     "prediction_target": "A cell graph with detections, temporal links, and division events; metric is adjusted edge Jaccard with a division component.",
@@ -9,7 +9,7 @@
     "started": "Not verified",
     "entered": "2026-07-03 first scored submission",
     "finished": "2026-09-29 23:59 UTC",
-    "standing": "Ongoing; best public 0.915; four submission slots remain on 2026-08-14; final private/rank not available",
+    "standing": "Ongoing; best public 0.915; five submission slots unused on 2026-08-15; final private/rank not available",
     "lesson": "The live leaderboard rejects the clean direct-export expectation; keep the public association stack as baseline and separate model changes from inactive or unverified controls."
   },
   "lanes": [
@@ -28,7 +28,7 @@
     {"id": "exp185", "lane": "decomposition", "title": "Exp185 50/50 ranker blend", "summary": "Defensible lower ranker weight regressed relative to the full stack.", "score": "Public 0.913", "status": "rejected", "parents": ["exp183"]},
     {"id": "exp187", "lane": "decomposition", "title": "Exp187 constrained ranker rescue", "summary": "Selective low-margin rescue changed only five output rows.", "score": "Public 0.914", "status": "submitted", "parents": ["exp183"]},
     {"id": "exp123", "lane": "decomposition", "title": "Exp123 motion bonus", "summary": "Learned motion-relink bonus 1.5 on the stronger public stack.", "score": "Public 0.908", "status": "rejected", "parents": ["exp183"]},
-    {"id": "exp124", "lane": "decomposition", "title": "Exp124 tighter motion gate", "summary": "Same stronger stack with a tighter 5um motion gate; result is not yet scored.", "score": "Submission 55499181 — pending", "status": "pending", "parents": ["exp123"]},
+    {"id": "exp124", "lane": "decomposition", "title": "Exp124 tighter motion gate", "summary": "Same stronger stack with a tighter 5um motion gate; it regressed below Exp123.", "score": "Public 0.907", "status": "submitted", "parents": ["exp123"]},
     {"id": "direct116119", "lane": "direct", "title": "Exp116 / Exp119 direct ILP export", "summary": "Minimal direct-export probes at point thresholds 0.9700 and 0.9800 failed to transfer.", "score": "Public 0.877 / 0.875", "status": "rejected", "parents": []},
     {"id": "exp120", "lane": "direct", "title": "Exp120 threshold 0.9500", "summary": "Direct-export kernel failed before submission because biohub_tracking was unavailable.", "score": "Not submitted — kernel error", "status": "not-submitted", "parents": ["direct116119"]},
     {"id": "exp121", "lane": "direct", "title": "Exp121 nine-view TTA", "summary": "Held until the copied notebook is verified to call do_tta_9public; it currently inherits 8-view TTA.", "score": "Held; not submitted", "status": "untried", "parents": ["direct116119"]},
