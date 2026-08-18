@@ -17,6 +17,7 @@ Record external inputs only when their source and role are explicit. This is a u
 | 2026-07-27 | Public `pilkwang` two-seed detection logit-blend notebook and support-pack assets | Two-seed detection blend | Exp148 and later backbone work |
 | 2026-08-02 reviewed; 2026-08-10 used | [`zoli800/biohub-cell-another-approch-2nd`](https://www.kaggle.com/code/zoli800/biohub-cell-another-approch-2nd) | Reverse-time harmonic association and coupled edge-TTA design, adapted rather than copied verbatim | Exp183; held coupled harmonic + edge-TTA path |
 | 2026-07-20; latest threshold probes 2026-08-13 | [`kaiwalyaatulraut/biohub-cell-tracking-solution`](https://www.kaggle.com/code/kaiwalyaatulraut/biohub-cell-tracking-solution) | Clean direct-ILP-export route; verified byte-identical after hub/fork removal | Exp116/119 and held Exp121 |
+| 2026-08-18 inspected; no data attached | [`josefreitasalvesneto/biohub-synthetic-dataset`](https://www.kaggle.com/code/josefreitasalvesneto/biohub-synthetic-dataset) and [explorer](https://www.kaggle.com/code/josefreitasalvesneto/synthetic-3d-microscopy-data-for-cell-tracking) | Source audit and schema-only adapter; no source data, weights, or outputs used | Held synthetic second-child pretraining control |
 | Metric rescore period | Official Kaggle discussion `727154` | Organizer metric-patch/rescore information; evaluation context only, not training or inference data | Patched-evaluator interpretation of division results |
 
 ## Current Best

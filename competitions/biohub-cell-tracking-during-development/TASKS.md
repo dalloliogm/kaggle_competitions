@@ -1,5 +1,16 @@
 # Tasks
 
+## PREPARED - 2026-08-18 (synthetic division pretraining adapter; diagnostic only)
+
+Source audit: `references/synthetic-dataset-source-audit-2026-08-18.md`.
+The public sequence build is parametric and calibrated from one training embryo;
+its divisions are simulated graph branches rather than observed mitotic morphology.
+`scripts/biohub_synthetic_sequence_adapter.py` is a smoke-tested, data-free
+adapter that verifies the source graph and converts native `(z,y,x)` labels to
+pooled image coordinates by `(1,4,4)`. It emits provenance-preserving
+second-child candidates only. Do not attach the full dataset, train a model, or
+submit this branch without a separately authorised, frozen Exp183 control.
+
 ## UPDATE - 2026-08-14 (live batch resolved except Exp124)
 
 Exp116 and Exp119 completed at public `0.877` and `0.875`; Exp120 errored on a
