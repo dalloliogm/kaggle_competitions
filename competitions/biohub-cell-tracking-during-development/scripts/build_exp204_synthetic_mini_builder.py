@@ -18,7 +18,9 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "notebooks" / "exp204-synthetic-mini-builder"
 
 CONFIG = """import os
-os.environ['SYNTH_GRIDSEARCH'] = '0'
+# The public notebook uses this flag as a guard against its earlier showcase
+# pipeline.  The final public-dataset builder still executes in the last cell.
+os.environ['SYNTH_GRIDSEARCH'] = '1'
 os.environ['SYNTH_NATIVE_COMPARE'] = '0'
 os.environ['SYNTH_NATIVE_LAYOUT'] = '0'
 os.environ['SYNTH_NATIVE_SIM'] = '0'
@@ -72,7 +74,8 @@ def main() -> None:
         "kernel_type": "notebook",
         "is_private": True,
         "enable_gpu": False,
-        "enable_internet": False,
+        # The source conditionally installs zarr/tracksdata in Kaggle's image.
+        "enable_internet": True,
         "competition_sources": ["biohub-cell-tracking-during-development"],
         "dataset_sources": [],
         "kernel_sources": [],
