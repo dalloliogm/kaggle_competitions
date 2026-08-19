@@ -4,7 +4,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 
 ## Approach map
 
-- [Interactive approach map and timeline](../../docs/autonomous-agent-prediction-beta-approach-map.html) — generated from [the map data](../../docs/autonomous-agent-prediction-beta-approach-map-data.json); latest workspace-recorded evaluator state is 2026-08-04.
+- [Interactive approach map, inventory, and timeline](../../docs/autonomous-agent-prediction-beta-approach-map.html) — rendered from these workspace records and [the compact lineage map data](../../docs/autonomous-agent-prediction-beta-approach-map-data.json); latest workspace-recorded evaluator state is 2026-08-04.
 
 ## External provenance log
 
