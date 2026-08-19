@@ -1,6 +1,6 @@
 {
   "title": "Biohub competition approach map",
-    "as_of": "2026-08-15",
+  "as_of": "2026-08-19",
   "competition": {
     "description": "3D time-lapse microscopy cell detection, lineage linking, and division reconstruction.",
     "prediction_target": "A cell graph with detections, temporal links, and division events; metric is adjusted edge Jaccard with a division component.",
@@ -9,29 +9,239 @@
     "started": "Not verified",
     "entered": "2026-07-03 first scored submission",
     "finished": "2026-09-29 23:59 UTC",
-    "standing": "Ongoing; best public 0.915; five submission slots unused on 2026-08-15; final private/rank not available",
-    "lesson": "The live leaderboard rejects the clean direct-export expectation; keep the public association stack as baseline and separate model changes from inactive or unverified controls."
+    "standing": "Ongoing; best public 0.915; Exp201 and Exp202 tied the frontier; five submission slots are available today; final private/rank not available",
+    "lesson": "The conditional frozen-transition and bounded count-calibration mechanisms both activated cleanly but tied at 0.915. The next credible gain must come from a genuinely different detector/linker, while the synthetic-data branch remains held until its held-out image evidence beats the geometry control."
   },
   "lanes": [
-    {"id": "backbone", "title": "Backbone and current frontier"},
-    {"id": "decomposition", "title": "Public-stack decomposition"},
-    {"id": "direct", "title": "Direct export and calibration branch"}
+    {
+      "id": "backbone",
+      "title": "Backbone and current frontier"
+    },
+    {
+      "id": "decomposition",
+      "title": "Public-stack decomposition"
+    },
+    {
+      "id": "direct",
+      "title": "Direct export and calibration branch"
+    },
+    {
+      "id": "newmodel",
+      "title": "Independent detector and synthetic-data branches"
+    }
   ],
   "nodes": [
-    {"id": "exp110", "lane": "backbone", "title": "Exp110 ILP costs", "summary": "Conservative appearance/disappearance costs broke the 0.903 plateau.", "score": "Public 0.909", "status": "submitted", "parents": []},
-    {"id": "exp148", "lane": "backbone", "title": "Exp148 adaptive fusion", "summary": "Fixed detection blend plus confidence-adaptive two-seed edge fusion.", "score": "Public 0.913", "status": "submitted", "parents": ["exp110"]},
-    {"id": "exp183", "lane": "backbone", "title": "Exp183 full public stack", "summary": "Public lineage with 85/15 association ranker, harmonic fusion, and edge TTA.", "score": "Public 0.915 — current frontier", "status": "best", "parents": ["exp148"]},
-    {"id": "exp188", "lane": "backbone", "title": "Exp188 inactive lookahead control", "summary": "Identical output to Exp183; the lookahead branch produced zero bonus edges.", "score": "Public 0.915; no active mechanism", "status": "submitted", "parents": ["exp183"]},
-    {"id": "exp193195", "lane": "backbone", "title": "Exp193 / Exp195 frontier ties", "summary": "Joint Gap-2 budget and stable control both matched the current frontier.", "score": "Public 0.915 / 0.915", "status": "best", "parents": ["exp183"]},
-    {"id": "exp194", "lane": "backbone", "title": "Exp194 boundary rescue", "summary": "Boundary and truncated-track rescue did not match the frontier.", "score": "Public 0.914", "status": "submitted", "parents": ["exp183"]},
-    {"id": "exp184186", "lane": "decomposition", "title": "Exp184 / Exp186 component probes", "summary": "Ranker-only and forward-only edge TTA did not reproduce the full-stack gain.", "score": "Public 0.914 / 0.913", "status": "submitted", "parents": ["exp183"]},
-    {"id": "exp185", "lane": "decomposition", "title": "Exp185 50/50 ranker blend", "summary": "Defensible lower ranker weight regressed relative to the full stack.", "score": "Public 0.913", "status": "rejected", "parents": ["exp183"]},
-    {"id": "exp187", "lane": "decomposition", "title": "Exp187 constrained ranker rescue", "summary": "Selective low-margin rescue changed only five output rows.", "score": "Public 0.914", "status": "submitted", "parents": ["exp183"]},
-    {"id": "exp123", "lane": "decomposition", "title": "Exp123 motion bonus", "summary": "Learned motion-relink bonus 1.5 on the stronger public stack.", "score": "Public 0.908", "status": "rejected", "parents": ["exp183"]},
-    {"id": "exp124", "lane": "decomposition", "title": "Exp124 tighter motion gate", "summary": "Same stronger stack with a tighter 5um motion gate; it regressed below Exp123.", "score": "Public 0.907", "status": "submitted", "parents": ["exp123"]},
-    {"id": "direct116119", "lane": "direct", "title": "Exp116 / Exp119 direct ILP export", "summary": "Minimal direct-export probes at point thresholds 0.9700 and 0.9800 failed to transfer.", "score": "Public 0.877 / 0.875", "status": "rejected", "parents": []},
-    {"id": "exp120", "lane": "direct", "title": "Exp120 threshold 0.9500", "summary": "Direct-export kernel failed before submission because biohub_tracking was unavailable.", "score": "Not submitted — kernel error", "status": "not-submitted", "parents": ["direct116119"]},
-    {"id": "exp121", "lane": "direct", "title": "Exp121 nine-view TTA", "summary": "Held until the copied notebook is verified to call do_tta_9public; it currently inherits 8-view TTA.", "score": "Held; not submitted", "status": "untried", "parents": ["direct116119"]},
-    {"id": "countcal", "lane": "direct", "title": "Detection-density/count calibration", "summary": "Diagnostic notebook defines per-movie count targets and bounded ratios; no submission change yet.", "score": "Diagnostic only", "status": "untried", "parents": ["direct116119"]}
+    {
+      "id": "exp110",
+      "lane": "backbone",
+      "title": "Exp110 ILP costs",
+      "summary": "Conservative appearance/disappearance costs broke the 0.903 plateau.",
+      "score": "Public 0.909",
+      "status": "submitted",
+      "parents": []
+    },
+    {
+      "id": "exp148",
+      "lane": "backbone",
+      "title": "Exp148 adaptive fusion",
+      "summary": "Fixed detection blend plus confidence-adaptive two-seed edge fusion.",
+      "score": "Public 0.913",
+      "status": "submitted",
+      "parents": [
+        "exp110"
+      ]
+    },
+    {
+      "id": "exp183",
+      "lane": "backbone",
+      "title": "Exp183 full public stack",
+      "summary": "Public lineage with 85/15 association ranker, harmonic fusion, and edge TTA.",
+      "score": "Public 0.915 — current frontier",
+      "status": "best",
+      "parents": [
+        "exp148"
+      ]
+    },
+    {
+      "id": "exp196",
+      "lane": "backbone",
+      "title": "Exp196 DeepCenter-confirmed stack",
+      "summary": "Clean deeper-stack candidate with active forward lookahead and DeepCenter-confirmed synthetic-gap rescue.",
+      "score": "Public 0.915",
+      "status": "submitted",
+      "parents": [
+        "exp183"
+      ]
+    },
+    {
+      "id": "exp201",
+      "lane": "backbone",
+      "title": "Exp201 conditional frozen transitions",
+      "summary": "Exact duplicate frames use zero-velocity relinking and suppress gap repair; ordinary transitions retain the Exp196 stack.",
+      "score": "Public 0.915 (55561500)",
+      "status": "submitted",
+      "parents": [
+        "exp196"
+      ]
+    },
+    {
+      "id": "exp202",
+      "lane": "backbone",
+      "title": "Exp202 bounded count calibration",
+      "summary": "Target-only high-confidence short-component rescue on 44b6_0b24845f; capped at 2% or 800 nodes.",
+      "score": "Public 0.915 (55583194)",
+      "status": "submitted",
+      "parents": [
+        "exp201"
+      ]
+    },
+    {
+      "id": "exp188",
+      "lane": "backbone",
+      "title": "Exp188 inactive lookahead control",
+      "summary": "Identical output to Exp183; the lookahead branch produced zero bonus edges.",
+      "score": "Public 0.915; no active mechanism",
+      "status": "submitted",
+      "parents": [
+        "exp183"
+      ]
+    },
+    {
+      "id": "exp193195",
+      "lane": "backbone",
+      "title": "Exp193 / Exp195 frontier ties",
+      "summary": "Joint Gap-2 budget and stable control both matched the current frontier.",
+      "score": "Public 0.915 / 0.915",
+      "status": "best",
+      "parents": [
+        "exp183"
+      ]
+    },
+    {
+      "id": "exp194",
+      "lane": "backbone",
+      "title": "Exp194 boundary rescue",
+      "summary": "Boundary and truncated-track rescue did not match the frontier.",
+      "score": "Public 0.914",
+      "status": "submitted",
+      "parents": [
+        "exp183"
+      ]
+    },
+    {
+      "id": "exp184186",
+      "lane": "decomposition",
+      "title": "Exp184 / Exp186 component probes",
+      "summary": "Ranker-only and forward-only edge TTA did not reproduce the full-stack gain.",
+      "score": "Public 0.914 / 0.913",
+      "status": "submitted",
+      "parents": [
+        "exp183"
+      ]
+    },
+    {
+      "id": "exp185",
+      "lane": "decomposition",
+      "title": "Exp185 50/50 ranker blend",
+      "summary": "Defensible lower ranker weight regressed relative to the full stack.",
+      "score": "Public 0.913",
+      "status": "rejected",
+      "parents": [
+        "exp183"
+      ]
+    },
+    {
+      "id": "exp187",
+      "lane": "decomposition",
+      "title": "Exp187 constrained ranker rescue",
+      "summary": "Selective low-margin rescue changed only five output rows.",
+      "score": "Public 0.914",
+      "status": "submitted",
+      "parents": [
+        "exp183"
+      ]
+    },
+    {
+      "id": "exp123",
+      "lane": "decomposition",
+      "title": "Exp123 motion bonus",
+      "summary": "Learned motion-relink bonus 1.5 on the stronger public stack.",
+      "score": "Public 0.908",
+      "status": "rejected",
+      "parents": [
+        "exp183"
+      ]
+    },
+    {
+      "id": "exp124",
+      "lane": "decomposition",
+      "title": "Exp124 tighter motion gate",
+      "summary": "Same stronger stack with a tighter 5um motion gate; it regressed below Exp123.",
+      "score": "Public 0.907",
+      "status": "submitted",
+      "parents": [
+        "exp123"
+      ]
+    },
+    {
+      "id": "direct116119",
+      "lane": "direct",
+      "title": "Exp116 / Exp119 direct ILP export",
+      "summary": "Minimal direct-export probes at point thresholds 0.9700 and 0.9800 failed to transfer.",
+      "score": "Public 0.877 / 0.875",
+      "status": "rejected",
+      "parents": []
+    },
+    {
+      "id": "exp120",
+      "lane": "direct",
+      "title": "Exp120 threshold 0.9500",
+      "summary": "Direct-export kernel failed before submission because biohub_tracking was unavailable.",
+      "score": "Not submitted — kernel error",
+      "status": "not-submitted",
+      "parents": [
+        "direct116119"
+      ]
+    },
+    {
+      "id": "exp121",
+      "lane": "direct",
+      "title": "Exp121 nine-view TTA",
+      "summary": "Held until the copied notebook is verified to call do_tta_9public; it currently inherits 8-view TTA.",
+      "score": "Held; not submitted",
+      "status": "untried",
+      "parents": [
+        "direct116119"
+      ]
+    },
+    {
+      "id": "countcal",
+      "lane": "direct",
+      "title": "Detection-density/count calibration",
+      "summary": "Diagnostic snapshot plus Exp202 bounded rescue: 52 high-confidence nodes selected on 44b6_0b24845f; the submitted output tied at 0.915.",
+      "score": "Public 0.915 (Exp202); diagnostic axis closed for now",
+      "status": "submitted",
+      "parents": [
+        "exp202"
+      ]
+    },
+    {
+      "id": "exp203",
+      "lane": "newmodel",
+      "title": "Exp203 classical three-model ensemble",
+      "summary": "Independent pooled-volume 3D U-Net heatmaps with physical NMS, velocity-aware Hungarian links, conservative gap repair, and line fitting.",
+      "score": "Pending; unverified",
+      "status": "pending",
+      "parents": []
+    },
+    {
+      "id": "exp204",
+      "lane": "newmodel",
+      "title": "Exp204 synthetic second-child diagnostic",
+      "summary": "Held-out sequence-level diagnostic tests whether synthetic image features add division evidence beyond geometry; separate from submitted kernels.",
+      "score": "Diagnostic only; not submitted",
+      "status": "untried",
+      "parents": []
+    }
   ]
 }
