@@ -1,0 +1,16 @@
+{
+  "id": "dalloliogm/biohub-exp204-synthetic-mini-builder",
+  "title": "Biohub Exp204: Capped Synthetic Lineage Builder",
+  "code_file": "biohub-exp204-synthetic-mini-builder.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": false,
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "dataset_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}
