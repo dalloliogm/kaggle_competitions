@@ -1,0 +1,16 @@
+{
+  "id": "dalloliogm/biohub-exp210-second-child-transfer",
+  "title": "Biohub Exp210 Second Child Transfer",
+  "code_file": "biohub-exp210-real-second-child-transfer.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": true,
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "kernel_sources": [
+    "dalloliogm/biohub-exp209-synthetic-second-child-ranker"
+  ]
+}
