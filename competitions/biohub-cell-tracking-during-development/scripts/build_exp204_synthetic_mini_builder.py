@@ -81,7 +81,9 @@ def main() -> None:
         "kernel_sources": [],
         "model_sources": [],
     }
-    (OUT / "kernel-metadata.json").write_text(json.dumps(metadata, indent=2) + "\n")
+    (OUT / "biohub-exp204-synthetic-mini-builder.kernel-metadata.json").write_text(
+        json.dumps(metadata, indent=2) + "\n"
+    )
 
 
 if __name__ == "__main__":

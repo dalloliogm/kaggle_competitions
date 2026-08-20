@@ -9,7 +9,7 @@ from pathlib import Path
 
 WORKSPACE = Path("competitions/biohub-cell-tracking-during-development")
 OUT = WORKSPACE / "notebooks/exp204-synthetic-second-child-pretrain/biohub-exp204-synthetic-second-child-pretrain.ipynb"
-META = OUT.with_name("kernel-metadata.json")
+META = OUT.with_suffix(".kernel-metadata.json")
 
 
 def markdown(text: str) -> dict:

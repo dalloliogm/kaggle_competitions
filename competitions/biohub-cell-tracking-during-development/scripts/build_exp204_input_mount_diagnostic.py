@@ -9,7 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 NOTEBOOK = ROOT / "notebooks" / "diagnostics" / "biohub-exp204-input-mount-diagnostic.ipynb"
-METADATA = NOTEBOOK.with_name("kernel-metadata.json")
+METADATA = NOTEBOOK.with_suffix(".kernel-metadata.json")
 
 
 def cell(source: str) -> dict:
