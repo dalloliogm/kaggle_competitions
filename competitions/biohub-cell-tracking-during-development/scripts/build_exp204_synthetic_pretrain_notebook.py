@@ -27,7 +27,7 @@ def main() -> None:
         "metadata": {
             "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
             "language_info": {"name": "python", "version": "3.12"},
-            "kaggle": {"accelerator": "none", "isGpuEnabled": False, "isInternetEnabled": False, "language": "python", "sourceType": "notebook", "competitionSources": ["biohub-cell-tracking-during-development"], "kernelSources": ["josefreitasalvesneto/biohub-synthetic-dataset"]},
+            "kaggle": {"accelerator": "none", "isGpuEnabled": False, "isInternetEnabled": False, "language": "python", "sourceType": "notebook", "competitionSources": ["biohub-cell-tracking-during-development"], "kernelSources": ["dalloliogm/biohub-exp204-capped-synthetic-lineage-builder"]},
         },
         "cells": [
             markdown("""# Exp204 — Synthetic second-child feasibility diagnostic
@@ -67,7 +67,7 @@ NATIVE_TO_POOLED = np.array([1.0, 4.0, 4.0], dtype=np.float32)
 POOLED_VOXEL_UM = np.array([1.625, 1.625, 1.625], dtype=np.float32)
 
 roots = sorted(glob.glob('/kaggle/input/**/biohub_synthetic/sequences', recursive=True))
-assert roots, 'Attach the public notebook output josefreitasalvesneto/biohub-synthetic-dataset.'
+assert roots, 'Attach the completed Exp204 capped synthetic lineage builder output.'
 SEQUENCE_DIR = Path(roots[0])
 files = sorted(SEQUENCE_DIR.glob('seq_*.npz'))[:MAX_SEQUENCE_FILES]
 assert len(files) >= 20, f'Need at least 20 sequence files, found {len(files)}.'
@@ -189,7 +189,7 @@ examples.head(10).to_csv('synthetic_second_child_examples_preview.csv', index=Fa
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(notebook, indent=1) + "\n")
-    META.write_text(json.dumps({"id": "dalloliogm/biohub-exp204-synthetic-second-child-pretrain", "title": "Biohub Exp204 Synthetic Second-Child Diagnostic", "code_file": OUT.name, "language": "python", "kernel_type": "notebook", "is_private": True, "enable_gpu": False, "enable_internet": False, "competition_sources": ["biohub-cell-tracking-during-development"], "kernel_sources": ["josefreitasalvesneto/biohub-synthetic-dataset"]}, indent=2) + "\n")
+    META.write_text(json.dumps({"id": "dalloliogm/biohub-exp204-synthetic-second-child-pretrain", "title": "Biohub Exp204 Synthetic Second-Child Diagnostic", "code_file": OUT.name, "language": "python", "kernel_type": "notebook", "is_private": True, "enable_gpu": False, "enable_internet": False, "competition_sources": ["biohub-cell-tracking-during-development"], "kernel_sources": ["dalloliogm/biohub-exp204-capped-synthetic-lineage-builder"]}, indent=2) + "\n")
 
 
 if __name__ == "__main__":

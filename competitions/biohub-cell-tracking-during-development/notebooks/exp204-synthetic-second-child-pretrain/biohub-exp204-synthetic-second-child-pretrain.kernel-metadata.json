@@ -11,6 +11,6 @@
     "biohub-cell-tracking-during-development"
   ],
   "kernel_sources": [
-    "josefreitasalvesneto/biohub-synthetic-dataset"
+    "dalloliogm/biohub-exp204-capped-synthetic-lineage-builder"
   ]
 }
