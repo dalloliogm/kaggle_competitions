@@ -26,7 +26,7 @@ def main() -> None:
             "This is **conditional identity validation** only: true division sources and GT-node candidates "
             "are jittered to mimic localization noise. It cannot justify a submission or an image model.\\n",
         ]},
-        code("""import glob, json, subprocess, sys
+        code("""import json, subprocess, sys
 from collections import defaultdict
 from pathlib import Path
 import numpy as np
@@ -44,13 +44,20 @@ VOXEL_UM = np.array([1.625, 0.40625, 0.40625], dtype=np.float32)
 JITTER_UM, MAX_DISTANCE_UM, MAX_CANDIDATES = 0.75, 16.0, 8
 FEATURE_NAMES = ['source_candidate_um', 'sister_separation_um', 'step_asymmetry_um',
                  'primary_candidate_cosine', 'motion_midpoint_residual_um', 'motion_midpoint_cosine']
-train_dir = Path('/kaggle/input/biohub-cell-tracking-during-development/train')
-assert train_dir.exists(), 'Competition train input is required.'
-prior_paths = sorted(glob.glob('/kaggle/input/**/synthetic_second_child_ranker.json', recursive=True))
-assert prior_paths, 'Attach Exp209 synthetic ranker output.'
-prior = json.loads(Path(prior_paths[0]).read_text())
-assert prior['feature_names'] == FEATURE_NAMES
-print('train:', train_dir, '| prior:', prior_paths[0])
+input_root = Path('/kaggle/input')
+train_candidates = [p for p in input_root.rglob('train') if p.is_dir() and any(p.glob('*.zarr'))] if input_root.exists() else []
+mount_report = {'top_level': [p.name for p in input_root.iterdir()] if input_root.exists() else [],
+                'train_candidates': [str(p) for p in train_candidates]}
+Path('/kaggle/working/exp210_input_mount.json').write_text(json.dumps(mount_report, indent=2))
+assert train_candidates, f'Competition train input is required; mount report: {mount_report}'
+train_dir = train_candidates[0]
+prior = {'feature_names': FEATURE_NAMES,
+         'mean': [10.340670585632324, 11.28427505493164, 6.1645708084106445, -0.020783843472599983, 6.427213668823242, -0.35534948110580444],
+         'scale': [3.6594369411468506, 3.8921639919281006, 3.487333297729492, 0.5854313969612122, 2.7527952194213867, 0.49876657128334045],
+         'coef': [-1.944502224241194, -1.311408107013591, -0.7044181286420426, -0.891100875171484, 0.36086645119956345, 0.35386928955306923],
+         'intercept': -2.7651535797738824,
+         'provenance': 'Exp209 synthetic_second_child_ranker.json'}
+print('train:', train_dir, '| prior:', prior['provenance'])
 """),
         code("""def graph_for(path):
     g = td.graph.IndexedRXGraph.from_geff(path)
@@ -161,9 +168,9 @@ print(json.dumps(results, indent=2))
             "transfer diagnostic; it is not submission-ready.\\n",
         ]},
     ]
-    nb={"cells":cells,"metadata":{"kernelspec":{"display_name":"Python 3","language":"python","name":"python3"},"language_info":{"name":"python","version":"3.12"},"kaggle":{"accelerator":"none","isGpuEnabled":False,"isInternetEnabled":True,"language":"python","sourceType":"notebook","competitionSources":["biohub-cell-tracking-during-development"],"kernelSources":["dalloliogm/biohub-exp209-synthetic-second-child-ranker"]}},"nbformat":4,"nbformat_minor":5}
+    nb={"cells":cells,"metadata":{"kernelspec":{"display_name":"Python 3","language":"python","name":"python3"},"language_info":{"name":"python","version":"3.12"},"kaggle":{"accelerator":"none","isGpuEnabled":False,"isInternetEnabled":True,"language":"python","sourceType":"notebook","competitionSources":["biohub-cell-tracking-during-development"],"kernelSources":[]}},"nbformat":4,"nbformat_minor":5}
     OUT.mkdir(parents=True, exist_ok=True); NOTEBOOK.write_text(json.dumps(nb, indent=1)+"\n")
-    METADATA.write_text(json.dumps({"id":"dalloliogm/biohub-exp210-second-child-transfer","title":"Biohub Exp210 Second Child Transfer","code_file":NOTEBOOK.name,"language":"python","kernel_type":"notebook","is_private":True,"enable_gpu":False,"enable_internet":True,"competition_sources":["biohub-cell-tracking-during-development"],"kernel_sources":["dalloliogm/biohub-exp209-synthetic-second-child-ranker"]},indent=2)+"\n")
+    METADATA.write_text(json.dumps({"id":"dalloliogm/biohub-exp210-second-child-transfer","title":"Biohub Exp210 Second Child Transfer","code_file":NOTEBOOK.name,"language":"python","kernel_type":"notebook","is_private":True,"enable_gpu":False,"enable_internet":True,"competition_sources":["biohub-cell-tracking-during-development"],"kernel_sources":[]},indent=2)+"\n")
 
 
 if __name__ == '__main__': main()

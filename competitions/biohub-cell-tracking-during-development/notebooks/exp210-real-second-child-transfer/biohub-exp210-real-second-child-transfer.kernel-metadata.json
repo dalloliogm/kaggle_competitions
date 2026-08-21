@@ -10,7 +10,5 @@
   "competition_sources": [
     "biohub-cell-tracking-during-development"
   ],
-  "kernel_sources": [
-    "dalloliogm/biohub-exp209-synthetic-second-child-ranker"
-  ]
+  "kernel_sources": []
 }
