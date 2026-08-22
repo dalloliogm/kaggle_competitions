@@ -11,6 +11,33 @@ to `0.910`, Exp211 (no appearance link cost) to `0.914`. **The gain needs the
 full combination, not the detector alone.** As in early August, the plateau
 broke on a NEW COMPONENT, not on tuning.
 
+### Line-fit smoothing bracket - BOTH POINTS SUBMITTED 2026-08-22
+
+| point | submission | sha | state |
+| --- | --- | --- | --- |
+| `LINEFIT_SMOOTH=0` (off) | `55691037` | `795141516e38306a` | pending |
+| `LINEFIT_WEIGHT=0.4` (half) | v2 kernel | `330a99fd1508ddbe` | pending |
+| `LINEFIT_WEIGHT=0.8` (shipped) | = exp183 `0.915` | `0f282cfd0e872742` | scored |
+
+All three carry an IDENTICAL graph - 123,090 nodes, 119,009 edges, 311
+divisions - and differ only in coordinates, which is the correct signature for
+an output-stage transform. Verified distinct by sha before either slot was spent.
+
+**How much smoothing actually moves nodes** (measured against the off-point, in
+physical um, over all 123,090 shared nodes):
+
+| setting | median | mean | p90 | p99 | max | >1um | >2um | >3um |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| weight 0.8 (shipped) | 0.575 | 0.949 | 1.862 | 3.375 | 6.626 | 33.61% | **8.94%** | 1.83% |
+| weight 0.4 | 0.406 | 0.414 | 0.908 | 1.862 | 3.300 | 6.39% | 0.54% | 0.01% |
+
+The shipped setting moves **92.6% of all nodes**, with ~9% displaced beyond
+2 um - against a measured cliff at `sigma ~= 2 um` (3 um costs 41%) and our own
+median cell spacing of 8.135 um. **The axis is a large graded intervention, not
+a rounding effect.** That does not fix the sign - smoothing may correct detector
+jitter more than it displaces true centroids - which is what the bracket
+settles.
+
 ### Line-fit smoothing bracket - the coordinate-displacement axis
 
 Submitted `55708...` (see `submitted_shas.txt`): **linefit-off** on the exp183
