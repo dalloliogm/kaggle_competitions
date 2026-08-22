@@ -1,0 +1,18 @@
+{
+  "id": "dalloliogm/biohub-exp222-classical-linefit-off",
+  "title": "Biohub Exp222 Classical Linefit Off",
+  "code_file": "biohub-exp222-classical-linefit-off.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "enable_internet": false,
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "dataset_sources": [
+    "xiaoleilian/biohub-unet3d-weights",
+    "xiaoleilian/biohub-unet3d-weights-v2models"
+  ]
+}
