@@ -11,6 +11,27 @@ to `0.910`, Exp211 (no appearance link cost) to `0.914`. **The gain needs the
 full combination, not the detector alone.** As in early August, the plateau
 broke on a NEW COMPONENT, not on tuning.
 
+### IN FLIGHT 2026-08-22 - exp220/exp221 separate the CHECKPOINT from the GATE
+
+Both pushed, no slot spent yet. Built by `scripts/build_exp220_exp221.py` from
+exp183 (`0.915`), whose DeepCenter block is fully off, so turning it on is one
+coherent config change. Verified the inherited strategy guard freezes **no**
+DeepCenter key, so neither run needs it repointed.
+
+| veto \ checkpoint | `checkpoint_last.pt` (epoch 500) | `best.pt` (epoch 2) |
+| --- | --- | --- |
+| SAFE_DIV_VETO ON | **Exp158 `0.905`** | **exp220** |
+| SAFE_DIV_VETO OFF | (exp183 lineage, `0.915`) | **exp221** |
+
+exp220 is the pairing the claimed `0.920` reports as working. exp221 keeps the
+checkpoint and drops the veto, which **isolates the checkpoint**. With Exp158
+already on the board, three cells of the 2x2 are filled and its `0.905` becomes
+attributable to one factor or the other rather than assumed.
+
+Numbering: `exp203`, `exp204` and `exp209` are all in concurrent use by other
+sessions (`exp204-synthetic-mini-builder`, `exp209-synthetic-second-child-...`),
+so these start well above the current maximum of `exp212`.
+
 ### SCAN 2026-08-22 - a claimed `0.920` exists, on a DIFFERENT lineage
 
 `references/public-scan-2026-08-22.md`.
