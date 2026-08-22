@@ -334,9 +334,9 @@
   {
    "id": "exp220221",
    "lane": "decomposition",
-   "title": "Exp220 / Exp221 DeepCenter best.pt",
-   "summary": "Loads DeepCenter from best.pt (epoch 2) rather than checkpoint_last.pt (epoch 500), with the safe-division veto on and off. With Exp158 (last.pt + veto, 0.905) this fills three cells of the 2x2 and attributes that loss to the checkpoint or the gate.",
-   "score": "Kernels running; not yet submitted",
+   "title": "Exp220 DeepCenter best.pt + safe-division veto",
+   "summary": "Loads DeepCenter from best.pt (epoch 2, confirmed in the run log) instead of checkpoint_last.pt (epoch 500). Exp158 ran the same veto on the epoch-500 checkpoint and it rejected ALL divisions for 0.905; on best.pt it retains 244 of 311, so it now acts as a selective gate. The checkpoint, not the gate, caused that failure. Companion Exp221 (best.pt, veto off) came out byte-identical to Exp183, so the DeepCenter gap veto is inert on this stack and this run isolates the safe-division veto alone.",
+   "score": "Pending (submitted 2026-08-22); 244 divisions vs 311",
    "status": "pending",
    "parents": [
     "exp183"

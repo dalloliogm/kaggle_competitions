@@ -268,7 +268,8 @@ over the incumbent post-processing stack.
 | --- | --- | --- | --- |
 | Line-fit smoothing OFF | `BIOHUB_OUTPUT_LINEFIT_SMOOTH=0` | Exp183 `0.915` | Submitted `55691037`, pending |
 | Line-fit weight `0.4` | `BIOHUB_OUTPUT_LINEFIT_WEIGHT` `0.8 -> 0.4` | Exp183 `0.915` | Submitted `55692442`, pending |
-| Exp220 / Exp221 DeepCenter `best.pt` | DeepCenter loaded from `best.pt` (epoch 2) instead of `checkpoint_last.pt` (epoch 500), with the safe-division veto on / off | Exp183 `0.915` | Kernels running, not submitted |
+| Exp220 DeepCenter `best.pt` + safe-division veto | DeepCenter loaded from `best.pt` (epoch 2, confirmed in the log) instead of `checkpoint_last.pt` (epoch 500), veto ON | Exp183 `0.915` | Submitted 2026-08-22, pending; 244 divisions vs 311 |
+| Exp221 DeepCenter `best.pt`, veto off | Same checkpoint change, veto OFF | Exp183 `0.915` | **Not submitted** - output byte-identical to Exp183 (`0f282cfd0e872742`) |
 | Exp222 line-fit off on the frontier | `LINEFIT_WEIGHT` `0.8 -> 0.0` | Exp203 `0.917` | Built and held until the Exp183 bracket scores |
 
 The line-fit work follows the 2026-08-17 public scan, which measured the centroid
@@ -283,10 +284,22 @@ displacement, not duplication, is the live risk on that axis.
 
 The DeepCenter pair follows the 2026-08-22 scan of the claimed `0.920` public
 notebook, which loads `best.pt` where every DeepCenter run here has used
-`checkpoint_last.pt`. That reframes Exp158 (`0.905`, filed as "the veto rejected
-all candidate divisions"): a center prior taken from the wrong checkpoint
-vetoing everything is exactly that symptom, and the checkpoint has never been
-separated from the gate.
+`checkpoint_last.pt`.
+
+**RESOLVED 2026-08-22, before any score came back.** Exp158 ran the safe-division
+veto against `checkpoint_last.pt` (epoch 500) and it rejected **all** divisions,
+scoring `0.905`; that was filed as evidence the gate was wrong. Exp220 runs the
+same veto against `best.pt` (epoch 2, confirmed in the run log) and it retains
+**244 of 311** divisions - a selective gate, which is what it was built to be.
+**The checkpoint caused Exp158's failure, not the gate.** Any conclusion drawn
+from Exp158 about division vetoing should be treated as measuring the wrong
+checkpoint.
+
+Exp221 tightened this further by accident: with the veto off, `best.pt` produces
+an output **byte-identical to Exp183**, so the DeepCenter gap veto is completely
+inert on this stack. It was not submitted. That also makes Exp220 a cleaner
+one-factor test than designed - the safe-division veto is the only DeepCenter
+mechanism doing anything here.
 
 **Experiment-number collisions.** Concurrent sessions allocate numbers with no
 shared registry, so `exp203`, `exp204`, `exp209` and `exp210` each refer to two

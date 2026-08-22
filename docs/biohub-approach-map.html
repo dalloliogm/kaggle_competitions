@@ -79,8 +79,8 @@ body{margin:0;background:#f6f8fa;color:#17212b;font:15px/1.42 system-ui,sans-ser
   <p class="score">Pending (55692442)</p><p class="relation">Derived from: Exp183 full public stack</p>
 </article>
 <article class="node pending" data-status="pending">
-  <h3>Exp220 / Exp221 DeepCenter best.pt</h3><p>Loads DeepCenter from best.pt (epoch 2) rather than checkpoint_last.pt (epoch 500), with the safe-division veto on and off. With Exp158 (last.pt + veto, 0.905) this fills three cells of the 2x2 and attributes that loss to the checkpoint or the gate.</p>
-  <p class="score">Kernels running; not yet submitted</p><p class="relation">Derived from: Exp183 full public stack</p>
+  <h3>Exp220 DeepCenter best.pt + safe-division veto</h3><p>Loads DeepCenter from best.pt (epoch 2, confirmed in the run log) instead of checkpoint_last.pt (epoch 500). Exp158 ran the same veto on the epoch-500 checkpoint and it rejected ALL divisions for 0.905; on best.pt it retains 244 of 311, so it now acts as a selective gate. The checkpoint, not the gate, caused that failure. Companion Exp221 (best.pt, veto off) came out byte-identical to Exp183, so the DeepCenter gap veto is inert on this stack and this run isolates the safe-division veto alone.</p>
+  <p class="score">Pending (submitted 2026-08-22); 244 divisions vs 311</p><p class="relation">Derived from: Exp183 full public stack</p>
 </article></div></section><section class="lane"><h2>Direct export and calibration branch</h2><div class="flow"><article class="node rejected" data-status="rejected">
   <h3>Exp116 / Exp119 direct ILP export</h3><p>Minimal direct-export probes at point thresholds 0.9700 and 0.9800 failed to transfer.</p>
   <p class="score">Public 0.877 / 0.875</p><p class="relation">Root approach</p>
