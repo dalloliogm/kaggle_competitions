@@ -1,5 +1,67 @@
 # Tasks
 
+## CURRENT STATUS - 2026-08-22 (0.917; back inside bronze; line-fit bracket resolving)
+
+Best public LB **`0.917`**, rank **`#228/2628`**, bronze ~top `263` - **inside by
+35 places**. Silver ~top `131`. The plateau broke on 08-19 via the independent
+three-model detector-linker (another session), matched by Exp212 on 08-21. The
+causal ablations around it matter: Exp206/Exp207 (three-model detector without
+graph patches / gap-snap only) both fall to `0.890`, Exp210 (no detection TTA)
+to `0.910`, Exp211 (no appearance link cost) to `0.914`. **The gain needs the
+full combination, not the detector alone.** As in early August, the plateau
+broke on a NEW COMPONENT, not on tuning.
+
+### Line-fit smoothing bracket - the coordinate-displacement axis
+
+Submitted `55708...` (see `submitted_shas.txt`): **linefit-off** on the exp183
+`0.915` fork, `BIOHUB_OUTPUT_LINEFIT_SMOOTH=0`, verified applied in the log
+(`output_linefit_smooth: false`, `Strategy guard: PASS`). 123,090 nodes -
+identical to exp183, which is the correct signature since smoothing moves
+coordinates without adding nodes. 4 slots remained after it.
+
+**exp204 v1 ERRORED and the reason is reusable.** exp183 carries the public
+notebook's strategy guard, which freezes a list of values and raises
+`Biohub 159B contains an unintended extra change` on any deviation.
+`OUTPUT_LINEFIT_WEIGHT: 0.8` is in that list; `OUTPUT_LINEFIT_SMOOTH` is not -
+which is exactly why exp203 ran unmodified and exp204 did not. exp196 inherits
+the same guard, so it is not an escape hatch.
+
+**exp204 v2 is pushed** with the guard's expectation for that ONE key moved to
+`0.4`. The guard exists to catch UNintended drift, so re-pointing it at the
+intended value is the correct handling; every other key stays frozen and an
+unintended change still fails the run. Anyone changing a guarded parameter on
+this stack needs the same treatment - see `repoint_strategy_guard()` in
+`scripts/build_exp203_exp204.py`.
+
+### CLOSED 2026-08-19 - duplicate detections are NOT a risk for us
+
+`scripts/duplicate_node_audit.py` over exp183's scored `0.915` submission
+(free - no slot, no GPU), KD-tree per `(dataset, t)` in physical micrometres:
+
+| same-frame pairs within | pairs | nodes | share of 123,090 |
+| --- | ---: | ---: | ---: |
+| 0.5 um | 2 | 4 | 0.0032% |
+| 1.0 um | 12 | 24 | 0.0195% |
+| 2.0 um | 29 | 58 | 0.0471% |
+| 3.0 um | 86 | 172 | 0.1397% |
+
+**Effectively clean - NMS is doing its job.** The 08-17 scan measured a single
+duplicate taking a perfect prediction from `1.000` to `0.500` (the losing twin's
+edges are graded as FPs, not merely counted), so this was worth checking; there
+is nothing to recover. Do not re-open it.
+
+Side measurement worth keeping: our own same-frame nearest-neighbour spacing is
+**median `8.135 um`, mean `8.483 um`, p1 `4.394 um`** - slightly TIGHTER than the
+scan's ~9-10 um estimate, which makes one-to-one match-stealing marginally more
+dangerous for us, and it is measured on our output rather than assumed.
+
+### Experiment-number collisions are now recurring
+
+`exp187`/`exp188` collided on 08-11 and `exp203` collided on 08-19 (the
+three-model detector-linker vs this line-fit run). Sessions allocate numbers
+concurrently with no shared registry. **Check the live submission list before
+claiming a number**, and prefer a number well above the current maximum.
+
 ## PREPARED - 2026-08-18 (synthetic division pretraining adapter; diagnostic only)
 
 Source audit: `references/synthetic-dataset-source-audit-2026-08-18.md`.
