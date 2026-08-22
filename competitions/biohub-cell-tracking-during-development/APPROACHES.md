@@ -34,7 +34,7 @@ Record external inputs only when their source and role are explicit. This is a u
 | 2026-07-19 | Exp110 ILP birth/death costs | Test-only public run; exact train validation not yet reproduced | 0.909 user-reported | TBD | `notebooks/biohub-exp110-ilp-birth-death-cost-candidate.ipynb` / submission `54826078` | Current best; conservative ILP appearance/disappearance costs `0.0` / `1.4` reduced graph size substantially and broke the 0.903 plateau |
 | 2026-07-27 | Exp148 adaptive two-seed edge fusion | Test-only structural harness | **0.913** | TBD | `notebooks/biohub-exp148-adaptive-edge-fusion.ipynb` / submission `55029450` | Current best; fixed 0.475 detection blend and confidence-adaptive edge fusion |
 | 2026-08-10 | Exp183 full public association stack | Kaggle structural audit passed | **0.915** | TBD | `notebooks/biohub-exp183-public-ranker-fork.ipynb` / submission `55404125` | Current scored best; global 85/15 ranker, harmonic fusion, edge TTA, and inactive lookahead branch |
-| 2026-08-18 | Exp203 three-classical-model ensemble | Three pooled-volume 3D U-Net heatmaps (bright, top-hat, second top-hat), physical NMS, velocity-aware Hungarian linking, conservative gap repair, line-fit smoothing | Notebook syntax/schema audit passed; Kaggle v1 running as `dalloliogm/biohub-exp203-classical-three-model-ensemble` | Pending | `notebooks/biohub-exp203-classical-ensemble.ipynb` | Unverified structural alternative; do not infer the public Kunal v3 `0.916` score applies to this branch |
+| 2026-08-19 | Exp203 three-classical-model ensemble | Three pooled-volume 3D U-Net heatmaps (bright, top-hat, second top-hat) averaged before peak detection, physical NMS, velocity-aware Hungarian linking, conservative gap repair, line-fit smoothing | Kaggle structural audit passed | **0.917** | TBD | `notebooks/biohub-exp203-classical-ensemble.ipynb` / submission `55626138` | **Current scored best.** Broke the 0.915 plateau from an independent branch on public `xiaoleilian` U-Net weights, not the pilkwang support pack. Ablations: without graph patches `0.890` (Exp206/207), without detection TTA `0.910` (Exp210), without appearance link cost `0.914` (Exp211); Exp212 division-precision probe ties at `0.917`. The gain needs the whole combination, not the detector alone |
 | 2026-08-16 | Exp201 conditional frozen-transition relinking | Exact duplicate adjacent frames trigger zero-velocity relinking and suppress gap repair across the frozen boundary; ordinary transitions retain Exp196 lookahead/ranker stack | Clean Kaggle audit; 20 frozen pairs, 20 frozen frames, 19 release frames; output changed by 150 rows | Public `0.915` (`55561500`) | `notebooks/exp201-frozen-transition-conditional/` | Mechanism activated but tied the frontier; do not repeat frozen-transition micro-tuning |
 | 2026-08-17 | Exp202 bounded count calibration | Exp201 plus a target-only high-confidence short-component rescue on `44b6_0b24845f`, capped at 2%/800 nodes | Clean audit; 12 components / 52 nodes selected from a 447-node budget; output changed by 58 rows | Public `0.915` (`55583194`) | `notebooks/exp202-bounded-count-calibration/` | Count branch activated but tied; preserve as evidence and move to a new detector/linker |
 | 2026-08-18 | Exp204 synthetic second-child diagnostic | Schema adapter and held-out sequence-level diagnostic for synthetic division evidence; no synthetic source data or weights attached to the competition kernel | Diagnostic/held; not a submission candidate | Not submitted | `notebooks/exp204-synthetic-second-child-pretrain/` | Parallel synthetic-data work remains separate; promote only after image evidence beats geometry control on held-out sequences |
@@ -261,3 +261,34 @@ over the incumbent post-processing stack.
 | Approach | Why dropped | Evidence | Revisit if |
 | --- | --- | --- | --- |
 | Conservative velocity-aware gap-2 recovery | Added nodes but recovered no annotated edges; exact score fell | Two embryos: edge TP/FP/FN unchanged at 761/63/134; nodes increased 32,471 to 32,619; score 0.794304 -> 0.793540 | Only if a detector change creates demonstrable two-frame misses that recover edge TPs |
+
+## In flight 2026-08-22
+
+| Approach | Change | Base | State |
+| --- | --- | --- | --- |
+| Line-fit smoothing OFF | `BIOHUB_OUTPUT_LINEFIT_SMOOTH=0` | Exp183 `0.915` | Submitted `55691037`, pending |
+| Line-fit weight `0.4` | `BIOHUB_OUTPUT_LINEFIT_WEIGHT` `0.8 -> 0.4` | Exp183 `0.915` | Submitted `55692442`, pending |
+| Exp220 / Exp221 DeepCenter `best.pt` | DeepCenter loaded from `best.pt` (epoch 2) instead of `checkpoint_last.pt` (epoch 500), with the safe-division veto on / off | Exp183 `0.915` | Kernels running, not submitted |
+| Exp222 line-fit off on the frontier | `LINEFIT_WEIGHT` `0.8 -> 0.0` | Exp203 `0.917` | Built and held until the Exp183 bracket scores |
+
+The line-fit work follows the 2026-08-17 public scan, which measured the centroid
+precision cliff at `sigma ~= 2 um` rather than the 7 um match radius: matching is
+one-to-one and neighbouring cells sit ~9-10 um apart, so centroid error makes
+adjacent cells steal each other's match. Measured on our own output, the shipped
+`0.8` line-fit weight displaces **92.6%** of all nodes (median `0.575 um`, p99
+`3.375 um`, `8.94%` beyond 2 um), and our own median same-frame spacing is
+`8.135 um`. A duplicate-node audit over the `0.915` output came back clean
+(29 same-frame pairs within 2 um out of 123,090 nodes), so coordinate
+displacement, not duplication, is the live risk on that axis.
+
+The DeepCenter pair follows the 2026-08-22 scan of the claimed `0.920` public
+notebook, which loads `best.pt` where every DeepCenter run here has used
+`checkpoint_last.pt`. That reframes Exp158 (`0.905`, filed as "the veto rejected
+all candidate divisions"): a center prior taken from the wrong checkpoint
+vetoing everything is exactly that symptom, and the checkpoint has never been
+separated from the gate.
+
+**Experiment-number collisions.** Concurrent sessions allocate numbers with no
+shared registry, so `exp203`, `exp204`, `exp209` and `exp210` each refer to two
+different experiments depending on the workstream. Check the live submission
+list before claiming a number.
