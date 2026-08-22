@@ -11,6 +11,41 @@ to `0.910`, Exp211 (no appearance link cost) to `0.914`. **The gain needs the
 full combination, not the detector alone.** As in early August, the plateau
 broke on a NEW COMPONENT, not on tuning.
 
+### SCAN 2026-08-22 - a claimed `0.920` exists, on a DIFFERENT lineage
+
+`references/public-scan-2026-08-22.md`.
+`yunusgmsoy/lb-0-920-biohub-cell-tracking-v17` claims **`0.920`** against our
+`0.917`. Same `BIOHUB_*` codebase, so its config diffs line-by-line against
+ours - and it carries **no local association ranker and no edge TTA**. It is
+dual-seed + harmonic fusion + DeepCenter. **Two routes now sit above `0.915`
+and share no new component**; ours is the three-model detector-linker.
+
+**The finding: `best.pt` vs `checkpoint_last.pt`.** Their comment - *"best.pt is
+epoch 2, not checkpoint_last.pt's epoch 500"*. **We have never used `best.pt`**;
+every DeepCenter run here pointed at the last checkpoint, not the
+validation-selected one.
+
+That reframes **Exp158**, which turned the safe-division veto on, scored
+`0.905`, and was filed as "the veto rejected all candidate divisions". It ran on
+the epoch-500 checkpoint. The `0.920` notebook turns the same veto on with
+`best.pt` and reports it helping, on telemetry showing safe-div accepting
+81-100% of its own candidates. **A center prior loaded from the wrong checkpoint
+vetoing everything is exactly what Exp158 saw.** Exp158 may have measured a bad
+checkpoint rather than a bad gate - never separated, so still open.
+
+Their published negatives, consistent with ours: `ILP_DIVISION_WEIGHT` at
+0.3/1.0/2.0/3.0 all `0.915`; `SAFE_DIV_MAX_UM=7.0` dropped to `0.914`.
+
+**CAUTION:** the newer `kimi-notebook-v17` widens safe-div geometry to
+`12.0/15.0/10.0`. That is NOT in the `0.920` recipe - the `0.920` notebook keeps
+`4.66/8.5/7.65`, and the same author records `7.0` losing a thousandth. It is
+their next experiment, not their result.
+
+**Next:** (1) DeepCenter from `best.pt` WITH the safe-division veto on, as a
+pair - separating them is precisely what nobody has done; (2)
+`BIDIRECTIONAL_EDGE_WEIGHT` `0.20 -> 0.30` (our exp166/167/168 bracket tied, but
+on the pre-ranker backbone); (3) `DUAL_SEED_MIN_CANDIDATE_RETENTION=0.90`.
+
 ### Line-fit smoothing bracket - BOTH POINTS SUBMITTED 2026-08-22
 
 | point | submission | sha | state |
