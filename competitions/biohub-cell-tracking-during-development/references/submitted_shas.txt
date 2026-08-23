@@ -34,3 +34,5 @@ cad891269bb2009011ead3acf19f0ed99032ea789004a3cdb75a8c33e6d5ea9d  dalloliogm/bio
 44472cec82a56b3ed7c6eb5b6cd915f867aa54a522cf2eb30bc88978305388d2  dalloliogm/biohub-exp186-edge-tta-only v1  exp186: forward-only 4-view edge-stage TTA with JS-reliability log-pooling on th
 330a99fd1508ddbe5072353c11133774d4a609854f8cca804fd667272c067f26  dalloliogm/biohub-exp204-linefit-weight-040 v2  linefit half-weight (my exp204 v2; note exp203/204 numbers collide with another 
 8b9e392e0adf058e5ce60b91b58a96855cc6b0a2f020e802dbbc703642356421  dalloliogm/biohub-exp220-deepcenter-best-safediv-veto v1  exp220: DeepCenter loaded from best.pt (epoch 2, verified in log) with the safe-
+a97b86955192ddfaeb320d4601443938a85617a9044cd98943b4f5bff2a9ff5e  dalloliogm/biohub-exp225-linefit-weight-090 v1  exp225: line-fit weight 0.8 -> 0.9 on the exp220 backbone (0.916). The 08-22 bra
+505f5de024a6a30eb10fb9186a6aba62fe6dbc26ab01e246143463630c5fb4b8  dalloliogm/biohub-exp226-linefit-weight-100 v1  exp226: line-fit weight 0.8 -> 1.0 on the exp220 backbone (0.916) - the extreme,

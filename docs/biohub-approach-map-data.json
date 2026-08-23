@@ -346,9 +346,9 @@
    "id": "exp223",
    "lane": "decomposition",
    "title": "Exp223 wide safe-div + DeepCenter veto",
-   "summary": "The public 0.923 cluster differs from the 0.920 recipe by exactly three keys, all safe-division geometry (4.66->12.0, 8.5->15.0, 7.65->10.0), verified by diffing two byte-identical public configs. This applies that widening on top of Exp220.",
-   "score": "Kernel running",
-   "status": "pending",
+   "summary": "Widened geometry on exp220. Failed its own clean-graph audit: a cell dividing into three. Cause - the three config keys were ported without the divergence + mutual-NN filters the source recipe says make them survivable, which are Python rather than env flags and so invisible to a config diff.",
+   "score": "FAILED audit - maximum_outdegree 3, 452 divisions",
+   "status": "rejected",
    "parents": [
     "exp220221"
    ]
@@ -357,11 +357,33 @@
    "id": "exp224",
    "lane": "decomposition",
    "title": "Exp224 wide safe-div only",
-   "summary": "Same widening without the DeepCenter veto. With Exp183 (0.915, narrow, no veto) and Exp220 (0.916, narrow, veto) this completes a 2x2, so a gain is attributable to the geometry, the veto, or their interaction.",
+   "summary": "Same widening without the veto; failed identically, so the geometry alone causes it.",
+   "score": "FAILED audit - same outdegree 3 / 452 divisions",
+   "status": "rejected",
+   "parents": [
+    "exp183"
+   ]
+  },
+  {
+   "id": "exp225226",
+   "lane": "decomposition",
+   "title": "Exp225 / Exp226 line-fit weight 0.9 / 1.0",
+   "summary": "The 08-22 bracket ran monotone AGAINST its own hypothesis (0.0=0.906, 0.4=0.910, 0.8=0.915), so smoothing corrects detector jitter more than it displaces true centroids. Nothing above the shipped 0.8 had ever been tested. Built on exp220 so a gain compounds with 0.916.",
+   "score": "Both submitted 2026-08-23, pending",
+   "status": "pending",
+   "parents": [
+    "exp220221"
+   ]
+  },
+  {
+   "id": "exp227",
+   "lane": "decomposition",
+   "title": "Exp227 divergence + mutual-NN + wide geometry",
+   "summary": "Ports the two safe-division admission filters behind the public 0.923: mutual nearest orphan (KD-tree; at most one admissible sister per parent - exactly the constraint exp223/224 violated) and forward divergence (both daughters need a single successor at t+2 separating by more than sister_dist + 1.5um). Applies the widened geometry with them. The clean-graph audit is the gate.",
    "score": "Kernel running",
    "status": "pending",
    "parents": [
-    "exp183"
+    "exp220221"
    ]
   }
  ]
