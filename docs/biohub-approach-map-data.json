@@ -379,8 +379,8 @@
    "id": "exp227",
    "lane": "decomposition",
    "title": "Exp227 divergence + mutual-NN + wide geometry",
-   "summary": "Ports the two safe-division admission filters behind the public 0.923: mutual nearest orphan (KD-tree; at most one admissible sister per parent - exactly the constraint exp223/224 violated) and forward divergence (both daughters need a single successor at t+2 separating by more than sister_dist + 1.5um). Applies the widened geometry with them. The clean-graph audit is the gate.",
-   "score": "Kernel running",
+   "summary": "Ports the two safe-division admission filters behind the public 0.923: mutual nearest orphan (KD-tree, at most one admissible sister per parent - exactly the constraint exp223/224 violated) and forward divergence (both daughters need a single successor at t+2 separating by more than sister_dist + 1.5um). With the widened geometry the audit now PASSES at maximum_outdegree 2, and safe-division candidates fall 7,823 -> 1,555 (-80%). 456 divisions retained, against 244 on exp220 and a ground-truth rate implying ~139, so the division count is the open risk.",
+   "score": "Submitted 2026-08-23, pending; audit PASSED at outdegree 2",
    "status": "pending",
    "parents": [
     "exp220221"

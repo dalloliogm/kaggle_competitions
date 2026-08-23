@@ -95,8 +95,8 @@ body{margin:0;background:#f6f8fa;color:#17212b;font:15px/1.42 system-ui,sans-ser
   <p class="score">Both submitted 2026-08-23, pending</p><p class="relation">Derived from: Exp220 DeepCenter best.pt + safe-division veto</p>
 </article>
 <article class="node pending" data-status="pending">
-  <h3>Exp227 divergence + mutual-NN + wide geometry</h3><p>Ports the two safe-division admission filters behind the public 0.923: mutual nearest orphan (KD-tree; at most one admissible sister per parent - exactly the constraint exp223/224 violated) and forward divergence (both daughters need a single successor at t+2 separating by more than sister_dist + 1.5um). Applies the widened geometry with them. The clean-graph audit is the gate.</p>
-  <p class="score">Kernel running</p><p class="relation">Derived from: Exp220 DeepCenter best.pt + safe-division veto</p>
+  <h3>Exp227 divergence + mutual-NN + wide geometry</h3><p>Ports the two safe-division admission filters behind the public 0.923: mutual nearest orphan (KD-tree, at most one admissible sister per parent - exactly the constraint exp223/224 violated) and forward divergence (both daughters need a single successor at t+2 separating by more than sister_dist + 1.5um). With the widened geometry the audit now PASSES at maximum_outdegree 2, and safe-division candidates fall 7,823 -&gt; 1,555 (-80%). 456 divisions retained, against 244 on exp220 and a ground-truth rate implying ~139, so the division count is the open risk.</p>
+  <p class="score">Submitted 2026-08-23, pending; audit PASSED at outdegree 2</p><p class="relation">Derived from: Exp220 DeepCenter best.pt + safe-division veto</p>
 </article></div></section><section class="lane"><h2>Direct export and calibration branch</h2><div class="flow"><article class="node rejected" data-status="rejected">
   <h3>Exp116 / Exp119 direct ILP export</h3><p>Minimal direct-export probes at point thresholds 0.9700 and 0.9800 failed to transfer.</p>
   <p class="score">Public 0.877 / 0.875</p><p class="relation">Root approach</p>
