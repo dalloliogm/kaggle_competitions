@@ -262,15 +262,15 @@ over the incumbent post-processing stack.
 | --- | --- | --- | --- |
 | Conservative velocity-aware gap-2 recovery | Added nodes but recovered no annotated edges; exact score fell | Two embryos: edge TP/FP/FN unchanged at 761/63/134; nodes increased 32,471 to 32,619; score 0.794304 -> 0.793540 | Only if a detector change creates demonstrable two-frame misses that recover edge TPs |
 
-## In flight 2026-08-22
+## RESULTS 2026-08-23 (was: in flight 2026-08-22)
 
 | Approach | Change | Base | State |
 | --- | --- | --- | --- |
-| Line-fit smoothing OFF | `BIOHUB_OUTPUT_LINEFIT_SMOOTH=0` | Exp183 `0.915` | Submitted `55691037`, pending |
-| Line-fit weight `0.4` | `BIOHUB_OUTPUT_LINEFIT_WEIGHT` `0.8 -> 0.4` | Exp183 `0.915` | Submitted `55692442`, pending |
-| Exp220 DeepCenter `best.pt` + safe-division veto | DeepCenter loaded from `best.pt` (epoch 2, confirmed in the log) instead of `checkpoint_last.pt` (epoch 500), veto ON | Exp183 `0.915` | Submitted 2026-08-22, pending; 244 divisions vs 311 |
+| Line-fit smoothing OFF | `BIOHUB_OUTPUT_LINEFIT_SMOOTH=0` | Exp183 `0.915` | **`0.906`** (`55691037`) - lost 0.009 |
+| Line-fit weight `0.4` | `BIOHUB_OUTPUT_LINEFIT_WEIGHT` `0.8 -> 0.4` | Exp183 `0.915` | **`0.910`** (`55692442`) - lost 0.005 |
+| Exp220 DeepCenter `best.pt` + safe-division veto | DeepCenter loaded from `best.pt` (epoch 2, confirmed in the log) instead of `checkpoint_last.pt` (epoch 500), veto ON | Exp183 `0.915` | **`0.916`** (`55694314`) - **+0.001, the first gain on this base** |
 | Exp221 DeepCenter `best.pt`, veto off | Same checkpoint change, veto OFF | Exp183 `0.915` | **Not submitted** - output byte-identical to Exp183 (`0f282cfd0e872742`) |
-| Exp222 line-fit off on the frontier | `LINEFIT_WEIGHT` `0.8 -> 0.0` | Exp203 `0.917` | Built and held until the Exp183 bracket scores |
+| Exp222 line-fit off on the frontier | `LINEFIT_WEIGHT` `0.8 -> 0.0` | Exp203 `0.917` | **Not submitted** - the bracket refuted its premise |
 
 The line-fit work follows the 2026-08-17 public scan, which measured the centroid
 precision cliff at `sigma ~= 2 um` rather than the 7 um match radius: matching is
@@ -305,3 +305,37 @@ mechanism doing anything here.
 shared registry, so `exp203`, `exp204`, `exp209` and `exp210` each refer to two
 different experiments depending on the workstream. Check the live submission
 list before claiming a number.
+
+### The line-fit bracket INVERTED the hypothesis
+
+| `LINEFIT_WEIGHT` | public LB |
+| ---: | ---: |
+| 0.0 (off) | `0.906` |
+| 0.4 | `0.910` |
+| **0.8 (shipped)** | **`0.915`** |
+
+Monotone in the weight, and in the direction opposite to the 08-17 scan's
+centroid-cliff prediction. The measurement behind that prediction stands - the
+shipped weight really does move 92.6% of nodes, 8.94% of them beyond 2 um - but
+the inference from it was wrong: **smoothing corrects detector jitter far more
+than it displaces true centroids.** The alternative reading was flagged when the
+bracket was designed and is now the confirmed one.
+
+**The axis is live in the other direction.** Nothing above `0.8` has been tested,
+on either stack, and the gradient is `+0.005` per `0.4` of weight. The next probe
+is `LINEFIT_WEIGHT` `0.9` / `1.0`, and on the `0.917` classical stack it is a
+plain constant. Exp222 (off, on the frontier) was built but never submitted.
+
+### Exp220: an old negative was a bad checkpoint
+
+`0.915 -> 0.916`, the first gain built on the Exp183 base. Exp158 had run the
+same safe-division veto against `checkpoint_last.pt` (epoch 500), where it
+rejected **all 311** divisions and scored `0.905`; against `best.pt` (epoch 2)
+it retains **244**. **Before concluding a component is wrong, check which
+artifact it loaded.** Exp221 (same checkpoint, veto off) was byte-identical to
+Exp183, so the DeepCenter gap veto is inert here and Exp220 isolates the
+safe-division veto alone.
+
+Open follow-ups: raise the line-fit weight above `0.8`; port the Exp220
+DeepCenter pairing onto the `0.917` classical stack, where no DeepCenter
+machinery exists yet.
