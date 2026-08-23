@@ -81,6 +81,14 @@ body{margin:0;background:#f6f8fa;color:#17212b;font:15px/1.42 system-ui,sans-ser
 <article class="node submitted" data-status="submitted">
   <h3>Exp220 DeepCenter best.pt + safe-division veto</h3><p>DeepCenter from best.pt (epoch 2) with the safe-division veto ON: 0.915 -&gt; 0.916, the first gain built on the exp183 base. Exp158 ran the same veto on checkpoint_last.pt (epoch 500), where it rejected ALL divisions for 0.905; on best.pt it retains 244 of 311. The checkpoint caused that failure, not the gate. Companion Exp221 (veto off) was byte-identical to Exp183, so the gap veto is inert and this isolates the safe-division veto alone.</p>
   <p class="score">Public 0.916 (55694314) - beats the exp183 lineage</p><p class="relation">Derived from: Exp183 full public stack</p>
+</article>
+<article class="node pending" data-status="pending">
+  <h3>Exp223 wide safe-div + DeepCenter veto</h3><p>The public 0.923 cluster differs from the 0.920 recipe by exactly three keys, all safe-division geometry (4.66-&gt;12.0, 8.5-&gt;15.0, 7.65-&gt;10.0), verified by diffing two byte-identical public configs. This applies that widening on top of Exp220.</p>
+  <p class="score">Kernel running</p><p class="relation">Derived from: Exp220 DeepCenter best.pt + safe-division veto</p>
+</article>
+<article class="node pending" data-status="pending">
+  <h3>Exp224 wide safe-div only</h3><p>Same widening without the DeepCenter veto. With Exp183 (0.915, narrow, no veto) and Exp220 (0.916, narrow, veto) this completes a 2x2, so a gain is attributable to the geometry, the veto, or their interaction.</p>
+  <p class="score">Kernel running</p><p class="relation">Derived from: Exp183 full public stack</p>
 </article></div></section><section class="lane"><h2>Direct export and calibration branch</h2><div class="flow"><article class="node rejected" data-status="rejected">
   <h3>Exp116 / Exp119 direct ILP export</h3><p>Minimal direct-export probes at point thresholds 0.9700 and 0.9800 failed to transfer.</p>
   <p class="score">Public 0.877 / 0.875</p><p class="relation">Root approach</p>
