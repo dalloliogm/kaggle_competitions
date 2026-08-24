@@ -22,13 +22,17 @@ from __future__ import annotations
 
 import ast
 import json
+import re
 from pathlib import Path
 
 WORKSPACE = Path(__file__).resolve().parent.parent
 SOURCE = WORKSPACE / "notebooks" / "biohub-exp227-divergence-mutualnn-wide.ipynb"
 OUT_DIR = WORKSPACE / "notebooks" / "safe-divisions-lb-0918"
-SLUG = "safe-divisions-without-false-forks-lb-0-918"
-TITLE = "Safe Divisions Without False Forks | Biohub LB 0.918"
+TITLE = "Biohub Safe Divisions Without False Forks LB 0.918"
+# Kaggle derives the kernel slug from the TITLE, not from the metadata id, so
+# derive it the same way. A hand-written id that disagrees with the title is
+# rejected with a bare 400 on push.
+SLUG = re.sub(r"[^a-z0-9]+", "-", TITLE.lower()).strip("-")
 
 # (old, new, minimum expected occurrences). Comments and message strings only.
 TEXT_EDITS = (

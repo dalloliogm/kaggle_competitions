@@ -37,3 +37,4 @@ cad891269bb2009011ead3acf19f0ed99032ea789004a3cdb75a8c33e6d5ea9d  dalloliogm/bio
 a97b86955192ddfaeb320d4601443938a85617a9044cd98943b4f5bff2a9ff5e  dalloliogm/biohub-exp225-linefit-weight-090 v1  exp225: line-fit weight 0.8 -> 0.9 on the exp220 backbone (0.916). The 08-22 bra
 505f5de024a6a30eb10fb9186a6aba62fe6dbc26ab01e246143463630c5fb4b8  dalloliogm/biohub-exp226-linefit-weight-100 v1  exp226: line-fit weight 0.8 -> 1.0 on the exp220 backbone (0.916) - the extreme,
 14e25e071b4ad1a4b85d3a53ac3d72c0005dc11ef0b8fde32bc4a361f932ea45  dalloliogm/biohub-exp227-divergence-mutualnn-wide v1  exp227: divergence + mutual-NN safe-division filters ported from the public 0.92
+a15e99baf9d0445f6c1179c8da0f6de58cb5eb26dfefc4cb896e7e920fabc9f4  dalloliogm/biohub-exp228-public-923-fork v1  exp228: the public 0.923 recipe (yunusgmsoy/kimi-notebook-v17, config byte-ident
