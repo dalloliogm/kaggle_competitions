@@ -9,7 +9,7 @@
   "started": "Not verified",
   "entered": "2026-07-03 first scored submission",
   "finished": "2026-09-29 23:59 UTC",
-  "standing": "Ongoing; best public 0.918 (Exp227 divergence + mutual-NN + wide safe-division geometry, 55724576); rank #295/2681 with bronze at ~top 268, so just outside the medal zone; final private/rank not available",
+  "standing": "Ongoing; best public 0.918 (Exp227, 55724576); rank #340/2689 with bronze at ~top 269, outside the medal zone; Exp228 (the public 0.923 recipe forked verbatim) pending; final private/rank not available",
   "lesson": "Both August plateaus broke on adopted external components, not on tuning, and the two failure modes are instructive. A config diff is not a port: exp223/224 lifted three keys and produced cells dividing into three, because the filters that made those keys survivable were Python rather than env flags. And an old negative can be an artifact: the same division veto that rejected every candidate on checkpoint_last.pt behaved correctly on best.pt. Check what a component loads, and what it depends on, before concluding it does not work."
  },
  "lanes": [
@@ -394,6 +394,17 @@
    "score": "Kernel running",
    "status": "pending",
    "parents": []
+  },
+  {
+   "id": "exp229230",
+   "lane": "decomposition",
+   "title": "Exp229 / Exp230 division precision on 0.918",
+   "summary": "Exp227 retains 456 divisions against a ground-truth rate implying ~139, and a false fork costs twice (FP edge and FP fork). Exp229 halves the budget caps - fewer of the same ranked proposals. Exp230 raises the divergence margin 1.5 -> 2.25 um - rejects the proposals whose daughters do not actually separate. The pair separates \"fewer divisions\" from \"better-chosen divisions\", the distinction Exp220 showed matters.",
+   "score": "Kernels running",
+   "status": "pending",
+   "parents": [
+    "exp227"
+   ]
   }
  ]
 }
