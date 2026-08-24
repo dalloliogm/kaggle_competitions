@@ -262,6 +262,45 @@ over the incumbent post-processing stack.
 | --- | --- | --- | --- |
 | Conservative velocity-aware gap-2 recovery | Added nodes but recovered no annotated edges; exact score fell | Two embryos: edge TP/FP/FN unchanged at 761/63/134; nodes increased 32,471 to 32,619; score 0.794304 -> 0.793540 | Only if a detector change creates demonstrable two-frame misses that recover edge TPs |
 
+## NEW FRONTIER 2026-08-24 - Exp227 `0.918`
+
+**`0.918` (`55724576`), our best, and the first frontier reached by porting a
+mechanism rather than forking a notebook.** Exp227 puts the public `0.923`
+recipe's two safe-division admission filters onto the Exp220 backbone and
+applies its widened geometry with them.
+
+| run | change | LB |
+| --- | --- | ---: |
+| Exp227 | divergence + mutual-NN filters + geometry 12.0/15.0/10.0 | **`0.918`** |
+| Exp223 / Exp224 | the same geometry WITHOUT the filters | audit failure, not submitted |
+| Exp220 | DeepCenter `best.pt` + safe-division veto | `0.916` |
+| Exp183 | public 0.915 stack, forked verbatim | `0.915` |
+
+The audit that failed Exp223/224 at `maximum_outdegree = 3` passes at `2`, and
+safe-division candidates fall `7,823 -> 1,555` (-80%) - the mutual-NN constraint
+doing exactly what it was built for. 456 divisions retained.
+
+### The line-fit axis is CLOSED with an interior optimum
+
+| weight | 0.0 | 0.4 | **0.8 (shipped)** | 0.9 | 1.0 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| public LB | `0.906` | `0.910` | **`0.915`/`0.916`** | `0.915` | `0.915` |
+
+Exp225 and Exp226 pushed past the shipped weight and both lost ground, so the
+optimum is at `0.8` where it already was. The axis is now bracketed on both
+sides and needs no further probes. The 08-17 centroid-cliff prediction was
+wrong in sign, and its opposite is wrong too: the shipped value was simply
+correct.
+
+### In flight - Exp228, the `0.923` recipe forked verbatim
+
+We have never submitted the `0.923` recipe itself, only components lifted from
+it. Both times a plateau actually broke for us it was a wholesale adoption -
+Exp183 forked the `0.915` stack, Exp203 the classical branch - while component
+grafts have been worth `+0.001` each and twice failed outright. Exp228 forks
+`yunusgmsoy/kimi-notebook-v17` unchanged to establish whether the cluster score
+transfers.
+
 ## RESULTS 2026-08-23 (was: in flight 2026-08-22)
 
 | Approach | Change | Base | State |

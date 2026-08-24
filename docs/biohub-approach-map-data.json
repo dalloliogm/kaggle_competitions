@@ -1,6 +1,6 @@
 {
  "title": "Biohub competition approach map",
- "as_of": "2026-08-23",
+ "as_of": "2026-08-24",
  "competition": {
   "description": "3D time-lapse microscopy cell detection, lineage linking, and division reconstruction.",
   "prediction_target": "A cell graph with detections, temporal links, and division events; metric is adjusted edge Jaccard with a division component.",
@@ -9,8 +9,8 @@
   "started": "Not verified",
   "entered": "2026-07-03 first scored submission",
   "finished": "2026-09-29 23:59 UTC",
-  "standing": "Ongoing; best public 0.917 (Exp203 classical three-model ensemble, 55626138); rank #300/2661 with bronze at ~top 266, so currently outside the medal zone; final private/rank not available",
-  "lesson": "Two 2026-08-22 brackets both inverted their hypotheses, in opposite directions. Removing line-fit smoothing was predicted to gain against a 2um centroid cliff and instead lost 0.009, with the weight bracket monotone in favour of MORE smoothing. Loading DeepCenter from best.pt instead of checkpoint_last.pt turned a veto that had rejected every division into a selective gate and gained 0.001 - so an earlier negative result had been measuring a bad checkpoint. Check which artifact a component loads before concluding the component is wrong."
+  "standing": "Ongoing; best public 0.918 (Exp227 divergence + mutual-NN + wide safe-division geometry, 55724576); rank #295/2681 with bronze at ~top 268, so just outside the medal zone; final private/rank not available",
+  "lesson": "Both August plateaus broke on adopted external components, not on tuning, and the two failure modes are instructive. A config diff is not a port: exp223/224 lifted three keys and produced cells dividing into three, because the filters that made those keys survivable were Python rather than env flags. And an old negative can be an artifact: the same division veto that rejected every candidate on checkpoint_last.pt behaved correctly on best.pt. Check what a component loads, and what it depends on, before concluding it does not work."
  },
  "lanes": [
   {
@@ -230,8 +230,8 @@
    "lane": "newmodel",
    "title": "Exp203 classical three-model ensemble",
    "summary": "Independent pooled-volume 3D U-Net heatmaps (bright + two top-hat) averaged before peak detection, with physical NMS, velocity-aware Hungarian links, conservative gap repair and line fitting. Broke the 0.915 plateau; uses xiaoleilian public weights, not the pilkwang support pack.",
-   "score": "Public 0.917 (55626138) \u2014 current frontier",
-   "status": "best",
+   "score": "Public 0.917 (55626138)",
+   "status": "submitted",
    "parents": []
   },
   {
@@ -368,9 +368,9 @@
    "id": "exp225226",
    "lane": "decomposition",
    "title": "Exp225 / Exp226 line-fit weight 0.9 / 1.0",
-   "summary": "The 08-22 bracket ran monotone AGAINST its own hypothesis (0.0=0.906, 0.4=0.910, 0.8=0.915), so smoothing corrects detector jitter more than it displaces true centroids. Nothing above the shipped 0.8 had ever been tested. Built on exp220 so a gain compounds with 0.916.",
-   "score": "Both submitted 2026-08-23, pending",
-   "status": "pending",
+   "summary": "Weight 0.9 and 1.0 both scored 0.915, under exp220 at 0.8. With 0.0=0.906, 0.4=0.910 and 0.8=0.915/0.916, the line-fit axis has an INTERIOR optimum at the shipped 0.8. The bracket is closed in both directions.",
+   "score": "Public 0.915 / 0.915 - both below exp220",
+   "status": "rejected",
    "parents": [
     "exp220221"
    ]
@@ -379,12 +379,21 @@
    "id": "exp227",
    "lane": "decomposition",
    "title": "Exp227 divergence + mutual-NN + wide geometry",
-   "summary": "Ports the two safe-division admission filters behind the public 0.923: mutual nearest orphan (KD-tree, at most one admissible sister per parent - exactly the constraint exp223/224 violated) and forward divergence (both daughters need a single successor at t+2 separating by more than sister_dist + 1.5um). With the widened geometry the audit now PASSES at maximum_outdegree 2, and safe-division candidates fall 7,823 -> 1,555 (-80%). 456 divisions retained, against 244 on exp220 and a ground-truth rate implying ~139, so the division count is the open risk.",
-   "score": "Submitted 2026-08-23, pending; audit PASSED at outdegree 2",
-   "status": "pending",
+   "summary": "Ports the two safe-division admission filters behind the public 0.923 - mutual nearest orphan (KD-tree, one admissible sister per parent) and forward divergence (both daughters need a single successor at t+2 separating by more than sister_dist + 1.5um) - and applies the widened geometry with them. The audit that failed exp223/224 at outdegree 3 now passes at 2, candidates fall 7,823 -> 1,555, and the score beats the three-model 0.917. The first frontier we reached by porting a mechanism rather than forking a notebook.",
+   "score": "Public 0.918 (55724576) - current frontier",
+   "status": "best",
    "parents": [
     "exp220221"
    ]
+  },
+  {
+   "id": "exp228",
+   "lane": "newmodel",
+   "title": "Exp228 public 0.923 fork (verbatim)",
+   "summary": "The 0.923 recipe forked unchanged, the way exp183 forked the 0.915 stack and exp203 the classical branch. Both earlier verbatim forks broke a plateau where component grafts had not, so this establishes whether the cluster score transfers to us.",
+   "score": "Kernel running",
+   "status": "pending",
+   "parents": []
   }
  ]
 }
