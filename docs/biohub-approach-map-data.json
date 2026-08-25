@@ -1,6 +1,6 @@
 {
  "title": "Biohub competition approach map",
- "as_of": "2026-08-24",
+ "as_of": "2026-08-25",
  "competition": {
   "description": "3D time-lapse microscopy cell detection, lineage linking, and division reconstruction.",
   "prediction_target": "A cell graph with detections, temporal links, and division events; metric is adjusted edge Jaccard with a division component.",
@@ -10,7 +10,7 @@
   "entered": "2026-07-03 first scored submission",
   "finished": "2026-09-29 23:59 UTC",
   "standing": "Ongoing; best public 0.918 (Exp227, 55724576); rank #340/2689 with bronze at ~top 269, outside the medal zone; Exp228 (the public 0.923 recipe forked verbatim) pending; final private/rank not available",
-  "lesson": "Both August plateaus broke on adopted external components, not on tuning, and the two failure modes are instructive. A config diff is not a port: exp223/224 lifted three keys and produced cells dividing into three, because the filters that made those keys survivable were Python rather than env flags. And an old negative can be an artifact: the same division veto that rejected every candidate on checkpoint_last.pt behaved correctly on best.pt. Check what a component loads, and what it depends on, before concluding it does not work."
+  "lesson": "Both August plateaus broke on adopted external components, and the failure modes are the lesson. A config diff is not a port: lifting three keys without the filters that made them survivable produced cells dividing into three. An old negative can be an artifact: a division veto that rejected every candidate was loading the wrong checkpoint. And a public score is not transferable evidence: forking the 0.923 recipe verbatim scored 0.918, exactly what porting two of its filters had already achieved."
  },
  "lanes": [
   {
@@ -390,17 +390,17 @@
    "id": "exp228",
    "lane": "newmodel",
    "title": "Exp228 public 0.923 fork (verbatim)",
-   "summary": "The 0.923 recipe forked unchanged, the way exp183 forked the 0.915 stack and exp203 the classical branch. Both earlier verbatim forks broke a plateau where component grafts had not, so this establishes whether the cluster score transfers to us.",
-   "score": "Kernel running",
-   "status": "pending",
+   "summary": "The 0.923 recipe forked verbatim and unmodified. It scored 0.918 - identical to Exp227, which reached the same number by porting only the two safe-division filters. So the cluster score does NOT transfer: either the 42-team attribution was wrong, or (more likely) the notebook has been edited since those teams forked it and the version we took is a later, in-progress iteration. Either way, everything in the public stack beyond what we ported is worth nothing on top of our backbone.",
+   "score": "Public 0.918 (55743804) - the same as our own port",
+   "status": "submitted",
    "parents": []
   },
   {
    "id": "exp229230",
    "lane": "decomposition",
    "title": "Exp229 / Exp230 division precision on 0.918",
-   "summary": "Exp227 retains 456 divisions against a ground-truth rate implying ~139, and a false fork costs twice (FP edge and FP fork). Exp229 halves the budget caps - fewer of the same ranked proposals. Exp230 raises the divergence margin 1.5 -> 2.25 um - rejects the proposals whose daughters do not actually separate. The pair separates \"fewer divisions\" from \"better-chosen divisions\", the distinction Exp220 showed matters.",
-   "score": "Kernels running",
+   "summary": "Exp227 retains 456 divisions against a ground-truth rate implying ~139. Exp229 halves the budget caps (456 -> 228 divisions, a quota cut). Exp230 raises the divergence margin 1.5 -> 2.25um (456 -> 387, an evidence cut). Both audits pass at outdegree 2. The pair separates \"fewer divisions\" from \"better-chosen divisions\".",
+   "score": "Both submitted 2026-08-25, pending; divisions 228 and 387 vs 456",
    "status": "pending",
    "parents": [
     "exp227"

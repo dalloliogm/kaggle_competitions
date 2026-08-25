@@ -38,3 +38,5 @@ a97b86955192ddfaeb320d4601443938a85617a9044cd98943b4f5bff2a9ff5e  dalloliogm/bio
 505f5de024a6a30eb10fb9186a6aba62fe6dbc26ab01e246143463630c5fb4b8  dalloliogm/biohub-exp226-linefit-weight-100 v1  exp226: line-fit weight 0.8 -> 1.0 on the exp220 backbone (0.916) - the extreme,
 14e25e071b4ad1a4b85d3a53ac3d72c0005dc11ef0b8fde32bc4a361f932ea45  dalloliogm/biohub-exp227-divergence-mutualnn-wide v1  exp227: divergence + mutual-NN safe-division filters ported from the public 0.92
 a15e99baf9d0445f6c1179c8da0f6de58cb5eb26dfefc4cb896e7e920fabc9f4  dalloliogm/biohub-exp228-public-923-fork v1  exp228: the public 0.923 recipe (yunusgmsoy/kimi-notebook-v17, config byte-ident
+f275809c645b3532ba31b1efa271cd00a772fe8c6b8ea7b9b3254818b24e0540  dalloliogm/biohub-exp229-safediv-half-budget v1  exp229: safe-division budget caps halved on the exp227 0.918 backbone (frame 0.0
+3cf797d4d6d281591eabf0dec3baf3588a6888c2fad2cbfb35fbc6aed8ac0158  dalloliogm/biohub-exp230-diverge-margin-225 v1  exp230: forward-divergence margin 1.5 -> 2.25um on the exp227 0.918 backbone. Di
