@@ -1,0 +1,30 @@
+{
+  "id": "dalloliogm/biohub-exp231-best-score-fork",
+  "title": "Biohub Exp231 Best Score Fork",
+  "code_file": "biohub-exp231-best-score-fork.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [
+    "pilkwang/biohub-deepcenter-unet3d-center-prior-v1",
+    "pilkwang/biohub-temporal-unet3d-seed314159-v1",
+    "pilkwang/biohub-tracking-support-pack-50ep-v1",
+    "xiaoleilian/biohub-unet3d-weights",
+    "xiaoleilian/biohub-unet3d-weights-v2models"
+  ],
+  "kernel_sources": [
+    "xiaoleilian/biohub-m001-ens3-sm6-sim2",
+    "yunusgmsoy/kimi-notebook-v17"
+  ],
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "model_sources": [],
+  "machine_shape": "NvidiaTeslaT4"
+}

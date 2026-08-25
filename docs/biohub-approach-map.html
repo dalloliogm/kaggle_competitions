@@ -151,6 +151,10 @@ body{margin:0;background:#f6f8fa;color:#17212b;font:15px/1.42 system-ui,sans-ser
 <article class="node submitted" data-status="submitted">
   <h3>Exp228 public 0.923 fork (verbatim)</h3><p>The 0.923 recipe forked verbatim and unmodified. It scored 0.918 - identical to Exp227, which reached the same number by porting only the two safe-division filters. So the cluster score does NOT transfer: either the 42-team attribution was wrong, or (more likely) the notebook has been edited since those teams forked it and the version we took is a later, in-progress iteration. Either way, everything in the public stack beyond what we ported is worth nothing on top of our backbone.</p>
   <p class="score">Public 0.918 (55743804) - the same as our own port</p><p class="relation">Root approach</p>
+</article>
+<article class="node pending" data-status="pending">
+  <h3>Exp231 best-score fork</h3><p>Earlier VERSIONS of a public kernel cannot be pulled (403 - only the latest is reachable), so the lineage was compared across its forks instead, since a fork freezes its parent. navazshfathi/best-score carries 41 config keys against the 35 in the notebook we forked as Exp228 - six extra explicit dual-seed secondary-association settings - AND attaches the xiaoleilian three-model detector weights alongside the pilkwang assets. That is a hybrid of the learned association stack and the classical detector our own 0.917 used, and nobody has run it.</p>
+  <p class="score">Kernel running</p><p class="relation">Derived from: Exp228 public 0.923 fork (verbatim)</p>
 </article></div></section></section></main>
 <script>const boxes=[...document.querySelectorAll('.legend input')];function apply(){const on=new Set(boxes.filter(b=>b.checked).map(b=>b.dataset.status));document.querySelectorAll('.node').forEach(n=>n.classList.toggle('hidden',!on.has(n.dataset.status)));document.querySelectorAll('.lane').forEach(l=>l.classList.toggle('hidden',![...l.querySelectorAll('.node')].some(n=>!n.classList.contains('hidden'))));}boxes.forEach(b=>b.addEventListener('change',apply));apply();</script>
 </body></html>

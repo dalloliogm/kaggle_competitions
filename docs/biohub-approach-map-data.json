@@ -405,6 +405,17 @@
    "parents": [
     "exp227"
    ]
+  },
+  {
+   "id": "exp231",
+   "lane": "newmodel",
+   "title": "Exp231 best-score fork",
+   "summary": "Earlier VERSIONS of a public kernel cannot be pulled (403 - only the latest is reachable), so the lineage was compared across its forks instead, since a fork freezes its parent. navazshfathi/best-score carries 41 config keys against the 35 in the notebook we forked as Exp228 - six extra explicit dual-seed secondary-association settings - AND attaches the xiaoleilian three-model detector weights alongside the pilkwang assets. That is a hybrid of the learned association stack and the classical detector our own 0.917 used, and nobody has run it.",
+   "score": "Kernel running",
+   "status": "pending",
+   "parents": [
+    "exp228"
+   ]
   }
  ]
 }
