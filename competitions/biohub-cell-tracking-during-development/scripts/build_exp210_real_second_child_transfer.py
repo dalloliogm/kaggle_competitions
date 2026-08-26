@@ -65,9 +65,14 @@ print('train:', train_dir, '| prior:', prior['provenance'])
 
 def load_real_graph(path):
     g = graph_for(path)
-    rows = list(g.node_attrs(attr_keys=['t', 'z', 'y', 'x']).iter_rows(named=True))
+    # tracksdata exposes GEFF topology as an edge attribute table.  Its graph
+    # wrapper does not have a networkx/rustworkx-style ``.graph.edge_list()``.
+    # Preserve the GEFF IDs explicitly: they need not coincide with row order.
+    rows = list(g.node_attrs().iter_rows(named=True))
+    node_index = {int(r['node_id']): i for i, r in enumerate(rows)}
     nodes = np.array([[float(r['t']), float(r['z']), float(r['y']), float(r['x'])] for r in rows], dtype=np.float32)
-    edges = np.asarray(list(g.graph.edge_list()), dtype=np.int64)
+    edge_rows = list(g.edge_attrs().iter_rows(named=True))
+    edges = np.asarray([[node_index[int(r['source_id'])], node_index[int(r['target_id'])]] for r in edge_rows], dtype=np.int64)
     if edges.size == 0: edges = np.empty((0, 2), dtype=np.int64)
     return nodes, edges
 
