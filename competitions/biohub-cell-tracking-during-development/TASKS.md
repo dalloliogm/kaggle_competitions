@@ -1,5 +1,74 @@
 # Tasks
 
+## UPDATE - 2026-09-01 (Rishabh detector-fusion sweep complete)
+
+The five corrected offline sweep submissions completed with public scores:
+`0.65 -> 0.927`, `0.75 -> 0.928`, `0.80 -> 0.930`, `0.85 -> 0.929`, and
+`0.95 -> 0.928`. The current scored frontier is `0.930` at detector-fusion
+weight `0.80`; the public Rishabh `.933` result is not fully reproduced.
+
+Next experiments are the exact public `.80` reproduction with an explicit
+runtime manifest, followed by the public agreement-gated per-frame secondary
+detector ramp. Keep all Rishabh downstream settings fixed so the detector
+fusion axis remains identifiable. The synthetic-dataset work remains in the
+parallel chat and is not mixed into these submissions.
+
+## UPDATE - 2026-08-20 (Exp203 causal ablations in progress)
+
+Exp209 safe-divisions-only control is now running as private Kaggle kernel
+`dalloliogm/exp209-three-model-divisions-only-v1`. It keeps the three-model
+detector, TTA, linker, line fit, and safe divisions from Exp203 while disabling
+only snap-only gap repair; no competition submission has been made.
+
+The synthetic-dataset/division-pretraining work is being developed in a
+separate chat and remains a parallel, held branch. It is not mixed into these
+public-checkpoint ablations or their submissions.
+
+The controlled ablation notebooks are generated under
+`notebooks/ablations/`, with `references/compare_exp203_ablations.py` for
+output hashes, graph counts, per-movie counts, and edge overlap. They are
+private diagnostics only; none has been submitted to the competition.
+
+Completed intermediate results:
+
+- Exp205 two-model detector plus the Exp203 downstream stack completed as
+  `dalloliogm/exp205-two-model-detector-ablation-v2`. It produced 145,402 nodes,
+  138,411 edges, and 440 divisions versus Exp203's 126,419 nodes, 121,191
+  edges, and 352 divisions. Edge overlap is 0.002684, so the third checkpoint
+  materially changes detection density and the resulting graph.
+- Exp207 three-model detector with TTA and gap snap only completed as
+  `dalloliogm/exp207-three-model-ensemble-with-gap-snap-only-v2`. It produced
+  131,271 nodes, 124,602 edges, and zero safe divisions, with 0.967068 edge
+  overlap against Exp203. Safe-division recovery therefore changes the final
+  graph materially, including which orphan nodes are retained.
+
+Exp206 three-model/no-graph-patches completed as
+`dalloliogm/exp206-nopatches-ablation-v3`: 130,818 nodes, 124,064 edges,
+zero divisions, and 0.962951 edge overlap against Exp203. It scored public
+`0.890` as submission `55648862`. Exp207 three-model/gap-only produced 131,271
+nodes, 124,602 edges, zero divisions, and 0.967068 edge overlap; it scored the
+same public `0.890` as submission `55648867`. Removing graph patches loses
+0.027 versus Exp203, while adding gap snap without safe divisions does not
+recover the loss. Exp208
+third-model-only completed as `dalloliogm/exp208-third-model-only-v2`: 106,232
+nodes, 101,699 edges, 281 divisions, and 0.002546 edge overlap against
+Exp203. It is a strong diagnostic difference, not a safe default candidate.
+The first failed Exp205/Exp207 runs were discarded as
+notebook-generation failures caused by a missing `_FLIP_VIEWS` constant, not
+model results; corrected v2/v3 kernels include the fix.
+
+Submission recommendation for today: if using diagnostic slots, prioritize
+Exp206 (three models without graph patches) and Exp207 (three models with gap
+snap but without safe divisions). Together they isolate the graph-patch gain
+most cleanly. Hold Exp205 (two-model density overshoot) and Exp208 (third-model
+only under-coverage) unless a later local/public result gives them a reason to
+be promoted. None of these ablation outputs has a leaderboard score yet.
+
+Exp209 safe-divisions-only was submitted as `55664709` after structural
+validation (`130,818` nodes, `124,449` edges, `385` divisions). It is pending;
+this is the cleanest test of whether safe divisions alone recover Exp203's
+`0.917`.
+
 ## PREPARED - 2026-08-18 (synthetic division pretraining adapter; diagnostic only)
 
 Source audit: `references/synthetic-dataset-source-audit-2026-08-18.md`.
@@ -10,6 +79,53 @@ adapter that verifies the source graph and converts native `(z,y,x)` labels to
 pooled image coordinates by `(1,4,4)`. It emits provenance-preserving
 second-child candidates only. Do not attach the full dataset, train a model, or
 submit this branch without a separately authorised, frozen Exp183 control.
+
+## UPDATE - 2026-08-20 (Exp203 scores 0.917; isolate the source of the gain)
+
+Exp203 submission `55626138` completed at public LB `0.917`, moving the own
+scored frontier above Exp183's `0.915`. The kernel is complete and its output
+is byte-identical to the downloaded outputs of both newly published public
+`0.917` notebooks. The private score is not yet available.
+
+The result does not prove that the third U-Net caused the gain. The public
+recipe changes several coupled factors at once: the extra
+`unet3d_v2_tophat_b32.pt` checkpoint, flip-quartet TTA, confidence-aware
+velocity linking, snap-only gap repair, safe divisions, short-track filtering,
+and line fitting. Earlier evidence still says the existing detector's labelled
+node recall was effectively saturated, so the next work should be ablation,
+not another blind detector-training project.
+
+Next controlled sequence, keeping the same T4 notebook and output audit:
+
+1. Exp205: original two-model detector, but with the Exp203 TTA/linker/repair
+   stack.
+2. Exp206: three-model detector and TTA, with graph patches disabled.
+3. Exp207: three-model detector with TTA and linker, adding only graph patches
+   one at a time (gap snap, then safe divisions).
+4. Exp208: third checkpoint only, with the same downstream stack, as a
+   diagnostic rather than an assumed submission candidate.
+
+Compare node counts, per-movie counts, score distributions, edge/division
+statistics, and output hashes before using submission slots. The winning
+explanation should account for both the public score and whether the private
+score remains stable.
+
+## UPDATE - 2026-08-19 (Exp203 exactly reproduces the new 0.917 public recipe)
+
+Exp203 T4 v2 exactly reproduces the two newly published public `0.917`
+notebooks: `hitoshisaito/biohub-kunal-0917-exact-repro` and
+`reyhanksatria/graph-patches-for-cell-tracking-0-917-lb`. Their downloaded
+`submission.csv` files and our Exp203 v2 output have the same SHA256
+`d7ba9e6af86a6bb0be8bd04a36d0c61564e857e03fbadf9a81508211a4a4f2bb`.
+The shared recipe is a three-model pooled U-Net ensemble with flip-quartet
+TTA, physical NMS, velocity/appearance-aware Hungarian linking, snap-only
+one-frame gap repair, safe divisions, short-track filtering, and line-fit
+smoothing. It is one method lineage, not two independent improvements.
+
+The exact reproduction was submitted as Kaggle submission `55626138` from
+kernel version 2 after correcting the machine type to T4. It subsequently
+completed at public `0.917` on 2026-08-20. This verifies both reproducibility
+and our own scored result; the private score remains unavailable.
 
 ## UPDATE - 2026-08-14 (live batch resolved except Exp124)
 

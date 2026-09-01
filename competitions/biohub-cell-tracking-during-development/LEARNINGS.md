@@ -2,6 +2,41 @@
 
 Capture durable information learned while working on this competition. This is for insights that should guide future modeling and prevent repeated mistakes.
 
+## SETTLED - detector-fusion sweep confirms a broad 0.80-0.85 optimum (2026-09-01)
+
+The corrected offline reproductions of the Rishabh recipe were submitted as a
+five-point detector-fusion sweep. Public scores were `0.927` at weight `0.65`,
+`0.928` at `0.75`, `0.930` at `0.80`, `0.929` at `0.85`, and `0.928` at
+`0.95`. This improves the prior `0.929` result and confirms that the useful
+signal is a detector-mixture calibration, not a new U-Net architecture.
+
+The response is smooth rather than a single brittle spike: weights `0.80` and
+`0.85` are both strong, while pushing to `0.95` loses ground. Keep the
+downstream Rishabh pipeline fixed and focus next on reproducing the public
+`.933` recipe exactly at `0.80`, then test the public per-frame agreement gate.
+These are public-LB results only; private-leaderboard transfer remains
+unverified.
+
+The first sweep attempt also exposed a packaging rule: Biohub kernels must
+include the complete offline dataset metadata and explicitly set
+`enable_internet: false`. A structurally valid CSV from an internet-enabled
+kernel is not submission-eligible.
+
+## SETTLED - Exp203 reproduces the public 0.917 frontier, but the causal factor is unresolved (2026-08-20)
+
+Exp203 submission `55626138` scored `0.917`, and its output is byte-identical
+to both newly published public `0.917` notebooks. This establishes a real
+improvement over the own `0.915` Exp183 frontier and confirms that the public
+recipe is reproducible.
+
+It does not establish that the third U-Net alone produced the gain. The recipe
+also changes TTA, link scoring, gap repair, division recovery, short-track
+filtering, and line fitting. The earlier labelled evidence that node recall
+was approximately saturated therefore remains valid as a statement about the
+old detector/output regime, not as proof that every ensemble variation is
+useless. Run the Exp205-208 ablations in `TASKS.md` before attributing credit to
+the third checkpoint or reopening detector training.
+
 ## SETTLED - live batch results reject clean direct export (2026-08-14)
 
 The direct-export hypothesis did not survive the leaderboard: Exp116 scored
