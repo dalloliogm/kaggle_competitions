@@ -12,10 +12,13 @@ SOURCE = Path("/tmp/biohub-public-flex-agreement/biohub-agreement-gated-dual-see
 OUT = ROOT / "notebooks" / "public-reproductions" / "agreement-fusion-batch-20260901"
 
 VARIANTS = {
+    "wm065-lm035": {"weight": "0.65", "margin": "0.35", "mode": "low_margin_consensus"},
     "wm080-lm035": {"weight": "0.80", "margin": "0.35", "mode": "low_margin_consensus"},
     "wm080-lm020": {"weight": "0.80", "margin": "0.20", "mode": "low_margin_consensus"},
     "wm085-lm035": {"weight": "0.85", "margin": "0.35", "mode": "low_margin_consensus"},
     "wm075-lm035": {"weight": "0.75", "margin": "0.35", "mode": "low_margin_consensus"},
+    "wm090-lm035": {"weight": "0.90", "margin": "0.35", "mode": "low_margin_consensus"},
+    "wm080-lm050": {"weight": "0.80", "margin": "0.50", "mode": "low_margin_consensus"},
     "adaptive080": {"weight": "0.80", "margin": "0.35", "mode": "adaptive"},
 }
 
