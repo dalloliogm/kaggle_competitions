@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import csv
 import hashlib
+import math
 import subprocess
 import sys
 import tempfile
@@ -70,6 +71,7 @@ def validate(path: Path) -> tuple[bool, list[str], dict]:
     outdeg: dict[tuple[str, int], int] = defaultdict(int)
     ids: set[str] = set()
     n_nodes = n_edges = dup = dangling = nonconsec = negative = 0
+    bad_row_type = bad_sentinel = bad_numeric = 0
 
     with path.open() as fh:
         reader = csv.DictReader(fh)
@@ -82,16 +84,31 @@ def validate(path: Path) -> tuple[bool, list[str], dict]:
             if row["id"] in ids:
                 dup += 1
             ids.add(row["id"])
+            if row["row_type"] not in {"node", "edge"}:
+                bad_row_type += 1
+                continue
+            try:
+                numeric = {k: float(row[k]) for k in ("node_id", "t", "z", "y", "x", "source_id", "target_id")}
+                if not all(math.isfinite(value) for value in numeric.values()):
+                    bad_numeric += 1
+                    continue
+            except (TypeError, ValueError):
+                bad_numeric += 1
+                continue
             if row["row_type"] == "node":
                 n_nodes += 1
+                if any(numeric[k] != -1 for k in ("source_id", "target_id")):
+                    bad_sentinel += 1
                 key = (row["dataset"], int(row["node_id"]))
                 if key in nodes:
                     problems.append(f"duplicate (dataset,node_id) {key}")
                 nodes[key] = int(row["t"])
-                if min(int(row["z"]), int(row["y"]), int(row["x"])) < 0:
+                if min(float(row["z"]), float(row["y"]), float(row["x"])) < 0:
                     negative += 1
             else:
                 n_edges += 1
+                if any(numeric[k] != -1 for k in ("node_id", "t", "z", "y", "x")):
+                    bad_sentinel += 1
                 d = row["dataset"]
                 src = (d, int(row["source_id"]))
                 tgt = (d, int(row["target_id"]))
@@ -106,10 +123,19 @@ def validate(path: Path) -> tuple[bool, list[str], dict]:
     max_in = max(indeg.values()) if indeg else 0
     max_out = max(outdeg.values()) if outdeg else 0
     divisions = sum(1 for v in outdeg.values() if v == 2)
+    expected_ids = {str(i) for i in range(len(ids))}
+    if ids != expected_ids:
+        problems.append("row ids are not contiguous zero-based integers")
     for label, count in (("duplicate ids", dup), ("dangling edges", dangling),
                          ("non-consecutive edges", nonconsec), ("negative coords", negative)):
         if count:
             problems.append(f"{count} {label}")
+    if bad_row_type:
+        problems.append(f"{bad_row_type} rows have an invalid row_type")
+    if bad_sentinel:
+        problems.append(f"{bad_sentinel} rows have invalid sentinel fields")
+    if bad_numeric:
+        problems.append(f"{bad_numeric} rows have non-finite or non-numeric fields")
     if max_in > 1:
         problems.append(f"max in-degree {max_in} > 1")
     if max_out > 2:

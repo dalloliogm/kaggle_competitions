@@ -114,15 +114,20 @@ def validate_schema(df: pd.DataFrame, errors: list[str], warnings: list[str]) ->
         _fail(errors, f"submission contains {missing} missing values")
     if not df["id"].is_unique:
         _fail(errors, "global row id values are not unique")
-    if len(df) and int(df["id"].min()) != 0:
-        warnings.append(f"row id minimum is {int(df['id'].min())}, expected 0")
-    if len(df) and int(df["id"].max()) != len(df) - 1:
-        warnings.append(
-            f"row id maximum is {int(df['id'].max())}, expected {len(df) - 1}"
-        )
+    try:
+        ids = df["id"].astype(int)
+        if len(df) and set(ids.tolist()) != set(range(len(df))):
+            _fail(errors, "global row ids are not contiguous zero-based integers")
+    except (TypeError, ValueError):
+        _fail(errors, "row id values are not integers")
     bad_row_type = sorted(set(df["row_type"]) - {"node", "edge"})
     if bad_row_type:
         _fail(errors, f"unexpected row_type values: {bad_row_type!r}")
+    numeric_columns = ["node_id", "t", "z", "y", "x", "source_id", "target_id"]
+    for column in numeric_columns:
+        values = pd.to_numeric(df[column], errors="coerce")
+        if values.isna().any() or not values.map(math.isfinite).all():
+            _fail(errors, f"{column} contains non-numeric or non-finite values")
 
 
 def _percentile(values: list[int], q: float) -> float:
@@ -260,7 +265,10 @@ def structural_report(df: pd.DataFrame, submission_path: Path) -> ValidationRepo
     warnings: list[str] = []
     validate_schema(df, errors, warnings)
     diagnostics: list[DatasetDiagnostics] = []
-    if list(df.columns) == SUBMISSION_COLUMNS:
+    # Do not cast malformed numeric fields in the per-dataset checks after the
+    # schema layer has already rejected them; report the schema failures cleanly.
+    schema_numeric_error = any("non-numeric or non-finite" in error for error in errors)
+    if list(df.columns) == SUBMISSION_COLUMNS and not schema_numeric_error:
         for dataset, group in df.groupby("dataset", sort=True):
             diagnostics.append(validate_dataset_group(str(dataset), group, errors, warnings))
     nodes = int((df["row_type"] == "node").sum()) if "row_type" in df else 0

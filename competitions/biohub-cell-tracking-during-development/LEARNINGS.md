@@ -2,6 +2,32 @@
 
 Capture durable information learned while working on this competition. This is for insights that should guide future modeling and prevent repeated mistakes.
 
+## PROCESS - validation hardened against overfitting (2026-09-03)
+
+The pre-submission boundary now rejects non-contiguous zero-based row IDs,
+invalid row types, non-finite/non-numeric fields, and incorrect node/edge
+sentinel values in both the notebook-oriented harness and the download-time
+submission helper. This protects slot usage and scoring integrity, but it does
+not establish predictive generalization.
+
+The promotion protocol is recorded in
+`references/validation_protocol.md`. New candidates must use complete
+movie/dataset groups, rotating development folds, and an untouched final
+holdout; report per-movie metric components and graph-size changes; compare
+against mechanism-off controls; and label evidence as structural, local proxy,
+public LB, or private LB. A local gain or public tick alone is not sufficient
+to claim private-LB improvement.
+
+## SETTLED - .80 detector fusion improves the div45 geometry stack (2026-09-04)
+
+The isolated `.80` detector-fusion follow-up on the Rishabh `9/14/4.5`
+division-geometry stack completed as submission `56010101` at public LB
+`0.938`, versus `0.936` for the `.65` incumbent. This is one controlled public
+result, not evidence of private-LB transfer. The `existing-child=12um`
+follow-up produced a byte-identical output to the incumbent and was correctly
+blocked by the duplicate guard. Next validation should test stability around
+`.80` on grouped movie splits before treating the gain as robust.
+
 ## SETTLED - detector-fusion sweep confirms a broad 0.80-0.85 optimum (2026-09-01)
 
 The corrected offline reproductions of the Rishabh recipe were submitted as a

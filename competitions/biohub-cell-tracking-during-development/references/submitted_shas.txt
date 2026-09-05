@@ -39,3 +39,6 @@ f64d94e3f9263d8eadaabe2f08f361ce6b9268c0d444955eb651c979ac8ee070  dalloliogm/exp
 f58d10cf6b4594e53e8862dfc3259115bea3d76d9053ea4eb1d43ee818f408d5  dalloliogm/biohub-agreement-adaptive080-v1 v1  2026-09-01 agreement-gated adaptive edge fusion
 ad7a75a837c4725e987664f862c36cd570854cabd7e1c299b213f2878ebb57db  dalloliogm/biohub-agreement-wm075-lm035-v1 v1  2026-09-01 agreement-gated secondary detection 0.75
 d58525ea2cd974e097b6838cc21682296bc362b6f935339026fa082e994cc992  dalloliogm/biohub-rishabh-division-geometry-065-v1 v1  Rishabh division geometry stack on .65 agreement fusion control; Kaggle refs 55979072 and 55979076 (duplicate pending records)
+650be35eeebb3489001a3ff32f1fbde0a8c0bd2f02bacb18046c23fece534587  dalloliogm/rishabh-division-geometry-080 v1  Rishabh div45 geometry with detector-fusion weight 0.80
+5f1b2fc33663bc117e0e24eeb34a2a4eef4beca500a37d20d39aa89fdabd1c08  dalloliogm/rishabh-division-geometry-075 v1  Rishabh div45 geometry with detector-fusion weight 0.75
+36e1c74ca30a9ff899614a3d918958ebc3c1798dec9fff47f67ed48766a41819  dalloliogm/rishabh-division-geometry-085 v1  Rishabh div45 geometry with detector-fusion weight 0.85

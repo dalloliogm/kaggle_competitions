@@ -1,5 +1,93 @@
 # Tasks
 
+## CURRENT STATUS - 2026-09-04 (division-geometry candidate scored 0.936)
+
+The Rishabh division-geometry stack on the `.65` agreement-fusion control is
+complete and scored `0.936` on both Kaggle records `55979072` and `55979076`.
+The two records are duplicate outputs from one submission attempt, so this is
+one independent result, not two confirmations. It improves the previous own
+frontier of `0.930`; private-LB transfer remains unknown.
+
+No kernel is currently known to be running from the live refresh. The next
+work should follow `references/validation_protocol.md`:
+
+1. Freeze the `.65` / `0.936` artifact as the incumbent and record its exact
+   SHA, graph counts, and per-dataset diagnostics.
+2. Build a grouped, movie-level validation comparison of the incumbent against
+   the Rishabh `div45` geometry extension (`14um` sister cap, `9um` maximum
+   cap, `4.5um` divergence cap), with a mechanism-off control.
+3. Run stability checks across embryo-aware folds and small predeclared
+   perturbations before using another public slot.
+4. Keep the synthetic-dataset work separate until its image-evidence transfer
+   beats the geometry control on held-out real sequences.
+5. Submit only a completed, downloaded, structurally audited artifact whose
+   output is distinct from the incumbent and whose promotion evidence is
+   recorded here and in `APPROACHES.md`.
+
+The detailed historical entries below are retained as an audit trail; older
+"next" sections should not override this current block.
+
+## PUBLIC SCAN - 2026-09-04
+
+New public kernels include `qrz1201/biohub-division-9-14-4-5-repro`,
+`rishabhr0y/940-biohub-sdec12`,
+`reyhanksatria/wider-divisions-calmer-fusion-0-939-lb`, and
+`sardorrazikov/biohub-fork-agreement-gated`. Their source configurations show
+that the `9/14/4.5` geometry family is already present in our scored `.65`
+candidate. The two separable follow-ups are therefore:
+
+- `rishabh-division-geometry-080`: identical geometry and downstream pipeline,
+  detector-fusion weight `.80`.
+- `rishabh-division-geometry-sdec12`: identical `.65` geometry pipeline,
+  `SAFE_DIV_EXISTING_CHILD_MAX_UM=12.0`.
+
+These are prepared privately under `notebooks/public-reproductions/` and have
+not been pushed or submitted. Public discussion remains cautionary: recent
+threads describe crowded-frame division failures, weak local/public agreement,
+and concern about small leaderboard changes being overfit. The new public
+claims are consequently hypotheses to test through the grouped validation gate,
+not validation evidence.
+
+Submission workflows started 2026-09-04 for both candidates. Kaggle kernels
+`dalloliogm/rishabh-division-geometry-080` and
+`dalloliogm/rishabh-division-geometry-sdec12` were launched. The
+guarded workflow will download each `submission.csv`, run the structural
+validators, reject duplicates or malformed graphs, and submit only after a
+successful audit.
+
+Update: both kernels completed. The `.80` candidate passed validation and was
+submitted as Kaggle ref `56010101`; it completed at public LB `0.938`. This is
+the current own scored frontier, improving the `.65 / 0.936` incumbent by
+`0.002`. The
+`sdec12` artifact passed validation but is byte-identical to the frozen `.65`
+incumbent (`d58525ea2cd974e097b6838cc21682296bc362b6f935339026fa082e994cc992`),
+so the duplicate guard correctly refused to submit it. Its audit counts are
+`120,190` nodes, `115,904` edges, and `49` divisions.
+
+The grouped-report comparator is now available at
+`scripts/compare_validation_reports.py`. It reports paired mean/median deltas,
+standard deviation, worst-case movie, regressions, improvements, ties, and
+missing datasets, so a candidate cannot be promoted from a pooled mean alone.
+
+Next: treat `.80 / 0.938` as the incumbent, check whether the improvement is
+stable in grouped validation and nearby predeclared weights, then move to the
+synthetic transfer gate if the fusion gain is not stable. Do not resubmit the
+`sdec12` configuration unless its output is made materially distinct.
+
+The predeclared stability bracket is now running on Kaggle: `.75` via
+`dalloliogm/rishabh-division-geometry-075` and `.85` via
+`dalloliogm/rishabh-division-geometry-085`. Both are private T4 kernels with
+internet disabled; their guarded submission workflows are waiting for
+completion and audit.
+
+Update: both completed the audit and were submitted as refs `56017062` (`.75`)
+and `56017063` (`.85`). Both are pending evaluation.
+
+The public `0.941` reproduction is also in flight as private kernel
+`dalloliogm/rishabh-public-0941-repro`, with `.80` fusion, gap close `5.0um`,
+and DeepCenter safe-division threshold `.25`. Its guarded workflow is waiting
+for completion; no submission ref has been created yet.
+
 ## UPDATE - 2026-09-01 (Rishabh detector-fusion sweep complete)
 
 The five corrected offline sweep submissions completed with public scores:
