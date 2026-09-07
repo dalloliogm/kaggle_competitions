@@ -42,3 +42,13 @@ d58525ea2cd974e097b6838cc21682296bc362b6f935339026fa082e994cc992  dalloliogm/bio
 650be35eeebb3489001a3ff32f1fbde0a8c0bd2f02bacb18046c23fece534587  dalloliogm/rishabh-division-geometry-080 v1  Rishabh div45 geometry with detector-fusion weight 0.80
 5f1b2fc33663bc117e0e24eeb34a2a4eef4beca500a37d20d39aa89fdabd1c08  dalloliogm/rishabh-division-geometry-075 v1  Rishabh div45 geometry with detector-fusion weight 0.75
 36e1c74ca30a9ff899614a3d918958ebc3c1798dec9fff47f67ed48766a41819  dalloliogm/rishabh-division-geometry-085 v1  Rishabh div45 geometry with detector-fusion weight 0.85
+770bd96805d1d616f002575c3a2714690e8651ea5b6355e8a1a01dac208b2be6  dalloliogm/rishabh-public-0941-repro v2  Approved exploratory batch 1/5; ref 56029383
+15f1b0908fa540f2271b0d315023a6da7bdcbce422e5972f89b89f5a5a5cd063  dalloliogm/biohub-sep05-gap50 v1  [SEP05:gap50] refs [56032186]
+ae67517009dbab883d7fd828dfc0f3f52f02313ec69a1b4b434936017382a415  dalloliogm/biohub-sep05-div25 v1  [SEP05:div25] refs [56032312]
+bb524d8302e0296ebad89da09e1e7b31f206ad8a6f8b6b54f9e3bfe04f48af84  dalloliogm/biohub-sep05-gap50-div18 v1  [SEP05:gap50-div18] refs [56032624]
+1b26962c8c1eab9aef045eb65a6cb00e601930405ad5dca5a88fceb0850933fc  dalloliogm/biohub-sep05-gap54-div25 v1  [SEP05:gap54-div25] refs [56032813]
+b8f6273f7203f6af09122ccd431858dded862dbfa031cd32942e407f657b056f  dalloliogm/biohub-sep06-diverge50 v1  [SEP06:diverge50] refs [56050349]
+11551f0e73e710a3b8d19bdf222ca1d469a12cec350fc4a4153bad47d22f4933  dalloliogm/biohub-sep06-image08 v1  [SEP06:image08] refs [56050357]
+f47108bbc6c37064e0c4c35b3bb283050a300dd609417ea952325dcb3c3eed4c  dalloliogm/biohub-sep06-image08-diverge50 v1  [SEP06:image08-diverge50] refs [56050780]
+f5c1ca733d625eb78b81f944e57ec8a389a8e574466f277616892b19cd755ce0  dalloliogm/biohub-sep06-symmetry45 v1  [SEP06:symmetry45] refs [56050782]
+f146c2a51a394af0213c2820b53b27bffd1a6d74d2bf8f3cbbc90330e82e0de9  dalloliogm/biohub-sep06-retention95 v1  [SEP06:retention95] refs [56051153]

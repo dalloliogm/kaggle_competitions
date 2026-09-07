@@ -22,6 +22,7 @@ For local output-only checks:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 import sys
@@ -336,15 +337,29 @@ def try_exact_metric(
     """Run official-style metric scoring when dependencies/data are available."""
     if train_dir is None:
         return None
+    scorer_root = Path(__file__).resolve().parents[1] / 'references' / 'official-scorer-075fc5f'
     if tracking_repo is not None:
-        sys.path.insert(0, str(tracking_repo / "src"))
+        scorer_root = tracking_repo
+    manifest_path = scorer_root / 'manifest.json'
+    if not manifest_path.is_file():
+        raise ValueError('Pinned scorer manifest missing; legacy unpinned scoring is forbidden')
+    scorer_manifest = json.loads(manifest_path.read_text())
+    for name, expected in scorer_manifest['files'].items():
+        if hashlib.sha256((scorer_root / name).read_bytes()).hexdigest() != expected:
+            raise ValueError(f'Official scorer checksum mismatch: {name}')
+    sys.path.insert(0, str(scorer_root))
     try:
         import polars as pl
-        import traccuracy as td
-        from biohub_tracking.io import graph_from_geff
-        from biohub_tracking.metrics import evaluate, node_recall, per_sample_metrics, summarise
+        import tracksdata as td
+        from tracking_cellmot.metrics import evaluate, node_recall, per_sample_metrics, summarise
+        import tracking_cellmot.metrics as metric_module
+        if Path(metric_module.__file__).resolve() != (scorer_root / 'tracking_cellmot/metrics.py').resolve():
+            raise ValueError('Another scorer is already imported; use a fresh process')
+        def graph_from_geff(path):
+            loaded = td.graph.IndexedRXGraph.from_geff(path)
+            return loaded[0] if isinstance(loaded, tuple) else loaded
     except Exception as exc:  # pragma: no cover - environment dependent
-        return {"skipped": True, "reason": f"metric dependencies unavailable: {exc}"}
+        raise RuntimeError(f"Official metric dependencies unavailable: {exc}") from exc
 
     voxel_scale_um = (1.625, 0.40625, 0.40625)
     default_keys = td.DEFAULT_ATTR_KEYS
@@ -399,7 +414,7 @@ def try_exact_metric(
     for dataset in datasets:
         truth_path = train_dir / f"{dataset}.geff"
         if not truth_path.exists():
-            continue
+            raise ValueError(f"Missing truth for requested movie: {dataset}")
         pred_graph = graph_from_submission_rows(dataset)
         truth_graph = graph_from_geff(truth_path)
         result = evaluate(pred_graph, truth_graph, scale=voxel_scale_um, max_distance=7.0)
@@ -416,7 +431,7 @@ def try_exact_metric(
 
     if not rows:
         return {"skipped": True, "reason": "no submission datasets had matching train GEFF"}
-    return {"skipped": False, "rows": rows, "summary": summarise(rows)}
+    return {"skipped": False, "rows": rows, "summary": summarise(rows), "scorer_manifest": scorer_manifest}
 
 
 def write_outputs(report: ValidationReport, out_dir: Path) -> None:

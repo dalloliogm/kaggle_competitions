@@ -19,10 +19,14 @@ to one already submitted (that wastes a slot on a duplicate).
 
 Usage:
   await_validate_submit.py OWNER/KERNEL-SLUG VERSION "message" [--dry-run]
+  Add --submit --promotion-packet PATH only after artifact-level authorization.
+  Default behavior is audit-only.
 """
 from __future__ import annotations
 
+import argparse
 import csv
+import json
 import hashlib
 import math
 import subprocess
@@ -41,6 +45,8 @@ MAX_WAIT_HOURS = 10
 
 def run(args: list[str], timeout: int = 600) -> str:
     p = subprocess.run(KG + args, capture_output=True, text=True, timeout=timeout)
+    if p.returncode:
+        raise RuntimeError(f"Kaggle command failed ({p.returncode}): {(p.stderr or p.stdout)[-1000:]}")
     return (p.stdout or "") + (p.stderr or "")
 
 
@@ -156,11 +162,18 @@ def already_submitted(sha: str, store: Path) -> str | None:
 
 
 def main() -> int:
-    if len(sys.argv) < 4:
-        print(__doc__)
-        return 2
-    slug, version, message = sys.argv[1], sys.argv[2], sys.argv[3]
-    dry = "--dry-run" in sys.argv
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('slug')
+    parser.add_argument('version', type=int)
+    parser.add_argument('message')
+    parser.add_argument('--dry-run', action='store_true')
+    parser.add_argument('--submit', action='store_true', help='Explicitly execute a previously authorized submission')
+    parser.add_argument('--promotion-packet', type=Path)
+    args = parser.parse_args()
+    slug, version, message = args.slug, args.version, args.message
+    dry = args.dry_run or not args.submit
+    if args.submit and not args.dry_run and args.promotion_packet is None:
+        parser.error('--submit requires --promotion-packet; structural validity alone is insufficient')
 
     status = wait_for_kernel(slug)
     if "COMPLETE" not in status:
@@ -168,7 +181,7 @@ def main() -> int:
         return 1
 
     tmp = Path(tempfile.mkdtemp(prefix="subm_"))
-    print(run(["kernels", "output", slug, "-p", str(tmp)], timeout=900).strip().splitlines()[-1:])
+    print(run(["kernels", "output", f"{slug}/{version}", "-p", str(tmp)], timeout=900).strip().splitlines()[-1:])
     sub = tmp / "submission.csv"
     if not sub.exists():
         print("ABORT: kernel produced no submission.csv")
@@ -180,6 +193,11 @@ def main() -> int:
         print("ABORT: validation FAILED -> " + "; ".join(problems))
         return 1
 
+    # Independent pandas-based checker must agree with the download validator.
+    from biohub_validation_harness import load_submission, structural_report
+    independent = structural_report(load_submission(sub), sub)
+    if not independent.valid:
+        raise ValueError(f"Independent structural check failed: {independent.errors}")
     sha = hashlib.sha256(sub.read_bytes()).hexdigest()
     store = Path(__file__).resolve().parent.parent / "references" / "submitted_shas.txt"
     dupe = already_submitted(sha, store)
@@ -192,9 +210,21 @@ def main() -> int:
         print("dry-run: not submitting")
         return 0
 
+    from promotion_gate import verify_packet
+    verify_packet(args.promotion_packet, sha, slug, version)
+    # Download APIs return the latest output, not necessarily the requested version.
+    # A version-bound runtime manifest is mandatory; never audit v2 then submit v1.
+    manifest_path = tmp / "artifact_manifest.json"
+    if not manifest_path.is_file():
+        raise ValueError("Missing artifact_manifest.json binding kernel/version/output")
+    manifest = json.loads(manifest_path.read_text())
+    if (manifest.get('kernel'), manifest.get('kernel_version'), manifest.get('artifact_sha256')) != (slug, version, sha):
+        raise ValueError("Runtime artifact manifest does not match requested kernel/version/output")
     out = run(["competitions", "submit", COMP, "-k", slug, "-v", str(version),
                "-f", "submission.csv", "-m", message], timeout=900)
     print(out.strip()[-400:])
+    if "success" not in out.lower():
+        raise RuntimeError("Submission response is uncertain; inspect live records before retrying. SHA not ledgered.")
     store.parent.mkdir(parents=True, exist_ok=True)
     with store.open("a") as fh:
         fh.write(f"{sha}  {slug} v{version}  {message[:80]}\n")

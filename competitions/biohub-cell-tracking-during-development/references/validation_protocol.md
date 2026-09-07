@@ -62,3 +62,34 @@ Use these labels in notes and maps:
 
 Never describe `STRUCTURAL_PASS` or `LOCAL_PROXY` as evidence of private-LB
 improvement.
+
+## Executable workflow (version 2, 2026-09-05)
+
+`compare_validation_reports.py` requires per-movie adjusted edge scores and all
+six confusion counts; accepts canonical official names and documented legacy
+aliases. It reconstructs the combined score, pools division counts, weights
+adjusted edges by edge TP+FP+FN, and separately reports macro and embryo deltas.
+A zero-division group drops the division term; it does not receive perfect
+artificial division credit. Missing/duplicate movies and invalid numbers fail.
+
+The harness uses the checksummed scorer in `official-scorer-075fc5f/` and raises
+on unavailable dependencies when exact scoring is requested. Use `--skip-metric`
+explicitly for structural-only work. `--tracking-repo` now means an alternative
+pinned scorer bundle containing a manifest and tracking_cellmot package.
+
+`await_validate_submit.py` is audit-only unless `--submit` is supplied. A real
+submission also requires `--promotion-packet PATH`, both structural validators,
+and `artifact_manifest.json` in the downloaded output binding `kernel`, integer
+`kernel_version`, and `artifact_sha256`. Version-pinned output retrieval is used.
+Changing these defaults is intentional: old unattended shell invocations now audit
+instead of submitting. A failed or uncertain CLI response must be reconciled with
+live submission records before retrying.
+
+Start from `promotion_packet.template.json` (HELD). Evidence paths are relative to
+the packet file and SHA256-checked. Required scientific review checks are explicit
+reviewer attestations, not automatic proof. The gate recomputes the candidate
+comparison, checks the predeclared tolerance and holdout/checkpoint separation;
+it never converts unknown training exposure or a local score into a pass.
+
+Current frozen groups have known secondary-checkpoint exposure. The final-holdout
+list is intentionally empty; the new diagnostic cannot pass the promotion gate.

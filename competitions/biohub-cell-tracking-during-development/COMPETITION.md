@@ -47,27 +47,13 @@ identify division events to reconstruct cell lineages.
 - Team/merge rules: Timeline and merge details must be verified on Kaggle.
 - Submission limit: 5 per day
 
-## Current Baseline
+## Current public best — September 6 results
 
-- Local CV: exact validation completed on Kaggle; artifact download remains
-  blocked by Kaggle output API HTTP 429.
-- Public LB: `0.827`
-- Notebook: `notebooks/biohub-exact-dog-hungarian-baseline.ipynb`
-- Kaggle kernel: `dalloliogm/biohub-exact-validation-and-dog-hungarian-baseline`
-- Kernel version 7 completed successfully on 2026-07-03 and produced the first
-  scored submission (`54297736`).
-
-## Current Candidate
-
-- Notebook: `notebooks/biohub-lb893-safe-divisions-source.ipynb`
-- Kaggle kernel: `dalloliogm/lb893-learned-graph-tracker-micro-safe-divisi`.
-- Strategy: learned U-Net/transformer/ILP backbone from
-  `pilkwang/biohub-tracking-support-pack-50ep-v1`, followed by motion relinking,
-  gap repair, line-fit smoothing, pruning, and conservative safe-division
-  insertion.
-- Public LB: `0.893` from submission `54397298`.
-- Test output: all four movies, `262,359` rows (`134,238` nodes and `128,121`
-  edges), with `381` division-like sources.
-- Next validation artifact:
-  `notebooks/biohub-lb893-validation-ablation.ipynb`, which defaults to labeled
-  train movies and emits `validation_metrics.csv` plus `validation_summary.json`.
+- Public best: 0.939, image threshold .08, submission 56050357,
+  `dalloliogm/biohub-sep06-image08` v1.
+- Preserve frozen .80 / 0.938 control 56010101; hashes in
+  `references/incumbent_manifest.json`. This manifest remains the batch reference.
+- Best artifact hash: `references/sep06-batch-execution.json` (image08).
+- Independent holdout not established; `references/validation_split_manifest.json`.
+- Five September 6 scores complete; see `TASKS.md` for results and next steps.
+- GEFF diagnostic compatibility fixed locally following v1 error; not rerun.

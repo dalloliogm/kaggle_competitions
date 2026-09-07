@@ -1,0 +1,43 @@
+{
+  "protocol_version": 2,
+  "evidence": "LOCAL_PROXY",
+  "status": "CHECKPOINT_EXPOSED_DIAGNOSTIC_ONLY",
+  "selection": "Existing four-movie diagnostic set, frozen before factorial scoring; not a new untouched holdout",
+  "development_folds": {
+    "fold_a": [
+      "44b6_12dfb391",
+      "6bba_062c8d37"
+    ],
+    "fold_b": [
+      "44b6_267148e4",
+      "6bba_07e24132"
+    ]
+  },
+  "embryo_stress_groups": {
+    "44b6": [
+      "44b6_12dfb391",
+      "44b6_267148e4"
+    ],
+    "6bba": [
+      "6bba_062c8d37",
+      "6bba_07e24132"
+    ]
+  },
+  "final_holdout": [],
+  "checkpoint_exposure": {
+    "secondary": {
+      "source": "kaggle_outputs/biohub-rishabh-division-geometry-065-v1/secondary_seed_weights/unet_transformer/split_0/split_manifest.json",
+      "source_sha256": "cbe8ace34ffc157172280538441454b60250f0188faa063d1a9eadfb1ac55c0b",
+      "train_movies": 199,
+      "diagnostic_overlap": [
+        "44b6_12dfb391",
+        "44b6_267148e4",
+        "6bba_062c8d37",
+        "6bba_07e24132"
+      ]
+    },
+    "primary": "UNKNOWN",
+    "deepcenter": "UNKNOWN"
+  },
+  "holdout_blocker": "Audit all checkpoint training lists; current diagnostic movies are not an independent model holdout."
+}

@@ -1,0 +1,47 @@
+[
+  {
+    "ref": 56051153,
+    "fileName": "submission.csv",
+    "date": "2026-09-06T08:52:00.100000",
+    "description": "[SEP06:retention95] User-approved exploratory batch; .80 fusion; distinct output passed both validators",
+    "status": "SubmissionStatus.COMPLETE",
+    "publicScore": "0.937",
+    "privateScore": ""
+  },
+  {
+    "ref": 56050782,
+    "fileName": "submission.csv",
+    "date": "2026-09-06T08:30:13.383000",
+    "description": "[SEP06:symmetry45] User-approved exploratory batch; .80 fusion; distinct output passed both validators",
+    "status": "SubmissionStatus.COMPLETE",
+    "publicScore": "0.933",
+    "privateScore": ""
+  },
+  {
+    "ref": 56050780,
+    "fileName": "submission.csv",
+    "date": "2026-09-06T08:30:01.560000",
+    "description": "[SEP06:image08-diverge50] User-approved exploratory batch; .80 fusion; distinct output passed both validators",
+    "status": "SubmissionStatus.COMPLETE",
+    "publicScore": "0.933",
+    "privateScore": ""
+  },
+  {
+    "ref": 56050357,
+    "fileName": "submission.csv",
+    "date": "2026-09-06T08:06:30.177000",
+    "description": "[SEP06:image08] User-approved exploratory batch; .80 fusion; distinct output passed both validators",
+    "status": "SubmissionStatus.COMPLETE",
+    "publicScore": "0.939",
+    "privateScore": ""
+  },
+  {
+    "ref": 56050349,
+    "fileName": "submission.csv",
+    "date": "2026-09-06T08:05:25.603000",
+    "description": "[SEP06:diverge50] User-approved exploratory batch; .80 fusion; distinct output passed both validators",
+    "status": "SubmissionStatus.COMPLETE",
+    "publicScore": "0.933",
+    "privateScore": ""
+  }
+]

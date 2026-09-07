@@ -1,0 +1,98 @@
+{
+  "date": "2026-09-05",
+  "arms": {
+    "gap50": {
+      "status": "SUBMITTED",
+      "sha256": "15f1b0908fa540f2271b0d315023a6da7bdcbce422e5972f89b89f5a5a5cd063",
+      "counts": {
+        "nodes": 119303,
+        "edges": 114982,
+        "rows": 234285,
+        "max_indeg": 1,
+        "max_outdeg": 2,
+        "divisions": 48
+      },
+      "artifact": "/Users/giovannidallolio/workspace/kaggle_competitions/kaggle_outputs/biohub-sep05-gap50-v1-audit/submission.csv",
+      "kernel_version": 1,
+      "submission_refs": [
+        56032186
+      ],
+      "submission_statuses": {
+        "56032186": "SubmissionStatus.COMPLETE"
+      },
+      "public_scores": {
+        "56032186": "0.938"
+      }
+    },
+    "div25": {
+      "status": "SUBMITTED",
+      "sha256": "ae67517009dbab883d7fd828dfc0f3f52f02313ec69a1b4b434936017382a415",
+      "counts": {
+        "nodes": 119308,
+        "edges": 114989,
+        "rows": 234297,
+        "max_indeg": 1,
+        "max_outdeg": 2,
+        "divisions": 28
+      },
+      "artifact": "/Users/giovannidallolio/workspace/kaggle_competitions/kaggle_outputs/biohub-sep05-div25-v1-audit/submission.csv",
+      "kernel_version": 1,
+      "submission_refs": [
+        56032312
+      ],
+      "submission_statuses": {
+        "56032312": "SubmissionStatus.COMPLETE"
+      },
+      "public_scores": {
+        "56032312": "0.935"
+      }
+    },
+    "gap50-div18": {
+      "status": "SUBMITTED",
+      "kernel_version": 1,
+      "sha256": "bb524d8302e0296ebad89da09e1e7b31f206ad8a6f8b6b54f9e3bfe04f48af84",
+      "counts": {
+        "nodes": 119294,
+        "edges": 114966,
+        "rows": 234260,
+        "max_indeg": 1,
+        "max_outdeg": 2,
+        "divisions": 39
+      },
+      "artifact": "/Users/giovannidallolio/workspace/kaggle_competitions/kaggle_outputs/biohub-sep05-gap50-div18-v1-audit/submission.csv",
+      "submission_refs": [
+        56032624
+      ],
+      "submission_statuses": {
+        "56032624": "SubmissionStatus.COMPLETE"
+      },
+      "public_scores": {
+        "56032624": "0.936"
+      }
+    },
+    "gap54-div25": {
+      "status": "SUBMITTED",
+      "kernel_version": 1,
+      "sha256": "1b26962c8c1eab9aef045eb65a6cb00e601930405ad5dca5a88fceb0850933fc",
+      "counts": {
+        "nodes": 119297,
+        "edges": 114972,
+        "rows": 234269,
+        "max_indeg": 1,
+        "max_outdeg": 2,
+        "divisions": 29
+      },
+      "artifact": "/Users/giovannidallolio/workspace/kaggle_competitions/kaggle_outputs/biohub-sep05-gap54-div25-v1-audit/submission.csv",
+      "submission_refs": [
+        56032813
+      ],
+      "submission_statuses": {
+        "56032813": "SubmissionStatus.COMPLETE"
+      },
+      "public_scores": {
+        "56032813": "0.935"
+      }
+    }
+  },
+  "live_checked_at": "2026-09-05T20:18:00Z"
+}

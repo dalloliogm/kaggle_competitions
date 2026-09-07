@@ -1,0 +1,98 @@
+{
+  "date": "2026-09-06",
+  "arms": {
+    "image08": {
+      "status": "SUBMITTED",
+      "kernel_version": 1,
+      "last_kernel_status": "dalloliogm/biohub-sep06-image08 has status \"KernelWorkerStatus.RUNNING\"",
+      "sha256": "11551f0e73e710a3b8d19bdf222ca1d469a12cec350fc4a4153bad47d22f4933",
+      "counts": {
+        "nodes": 119339,
+        "edges": 115033,
+        "rows": 234372,
+        "max_indeg": 1,
+        "max_outdeg": 2,
+        "divisions": 48
+      },
+      "artifact": "/Users/giovannidallolio/workspace/kaggle_competitions/kaggle_outputs/biohub-sep06-image08-v1-audit/submission.csv",
+      "submission_refs": [
+        56050357
+      ]
+    },
+    "diverge50": {
+      "status": "SUBMITTED",
+      "kernel_version": 1,
+      "upload_reconciliation": "Remote v1 normalized cell sources match the authorized local notebook after connection reset",
+      "sha256": "b8f6273f7203f6af09122ccd431858dded862dbfa031cd32942e407f657b056f",
+      "counts": {
+        "nodes": 119343,
+        "edges": 115026,
+        "rows": 234369,
+        "max_indeg": 1,
+        "max_outdeg": 2,
+        "divisions": 38
+      },
+      "artifact": "/Users/giovannidallolio/workspace/kaggle_competitions/kaggle_outputs/biohub-sep06-diverge50-v1-audit/submission.csv",
+      "submission_refs": [
+        56050349
+      ]
+    },
+    "image08-diverge50": {
+      "status": "SUBMITTED",
+      "kernel_version": 1,
+      "last_kernel_status": "dalloliogm/biohub-sep06-image08-diverge50 has status \"KernelWorkerStatus.RUNNING\"",
+      "sha256": "f47108bbc6c37064e0c4c35b3bb283050a300dd609417ea952325dcb3c3eed4c",
+      "counts": {
+        "nodes": 119343,
+        "edges": 115027,
+        "rows": 234370,
+        "max_indeg": 1,
+        "max_outdeg": 2,
+        "divisions": 39
+      },
+      "artifact": "/Users/giovannidallolio/workspace/kaggle_competitions/kaggle_outputs/biohub-sep06-image08-diverge50-v1-audit/submission.csv",
+      "submission_refs": [
+        56050780
+      ]
+    },
+    "symmetry45": {
+      "status": "SUBMITTED",
+      "kernel_version": 1,
+      "last_kernel_status": "dalloliogm/biohub-sep06-symmetry45 has status \"KernelWorkerStatus.RUNNING\"",
+      "sha256": "f5c1ca733d625eb78b81f944e57ec8a389a8e574466f277616892b19cd755ce0",
+      "counts": {
+        "nodes": 119339,
+        "edges": 115023,
+        "rows": 234362,
+        "max_indeg": 1,
+        "max_outdeg": 2,
+        "divisions": 38
+      },
+      "artifact": "/Users/giovannidallolio/workspace/kaggle_competitions/kaggle_outputs/biohub-sep06-symmetry45-v1-audit/submission.csv",
+      "submission_refs": [
+        56050782
+      ]
+    },
+    "retention95": {
+      "status": "SUBMITTED",
+      "kernel_version": 1,
+      "last_kernel_status": "dalloliogm/biohub-sep06-retention95 has status \"KernelWorkerStatus.RUNNING\"",
+      "sha256": "f146c2a51a394af0213c2820b53b27bffd1a6d74d2bf8f3cbbc90330e82e0de9",
+      "counts": {
+        "nodes": 120245,
+        "edges": 115876,
+        "rows": 236121,
+        "max_indeg": 1,
+        "max_outdeg": 2,
+        "divisions": 42
+      },
+      "artifact": "/Users/giovannidallolio/workspace/kaggle_competitions/kaggle_outputs/biohub-sep06-retention95-v1-audit/submission.csv",
+      "submission_refs": [
+        56051153
+      ]
+    },
+    "reserve-retention85": {
+      "status": "RESERVE"
+    }
+  }
+}

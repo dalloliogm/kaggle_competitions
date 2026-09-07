@@ -1,5 +1,153 @@
 # Tasks
 
+## September 6 final results and handoff
+
+All five submissions completed. Best public result is **0.939**, submission
+56050357 (image threshold .08), versus the preserved 0.938 control 56010101.
+
+| Candidate | Ref | Public score |
+| --- | --- | ---: |
+| Image .08 | 56050357 | 0.939 |
+| Divergence 5.0 | 56050349 | 0.933 |
+| Image .08 + divergence 5.0 | 56050780 | 0.933 |
+| Symmetry .45 | 56050782 | 0.933 |
+| Retention .95 | 56051153 | 0.937 |
+
+Both validators passed for every distinct output; the runner completed and the
+reserve was unused. September 5/6 authorizations are date-bound and do not
+permit September 7 uploads. Final score evidence: `references/sep06-live-submissions.json`.
+
+The 0.001 public gain is not established private-transfer improvement. The
+winning output changes only movie 6bba_05db0fb1: 18 node rows change, two edge
+rows are removed and three added (excluding CSV row IDs). All four local
+validation movies were exposed to secondary checkpoint training; primary and
+veto checkpoint exposure remains unknown. Keep the 0.938 reference intact.
+Pause further threshold sweeps; prioritize complete-movie/embryo validation
+excluded from every checkpoint's training, using the official metric and
+per-movie regression checks. Retraining may be necessary to obtain that split.
+
+September 6 public leaderboard snapshot: rank 444/3180 at .939; approximate
+bronze boundary rank 318 at .941, with .941 spanning ranks 149-361. These are
+historical public positions, not final medal evidence or current September 7 ranks.
+The .942 band (ranks 94-148 then) was a clearer public target.
+
+The frozen factorial v1 failed at GEFF loading; tuple compatibility is fixed
+locally, but the diagnostic has not been rerun. It cannot establish an independent
+holdout on the existing exposed movies. Historical entries below retain their dates.
+
+## Five-probe results — 2026-09-05 20:18 UTC
+
+All five submissions are COMPLETE. None improves the .80 / 0.938 incumbent.
+
+| Gap um | Division threshold | Submission ref | Public LB |
+| --- | --- | --- | ---: |
+| 5.0 | .25 | 56029383 | 0.935 |
+| 5.0 | .12 | 56032186 | 0.938 |
+| 5.8 | .25 | 56032312 | 0.935 |
+| 5.0 | .18 | 56032624 | 0.936 |
+| 5.4 | .25 | 56032813 | 0.935 |
+
+All arms use .80 fusion. Gap-only ties the incumbent; tightening the division
+image threshold regresses. The public 0.941 claim was not reproduced. At the
+reported three-decimal precision, the four-arm factorial shows no beneficial
+gap/threshold interaction. Retain the frozen incumbent and avoid extending this
+threshold sweep without new evidence. Private transfer remains unknown.
+All five daily slots are used. Earlier pending-status blocks below are historical.
+
+## Live batch completion — 2026-09-05 12:51 UTC
+
+All five requested submissions are confirmed on Kaggle; all remain PENDING.
+No daily slots remain. Every output was distinct and passed both structural validators.
+
+| Gap um | Division threshold | Submission ref | Status |
+| --- | --- | --- | --- |
+| 5.0 | .25 | 56029383 | PENDING |
+| 5.0 | .12 | 56032186 | PENDING |
+| 5.8 | .25 | 56032312 | PENDING |
+| 5.0 | .18 | 56032624 | PENDING |
+| 5.4 | .25 | 56032813 | PENDING |
+
+All arms use .80 fusion. The incumbent remains .80 / 0.938; no new score yet.
+The earlier upload-approval and GPU-queue entries below are historical.
+
+
+## Approved five-submission batch — 2026-09-05
+
+User explicitly requested five submissions today. Candidate 1/5 was submitted
+as `56029383` from `rishabh-public-0941-repro` **v2**; pending evaluation.
+Kaggle confirmed four slots remain. V1 had no output and rejected requests created
+no submissions. Four new controlled candidates are built by
+`references/build_five_probe_batch.py`. The user subsequently explicitly approved all four private uploads/GPU runs and
+submissions. Gap-only and threshold-only kernels launched as v1; the other two
+are queued locally behind Kaggle's two-session GPU cap. The date-bound runner
+`scripts/run_approved_sep05_batch.py` validates and submits each exactly once;
+execution records are in `references/sep05-batch-execution.json`.
+See `references/authorized-five-batch-2026-09-05.json`. This is an explicitly
+authorised exploratory batch, not a claim that independent holdout gates passed.
+
+
+## Current plan — 2026-09-05
+
+The frozen incumbent is `.80 / 0.938`, submission `56010101`, kernel
+`dalloliogm/rishabh-division-geometry-080` v1. `.75` completed at `0.935`
+(`56017062`) and `.85` at `0.932` (`56017063`). The newer geometry stack does
+not establish the older recipe's broad `.80–.85` optimum. Private transfer is unknown.
+
+Implemented in this review:
+
+- Corrected metric comparison: official weighted edge aggregation, pooled
+  division confusion counts, combined score, per-movie and embryo deltas;
+  reject incomplete, duplicate, non-finite and edge-only evidence.
+- Pinned the official scorer at `075fc5f5a52d11077f9dc2b074644618f26939e2`
+  with source hashes and license; removed the harness's legacy scorer fallback.
+- Submission helper defaults to audit-only. Explicit submission requires both
+  validators, a matching artifact/kernel/version, and a reviewed promotion packet
+  with checksummed evidence. Failed CLI operations no longer enter the SHA ledger.
+- Downloaded and audited all four fusion artifacts and the completed public
+  `0.941` reproduction. See `references/fusion-output-diagnostics-2026-09-05.json`
+  and `references/public-0941-output-audit-2026-09-05.json`.
+- Frozen the incumbent and development movie list in
+  `references/incumbent_manifest.json` and `references/validation_split_manifest.json`.
+- Built a private five-arm diagnostic (four factorial combinations plus
+  divisions-off), with shared raw detections, pinned official scoring, stage
+  counters and graph exports. Builder: `references/build_validation_factorial.py`.
+  Analysis/review queue: `scripts/summarize_factorial.py`.
+
+Critical validation finding: all four existing validator movies are in the
+secondary checkpoint's 199-movie training list. Primary and DeepCenter exposure
+remain unknown. These are checkpoint-exposed diagnostic folds, NOT an independent
+holdout. No final holdout has been invented or marked passed. The old notebooks'
+custom-score reports remain legacy proxy evidence; re-aggregating them does not
+make their division matching official.
+
+Next execution:
+
+1. User explicitly approved the private diagnostic on 2026-09-05. Uploaded
+   `dalloliogm/biohub-frozen-gap-division-factorial` v1 at approximately 09:10 UTC.
+   V1 failed after inference: tracksdata GEFF loader returned (graph, metadata).
+   The loader compatibility fix is tested locally; diagnostic rerun is deferred
+   behind today's explicitly requested submission batch.
+2. Download `factorial_validation/`, run `scripts/summarize_factorial.py`, review
+   changed events plus seeded unchanged controls in the images. Measure the
+   gap/threshold interaction and stage activation before considering tighter sweeps.
+3. Audit complete training provenance for all checkpoints. Define genuinely
+   unexposed validation data or retrain fold-specific models before claiming
+   independent holdout evidence. Keep the current baseline while this is unresolved.
+4. Synthetic branch stays HELD. A retry must use actual current-detector candidates,
+   include the geometry control, improve graph decisions, and preserve ordinary links.
+5. No competition submission until the promotion packet is complete and the exact
+   artifact is authorised. Do not submit an older candidate merely to spend slots.
+
+The public `0.941` reproduction is COMPLETE and STRUCTURAL_PASS, not a verified
+`0.941` result: 119,272 nodes, 114,939 edges, 29 divisions. Its gap and image-threshold
+changes reduce division count from the incumbent's 47 to 29, concentrated in two
+movies; accuracy requires labelled/image review.
+
+All sections below are historical audit records. Their old pending statuses,
+"current best" labels and next actions do not override this plan.
+
+## Historical plan and execution trail
+
 ## CURRENT STATUS - 2026-09-04 (division-geometry candidate scored 0.936)
 
 The Rishabh division-geometry stack on the `.65` agreement-fusion control is

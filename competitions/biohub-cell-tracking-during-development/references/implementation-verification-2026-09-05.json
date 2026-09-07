@@ -1,0 +1,11 @@
+{
+  "workflow_tests": 16,
+  "result": "PASS",
+  "notebook_code_cells_compiled": 12,
+  "notebook_sha256": "ad400de20d82f10c718003c9e7e4bc1a01a4ada30def040f682a4f2b968eb964",
+  "official_aggregation": "parity test against pinned upstream summarise passed",
+  "official_graph_scoring": "NOT_EXECUTED: local tracksdata dependency unavailable; private Kaggle upload rejected by automatic approval review",
+  "factorial_execution": "PREPARED_NOT_LAUNCHED",
+  "competition_submissions_made": 0,
+  "unrelated_work": "preserved"
+}

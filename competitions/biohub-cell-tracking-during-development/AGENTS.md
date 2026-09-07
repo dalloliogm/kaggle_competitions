@@ -18,12 +18,14 @@ Competition-specific instructions for `competitions/biohub-cell-tracking-during-
 - Before suggesting a new modeling direction, review `APPROACHES.md` and `LEARNINGS.md` to avoid repeating failed experiments.
 - Put local submissions or downloaded outputs under `submissions/`; do not commit generated submission files unless explicitly requested.
 - When running on Kaggle from this repository, prefer `../../scripts/kaggle_push_notebook.sh`, `../../scripts/kaggle_status.sh`, and `../../scripts/kaggle_output.sh`.
-- Kaggle competition submissions can take several hours to validate. For this
-  challenge, do not wait for one pending public-LB result before preparing the
-  next independent candidate. When daily submission slots remain and a candidate
-  has completed on Kaggle with structural checks passing, submit multiple
-  distinct candidates in parallel, then interpret the leaderboard results later.
-  Still avoid submitting known-invalid outputs such as Exp100.
+- Prepare independent candidates while public scores are pending, but do not
+  auto-submit based on structural validity alone. Follow
+  `references/validation_protocol.md` and require artifact-level authorization.
+- Submission tooling defaults to audit-only. Never bypass its promotion packet,
+  scorer provenance, independent holdout, version or duplicate checks to use slots.
+- Treat historical "closed" modeling directions as scoped to the tested pipeline.
+- Do not describe a checkpoint-exposed movie as a model holdout. Check training
+  manifests for every model, including secondary and veto detectors.
 
 ## Competition Constraints
 

@@ -1,0 +1,56 @@
+{
+  "date": "2026-09-06",
+  "authorization": "User said do it to the five-probe execution plan including private runs and audited submissions",
+  "status": "AUTHORIZED",
+  "arms": {
+    "image08": {
+      "changes": {
+        "image": ".08"
+      },
+      "kernel": "dalloliogm/biohub-sep06-image08",
+      "notebook_sha256": "9d8566adc53b9d5409d2f8ca6057e0a91fb3b4ef9fe14acb7535cbfbc1c8aba6",
+      "reserve": false
+    },
+    "diverge50": {
+      "changes": {
+        "diverge": "5.0"
+      },
+      "kernel": "dalloliogm/biohub-sep06-diverge50",
+      "notebook_sha256": "3801b04ac8e7697f6e6b659a947ddfd89b9a56ecd3ad88f43eea0e67a363f784",
+      "reserve": false
+    },
+    "image08-diverge50": {
+      "changes": {
+        "image": ".08",
+        "diverge": "5.0"
+      },
+      "kernel": "dalloliogm/biohub-sep06-image08-diverge50",
+      "notebook_sha256": "7c3e5e1c9bbe294f54ec54966b3acc2ab22ada0aa3152c0dc49f8146fef5d9b8",
+      "reserve": false
+    },
+    "symmetry45": {
+      "changes": {
+        "symmetry": "0.45"
+      },
+      "kernel": "dalloliogm/biohub-sep06-symmetry45",
+      "notebook_sha256": "9d3226e4cb7bd2bb5c731ce4e3348151e1321de3fd2bb514da6be7d26d46eb5a",
+      "reserve": false
+    },
+    "retention95": {
+      "changes": {
+        "retention": "0.95"
+      },
+      "kernel": "dalloliogm/biohub-sep06-retention95",
+      "notebook_sha256": "76a8065ab0694a5fd3a7368518264f5e0def470d9a2ce256697a3a6631b37402",
+      "reserve": false
+    },
+    "reserve-retention85": {
+      "changes": {
+        "retention": "0.85"
+      },
+      "kernel": "dalloliogm/biohub-sep06-reserve-retention85",
+      "notebook_sha256": "853fa41bc6cd3e358e63a57f1f3dceec92812e8c5e537c077a0ad93f802853df",
+      "reserve": true
+    }
+  }
+}

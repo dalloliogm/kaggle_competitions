@@ -1,0 +1,82 @@
+{
+  "date": "2026-09-05",
+  "user_instruction": "Make 5 submissions today",
+  "scope": "Five distinct structurally audited exploratory submissions to biohub-cell-tracking-during-development",
+  "holdout_requirement": "User-directed exploratory batch; not validated promotion or private-LB evidence",
+  "first": {
+    "kernel": "dalloliogm/rishabh-public-0941-repro",
+    "version": 2,
+    "sha256": "770bd96805d1d616f002575c3a2714690e8651ea5b6355e8a1a01dac208b2be6",
+    "counts": {
+      "nodes": 119272,
+      "edges": 114939,
+      "rows": 234211,
+      "max_indeg": 1,
+      "max_outdeg": 2,
+      "divisions": 29
+    },
+    "version_note": "Live ApiGetKernel metadata confirmed current_version_number=2; v1 submission failed with no output file and no record created.",
+    "submission_ref": 56029383,
+    "status": "SubmissionStatus.COMPLETE",
+    "public_score": "0.935"
+  },
+  "fallback": "retain .80 / .938 incumbent",
+  "remaining_kernels": [
+    "dalloliogm/biohub-sep05-gap50",
+    "dalloliogm/biohub-sep05-div25",
+    "dalloliogm/biohub-sep05-gap50-div18",
+    "dalloliogm/biohub-sep05-gap54-div25"
+  ],
+  "remaining_status": "ALL_FIVE_SCORED_NO_IMPROVEMENT",
+  "submitted_count": 5,
+  "remaining_slots_confirmed": 0,
+  "remaining_authorization": "User explicitly approved all four named private uploads/GPU runs and submission of each distinct validated output.",
+  "live_checked_at": "2026-09-05T20:18:00Z",
+  "live_submissions": [
+    {
+      "ref": 56032813,
+      "fileName": "submission.csv",
+      "date": "2026-09-05T12:34:19.293000",
+      "description": "[SEP05:gap54-div25] User-approved exploratory batch; .80 fusion; distinct output passed both validators",
+      "status": "SubmissionStatus.COMPLETE",
+      "publicScore": "0.935",
+      "privateScore": ""
+    },
+    {
+      "ref": 56032624,
+      "fileName": "submission.csv",
+      "date": "2026-09-05T12:24:07.330000",
+      "description": "[SEP05:gap50-div18] User-approved exploratory batch; .80 fusion; distinct output passed both validators",
+      "status": "SubmissionStatus.COMPLETE",
+      "publicScore": "0.936",
+      "privateScore": ""
+    },
+    {
+      "ref": 56032312,
+      "fileName": "submission.csv",
+      "date": "2026-09-05T12:07:19.077000",
+      "description": "[SEP05:div25] User-approved exploratory batch; .80 fusion; distinct output passed both validators",
+      "status": "SubmissionStatus.COMPLETE",
+      "publicScore": "0.935",
+      "privateScore": ""
+    },
+    {
+      "ref": 56032186,
+      "fileName": "submission.csv",
+      "date": "2026-09-05T11:59:41.293000",
+      "description": "[SEP05:gap50] User-approved exploratory batch; .80 fusion; distinct output passed both validators",
+      "status": "SubmissionStatus.COMPLETE",
+      "publicScore": "0.938",
+      "privateScore": ""
+    },
+    {
+      "ref": 56029383,
+      "fileName": "submission.csv",
+      "date": "2026-09-05T09:20:48.310000",
+      "description": "Approved five-probe batch 1/5: .80 fusion, gap5.0, div.25; version2 output structurally audited",
+      "status": "SubmissionStatus.COMPLETE",
+      "publicScore": "0.935",
+      "privateScore": ""
+    }
+  ]
+}

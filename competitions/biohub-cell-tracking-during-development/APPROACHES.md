@@ -1,5 +1,98 @@
 # Approaches
 
+## September 6 final results and handoff
+
+All five submissions completed. Best public result is **0.939**, submission
+56050357 (image threshold .08), versus the preserved 0.938 control 56010101.
+
+| Candidate | Ref | Public score |
+| --- | --- | ---: |
+| Image .08 | 56050357 | 0.939 |
+| Divergence 5.0 | 56050349 | 0.933 |
+| Image .08 + divergence 5.0 | 56050780 | 0.933 |
+| Symmetry .45 | 56050782 | 0.933 |
+| Retention .95 | 56051153 | 0.937 |
+
+Both validators passed for every distinct output; the runner completed and the
+reserve was unused. September 5/6 authorizations are date-bound and do not
+permit September 7 uploads. Final score evidence: `references/sep06-live-submissions.json`.
+
+The 0.001 public gain is not established private-transfer improvement. The
+winning output changes only movie 6bba_05db0fb1: 18 node rows change, two edge
+rows are removed and three added (excluding CSV row IDs). All four local
+validation movies were exposed to secondary checkpoint training; primary and
+veto checkpoint exposure remains unknown. Keep the 0.938 reference intact.
+Pause further threshold sweeps; prioritize complete-movie/embryo validation
+excluded from every checkpoint's training, using the official metric and
+per-movie regression checks. Retraining may be necessary to obtain that split.
+
+September 6 public leaderboard snapshot: rank 444/3180 at .939; approximate
+bronze boundary rank 318 at .941, with .941 spanning ranks 149-361. These are
+historical public positions, not final medal evidence or current September 7 ranks.
+The .942 band (ranks 94-148 then) was a clearer public target.
+
+The frozen factorial v1 failed at GEFF loading; tuple compatibility is fixed
+locally, but the diagnostic has not been rerun. It cannot establish an independent
+holdout on the existing exposed movies. Historical entries below retain their dates.
+
+## Five-probe results — 2026-09-05 20:18 UTC
+
+All five submissions are COMPLETE. None improves the .80 / 0.938 incumbent.
+
+| Gap um | Division threshold | Submission ref | Public LB |
+| --- | --- | --- | ---: |
+| 5.0 | .25 | 56029383 | 0.935 |
+| 5.0 | .12 | 56032186 | 0.938 |
+| 5.8 | .25 | 56032312 | 0.935 |
+| 5.0 | .18 | 56032624 | 0.936 |
+| 5.4 | .25 | 56032813 | 0.935 |
+
+All arms use .80 fusion. Gap-only ties the incumbent; tightening the division
+image threshold regresses. The public 0.941 claim was not reproduced. At the
+reported three-decimal precision, the four-arm factorial shows no beneficial
+gap/threshold interaction. Retain the frozen incumbent and avoid extending this
+threshold sweep without new evidence. Private transfer remains unknown.
+All five daily slots are used. Earlier pending-status blocks below are historical.
+
+## Live batch completion — 2026-09-05 12:51 UTC
+
+All five requested submissions are confirmed on Kaggle; all remain PENDING.
+No daily slots remain. Every output was distinct and passed both structural validators.
+
+| Gap um | Division threshold | Submission ref | Status |
+| --- | --- | --- | --- |
+| 5.0 | .25 | 56029383 | PENDING |
+| 5.0 | .12 | 56032186 | PENDING |
+| 5.8 | .25 | 56032312 | PENDING |
+| 5.0 | .18 | 56032624 | PENDING |
+| 5.4 | .25 | 56032813 | PENDING |
+
+All arms use .80 fusion. The incumbent remains .80 / 0.938; no new score yet.
+The earlier upload-approval and GPU-queue entries below are historical.
+
+
+## Current decision — 2026-09-05
+
+| Configuration | Public LB | State |
+| --- | ---: | --- |
+| div45, fusion .65 | 0.936 | Previous incumbent; duplicate refs are one result |
+| div45, fusion .75 | 0.935 | Complete, 56017062 |
+| div45, fusion .80 | **0.938** | Frozen incumbent, 56010101 |
+| div45, fusion .85 | 0.932 | Complete, 56017063 |
+| .80 + gap 5.0 + DeepCenter .25 | Unknown | COMPLETE / STRUCTURAL_PASS / HELD |
+
+Exp209 safe-divisions-only completed at **0.913** (55664709): compare no-patches
+0.890, gap-only 0.890, both patches 0.917. This supports testing interactions,
+not concluding that gap repair is globally ineffective.
+
+The frozen factorial is prepared, not executed. Official scorer and exact source
+hashes are in `references/factorial_experiment_manifest.json`. Its current four
+movies are checkpoint-exposed diagnostic groups; independent holdout promotion
+is blocked pending checkpoint provenance. See the current `TASKS.md` plan.
+
+Historical "closed" axes apply to their tested baseline and metric version only.
+The July minimal-export strategy was rejected by subsequent live results.
+
 Track modeling approaches, experiments, submissions, and outcomes here. Prefer short entries with enough detail that a future chat can understand what was tried and whether it is worth revisiting.
 
 ## Interactive decision map
