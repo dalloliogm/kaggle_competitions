@@ -47,7 +47,17 @@ identify division events to reconstruct cell lineages.
 - Team/merge rules: Timeline and merge details must be verified on Kaggle.
 - Submission limit: 5 per day
 
-## Current public best — September 6 results
+## Current execution — September 7
+
+- Exact private reproduction of public edge-feature TTA v1 completed and passed
+  both validators; output is byte-identical to the public artifact scored 0.946.
+- Submitted once as ref 56075335; status PENDING. Four daily slots remain.
+- Exact private reproduction of the public threshold-.960 artifact scored 0.942
+  is validated and held as an unsubmitted fallback.
+- These are public-LB/artifact-reproduction results, not private-LB or independent
+  holdout evidence. See `references/sep07-public-reproduction-execution.json`.
+
+## Previous public best — September 6 results
 
 - Public best: 0.939, image threshold .08, submission 56050357,
   `dalloliogm/biohub-sep06-image08` v1.

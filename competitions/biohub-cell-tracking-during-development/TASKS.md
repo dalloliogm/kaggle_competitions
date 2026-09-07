@@ -1,5 +1,23 @@
 # Tasks
 
+## September 7 public-notebook reproductions
+
+Two private, exact-source reproductions completed successfully:
+
+| Candidate | Public provenance | Artifact result | Kaggle state |
+| --- | --- | --- | --- |
+| Edge-feature TTA | `redoctopusk/biohub-942tta` v1, verified public LB 0.946 | Byte-identical SHA `a852d1d...95b3e`; both validators pass | Submitted once as ref 56075335; PENDING |
+| Detection threshold .960 | `busyaprime/biohub-0-942-lb-one-knob-past-the-public-line` v2, verified public LB 0.942 | Byte-identical SHA `8218ae3...c41b9`; both validators pass | Audited reserve; not submitted |
+
+The primary used one September 7 slot; four remain. Wait for ref 56075335 to
+reach a terminal score. Submit the .942 reserve only if the primary fails or
+does not reproduce; do not spend a second slot merely to confirm a weaker public
+score. Artifact and execution details are frozen in
+`references/sep07-public-reproduction-execution.json`.
+
+Exact public-output identity establishes reproduction of the public artifact,
+not private-leaderboard transfer or an independent holdout result.
+
 ## September 6 final results and handoff
 
 All five submissions completed. Best public result is **0.939**, submission

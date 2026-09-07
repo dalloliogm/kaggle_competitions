@@ -1,0 +1,31 @@
+{
+  "id": "dalloliogm/biohub-sep07-threshold0960-0942-repro",
+  "title": "Biohub Sep07 Threshold 0960 0942 Repro",
+  "code_file": "biohub-0-942-lb-one-knob-past-the-public-line.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [
+    "gpu",
+    "biology",
+    "deep learning",
+    "computer vision",
+    "segmentation",
+    "neural networks"
+  ],
+  "dataset_sources": [
+    "pilkwang/biohub-deepcenter-unet3d-center-prior-v1",
+    "busyaprime/biohub-knob-provenance",
+    "pilkwang/biohub-temporal-unet3d-seed314159-v1",
+    "pilkwang/biohub-tracking-support-pack-50ep-v1"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "model_sources": [],
+  "machine_shape": "NvidiaTeslaT4"
+}

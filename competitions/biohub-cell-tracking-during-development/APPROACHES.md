@@ -1,5 +1,17 @@
 # Approaches
 
+## September 7 public-notebook reproductions
+
+| Candidate | Change | Reproduction evidence | State |
+| --- | --- | --- | --- |
+| Edge-feature TTA | Average augmented U-Net intermediate edge features, not only final heatmaps | Exact source; output byte-identical to verified public 0.946 artifact; both validators pass | Ref 56075335 PENDING |
+| Threshold .960 | Detection threshold .965 -> .960 | Exact source; output byte-identical to verified public 0.942 artifact; both validators pass | Audited reserve |
+
+The primary is the preferred medal attempt because it changes the learned edge
+representation and has the stronger verified public score. The reserve should be
+used only on primary failure/non-reproduction. Public artifact identity is not
+independent holdout or private-leaderboard evidence.
+
 ## September 6 final results and handoff
 
 All five submissions completed. Best public result is **0.939**, submission

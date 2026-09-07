@@ -1,5 +1,19 @@
 # Learnings
 
+## September 7 public notebook evidence
+
+The newly published edge-feature TTA notebook is a materially stronger lead than
+another scalar post-processing sweep. It averages augmented intermediate U-Net
+feature maps before downstream detection/linking and its v1 output has verified
+public LB 0.946. Our private exact-source run produced a byte-identical
+`submission.csv` and passed both structural validators. Submission 56075335 is
+pending, so 0.946 remains public-source provenance rather than our confirmed score.
+
+The threshold-.960 notebook provides a mechanistically narrower control at
+verified public LB 0.942. Its private reproduction is also byte-identical and
+validated, but remains unsubmitted reserve. Neither result supplies independent
+holdout or private-leaderboard evidence.
+
 ## September 6 final results and handoff
 
 All five submissions completed. Best public result is **0.939**, submission
