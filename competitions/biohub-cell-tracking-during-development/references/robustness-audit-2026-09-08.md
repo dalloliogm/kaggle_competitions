@@ -263,3 +263,75 @@ But that question turns out to be secondary. The public score is an `n≈2`
 measurement on fittable data, and the private score depends on a rerun that,
 on current timings, **will not complete**. Robustness work should move to
 runtime before it moves anywhere else.
+
+---
+
+# UPDATE 2 - the widened validation CORRECTS the earlier reading
+
+The 24-video run finished. First, a methodological control: its `submission.csv`
+sha is `a852d1d07ff8c930...`, **byte-identical to the scored `0.946` artifact**,
+confirming the only change was the validator width and the pipeline is untouched.
+
+| | 8 videos (earlier) | **24 videos** |
+| --- | ---: | ---: |
+| weighted RAW edge Jaccard | 0.9232 | **0.9088** |
+| weighted ADJ edge Jaccard | 0.9261 | **0.9122** |
+| node-count multiplier | 1.0032 | **1.0038** |
+| division Jaccard | 0.2308 (13 events) | **0.1458** (48 events: 7 TP / 14 FP / 27 FN) |
+| **local score** | 0.9492 | **0.9268** |
+| bootstrap 95% CI on adj J | [0.8815, 0.9709] | **[0.8797, 0.9407]** |
+| CI width | 0.0894 | **0.0609** |
+
+## The earlier "local ≈ public" reading does not survive
+
+On 8 videos the local score was `0.9492` against a public `0.946`, and section 3
+read that as reassuring agreement. **On 24 videos the local score is `0.9268`,
+and the public `0.946` now sits ABOVE the upper bound of the local 95% interval
+(`0.9407`).** The gap is about `0.019` and is no longer explainable as sampling
+noise.
+
+The 8-video sample was the notebook's own selection - 4 per embryo, preferring
+division-bearing videos - and it was an easy draw. Per-video adjusted Jaccard
+ranges from `0.80` to `0.995`, so an 8-video mean was never going to be stable.
+**The correction runs against the artifact**, which is the direction that
+matters: the public score is optimistic relative to held-out data, not
+pessimistic.
+
+## Embryo-to-embryo variation is larger than it looked
+
+| embryo | 8-video | **24-video** |
+| --- | ---: | ---: |
+| `44b6` | 0.9534 | **0.9510** |
+| `6bba` | 0.9431 | **0.9154** |
+| gap | 0.010 | **0.036** |
+
+Since the hidden test is embryo-disjoint, `0.036` is a realistic scale for how
+much performance can move on unseen embryos - and that is between two embryos
+the models were *trained* on. Unseen ones can reasonably be worse.
+
+Divisions also look weaker with more events in view: `0.1458` with **14 false
+positives against 7 true positives**, where the small sample suggested `0.2308`.
+
+## What still holds
+
+The node-count multiplier is `1.0038` on 24 videos - unchanged and negligible.
+**The score is still earned by raw tracking, not by gaming the node-count
+penalty**, and the source is still free of exploit patterns. The result is not a
+hack.
+
+## Revised verdict, second pass
+
+1. **Not a metric hack, not fitted by us.** That stands on the source audit and
+   the raw-vs-adjusted decomposition.
+2. **But the public `0.946` is optimistic.** Best held-out estimate is `0.9268`
+   (95% CI `[0.880, 0.941]`), and public sits outside it. Expect the private
+   score to land materially below `0.946` even before domain shift.
+3. **Unseen-embryo shift adds roughly `±0.036`** on the evidence of the two
+   training embryos.
+4. **And none of that matters if the kernel times out at rerun** - projected
+   `27.3 h` against a `12 h` limit at ~199 hidden videos.
+
+Priority order for the remaining three weeks: fix the runtime, then treat
+`~0.93` rather than `0.946` as the honest expectation and stop reading public
+ticks of `0.001-0.003` as real improvements - they are well inside the noise of
+an `n≈2` public measurement.
