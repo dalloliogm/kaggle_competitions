@@ -68,3 +68,15 @@
 - `starter` sells almost nothing, so benchmarking against it overstates results
   by roughly 2x: the same agent scores ~$111k against `starter` and ~$55k a
   side in self-play. Always confirm a change head-to-head as well.
+
+## Ladder calibration (2026-09-08)
+
+- A new submission enters at rating 600 and moves slowly, so the first score
+  reading says nothing. v1 read 578 while actually going 5-5 in its first ten
+  episodes.
+- v1's real opponents scored $17k-$163k against it; the previously submitted
+  public agent (rating 2191) scored ~$57k in a head-to-head with v1's ~$58k.
+  So roughly $60k is mid-field and the top of the ladder is producing ~$160k.
+- Only 4 CPUs are available in this session: running benchmarks with `--jobs 14`
+  is slower than `--jobs 4` and leaves orphaned processes that poison later
+  sweeps. Keep parallelism at the core count.

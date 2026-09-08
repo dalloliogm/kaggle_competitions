@@ -56,12 +56,23 @@ when nobody supplies the town.
    hand can touch, while an egg is the least. 12 cows / 6 sheep / no geese.
    ~$111k mean vs `starter`.
 
+7. **Tuning in a contested market** (current, v4). Every result above was
+   measured against `starter`, which sells almost nothing and so leaves the
+   whole market to us. Re-running the sweeps with a frozen copy of v3 as the
+   opponent changed the answer: 8 cows / 4 sheep beats 12 / 6, because a rival
+   herd crashes the milk and wool pools much sooner than the town can drain
+   them. v4 wins 22 of 24 position-balanced games against v3.
+   The opponent's farm is public, so `opponent_weight` will price their
+   growing crops and herd into our own supply curve — measured no better than
+   ignoring it (50% at weight 0.5 vs 62% at 0), so it ships disabled.
+
 ## Submitted agents
 
 | version | local vs `starter` (12 seeds) | notes |
 | --- | --- | --- |
 | v1 (56100155) | $80,157 | small herd, price-driven crops |
-| v3 (`submissions/main_v3.py`) | $111,100 | dairy herd, deadlock fixed; 16/16 head-to-head vs v1 |
+| v3 (56100666) | $111,100 | dairy herd, deadlock fixed; 16/16 head-to-head vs v1 |
+| v4 (`submissions/main_v4.py`) | ~$100k | herd tuned against a real opponent; 22/24 vs v3 |
 
 v1's real ladder episodes came in at $52k-72k against opponents scoring
 $32k-92k (2 wins / 2 losses in its first four games), so the local numbers are
@@ -81,6 +92,10 @@ mix inside them is chosen by `animal_value()` from live prices),
   more than the extra yield is worth. Left in the code, disabled by default.
 - The third quadrant is worth buying, the fourth is not (`max_quadrants=3`).
 - More than 13 farm hands loses badly: `fib(14..16)` = 377/610/987 a day.
-- Modelling the opponent's sales to time our own dumping of the capped pools.
-- Tuning against a *strong* opponent rather than `starter`; the current mix may
-  over-index on owning the capped pools alone.
+- **Movement is 65% of every unit-turn** (8% is PASS, only 26% is productive
+  work). Bigger wheat loads per shed trip, leaving idle hands in the field, and
+  a smaller farm footprint were all tried and all came out even, so cutting it
+  needs a real routing change — servicing a cluster of jobs per trip rather
+  than re-deciding a single best job every turn — not another parameter.
+- Top ladder opponents score $160k in games where we score $60k, so roughly
+  half the achievable output is still on the table.
