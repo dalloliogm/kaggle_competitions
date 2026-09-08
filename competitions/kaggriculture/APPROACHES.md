@@ -1,0 +1,63 @@
+# Approaches — Kaggriculture
+
+Kaggriculture is a 2-player farming sim on `kaggle_environments`; submit a
+`main.py` with an `agent(obs)` entry point. Score is the bank balance at the end
+of a 30-day / 720-turn season, and the leaderboard is a rating ladder.
+
+## Economics established from the rules (see `references/price_model.py`)
+
+Selling drives a resource's price down its own curve; town shops and the town
+centre drain inventory all season, which drives prices *up* for anything nobody
+produces. Total revenue for dumping N units from the starting inventory:
+
+| product | 50 u | 200 u | 800 u | price after 800 |
+| --- | --- | --- | --- | --- |
+| EGG | $2.2k | $8.5k | $32.2k | $38 |
+| WHEAT | $1.1k | $4.3k | $16.2k | $19 |
+| MELON | $12.1k | $26.5k | $27.1k | $1 |
+| FERTILIZER | $4.8k | $16.0k | $25.4k | $1 |
+| WOOL | $7.7k | $8.1k | $8.7k | $1 |
+| MILK | $5.4k | $6.3k | $6.9k | $1 |
+| CARROT | $1.5k | $4.8k | $10.6k | $2 |
+
+So egg and wheat are the only volume-tolerant sinks; melon, fertilizer, wool and
+milk are rich but small *pools*; carrot / tomato / strawberry sit on steep
+scarcity curves (carrot and tomato use `hinge`) and climb to several times base
+when nobody supplies the town.
+
+## What was tried
+
+1. **Fixed melon + large goose herd** (first working agent). Buy geese
+   aggressively, grow/buy wheat to feed them, 12 melon tiles.
+   ~$47k mean vs `starter`.
+2. **Value-based scheduler.** Replaced arbitrary job priorities with dollar
+   values (`value - distance * action_value`) plus a stickiness bonus so units
+   stop oscillating between equally attractive jobs. Large win once the
+   attendant bugs were out (see LEARNINGS.md).
+3. **Herd sizing sweep.** Fewer animals is strictly better: 26 geese → $47k,
+   16 → $64k, 8 → $69k, 4 → $69k, none at all → $28k. Animals are worth having
+   for the fertilizer they drop for free (1/day each, fed or not), not for eggs:
+   feeding daily costs a wheat, and importing wheat at herd scale walks its
+   price from $25 to $65.
+4. **Price-driven crop planner** (current). Each free tile is assigned to
+   whichever crop maximises `(marginal revenue - seed) / days occupied`, valued
+   after the units already growing will have hit the market. This makes the
+   agent open with melon and rotate into carrot/tomato/wheat as melon crashes
+   and town scarcity lifts the others. ~$80k mean vs `starter`.
+
+## Current agent (`agent/main.py`, submitted as v1)
+
+Mean $80,157 over 10 seeds vs `starter` (10/10 wins); 10/10 head-to-head against
+approach 1, $53k vs $23k. Self-play against a frozen copy is ~even, as expected.
+
+Tuned parameters: `max_geese=8`, `cows=2`, `sheep=2`, `struct_slots_ahead=12`,
+`wheat_crop_bias=0.8`, `min_crop_value=25`, `action_value=30`.
+
+## Not yet tried
+
+- Fertilizing crops (doubles the per-day watering bonus for 3 days) — the herd
+  produces fertilizer for free once the market price collapses late in the game.
+- Buying the SW/SE quadrants earlier, and whether the extra walking pays.
+- Modelling the opponent's sales to time our own dumping of the capped pools.
+- Tuning against a *strong* opponent rather than `starter`; the current mix may
+  over-index on owning the capped pools alone.
