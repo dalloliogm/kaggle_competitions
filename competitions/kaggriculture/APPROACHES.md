@@ -45,19 +45,42 @@ when nobody supplies the town.
    agent open with melon and rotate into carrot/tomato/wheat as melon crashes
    and town scarcity lifts the others. ~$80k mean vs `starter`.
 
-## Current agent (`agent/main.py`, submitted as v1)
+5. **Feeding valued at what it returns.** An unfed animal still produces its
+   base unit; feeding only buys the CARE bonus (one extra unit at the next
+   tick). Valuing FEED at `product_price - wheat_price` makes the agent feed
+   cows daily and geese only when they are about to starve. +3%.
+6. **Dairy/wool herd** (current). Fixing the build-type deadlock (see
+   LEARNINGS.md) made larger herds viable and completely changed the optimum:
+   a cow cared for daily yields 3 milk every 2 days, and CARE pays a whole
+   unit of product per action — milk and wool are the most valuable things a
+   hand can touch, while an egg is the least. 12 cows / 6 sheep / no geese.
+   ~$111k mean vs `starter`.
 
-Mean $80,157 over 10 seeds vs `starter` (10/10 wins); 10/10 head-to-head against
-approach 1, $53k vs $23k. Self-play against a frozen copy is ~even, as expected.
+## Submitted agents
 
-Tuned parameters: `max_geese=8`, `cows=2`, `sheep=2`, `struct_slots_ahead=12`,
-`wheat_crop_bias=0.8`, `min_crop_value=25`, `action_value=30`.
+| version | local vs `starter` (12 seeds) | notes |
+| --- | --- | --- |
+| v1 (56100155) | $80,157 | small herd, price-driven crops |
+| v3 (`submissions/main_v3.py`) | $111,100 | dairy herd, deadlock fixed; 16/16 head-to-head vs v1 |
+
+v1's real ladder episodes came in at $52k-72k against opponents scoring
+$32k-92k (2 wins / 2 losses in its first four games), so the local numbers are
+in the right league — but note that `starter` sells nothing, so playing it
+overstates every score by roughly 2x versus a contested market. In self-play v3
+scores ~$55k a side.
+
+Current tuned parameters: `cows=12`, `sheep=6`, `max_geese=0` (caps only — the
+mix inside them is chosen by `animal_value()` from live prices),
+`struct_slots_ahead=12`, `wheat_crop_bias=0.8`, `min_crop_value=25`,
+`action_value=30`, `feed_gain=1.0`, `max_quadrants=3`.
 
 ## Not yet tried
 
-- Fertilizing crops (doubles the per-day watering bonus for 3 days) — the herd
-  produces fertilizer for free once the market price collapses late in the game.
-- Buying the SW/SE quadrants earlier, and whether the extra walking pays.
+- Fertilizing crops was implemented and **rejected**: at `fertilize_gain` 0.3 it
+  is worth +0.5% (noise) and at 0.4 it costs 30%, because fertilizer sells for
+  more than the extra yield is worth. Left in the code, disabled by default.
+- The third quadrant is worth buying, the fourth is not (`max_quadrants=3`).
+- More than 13 farm hands loses badly: `fib(14..16)` = 377/610/987 a day.
 - Modelling the opponent's sales to time our own dumping of the capped pools.
 - Tuning against a *strong* opponent rather than `starter`; the current mix may
   over-index on owning the capped pools alone.

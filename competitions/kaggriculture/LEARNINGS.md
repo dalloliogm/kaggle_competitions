@@ -49,3 +49,22 @@
   distance charged at the value of a unit-turn, fixed it.
 - Buying livestock faster than coops could be built left 15 geese ($4.5k) parked
   in the shed all game. Buy against structures that already exist.
+
+## Strategy findings
+
+- **CARE is the highest-value action in the game for pasture animals.** The
+  banked bonus pays one whole extra unit of product at the next scheduled
+  yield, so a cared-for cow yields 3 milk every 2 days. At $200-300 a unit that
+  is far better than anything a crop tile returns per action.
+- **Eggs are the worst.** A goose fed and cared for daily produces 2 eggs (~$80)
+  for a wheat and three actions, and importing wheat at herd scale walks its
+  price from $25 to $65. Geese are worth zero in the tuned config; their only
+  merit is the fertilizer every animal drops for free.
+- **The town is a price pump.** Shops and the town centre consume products all
+  season. Anything nobody produces climbs its scarcity curve — carrot and
+  tomato use `hinge` and reach several times base — so the profitable crop
+  changes as the season runs and should be chosen from live prices.
+- Melon opens at $250 but the pool is only ~150 units before the floor.
+- `starter` sells almost nothing, so benchmarking against it overstates results
+  by roughly 2x: the same agent scores ~$111k against `starter` and ~$55k a
+  side in self-play. Always confirm a change head-to-head as well.
