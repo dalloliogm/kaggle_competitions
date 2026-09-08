@@ -168,3 +168,98 @@ No evidence of leaderboard overfitting, and one positive result that is hard to
 fake: the score survives decomposition into raw tracking quality with a
 negligible node-count multiplier. The open question is precision, not honesty -
 the estimate rests on 8 videos, and that is what the wider run addresses.
+
+---
+
+# UPDATE - the official Dataset Description resolves the split, and exposes a bigger risk
+
+The competition's Dataset Description settles what section 5 left open, and the
+answer moves the main risk somewhere else entirely.
+
+## The split, resolved
+
+> "Train and test sets are embryo-disjoint — no embryo appears in both."
+> "test/ - Example test samples (copies from train)... When a notebook is
+> submitted for rerun, a new hidden test set is swapped in. **The size of the
+> hidden test set is approximately the same size as the training dataset.**"
+
+So:
+
+- The **public** score is computed on 4 visible movies that are copies of train,
+  93.5% of the weight on two of them. Confirmed as an `n≈2` measurement on data
+  whose labels everyone has. Its value as evidence is close to nil.
+- The **private** score comes from **re-executing the kernel** on a hidden set of
+  roughly **199 samples** from **unseen embryos**.
+
+Our submissions do go through the code path (`competitions submit -k <kernel>
+-v <version>`), so they are kernel submissions and are eligible for rerun. That
+part is fine.
+
+Two consequences. Good: with ~199 samples instead of 4, private-score *variance*
+will be far lower than public. Bad: unseen embryos mean domain shift that no
+validator built from train data can measure, since every train video comes from
+the two embryos the models were fitted on.
+
+## The risk that actually threatens the result: RERUN TIMEOUT
+
+Phase timings from the scored `0.946` run (`2x T4`, prediction already sharded
+across both GPUs):
+
+| phase | wall clock | scales with test size? |
+| --- | ---: | --- |
+| setup, install, model load | 12.3 min | no |
+| test-set prediction, 4 videos | 9.6 min | **yes** |
+| tracking, post-processing, audit, 4 videos | 21.8 min | **yes** |
+| held-out validator, 8 train videos | 62.4 min | no (removable) |
+| **total** | **106.1 min** | |
+
+Test-side cost is **7.84 min per video**. Projected at rerun:
+
+| hidden videos | projected wall clock | 12 h limit |
+| ---: | ---: | --- |
+| 100 | **14.3 h** | OVER |
+| 199 | **27.3 h** | OVER |
+
+Even with the validator disabled, the budget allows only about **90 videos**.
+The Dataset Description implies roughly **199**.
+
+**On this arithmetic the kernel does not finish at rerun, and a kernel that does
+not finish scores nothing on the private leaderboard.** That would make the
+public `0.946` irrelevant regardless of how well it generalizes - which is a
+larger threat to the result than any amount of leaderboard overfitting.
+
+**Independent corroboration.** In the `focus3d` forum thread, one competitor
+reports "I tried to use focus-3d to segment cells, but **it timed out when
+submitting**", and another asks whether an approach "fits under kaggle 12 hour
+window run". Rerun timeout is a live, known failure mode in this competition,
+not a theoretical one.
+
+## Where the time goes, and what to do
+
+Of the 31.4 min of test-side work on 4 videos, prediction is 9.6 (30%) and
+**tracking plus post-processing is 21.8 (70%)**. The bottleneck is the graph
+stage, not the U-Net.
+
+1. **Disable the validator in any submitted kernel**
+   (`BIOHUB_VALIDATOR_ENABLE=0`). Saves 62 min. Necessary, nowhere near
+   sufficient, and it costs nothing since the diagnostic belongs in a separate
+   run.
+2. **Measure before optimising.** The 7.84 min/video figure is an average over
+   four videos whose node counts differ by 11x (`6bba_05db0fb1` has 70,301
+   nodes, `6bba_05b6850b` 6,150). If cost is driven by node count rather than
+   video count, the projection needs redoing against the hidden set's expected
+   density, and could be better or worse than linear.
+3. **Then attack the graph stage**, which needs roughly a 2.2x speedup at
+   N=199.
+
+## Revised verdict
+
+On the original question - is `0.946` fitted to the public leaderboard? - the
+evidence says no: it was not tuned by us, its config was selected against videos
+excluding the graded ones, it carries no exploit patterns, and it decomposes
+into raw tracking quality with a negligible `1.0032` node-count multiplier.
+
+But that question turns out to be secondary. The public score is an `n≈2`
+measurement on fittable data, and the private score depends on a rerun that,
+on current timings, **will not complete**. Robustness work should move to
+runtime before it moves anywhere else.
