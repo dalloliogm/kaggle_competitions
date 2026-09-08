@@ -89,7 +89,57 @@ Divisions point the same way: the submission contains **102 divisions**, below
 the ground-truth-implied `~139` and far below the `456` our own Exp227 emitted.
 Local division counts are `3 TP / 1 FP / 9 FN` - under-calling, not fabricating.
 
-## 5. What is NOT established
+## 5. The public leaderboard is a weaker instrument than it looks
+
+This turned out to be the most consequential finding, and it partly inverts the
+question.
+
+**The graded movies are four, and we have ground truth for them.** The
+submission covers exactly `44b6_0113de3b`, `44b6_0b24845f`, `6bba_05b6850b`,
+`6bba_05db0fb1`. Those are the same stems this workspace's own harness scores
+against ground truth (`LEARNINGS.md` carries their per-movie TP/FP/FN and node
+counts), and the 08-17 public scan found the visible `test/` volumes to be
+copies of train volumes. So the data the public leaderboard scores has
+available labels - for us and for every other competitor.
+
+**And the score is concentrated in two of them.** The official metric
+weight-averages by `TP+FP+FN`, and `LEARNINGS.md` records the split:
+
+| movie | share of public score |
+| --- | ---: |
+| `6bba_05db0fb1` | **56.1%** |
+| `6bba_05b6850b` | **37.4%** |
+| the three `44b6` movies | ~2.2% each |
+
+**93.5% of the public leaderboard comes from two movies.** A public score is
+therefore close to an `n = 2` measurement taken on data whose labels are
+obtainable. That makes it both easy to fit deliberately and noisy by nature -
+which is the real reason a 119-team cluster at one value should not be taken at
+face value, and why the July `0.950` cluster could collapse the way it did.
+
+**Why our artifact is not exposed to this.** The notebook's validator selects
+its held-out videos from `TRAIN_DIR` while explicitly excluding every stem that
+appears in `TEST_DIR`. Its post-processing config was therefore chosen against
+videos that are *not* the graded ones. That safeguard looked like ordinary
+hygiene on first reading; given the above it is the single thing that separates
+this artifact from one fitted to the four graded movies.
+
+**Consequence for how we evaluate from here.** Our own 24-video held-out
+validation is arguably a *better* generalization estimate than the public
+leaderboard, because it averages over three times as many videos and none of
+them are the graded ones. Where the two disagree, the wider local estimate
+deserves at least equal weight.
+
+**One thing genuinely unresolved:** whether the private leaderboard is a
+disjoint split *within* these four movies, or a hidden set swapped in at rerun.
+The 08-17 scan reported the latter; this competition also accepts CSV uploads
+and was rescored server-side in July, which fits the former. The implication
+differs - a within-movie split would transfer well, a swapped unseen-embryo set
+much less so - and we cannot currently tell which. The competition pages are
+JS-rendered and not retrievable through the API, so this needs a human to read
+the Data/Evaluation tab.
+
+## 6. What is NOT established
 
 - **The sample is small.** Eight videos, and a bootstrap over them gives a 95%
   interval on adjusted edge Jaccard of **`[0.8815, 0.9709]`**, about `+-0.045`.
@@ -102,7 +152,7 @@ Local division counts are `3 TP / 1 FP / 9 FN` - under-calling, not fabricating.
 - **Public-vs-private split** within the hidden test is unknown, so
   public-to-private transfer is unmeasured.
 
-## 6. In flight
+## 7. In flight
 
 `dalloliogm/biohub-sep08-robustness-wide-validation` raises
 `BIOHUB_VALIDATOR_N_PER_TYPE` `4 -> 12`, giving **24 held-out videos** instead of
