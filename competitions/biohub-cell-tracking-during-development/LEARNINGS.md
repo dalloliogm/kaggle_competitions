@@ -1,5 +1,138 @@
 # Learnings
 
+## CRITICAL 2026-09-09: the 0.936-0.939 ladder is inside the noise band, and CV cannot guard it
+
+Audit prompted by a forum comment on *"The 0.950 Cluster: What Happens After the
+Rescore"* alleging the 0.94-0.95 band is reached by sweeping/cherry-picking
+random seeds. Full report: `notes/seed_overfitting_analysis.md`.
+
+### Seed cherry-picking is NOT the mechanism here (and could not be)
+
+- **No run in this workspace varies an RNG seed.** Exp073 through Exp209, the
+  detector-fusion sweep, the division-geometry bracket and the Sep-05/06 batches
+  contain zero seed-only submissions. Nothing in the submission path trains; all
+  candidates run fixed public pretrained checkpoints in inference. "Seed A / seed B"
+  means two FIXED PUBLIC CHECKPOINT IDENTITIES, not sampled RNG states.
+- **LB scoring is deterministic.** Exp188 produced a byte-identical output
+  signature to Exp183 and scored the same `0.915`; `sdec12` reproduced the `.65`
+  incumbent byte-for-byte. Identical bytes => identical score. There is no
+  run-to-run RNG noise floor to select from.
+- **The seed/checkpoint axis is measured and NEGATIVE.** Exp135 (independent
+  same-arch reseed ensemble) `0.908` vs `0.910` baseline; Exp129 (full fine-tune)
+  `0.900` vs `0.910`; Exp133 (3-member checkpoint ensemble) never returned a
+  usable score. Classic seed ensembling is ruled out on this task - do not
+  propose it as a safeguard.
+
+### But the concern is right, via a different mechanism
+
+The 0.94x figures are **not our results**: `references/sep07-public-reproduction-execution.json`
+records `0.946` and `0.942` as `byte_identical_to_public_scored_output: true`
+reproductions of `redoctopusk/biohub-942tta` and
+`busyaprime/biohub-0-942-lb-one-knob-past-the-public-line`. **Own scored frontier
+is `0.939`.** Every real step up in the whole log is an import, not a tune:
+0.834 -> 0.893 -> 0.903 -> 0.913 -> 0.915 -> 0.917 -> 0.930 -> 0.936/0.938 -> 0.946.
+
+### The noise floor: sd ~= 0.002, band ~= +/-0.003
+
+Because scoring is deterministic, the relevant noise is **public-test sampling
+noise**, not RNG. Three convergent estimates:
+
+1. **Metric sensitivity.** GT is sparse (~2,258 scored edges total; `6bba_05db0fb1`
+   carries ~56% of weight). Per this repo's own derivation, **1-2 mis-links = 0.001 LB.**
+2. **The winning diff.** The `0.939` result (56050357) beat the `0.938` control by
+   changing **18 node rows, 2 edges removed and 3 added, on one movie**
+   (`references/sep06-diverge50-graph-audit.json`). Five edge changes buying +0.001
+   is exactly the coin-flip prediction from (1).
+3. **Within-bracket dispersion** on an identical detector:
+
+| Batch | n | Range | sd |
+| --- | ---: | ---: | ---: |
+| det-fusion 065-095 (0.927/0.928/0.930/0.929/0.928) | 5 | 0.003 | 0.0011 |
+| div45 fusion bracket (.65=0.936/.75=0.935/.80=0.938/.85=0.932) | 4 | 0.006 | 0.0025 |
+| Sep-05 gap/threshold five-probe | 5 | 0.003 | ~0.0012 |
+| Sep-06 threshold/TTA five-probe | 5 | 0.006 | ~0.0027 |
+
+Only **four test movies** (25,470 / 18,540 / 6,044 / 69,285 nodes), one dominating
+the weight, ~2% of edges scored at all. The `.80` peak in the div45 bracket is a
+spike between two LOWER neighbours (`.75`, `.85`) - a max-picked point, not an optimum.
+
+**Improvements currently being chased are 0.001-0.002, i.e. about HALF the noise.**
+The log holds ~25 recent arms; taking the max of 25 draws from an sd-0.002
+distribution buys about **+0.004 of pure selection bias** - the entire distance
+from `0.935` to `0.939`. The `0.936 -> 0.938 -> 0.939` ladder is best explained as
+max-selection over noise, not as three improvements.
+
+**Exception, credited:** the `9/14/4.5` division-geometry adoption at fixed `.80`
+fusion, `0.930 -> 0.938` (**+0.008**), is ~2-3x the band and mechanism-attributable.
+It is real.
+
+### Why local CV cannot catch this
+
+The standard defence ("submit on CV, not LB") is **currently unavailable**:
+
+- **Ranking inversion (measured, 2026-07-20; re-confirmed 2026-08-05).** Same
+  comparison, local `ilp_only 0.9083 > full 0.8877` (-0.021) vs LB
+  `ilp_only 0.877 < full 0.909` (+0.032). Opposite sign, comparable magnitude.
+- **Confounder eliminated (2026-08-06).** The node-count-penalty explanation was
+  tested with the true adjusted metric: moves the ladder by <=0.004 against a ~0.03
+  discrepancy and does not flip the ordering.
+- **Leakage (hard evidence).** `references/validation_split_manifest.json`:
+  `status: CHECKPOINT_EXPOSED_DIAGNOSTIC_ONLY`; **all four** validation movies appear
+  in the secondary checkpoint's 199-movie train list; `primary: UNKNOWN`,
+  `deepcenter: UNKNOWN`; `final_holdout: []`. The checkpoint's own test list also
+  overlaps its train list by 40 movies.
+
+This combination - no trustworthy internal signal plus a wide, flat, noisy LB axis -
+is exactly the condition under which a 25-arm sweep converts noise into apparent
+progress. **This is the highest-priority defect in the setup, above any modeling idea.**
+
+### Standing rules adopted from this audit
+
+1. **Trust threshold: treat `delta < 0.004` as NO EVIDENCE** unless a mechanism
+   explains it AND the output diff is large enough to plausibly move scored edges.
+   A change touching <50 rows on one movie cannot honestly claim +0.001.
+2. **Stop scalar sweeps** (threshold, gap, divergence, symmetry, retention, fusion
+   weight). 25 arms have produced a total spread smaller than 2 sigma; more arms buy
+   selection bias, not score.
+3. **Gate on scored-error deltas, not aggregate score,** until a holdout exists:
+   require a candidate to reduce FP+FN on `6bba_05db0fb1` (only ~167 known errors
+   total) before spending a slot. This sidesteps the aggregate-score inversion.
+4. **Build the unexposed holdout.** Audit the primary and DeepCenter training
+   manifests, carve complete movies/embryos excluded from all three, score with the
+   pinned official scorer `075fc5f5a52d11077f9dc2b074644618f26939e2`. Until
+   `final_holdout` is non-empty, every promotion is an LB guess. Retraining a
+   fold-specific model may be required and is worth it.
+5. **Final two slots: pick on mechanism + robustness, not LB rank.** Slot 1 =
+   edge-feature TTA (56075335) if it scores - feature-level averaging is a real
+   variance-reduction mechanism. Slot 2 = the `.80` incumbent `56010101` (0.938),
+   NOT the 0.939 image-`.08` spike: 0.001 apart is 5 edge rows, and the centre of a
+   bracket transfers better than a max-picked peak. Do NOT stack image-`.08` +
+   divergence 5.0 + symmetry `.45`; each is individually within noise and stacking
+   noise-selected knobs is the classic private-LB collapse.
+6. **The available variance reduction is at the augmentation/feature level,** not the
+   seed level (see Exp135/129/133 above). "Ensemble instead of select" on this task
+   means TTA, not seed ensembling.
+7. **Do not chase 0.950.** The gap from 0.939 is ~5x the noise band and ~14x the
+   current step size; no knob closes it. Remaining headroom, per our own
+   measurements, is association/linking in dense frames (`node_recall` is already
+   0.998-1.000, so ALL residual edge loss is linking loss) and division candidate identity.
+
+### Caveats
+
+- **No private-LB data exists yet** - every `privateScore` in the ledger is empty.
+  "These gains are noise" is a claim about evidential support, not a prediction that
+  the private score will fall.
+- The sd estimate is indirect: with deterministic scoring and no repeated identical
+  submissions over time, it comes from dispersion of *nearby but distinct* configs,
+  which conflates small true effects with sampling noise. So **0.002 is an UPPER BOUND
+  on sd** - tightening it only strengthens the conclusion, since the gains chased are
+  smaller still.
+- Not every tie is noise: the 13-tie block at `0.913` has a known MECHANICAL cause
+  (edits landing on unscored edges), a different failure with the same implication.
+- On the forum comment itself: the mechanism alleged is wrong for our entries and
+  worth correcting factually. The concern is not. If replying publicly, publishing the
+  sensitivity derivation (1-2 mis-links = 0.001) is more useful than a rebuttal.
+
 ## September 7 public notebook evidence
 
 The newly published edge-feature TTA notebook is a materially stronger lead than
