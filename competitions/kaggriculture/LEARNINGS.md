@@ -106,3 +106,20 @@ kept in the code where harmless):
   the early herd needs.
 - Pricing the opponent's visible production into our own supply curve
   (`opponent_weight`): 50% at 0.5 against 62% at 0.
+
+## Selling and feeding (2026-09-09, second pass)
+
+- **Holding harvests for a better price loses.** The town's drain does lift the
+  price of everything it consumes, so waiting genuinely sells higher — but
+  every variant tried (2-5 day look-ahead, 2-15% required gain) came out behind
+  selling on sight. Cash compounds: proceeds today buy the animal or the seed
+  that earns for the rest of the season. Left in the code as `hold_days`,
+  defaulted to 0.
+- **The wheat purchase ceiling never binds** at a 12-animal herd, so making it
+  scale with the herd's product price (`feed_price_share`) changed nothing. It
+  only mattered for the big herds, which fail for other reasons.
+- **The feed buffer was the real constraint.** Keeping two days of wheat per
+  animal meant the herd went unfed whenever the town pushed wheat prices up:
+  animals lose their banked CARE bonus on an unfed production day, and hands
+  waste turns walking to an empty shed. Four days is worth ~7% and 20/24 games.
+  Six days is too much - it ties up cash and shed space.

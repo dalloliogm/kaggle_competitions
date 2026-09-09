@@ -86,6 +86,13 @@ when nobody supplies the town.
    alternative is buying on a `25 + sqrt(drawdown)` curve).
    17/24 position-balanced games against v4.
 
+9. **Feed buffer** (v6). The shed kept only two days of wheat per animal. That
+   is not a buffer at all once the town starts draining wheat: the herd went
+   unfed, lost its banked CARE bonus, and hands burned turns shuttling to an
+   empty shed. Four days is the sweet spot (six ties up too much cash and shed
+   space). Worth more than any other single change measured so far: 20/24
+   position-balanced games against v5.
+
 ## Submitted agents
 
 | version | local vs `starter` (12 seeds) | notes |
@@ -93,7 +100,8 @@ when nobody supplies the town.
 | v1 (56100155) | $80,157 | small herd, price-driven crops |
 | v3 (56100666) | $111,100 | dairy herd, deadlock fixed; 16/16 head-to-head vs v1 |
 | v4 (56100940) | ~$100k | herd tuned against a real opponent; 22/24 vs v3 |
-| v5 (`submissions/main_v5.py`) | ~$105k | town-demand pricing, partial yields, feed-aware wheat; 17/24 vs v4 |
+| v5 (56122948) | ~$105k | town-demand pricing, partial yields, feed-aware wheat; 17/24 vs v4 |
+| v6 (`submissions/main_v6.py`) | ~$129k | 4-day wheat feed buffer; 20/24 vs v5 |
 
 v1's real ladder episodes came in at $52k-72k against opponents scoring
 $32k-92k (2 wins / 2 losses in its first four games), so the local numbers are
