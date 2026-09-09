@@ -79,8 +79,8 @@ PARAMS = {
     "struct_slots_ahead": 12,
     # --- animals -----------------------------------------------------------
     "max_geese": 0,           # caps; the mix within them is chosen from prices
-    "cows": 8,
-    "sheep": 4,
+    "cows": 6,                # smaller herd: lower ceiling, higher floor
+    "sheep": 3,
     "animal_min_value": 0.0,
     "opponent_weight": 0.0,    # rival output to price in; measured no better at 0.5-1.0
     "last_animal_day": 18,      # after this, a new animal cannot pay for itself

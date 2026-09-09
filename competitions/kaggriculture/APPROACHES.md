@@ -93,6 +93,15 @@ when nobody supplies the town.
    space). Worth more than any other single change measured so far: 20/24
    position-balanced games against v5.
 
+10. **Diversification hedge** (v7). Nothing beat v6 in a day of both-sides
+    testing, so this is deliberately not a measured improvement: 6 cows and 3
+    sheep instead of 8 and 4. It loses to v6 head-to-head (3/20) and has a
+    slightly lower mean, but a much higher floor -- worst case $102k against
+    v6's $90k in uncontested play. The thesis is that ladder games are lost in
+    the seasons where we score low, so trading ceiling for consistency may win
+    more matches than it costs. Submitted on that reasoning alone; the ladder
+    will say whether it holds.
+
 ## Submitted agents
 
 | version | local vs `starter` (12 seeds) | notes |
@@ -101,7 +110,8 @@ when nobody supplies the town.
 | v3 (56100666) | $111,100 | dairy herd, deadlock fixed; 16/16 head-to-head vs v1 |
 | v4 (56100940) | ~$100k | herd tuned against a real opponent; 22/24 vs v3 |
 | v5 (56122948) | ~$105k | town-demand pricing, partial yields, feed-aware wheat; 17/24 vs v4 |
-| v6 (`submissions/main_v6.py`) | ~$129k | 4-day wheat feed buffer; 20/24 vs v5 |
+| v6 (56126648) | ~$129k | 4-day wheat feed buffer; 20/24 vs v5 |
+| v7 (`submissions/main_v7.py`) | ~$118k | smaller herd; higher floor, lower ceiling - a hedge, not an improvement |
 
 v1's real ladder episodes came in at $52k-72k against opponents scoring
 $32k-92k (2 wins / 2 losses in its first four games), so the local numbers are

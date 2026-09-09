@@ -79,8 +79,8 @@ PARAMS = {
     "struct_slots_ahead": 12,
     # --- animals -----------------------------------------------------------
     "max_geese": 0,           # caps; the mix within them is chosen from prices
-    "cows": 8,
-    "sheep": 4,
+    "cows": 6,                # smaller herd: lower ceiling, higher floor
+    "sheep": 3,
     "animal_min_value": 0.0,
     "opponent_weight": 0.0,    # rival output to price in; measured no better at 0.5-1.0
     "last_animal_day": 18,      # after this, a new animal cannot pay for itself
@@ -124,11 +124,13 @@ PARAMS = {
     "fetch_range": 6,       # discourages re-targeting mid-walk
     "build_value": 160.0,
     "dig_value": 90.0,
+    "last_dig_day": 18,
+    "digs_per_turn": 6,
     "plant_discount": 0.30,     # melon value is ten days away
     "builds_per_turn": 3,
     "build_lookahead": 2,
 }
-PARAMS.update(json.loads(os.environ.get("KAG_PARAMS_OPP", "{}")))
+PARAMS.update(json.loads(os.environ.get("KAG_PARAMS", "{}")))
 _LAST = {}          # (player, unit index) -> (target pos, op) from last turn
 _TRACE = set(int(d) for d in os.environ.get("KAG_TRACE", "").split(",") if d.strip())
 
@@ -607,8 +609,11 @@ def _plan(obs):
         left[c] -= 1
         add(pos, ["PLANT", c], vpd * CROP_PROFILE[c][2] * PARAMS["plant_discount"], "plant")
 
-    if day <= PARAMS["last_animal_day"]:
-        for pos in weeds[:6]:
+    # Clear weeds for as long as a fresh crop can still finish: a carrot sown on
+    # day 25 harvests on day 28. Tying this to the livestock cutoff left ~50
+    # dead tiles idle over the last third of the season.
+    if day <= PARAMS["last_dig_day"]:
+        for pos in weeds[:PARAMS["digs_per_turn"]]:
             add(pos, ["DIG"], PARAMS["dig_value"], "dig")
 
     # ------------------------------------------------------- unit assignment
