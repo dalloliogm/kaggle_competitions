@@ -124,13 +124,11 @@ PARAMS = {
     "fetch_range": 6,       # discourages re-targeting mid-walk
     "build_value": 160.0,
     "dig_value": 90.0,
-    "last_dig_day": 18,
-    "digs_per_turn": 6,
     "plant_discount": 0.30,     # melon value is ten days away
     "builds_per_turn": 3,
     "build_lookahead": 2,
 }
-PARAMS.update(json.loads(os.environ.get("KAG_PARAMS", "{}")))
+PARAMS.update(json.loads(os.environ.get("KAG_PARAMS_OPP", "{}")))
 _LAST = {}          # (player, unit index) -> (target pos, op) from last turn
 _TRACE = set(int(d) for d in os.environ.get("KAG_TRACE", "").split(",") if d.strip())
 
@@ -609,11 +607,8 @@ def _plan(obs):
         left[c] -= 1
         add(pos, ["PLANT", c], vpd * CROP_PROFILE[c][2] * PARAMS["plant_discount"], "plant")
 
-    # Clear weeds for as long as a fresh crop can still finish: a carrot sown on
-    # day 25 harvests on day 28. Tying this to the livestock cutoff left ~50
-    # dead tiles idle over the last third of the season.
-    if day <= PARAMS["last_dig_day"]:
-        for pos in weeds[:PARAMS["digs_per_turn"]]:
+    if day <= PARAMS["last_animal_day"]:
+        for pos in weeds[:6]:
             add(pos, ["DIG"], PARAMS["dig_value"], "dig")
 
     # ------------------------------------------------------- unit assignment

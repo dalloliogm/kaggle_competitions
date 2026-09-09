@@ -21,8 +21,11 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 def run_one(args):
     a, b, seed, params_a, params_b, swap = args
     if swap:
+        # Swap seat order only. The overrides must NOT swap with it: each agent
+        # file reads its own variable (main.py -> KAG_PARAMS, the frozen copy ->
+        # KAG_PARAMS_OPP), so swapping them silently ran the reversed half of
+        # every parameterised comparison as default-vs-default.
         a, b = b, a
-        params_a, params_b = params_b, params_a
     env = dict(os.environ)
     # Both sides read KAG_PARAMS, so a variant match needs the two agents in
     # separate processes anyway; pass the side-specific overrides by file.

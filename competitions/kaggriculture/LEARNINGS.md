@@ -123,3 +123,32 @@ kept in the code where harmless):
   animals lose their banked CARE bonus on an unfed production day, and hands
   waste turns walking to an empty shed. Four days is worth ~7% and 20/24 games.
   Six days is too much - it ties up cash and shed space.
+
+## Only the newest submissions actually play (2026-09-09)
+
+Episode counts stop growing on older submissions: v1 froze at 15 episodes, v3
+at 38, v4 at 44 while v5 (32) and v6 kept accruing. So a new submission does
+not add to the pool — it *displaces* the previous one from active play, and
+starts over at rating 600. Submitting anything that is not a measured
+improvement therefore costs the ladder position of the agent it retires. This
+is what dropped the team from rank 751 to ~4500 on day one.
+
+## Both-sides benchmarking is mandatory (and the harness was lying)
+
+`bench.py --both-sides` swapped the *parameter overrides* along with the seat
+order, so the reversed half of every parameterised comparison silently ran
+default-vs-default. The tell was identical "R" rows across three different
+configs. Fixed: swap the seats only, since each agent file reads its own env
+var. Any one-sided sweep result is also unreliable for near-identical agents —
+`c6s3` looked like a +$5k improvement one-sided and lost 3/20 when measured
+properly, because each variant plays a *different* game against the opponent.
+Ties also deflate the win column: identical agents produce exact ties.
+
+## Rejected today (all measured both-sides against v6)
+
+Smaller herd (6 cows/3 sheep), larger herds (12-24), 4 quadrants, 15-16 hands,
+higher cash reserve, faster seed buying, higher plant urgency, late weed
+clearing, holding harvests for scarcity, herd-scaled wheat price ceiling, and
+the winners' full configuration as a combination (4 quadrants + 16 hands + 24
+animals: 0/20, mean $26k against $81k). Our scheduler simply cannot run a farm
+that size — that is an execution limit, not a parameter choice.
