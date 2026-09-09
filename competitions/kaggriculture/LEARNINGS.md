@@ -80,3 +80,29 @@
 - Only 4 CPUs are available in this session: running benchmarks with `--jobs 14`
   is slower than `--jobs 4` and leaves orphaned processes that poison later
   sweeps. Keep parallelism at the core count.
+
+## Reading the ladder's replays (2026-09-09)
+
+Replays of the opponents who beat v4 are the most useful tuning signal
+available — they contain both farms' full tile state at every step, so the
+winners' strategy can be read directly:
+
+```
+kaggle competitions episodes <submission_id> -v   # episode ids
+kaggle competitions replay <episode_id> -p ./r    # full replay JSON
+# steps[i][0]['observation']['farms'][player] -> tiles, money, hands
+```
+
+That is how the two pricing bugs above were found: the winners' farms were
+full of strawberry while ours stood a third empty.
+
+Things measured and rejected today (all roughly neutral against a v4 opponent,
+kept in the code where harmless):
+
+- Grouping jobs by tile so a unit is sent to the best *cluster* of work rather
+  than a single job. Movement stayed at 64% — most crop tiles only ever have
+  one pending job, and animal tiles already got consecutive turns for free.
+- More than 13 farm hands, again: still 0/10, the fib hire cost eats the cash
+  the early herd needs.
+- Pricing the opponent's visible production into our own supply curve
+  (`opponent_weight`): 50% at 0.5 against 62% at 0.

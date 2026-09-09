@@ -66,13 +66,34 @@ when nobody supplies the town.
    growing crops and herd into our own supply curve — measured no better than
    ignoring it (50% at weight 0.5 vs 62% at 0), so it ships disabled.
 
+8. **Learning from the leaderboard's replays** (v5). v4 settled at exactly
+   11/22 on the ladder, so I pulled the replays of the opponents who beat it
+   and read their farms: the winners run 30-38 strawberry tiles and 14-33
+   animals, while ours left a third of the farm empty from day 12 on. Two
+   modelling gaps explained it, both now fixed:
+   - **The town's future demand was ignored when pricing a crop.** We valued a
+     tile against today's inventory, so every extra tile looked like
+     self-inflicted glut. The town eats 6 units a day per shop instance that
+     demands a product (12 for a single-product shop), which is far more than
+     one tile adds. `town_drain()` now prices a crop against the market it will
+     actually be sold into.
+   - **Ongoing crops were valued all-or-nothing.** A strawberry has a harvest
+     age of 16, so from day 14 the planner dropped it entirely and filled the
+     best tiles with wheat at half the return — even though a strawberry sown
+     on day 15 still pays two of its four yields.
+   Also: wheat is priced as feed, not cash, whenever the herd has less than
+   four days of it on hand (its sale price badly understates it — the
+   alternative is buying on a `25 + sqrt(drawdown)` curve).
+   17/24 position-balanced games against v4.
+
 ## Submitted agents
 
 | version | local vs `starter` (12 seeds) | notes |
 | --- | --- | --- |
 | v1 (56100155) | $80,157 | small herd, price-driven crops |
 | v3 (56100666) | $111,100 | dairy herd, deadlock fixed; 16/16 head-to-head vs v1 |
-| v4 (`submissions/main_v4.py`) | ~$100k | herd tuned against a real opponent; 22/24 vs v3 |
+| v4 (56100940) | ~$100k | herd tuned against a real opponent; 22/24 vs v3 |
+| v5 (`submissions/main_v5.py`) | ~$105k | town-demand pricing, partial yields, feed-aware wheat; 17/24 vs v4 |
 
 v1's real ladder episodes came in at $52k-72k against opponents scoring
 $32k-92k (2 wins / 2 losses in its first four games), so the local numbers are
@@ -92,6 +113,12 @@ mix inside them is chosen by `animal_value()` from live prices),
   more than the extra yield is worth. Left in the code, disabled by default.
 - The third quadrant is worth buying, the fourth is not (`max_quadrants=3`).
 - More than 13 farm hands loses badly: `fib(14..16)` = 377/610/987 a day.
+- **Copying the winners' herd size does not work yet.** They run 21-33
+  animals; at 20 cows / 12 sheep ours scores $37k because the shed runs dry —
+  30 animals eat 30 wheat a day, the farm freezes around day 14, and seeds go
+  unplanted. Feed-aware wheat recovered part of it ($37k to $45k) but a big
+  herd still loses to our 8 cows / 4 sheep. Whatever lets them feed and care
+  for 30 animals is the largest single thing still missing.
 - **Movement is 65% of every unit-turn** (8% is PASS, only 26% is productive
   work). Bigger wheat loads per shed trip, leaving idle hands in the field, and
   a smaller farm footprint were all tried and all came out even, so cutting it
