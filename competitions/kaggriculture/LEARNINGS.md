@@ -152,3 +152,45 @@ clearing, holding harvests for scarcity, herd-scaled wheat price ceiling, and
 the winners' full configuration as a combination (4 quadrants + 16 hands + 24
 animals: 0/20, mean $26k against $81k). Our scheduler simply cannot run a farm
 that size — that is an execution limit, not a parameter choice.
+
+## Movement is not waste (2026-09-10)
+
+The standing theory was that ~65% of unit-turns going to movement was the big
+remaining inefficiency, and that routing hands to work a cluster before moving
+on would nearly double productive work. Zone routing was built to test it: a
+unit claims a block of tiles and works everything in it before moving on.
+
+It cuts movement exactly as intended, and income falls monotonically with it:
+
+| zone size | movement | reward (seed 3, vs starter) |
+| --- | --- | --- |
+| off | 67% | $132.0k |
+| 2 | 60% | $122.4k |
+| 3 | 47% | $88.3k |
+| 4 | 26% | $74.2k |
+| 5 | 13% | $12.7k |
+
+Distance is a proxy for value here: the far tiles are the crops that pay, the
+near ones are the animals. Confining a unit to a block makes it do cheap work
+nearby instead of expensive work across the farm, and `value - distance *
+action_value` was already making that trade correctly. Both-sides against v6,
+`zone_size=2` scores 9/20.
+
+The corollary was also tested and also false. An animal visit buys four actions
+(feed, care, harvest, collect) while a crop tile buys one, which argues for
+crops near the shed and livestock pushed out. Measured: 0/20. Animals need the
+shed too - that is where their wheat comes from - so moving them out just adds
+a feed round-trip.
+
+Both mechanisms are left in the code, disabled (`zone_size`, `structures_far`),
+because the negative result is the useful part.
+
+## Why big herds actually fail
+
+Not routing. Capital. At day 12 a 16-animal farm has $262 in the bank and 36
+plants; the 8-cow farm has $10,932 and 58 plants. Livestock at $400-500 a head
+crowds out the strawberry seed that funds everything, and the crop engine never
+starts. By day 16 the big farm holds 22 animals, zero wheat, 22 of them unfed,
+and spends 87% of its turns walking because there is nothing it can afford to
+do. The labour budget then makes it worse: `crop_capacity` charges 7 actions a
+day per animal, so a big herd caps the crop plan at ~27 tiles by construction.

@@ -77,10 +77,11 @@ PARAMS = {
     "labour_efficiency": 0.70,  # share of unit-turns that are not walking
     "seeds_per_turn": 6,
     "struct_slots_ahead": 12,
+    "structures_far": 0,        # put livestock on the outer tiles, crops near the shed
     # --- animals -----------------------------------------------------------
     "max_geese": 0,           # caps; the mix within them is chosen from prices
-    "cows": 6,                # smaller herd: lower ceiling, higher floor
-    "sheep": 3,
+    "cows": 8,
+    "sheep": 4,
     "animal_min_value": 0.0,
     "opponent_weight": 0.0,    # rival output to price in; measured no better at 0.5-1.0
     "last_animal_day": 18,      # after this, a new animal cannot pay for itself
@@ -119,6 +120,8 @@ PARAMS = {
     "max_hires_per_turn": 4,
     # --- scheduler ---------------------------------------------------------
     "action_value": 30.0,       # dollars a unit-turn is worth (distance charge)
+    "zone_size": 0,            # >0 enables zone routing with blocks this wide
+    "zone_sticky": 120.0,      # keeps a unit in its block instead of re-picking
     "cluster_decay": 0.7,      # weight of the 2nd, 3rd... job on the same tile
     "sticky_bonus": 30.0,
     "fetch_range": 6,       # discourages re-targeting mid-walk
@@ -131,6 +134,7 @@ PARAMS = {
     "build_lookahead": 2,
 }
 PARAMS.update(json.loads(os.environ.get("KAG_PARAMS", "{}")))
+_ZONE = {}         # (player, unit index) -> claimed zone
 _LAST = {}          # (player, unit index) -> (target pos, op) from last turn
 _TRACE = set(int(d) for d in os.environ.get("KAG_TRACE", "").split(",") if d.strip())
 
@@ -383,8 +387,17 @@ def _plan(obs):
                         len(empties) + len(empty_struct) + n_animals)
     n_struct_need = max(0, min(n_struct_want - n_animals - len(empty_struct),
                                PARAMS["struct_slots_ahead"]))
-    struct_slots = empties[:n_struct_need]
-    crop_tiles = empties[n_struct_need:]
+    # Who gets the tiles near the shed. A visit to an animal buys four actions
+    # (feed, care, harvest, collect) so its walk is amortised; a crop tile buys
+    # one, so its walk is pure overhead per action. That argues for crops close
+    # in and livestock pushed out -- the opposite of the original layout.
+    if PARAMS["structures_far"]:
+        struct_slots = empties[::-1][:n_struct_need]
+        far = set(struct_slots)
+        crop_tiles = [p for p in empties if p not in far]
+    else:
+        struct_slots = empties[:n_struct_need]
+        crop_tiles = empties[n_struct_need:]
 
     # ---------------------------------------------------------- crop planner
     # Pick what to plant from the live market: town shops drain carrot, tomato
@@ -638,33 +651,93 @@ def _plan(obs):
     for ji, job in enumerate(jobs):
         by_tile.setdefault(job["pos"], []).append(ji)
 
+    decay = PARAMS["cluster_decay"]
+
+    def tile_value(jis):
+        v, w = 0.0, 1.0
+        for ji in jis:
+            v += jobs[ji]["val"] * w
+            w *= decay
+        return v
+
     assign = {}
     taken = set()
-    pairs = []
-    decay = PARAMS["cluster_decay"]
-    for ui, (idx, pos, inv) in enumerate(units):
+    zs = PARAMS["zone_size"]
+    if zs > 0:
+        # Zone routing. Sending a unit to the single best job and re-deciding
+        # next turn means it crosses the farm for one action and crosses back:
+        # roughly two thirds of every unit-turn was spent walking. Instead a
+        # unit claims a block of tiles and works everything in it before moving
+        # on, so the walk out is amortised over a whole cluster of jobs.
+        zones = {}
         for tpos, jis in by_tile.items():
-            doable = [ji for ji in jis if _can_do(jobs[ji], idx, inv)]
-            if not doable:
+            zones.setdefault((tpos[0] // zs, tpos[1] // zs), []).append(tpos)
+
+        def zone_score(unit_idx, inv, zpos, tiles_in):
+            total = 0.0
+            nearest = None
+            for tpos in tiles_in:
+                doable = [ji for ji in by_tile[tpos] if _can_do(jobs[ji], unit_idx, inv)]
+                if not doable:
+                    continue
+                total += tile_value(sorted(doable, key=lambda ji: -jobs[ji]["val"]))
+                if nearest is None or _dist(pos, tpos) < nearest:
+                    nearest = _dist(pos, tpos)
+            return (total, nearest)
+
+        pairs = []
+        for ui, (idx, pos, inv) in enumerate(units):
+            for zpos, tiles_in in zones.items():
+                total, nearest = zone_score(idx, inv, zpos, tiles_in)
+                if not total or nearest is None:
+                    continue
+                score = total - nearest * PARAMS["action_value"]
+                if _ZONE.get((player, idx)) == zpos:
+                    score += PARAMS["zone_sticky"]
+                pairs.append((score, ui, zpos))
+        pairs.sort(key=lambda p: (-p[0], p[1]))
+        claimed = {}
+        for _score, ui, zpos in pairs:
+            if ui in claimed or zpos in taken:
                 continue
-            doable.sort(key=lambda ji: -jobs[ji]["val"])
-            # Later jobs on the tile are worth less: each one costs another turn
-            # and may be done by whoever passes through next.
-            value = 0.0
-            w = 1.0
-            for ji in doable:
-                value += jobs[ji]["val"] * w
-                w *= decay
-            score = value - _dist(pos, tpos) * PARAMS["action_value"]
-            if _LAST.get((player, idx)) == tpos:
-                score += PARAMS["sticky_bonus"]
-            pairs.append((score, ui, tpos, doable[0]))
-    pairs.sort(key=lambda p: (-p[0], p[1]))
-    for _score, ui, tpos, ji in pairs:
-        if ui in assign or tpos in taken:
-            continue
-        assign[ui] = ji
-        taken.add(tpos)
+            claimed[ui] = zpos
+            taken.add(zpos)
+        # Within its zone a unit takes the nearest worthwhile tile, so it works
+        # the block as a route instead of hopping across it.
+        for ui, (idx, pos, inv) in enumerate(units):
+            zpos = claimed.get(ui)
+            _ZONE[(player, idx)] = zpos
+            if zpos is None:
+                continue
+            best, best_score = None, None
+            for tpos in zones[zpos]:
+                doable = [ji for ji in by_tile[tpos] if _can_do(jobs[ji], idx, inv)]
+                if not doable:
+                    continue
+                doable.sort(key=lambda ji: -jobs[ji]["val"])
+                sc = tile_value(doable) - _dist(pos, tpos) * PARAMS["action_value"]
+                if best_score is None or sc > best_score:
+                    best, best_score = doable[0], sc
+            if best is not None:
+                assign[ui] = best
+    else:
+        pairs = []
+        for ui, (idx, pos, inv) in enumerate(units):
+            for tpos, jis in by_tile.items():
+                doable = [ji for ji in jis if _can_do(jobs[ji], idx, inv)]
+                if not doable:
+                    continue
+                doable.sort(key=lambda ji: -jobs[ji]["val"])
+                score = tile_value(doable) - _dist(pos, tpos) * PARAMS["action_value"]
+                if _LAST.get((player, idx)) == tpos:
+                    score += PARAMS["sticky_bonus"]
+                pairs.append((score, ui, tpos, doable[0]))
+        pairs.sort(key=lambda p: (-p[0], p[1]))
+        for _score, ui, tpos, ji in pairs:
+            if ui in assign or tpos in taken:
+                continue
+            assign[ui] = ji
+            taken.add(tpos)
 
     # ------------------------------------------------------------ unit moves
     unit_actions = []

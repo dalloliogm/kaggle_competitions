@@ -137,6 +137,8 @@ mix inside them is chosen by `animal_value()` from live prices),
   unplanted. Feed-aware wheat recovered part of it ($37k to $45k) but a big
   herd still loses to our 8 cows / 4 sheep. Whatever lets them feed and care
   for 30 animals is the largest single thing still missing.
+- ~~Movement is 65% of every unit-turn~~ **Tested and false** - see
+  LEARNINGS.md. Cutting movement cuts income; distance is a proxy for value.
 - **Movement is 65% of every unit-turn** (8% is PASS, only 26% is productive
   work). Bigger wheat loads per shed trip, leaving idle hands in the field, and
   a smaller farm footprint were all tried and all came out even, so cutting it
