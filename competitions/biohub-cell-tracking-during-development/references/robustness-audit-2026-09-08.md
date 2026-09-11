@@ -335,3 +335,60 @@ Priority order for the remaining three weeks: fix the runtime, then treat
 `~0.93` rather than `0.946` as the honest expectation and stop reading public
 ticks of `0.001-0.003` as real improvements - they are well inside the noise of
 an `n≈2` public measurement.
+
+---
+
+# UPDATE 3 - the config pin is VERIFIED, and the runtime model is now measured
+
+## The pin is provably equivalent
+
+`dalloliogm/biohub-sep10-runtime-pinned-config-no-validator` sets
+`MOTION_RELINK_TIGHT_UM=5.5` directly and disables the validator. Its
+`submission.csv` sha is **`a852d1d07ff8c9307d9b10db...` - byte-identical to the
+scored `0.946` artifact.** So the whole validator apparatus exists only to
+re-derive one constant, and pinning it changes nothing about the output.
+
+| run | wall clock |
+| --- | ---: |
+| original (validator, 8 videos) | 106.1 min |
+| widened (validator, 24 videos) | 170.6 min |
+| **pinned, no validator** | **24.9 min** |
+
+**A 4.3x reduction for an identical submission.**
+
+## Measured runtime model
+
+Phase timings from the pinned run, not inferred:
+
+| phase | cost |
+| --- | ---: |
+| setup, install, model load | 6.0 min (fixed) |
+| prediction, 4 test videos | 9.3 min -> `2.33` min/video |
+| tracking, post-processing, audit, 4 videos | 9.4 min -> `2.35` min/video |
+| **per-video total** | **`4.68` min** |
+
+Validator cost decomposes as `49.0` min fixed plus `4.03` min/video (solved from
+the 8- and 24-video runs against this one).
+
+## Projection - better, still short
+
+| hidden videos | pinned | original | limit |
+| ---: | ---: | ---: | ---: |
+| 152 | **11.9 h** | 13.3 h | 12 h |
+| 199 | **15.6 h** | 17.0 h | 12 h |
+
+The pinned kernel fits **about 152 videos**. The Dataset Description implies
+**~199**, so **a further `1.30x` speedup is needed**. Pinning was necessary and
+is real progress - it removed 81 min of pure overhead and 1.4 h at N=199 - but it
+does not close the gap on its own.
+
+Prediction and tracking are now almost exactly half the cost each (`2.33` vs
+`2.35` min/video), so there is no single dominant target: either both improve
+modestly, or one is roughly halved.
+
+## Correction
+
+An earlier pass in this file estimated `3.22` min/video by assuming a 12 min
+setup carried over from the original run. The pinned run's setup is **6.0 min**
+measured, which gives `4.68` min/video and turns a projected "10.9 h FITS" into
+**15.6 h OVER**. The measured figure governs.
