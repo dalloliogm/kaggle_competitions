@@ -17,8 +17,9 @@
       "nodes": 122794,
       "edges": 118512,
       "datasets": 4,
-      "state": "PRIVATE_KERNEL_RUNNING_V1",
-      "private_kernel": "dalloliogm/biohub-sep12-lf-dctta-0947"
+      "state": "SUBMITTED_PENDING",
+      "private_kernel": "dalloliogm/biohub-sep12-lf-dctta-0947",
+      "submission_ref": 56189963
     },
     {
       "target_kernel": "dalloliogm/biohub-sep12-lf-dctta-v020-0947",
@@ -30,8 +31,9 @@
       "nodes": 122808,
       "edges": 118548,
       "datasets": 4,
-      "state": "PRIVATE_KERNEL_RUNNING_V1",
-      "private_kernel": "dalloliogm/biohub-sep12-lf-dctta-v020-0947"
+      "state": "SUBMITTED_PENDING",
+      "private_kernel": "dalloliogm/biohub-sep12-lf-dctta-v020-0947",
+      "submission_ref": 56189965
     },
     {
       "target_kernel": "dalloliogm/biohub-sep12-lf-dctta-v3-secw060",
@@ -74,5 +76,5 @@
     "known_submitted_0946_sha": "a852d1d07ff8c9307d9b10db7f9b4b12e8b1882f14c5dbeb1316d099f0795b3e",
     "known_submitted_0946_reproduction_excluded": true
   },
-  "submission_state": "No September 12 submission yet. Two private kernels are running; three private pushes are queued behind Kaggle's two-session GPU cap."
+  "submission_state": "Two September 12 submissions accepted and pending evaluation; three candidates remain queued behind the two-session GPU cap."
 }
