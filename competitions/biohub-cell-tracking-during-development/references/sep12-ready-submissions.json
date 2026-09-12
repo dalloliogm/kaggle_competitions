@@ -1,0 +1,78 @@
+{
+  "date": "2026-09-12",
+  "source_scan": "Kaggle public kernels list and score lookups refreshed on 2026-09-12",
+  "validation": {
+    "harness": "scripts/biohub_validation_harness.py --skip-metric",
+    "result": "all five valid; zero warnings and errors",
+    "independent_holdout": false
+  },
+  "candidates": [
+    {
+      "target_kernel": "dalloliogm/biohub-sep12-lf-dctta-0947",
+      "public_source": "sjlee101/biohub-lf-dctta",
+      "public_score": 0.947,
+      "public_score_status": "verified",
+      "sha256": "a69c78229c6556d06d5fe9ff050074254b4a326e83249efbf578b843aec7a848",
+      "rows": 241306,
+      "nodes": 122794,
+      "edges": 118512,
+      "datasets": 4,
+      "state": "PRIVATE_KERNEL_RUNNING_V1",
+      "private_kernel": "dalloliogm/biohub-sep12-lf-dctta-0947"
+    },
+    {
+      "target_kernel": "dalloliogm/biohub-sep12-lf-dctta-v020-0947",
+      "public_source": "crystalbaby/biohub-lf-dctta-v020",
+      "public_score": 0.947,
+      "public_score_status": "verified",
+      "sha256": "d34533806b3153ddd4f33f3bbc1dea70af2d5406bb1ea48e42c135a97c213f60",
+      "rows": 241356,
+      "nodes": 122808,
+      "edges": 118548,
+      "datasets": 4,
+      "state": "PRIVATE_KERNEL_RUNNING_V1",
+      "private_kernel": "dalloliogm/biohub-sep12-lf-dctta-v020-0947"
+    },
+    {
+      "target_kernel": "dalloliogm/biohub-sep12-lf-dctta-v3-secw060",
+      "public_source": "wind0703/biohub-lf-dctta-v3-secw060",
+      "public_score": null,
+      "public_score_status": "not_returned_by_score_lookup",
+      "sha256": "1c6f89d96695ba314f6837e59864b3c14c2df0baacb044329a37bae5c3942f8c",
+      "rows": 243582,
+      "nodes": 123962,
+      "edges": 119619,
+      "datasets": 4,
+      "state": "READY_TO_PUSH_AND_RUN"
+    },
+    {
+      "target_kernel": "dalloliogm/biohub-sep12-lf-dctta-sister16-0947",
+      "public_source": "sjlee101/biohub-lf-dctta020-sectta1-sister16",
+      "public_score": 0.947,
+      "public_score_status": "verified",
+      "sha256": "925d65e3939cb3ec2325178fe73cd0be45b874159f6c771ffb1b4eab6f5a8d99",
+      "rows": 241352,
+      "nodes": 122807,
+      "edges": 118545,
+      "datasets": 4,
+      "state": "READY_TO_PUSH_AND_RUN"
+    },
+    {
+      "target_kernel": "dalloliogm/biohub-sep12-lineage-forge-0946",
+      "public_source": "sjlee101/biohub-lineage-forge-fork",
+      "public_score": 0.946,
+      "public_score_status": "verified",
+      "sha256": "22ef93cf2b78eae39e1247d8370f31aa3c6cbd66ce0fe2aed05fa4d2c50d3605",
+      "rows": 241306,
+      "nodes": 122792,
+      "edges": 118514,
+      "datasets": 4,
+      "state": "READY_TO_PUSH_AND_RUN"
+    }
+  ],
+  "duplicate_guard": {
+    "known_submitted_0946_sha": "a852d1d07ff8c9307d9b10db7f9b4b12e8b1882f14c5dbeb1316d099f0795b3e",
+    "known_submitted_0946_reproduction_excluded": true
+  },
+  "submission_state": "No September 12 submission yet. Two private kernels are running; three private pushes are queued behind Kaggle's two-session GPU cap."
+}
