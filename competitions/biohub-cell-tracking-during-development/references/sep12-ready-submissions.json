@@ -73,12 +73,14 @@
       "nodes": 122792,
       "edges": 118514,
       "datasets": 4,
-      "state": "READY_TO_PUSH_AND_RUN"
+      "state": "SUBMITTED_PENDING",
+      "private_kernel": "dalloliogm/biohub-sep12-lineage-forge-0946",
+      "submission_ref": 56211128
     }
   ],
   "duplicate_guard": {
     "known_submitted_0946_sha": "a852d1d07ff8c9307d9b10db7f9b4b12e8b1882f14c5dbeb1316d099f0795b3e",
     "known_submitted_0946_reproduction_excluded": true
   },
-  "submission_state": "Four submissions accepted across September 12-13; the September 13 submissions are pending evaluation. Lineage Forge remains uncreated because of the earlier GPU-session cap."
+  "submission_state": "Five candidates completed private runs and passed validation. September 13 submissions 56202058, 56202064, and 56211128 are pending; September 12 submissions remain pending."
 }
