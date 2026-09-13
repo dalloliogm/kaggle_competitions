@@ -55,3 +55,5 @@ f146c2a51a394af0213c2820b53b27bffd1a6d74d2bf8f3cbbc90330e82e0de9  dalloliogm/bio
 a852d1d07ff8c9307d9b10db7f9b4b12e8b1882f14c5dbeb1316d099f0795b3e  dalloliogm/biohub-sep07-edge-feature-tta-0946-repro v1  [SEP07:edge-feature-tta-0946-repro] refs [56075335]
 a69c78229c6556d06d5fe9ff050074254b4a326e83249efbf578b843aec7a848  dalloliogm/biohub-sep12-lf-dctta-0947 v1  [SEP12:lf-dctta-0947] refs [56189963]
 d34533806b3153ddd4f33f3bbc1dea70af2d5406bb1ea48e42c135a97c213f60  dalloliogm/biohub-sep12-lf-dctta-v020-0947 v1  [SEP12:lf-dctta-v020-0947] refs [56189965]
+1c6f89d96695ba314f6837e59864b3c14c2df0baacb044329a37bae5c3942f8c  dalloliogm/biohub-sep12-lf-dctta-v3-secw060 v1  [SEP13:lf-dctta-v3-secw060] refs [56202058]
+925d65e3939cb3ec2325178fe73cd0be45b874159f6c771ffb1b4eab6f5a8d99  dalloliogm/biohub-sep12-lf-dctta-sister16-0947 v1  [SEP13:lf-dctta-sister16-0947] refs [56202064]

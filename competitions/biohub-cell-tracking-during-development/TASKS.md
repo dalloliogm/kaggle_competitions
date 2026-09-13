@@ -11,18 +11,18 @@ structurally validated, and prepared under `notebooks/public-reproductions/`:
 | --- | ---: | --- | --- | --- |
 | LF DCTTA | 0.947 | `a69c7822` | valid; 122,794 nodes / 118,512 edges | Submitted `56189963`; PENDING |
 | LF DCTTA v020 | 0.947 | `d3453380` | valid; 122,808 nodes / 118,548 edges | Submitted `56189965`; PENDING |
-| LF DCTTA v3 SECW060 | Unscored | `1c6f89d9` | valid; 123,962 nodes / 119,619 edges | Ready to push/run; score unknown |
-| LF DCTTA sister16 | 0.947 | `925d65e3` | valid; 122,807 nodes / 118,545 edges | Ready to push/run |
+| LF DCTTA v3 SECW060 | Unscored | `1c6f89d9` | valid; 123,962 nodes / 119,619 edges | Submitted `56202058`; PENDING |
+| LF DCTTA sister16 | 0.947 | `925d65e3` | valid; 122,807 nodes / 118,545 edges | Submitted `56202064`; PENDING |
 | Lineage Forge | 0.946 | `22ef93cf` | valid; 122,792 nodes / 118,514 edges | Ready to push/run |
 
 All five pass the structural harness with four datasets, no warnings, and no
 errors. The public `0.946` artifact already submitted on September 7 is excluded
 by the SHA duplicate guard. These are public-source reproductions, not private-
 leaderboard or independent-holdout evidence. Full provenance and hashes are in
-`references/sep12-ready-submissions.json`. Two private kernels (LF DCTTA and
-LF DCTTA v020) completed, passed validation, and were submitted as refs
-`56189963` and `56189965`; both are PENDING. The other three pushes are queued
-behind Kaggle's two-session GPU cap.
+`references/sep12-ready-submissions.json`. Four candidates have now completed,
+passed validation, and been submitted as refs `56189963`, `56189965`, `56202058`,
+and `56202064`; all four are PENDING. The Lineage Forge push was blocked by
+Kaggle's two-session GPU cap and remains uncreated.
 
 ## September 7 public-notebook reproductions
 
