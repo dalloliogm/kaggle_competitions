@@ -1,5 +1,22 @@
 # Tasks
 
+## September 13 recommended public-reproduction queue
+
+Three new public directions are prepared locally and ordered for execution:
+
+1. `sep13-v1329-original-guard`: V1329/V1327 learned map with the original
+   V1290 detector guard restored (`josephadamski91/biohub-v1329-v1327-original-guard`).
+2. `sep13-deepcenter-tta`: DeepCenter/detection-TTA candidate
+   (`sushanthtiruvaipati/biohub-deepcenter-tta-v1`).
+3. `sep13-champion-v5-thr099b`: detector threshold `.99` plus adaptive
+   short-track rescue and the public division controls
+   (`caassicca/biohub-champion-v5-thr099b`).
+
+The first two private kernels are running as version 1; the third is prepared
+locally and waits behind Kaggle's two-session GPU cap. These are reproductions,
+not submissions; each must complete and pass the structural audit before any
+upload is considered.
+
 ## September 12 five-candidate preparation
 
 Live Kaggle refresh on 2026-09-12 shows no submission made today. The
