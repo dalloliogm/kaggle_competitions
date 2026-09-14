@@ -153,11 +153,23 @@ def validate(path: Path) -> tuple[bool, list[str], dict]:
 
 
 def already_submitted(sha: str, store: Path) -> str | None:
-    if not store.exists():
-        return None
-    for line in store.read_text().splitlines():
-        if line.startswith(sha):
-            return line
+    """Match the ledger on full sha *or* on a recorded prefix.
+
+    The ledger used to hold only full 64-char digests, so an entry recovered
+    from a Kaggle submission description - which carries just the leading 8
+    hex characters - could never match, and on 2026-09-14 two slots were spent
+    resubmitting artifacts already scored on 2026-09-12. Any line whose first
+    token is a hex prefix of at least 8 characters now counts as a hit.
+    """
+    for path in (store, store.with_name("submitted_sha_prefixes.txt")):
+        if not path.exists():
+            continue
+        for line in path.read_text().splitlines():
+            token = line.split()[0] if line.split() else ""
+            if len(token) < 8 or any(c not in "0123456789abcdef" for c in token):
+                continue
+            if sha.startswith(token):
+                return f"{path.name}: {line}"
     return None
 
 
