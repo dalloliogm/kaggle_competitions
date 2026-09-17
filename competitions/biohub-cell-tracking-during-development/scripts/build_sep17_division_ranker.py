@@ -142,6 +142,20 @@ ARMS = {
         ],
         "note": "C: evidence ranking with the gates half-open.",
     },
+    # Arm B moves two things at once - ranking AND gating - so on its own it
+    # cannot say which one mattered. This is the control: identical gates to B,
+    # but the original geometry ranker. B minus D is the ranking effect at a
+    # pool size where the cap actually binds (B skipped 57 candidates on the
+    # cap; the shipped-gate arm skipped none, which is why ranking was inert
+    # there).
+    "biohub-sep17-geomrank-open": {
+        "title": "Biohub Sep17 Geometry Rank Gates Open",
+        "env": [
+            ("BIOHUB_SAFE_DIV_REQUIRE_DIVERGENCE", "0"),
+            ("BIOHUB_SAFE_DIV_SISTER_SYMMETRY_TAU", "0.0"),
+        ],
+        "note": "D: CONTROL - gates off exactly as in B, but the original geometry ranker.",
+    },
 }
 
 
