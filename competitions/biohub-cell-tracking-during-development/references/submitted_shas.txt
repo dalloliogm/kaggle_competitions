@@ -57,3 +57,7 @@ a69c78229c6556d06d5fe9ff050074254b4a326e83249efbf578b843aec7a848  dalloliogm/bio
 60f14085  ref 56240254  2026-09-14  SEP14-3 DCTTA detection threshold 0.99 (prefix only; full digest not retained)
 da8ab1b84ebf94c914a308edae61e876650bccd3c9e5663179e85c7fac48a48b  dalloliogm/biohub-sep14-motion-relink-tight-50 v1  SEP14-4 MOTION_RELINK_TIGHT_UM 5.0; ref 56240559
 d3c053316a051db624c1d3930c447b9f95e21621eae418f301b0871de9e958cc  dalloliogm/biohub-sep14-safe-division-half-budget v1  SEP14-5 safe-division caps halved; ref 56240562
+30835489677cb403a7e936d9ad3f2219da3ea59d88aa4841ae7273c1253e2042  dalloliogm/biohub-sep17-division-rank-gates-open v1  SEP17-1 DeepCenter-ranked divisions, gates off; 382 divisions
+d43147a6040d62876c0f6bead0bb519317c134cd6136f9801b4dda7f77168dd0  dalloliogm/biohub-sep17-geometry-rank-gates-open v1  SEP17-2 CONTROL geometry ranker, same gates as SEP17-1
+b2a6f055c1ce0d5e1d9b7a851964158e6fa39b4b8df0f16cd59a9443e98b10fb  dalloliogm/biohub-sep17-division-rank-gates-mid v1  SEP17-3 DeepCenter-ranked divisions, gates half-open; 342 divisions
+a567aee2f3f54586a49413a218c301ea44bcdadaf9eb82f6124b460e34ccf59f  dalloliogm/biohub-sep17-division-rank-deepcenter v1  NOT SUBMITTED - arm A, counters identical to baseline, 7 rows from a scored artifact
