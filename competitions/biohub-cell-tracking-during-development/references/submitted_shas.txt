@@ -61,3 +61,4 @@ d3c053316a051db624c1d3930c447b9f95e21621eae418f301b0871de9e958cc  dalloliogm/bio
 d43147a6040d62876c0f6bead0bb519317c134cd6136f9801b4dda7f77168dd0  dalloliogm/biohub-sep17-geometry-rank-gates-open v1  SEP17-2 CONTROL geometry ranker, same gates as SEP17-1
 b2a6f055c1ce0d5e1d9b7a851964158e6fa39b4b8df0f16cd59a9443e98b10fb  dalloliogm/biohub-sep17-division-rank-gates-mid v1  SEP17-3 DeepCenter-ranked divisions, gates half-open; 342 divisions
 a567aee2f3f54586a49413a218c301ea44bcdadaf9eb82f6124b460e34ccf59f  dalloliogm/biohub-sep17-division-rank-deepcenter v1  NOT SUBMITTED - arm A, counters identical to baseline, 7 rows from a scored artifact
+bbca0613a4a7a19ba7e18d23be9e66e9133bb4abeefafdedf13998160f14ff23  dalloliogm/biohub-sep18-density-adaptive-low-only v1  NOT SUBMITTED - arm E, 45 rows from baseline, all in the lowest-weight video; needs local validation across density regimes, not the LB
