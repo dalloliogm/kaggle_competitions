@@ -65,3 +65,7 @@ bbca0613a4a7a19ba7e18d23be9e66e9133bb4abeefafdedf13998160f14ff23  dalloliogm/bio
 fe6f0a6fe5c996b876cd40f85b9cef75421be5e959a5cd859c33fa339888a8d9  dalloliogm/biohub-sep18-density-adaptive-full-table v1  SEP18-1 density-adaptive relink, full three-bucket table
 471044e7089083bd2176e55062edc1c845c1788148e0da7ba8dc7e34a59a5e4c  dalloliogm/biohub-sep19-density-low-800 v1  SEP19-1 density low bucket 8.0; only arm supported over F by the restricted paired test
 fca59501532c22486f803af9a64401c6063d0b6f788be45ba263b85b82817e2d  dalloliogm/biohub-sep19-density-middle-700 v1  SEP19-2 middle bucket 7.0; aggregate-vs-paired prediction test (3/9 W-L)
+968be0e36b7ee06c3b4decf7634428101450208ec82026c0f3ca0431af9c9b85  dalloliogm/biohub-sep19-density-low-900 v1  SEP19-3 low bucket 9.0; extends the supported gradient
+d66d407e26d82c0c5a23bbba2901d45370984508c6364f73f9b88046b4b64fae  dalloliogm/biohub-sep19-density-high-600 v1  SEP19-4 high bucket 6.0; probes the 57.2%-weight public video our harness barely covers
+17a5b037a2d492d5439fee207c3a7226ee2a0cd17de2b50c177e781282214987  dalloliogm/biohub-sep19-density-middle-700-low-800 v1  SEP19-5 low 8.0 + middle 7.0; interaction test
+b98e5454279f74d3607ee342295b8a758737615d4452e5c2b96364c15b8c8b06  dalloliogm/biohub-sep19-density-low-650 v1  NOT SUBMITTED - held-out -0.00027 vs arm F; least informative point on the low curve
