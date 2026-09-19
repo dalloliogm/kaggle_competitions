@@ -63,3 +63,4 @@ b2a6f055c1ce0d5e1d9b7a851964158e6fa39b4b8df0f16cd59a9443e98b10fb  dalloliogm/bio
 a567aee2f3f54586a49413a218c301ea44bcdadaf9eb82f6124b460e34ccf59f  dalloliogm/biohub-sep17-division-rank-deepcenter v1  NOT SUBMITTED - arm A, counters identical to baseline, 7 rows from a scored artifact
 bbca0613a4a7a19ba7e18d23be9e66e9133bb4abeefafdedf13998160f14ff23  dalloliogm/biohub-sep18-density-adaptive-low-only v1  SEP18-2 density-adaptive LOW BUCKET ONLY; held back until validated, then submitted on paired 24-video evidence (+0.00167 adj edge, CI excludes zero)
 fe6f0a6fe5c996b876cd40f85b9cef75421be5e959a5cd859c33fa339888a8d9  dalloliogm/biohub-sep18-density-adaptive-full-table v1  SEP18-1 density-adaptive relink, full three-bucket table
+471044e7089083bd2176e55062edc1c845c1788148e0da7ba8dc7e34a59a5e4c  dalloliogm/biohub-sep19-density-low-800 v1  SEP19-1 density low bucket 8.0; only arm supported over F by the restricted paired test
