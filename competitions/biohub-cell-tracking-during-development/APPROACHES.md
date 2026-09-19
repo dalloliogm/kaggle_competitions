@@ -1,5 +1,30 @@
 # Approaches
 
+## September 13 recommended reproductions
+
+The next queue targets three directions that differ from the already submitted
+LF/DCTTA sweep: restoring the original V1290 detector guard around the V1329
+learned map, applying DeepCenter/detection test-time augmentation, and testing
+the `.99` detector plus adaptive short-track rescue recipe. Sources, metadata,
+and private target kernel IDs are under `notebooks/public-reproductions/sep13-*`.
+The first two are running; the third is prepared behind the GPU-session cap.
+
+## September 12 public-kernel scan and five ready candidates
+
+The latest public scan found a new `0.947` LF/DCTTA family. Five distinct
+outputs were downloaded from completed public kernels and passed the local
+structural harness. Three have verified public `0.947` scores, one is a
+verified `0.946` lineage-forge result, and one SECW060 variant has no score
+returned by the lookup. They target the learned feature/link representation and
+downstream association/lineage construction rather than another scalar
+post-processing sweep. Local source copies and metadata are under
+`notebooks/public-reproductions/sep12-*`; the readiness ledger is
+`references/sep12-ready-submissions.json`.
+
+The five outputs are distinct from one another and from the already submitted
+September 7 `0.946` SHA. They are ready to push and run as private kernels, but
+are not yet Kaggle submissions and provide no independent holdout evidence.
+
 ## September 7 public-notebook reproductions
 
 | Candidate | Change | Reproduction evidence | State |

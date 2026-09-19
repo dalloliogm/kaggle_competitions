@@ -53,6 +53,11 @@ f47108bbc6c37064e0c4c35b3bb283050a300dd609417ea952325dcb3c3eed4c  dalloliogm/bio
 f5c1ca733d625eb78b81f944e57ec8a389a8e574466f277616892b19cd755ce0  dalloliogm/biohub-sep06-symmetry45 v1  [SEP06:symmetry45] refs [56050782]
 f146c2a51a394af0213c2820b53b27bffd1a6d74d2bf8f3cbbc90330e82e0de9  dalloliogm/biohub-sep06-retention95 v1  [SEP06:retention95] refs [56051153]
 a852d1d07ff8c9307d9b10db7f9b4b12e8b1882f14c5dbeb1316d099f0795b3e  dalloliogm/biohub-sep07-edge-feature-tta-0946-repro v1  [SEP07:edge-feature-tta-0946-repro] refs [56075335]
+a69c78229c6556d06d5fe9ff050074254b4a326e83249efbf578b843aec7a848  dalloliogm/biohub-sep12-lf-dctta-0947 v1  [SEP12:lf-dctta-0947] refs [56189963]
+d34533806b3153ddd4f33f3bbc1dea70af2d5406bb1ea48e42c135a97c213f60  dalloliogm/biohub-sep12-lf-dctta-v020-0947 v1  [SEP12:lf-dctta-v020-0947] refs [56189965]
+1c6f89d96695ba314f6837e59864b3c14c2df0baacb044329a37bae5c3942f8c  dalloliogm/biohub-sep12-lf-dctta-v3-secw060 v1  [SEP13:lf-dctta-v3-secw060] refs [56202058]
+925d65e3939cb3ec2325178fe73cd0be45b874159f6c771ffb1b4eab6f5a8d99  dalloliogm/biohub-sep12-lf-dctta-sister16-0947 v1  [SEP13:lf-dctta-sister16-0947] refs [56202064]
+22ef93cf2b78eae39e1247d8370f31aa3c6cbd66ce0fe2aed05fa4d2c50d3605  dalloliogm/biohub-sep12-lineage-forge-0946 v1  [SEP13:lineage-forge-0946] refs [56211128]
 a69c78229c6556d06d5fe9ff050074254b4a326e83249efbf578b843aec7a848  dalloliogm/biohub-sep13-deepcenter-tta v1  SEP14-1 DeepCenter TTA
 60f14085  ref 56240254  2026-09-14  SEP14-3 DCTTA detection threshold 0.99 (prefix only; full digest not retained)
 da8ab1b84ebf94c914a308edae61e876650bccd3c9e5663179e85c7fac48a48b  dalloliogm/biohub-sep14-motion-relink-tight-50 v1  SEP14-4 MOTION_RELINK_TIGHT_UM 5.0; ref 56240559

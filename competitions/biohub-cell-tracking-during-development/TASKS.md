@@ -1,5 +1,46 @@
 # Tasks
 
+## September 13 recommended public-reproduction queue
+
+Three new public directions are prepared locally and ordered for execution:
+
+1. `sep13-v1329-original-guard`: V1329/V1327 learned map with the original
+   V1290 detector guard restored (`josephadamski91/biohub-v1329-v1327-original-guard`).
+2. `sep13-deepcenter-tta`: DeepCenter/detection-TTA candidate
+   (`sushanthtiruvaipati/biohub-deepcenter-tta-v1`).
+3. `sep13-champion-v5-thr099b`: detector threshold `.99` plus adaptive
+   short-track rescue and the public division controls
+   (`caassicca/biohub-champion-v5-thr099b`).
+
+The first two private kernels are running as version 1; the third is prepared
+locally and waits behind Kaggle's two-session GPU cap. These are reproductions,
+not submissions; each must complete and pass the structural audit before any
+upload is considered.
+
+## September 12 five-candidate preparation
+
+Live Kaggle refresh on 2026-09-12 shows no submission made today. The
+September 7 edge-feature reproduction is complete at `0.946` (ref `56075335`).
+Five distinct public-kernel reproductions are now locally downloaded,
+structurally validated, and prepared under `notebooks/public-reproductions/`:
+
+| Candidate | Public source score | Output SHA prefix | Validation | State |
+| --- | ---: | --- | --- | --- |
+| LF DCTTA | 0.947 | `a69c7822` | valid; 122,794 nodes / 118,512 edges | Submitted `56189963`; PENDING |
+| LF DCTTA v020 | 0.947 | `d3453380` | valid; 122,808 nodes / 118,548 edges | Submitted `56189965`; PENDING |
+| LF DCTTA v3 SECW060 | Unscored | `1c6f89d9` | valid; 123,962 nodes / 119,619 edges | Submitted `56202058`; PENDING |
+| LF DCTTA sister16 | 0.947 | `925d65e3` | valid; 122,807 nodes / 118,545 edges | Submitted `56202064`; PENDING |
+| Lineage Forge | 0.946 | `22ef93cf` | valid; 122,792 nodes / 118,514 edges | Submitted `56211128`; PENDING |
+
+All five pass the structural harness with four datasets, no warnings, and no
+errors. The public `0.946` artifact already submitted on September 7 is excluded
+by the SHA duplicate guard. These are public-source reproductions, not private-
+leaderboard or independent-holdout evidence. Full provenance and hashes are in
+`references/sep12-ready-submissions.json`. Four candidates have now completed,
+passed validation, and been submitted as refs `56189963`, `56189965`, `56202058`,
+and `56202064`; all four are PENDING. Lineage Forge subsequently completed its
+private run and was submitted as `56211128`; it is also PENDING.
+
 ## September 7 public-notebook reproductions
 
 Two private, exact-source reproductions completed successfully:
