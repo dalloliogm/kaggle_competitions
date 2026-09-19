@@ -220,6 +220,23 @@ ARMS = {
         ],
         "note": "both sweep winners; tests whether they are additive",
     },
+    # The low bucket keeps improving as it widens: 6.5 -> 7.25 -> 8.0, with 8.0
+    # the only candidate the restricted paired test supports over arm F
+    # (+0.00070, 5/2, CI excludes zero). This extends the gradient to find where
+    # it turns, the same way MOTION_RELINK_TIGHT_UM 6.0/5.5/5.0 located that peak.
+    "biohub-sep19-dlow900": {
+        "title": "Biohub Sep19 Density Low 900",
+        "env": [
+            ("BIOHUB_DENSITY_ADAPTIVE_RELINK", "1"),
+            ("BIOHUB_DENSITY_LOW_TIGHT_UM", "9.0"),
+            ("BIOHUB_DENSITY_LOW_RELAXED_UM", "12.0"),
+            ("BIOHUB_DENSITY_MIDDLE_TIGHT_UM", "6.5"),
+            ("BIOHUB_DENSITY_MIDDLE_RELAXED_UM", "9.0"),
+            ("BIOHUB_DENSITY_HIGH_TIGHT_UM", "5.5"),
+            ("BIOHUB_DENSITY_HIGH_RELAXED_UM", "10.0"),
+        ],
+        "note": "low bucket 8.0 -> 9.0; extends the only supported gradient",
+    },
 }
 
 
