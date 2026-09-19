@@ -52,6 +52,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
 import re
 from pathlib import Path
 
@@ -61,8 +62,12 @@ SOURCE = Path(
     "/tmp/claude-0/-home-user-kaggle-competitions/"
     "079e2126-1615-5dfd-bdeb-d1a861286f6c/scratchpad/audit946"
 )
-OUT_DIR = WORKSPACE / "notebooks" / "sep18-carry-forward"
-TITLE = "Biohub Sep18 Carry Forward KDTree Density Low"
+OUT_DIR = WORKSPACE / "notebooks" / (
+    "sep19-carry-forward-full" if os.environ.get("CARRY_ARM", "").endswith("full")
+    else "sep18-carry-forward")
+TITLE = ("Biohub Sep19 Carry Forward KDTree Density Full"
+         if os.environ.get("CARRY_ARM", "").endswith("full")
+         else "Biohub Sep18 Carry Forward KDTree Density Low")
 SLUG = re.sub(r"[^a-z0-9]+", "-", TITLE.lower()).strip("-")
 
 ARM_E_SHA = "bbca0613a4a7a19ba7e18d23be9e66e9133bb4abeefafdedf13998160f14ff23"
@@ -78,8 +83,9 @@ def _load(name: str):
 kdtree = _load("build_sep15_relink_kdtree")
 density = _load("build_sep18_density_adaptive")
 
-# Arm E's exact environment, plus the pinned fast base.
-ARM_E_ENV = density.ARMS["biohub-sep18-density-low-only"]["env"]
+# Which validated density arm to carry, plus the pinned fast base.
+_ARM = os.environ.get("CARRY_ARM", "biohub-sep18-density-low-only")
+ARM_E_ENV = density.ARMS[_ARM]["env"]
 CONFIG_BLOCK = (
     '# Carry-forward: the KD-tree relink speedup (verified byte-identical) plus\n'
     '# the density-adaptive low bucket (paired CI excludes zero on 24 videos).\n'
