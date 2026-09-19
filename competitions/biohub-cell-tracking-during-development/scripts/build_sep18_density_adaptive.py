@@ -148,6 +148,78 @@ ARMS = {
         ],
         "note": "F: their three-bucket table replicated exactly, as a direct test of the 0.948 claim.",
     },
+    # 2026-09-19 held-out sweep (24 videos, official division rule): these two
+    # outrank arm F's table, +0.0024 and +0.0023 against tight55 versus F's
+    # +0.0016. Both widen a gate FURTHER than the public notebook's hand-set
+    # value, which is the direction our own data keeps pointing.
+    "biohub-sep19-dmid700": {
+        "title": "Biohub Sep19 Density Middle 700",
+        "env": [
+            ("BIOHUB_DENSITY_ADAPTIVE_RELINK", "1"),
+            ("BIOHUB_DENSITY_LOW_TIGHT_UM", "7.25"),
+            ("BIOHUB_DENSITY_LOW_RELAXED_UM", "11.0"),
+            ("BIOHUB_DENSITY_MIDDLE_TIGHT_UM", "7.0"),
+            ("BIOHUB_DENSITY_MIDDLE_RELAXED_UM", "9.0"),
+            ("BIOHUB_DENSITY_HIGH_TIGHT_UM", "5.5"),
+            ("BIOHUB_DENSITY_HIGH_RELAXED_UM", "10.0"),
+        ],
+        "note": "middle bucket 6.5 -> 7.0; top of the held-out sweep",
+    },
+    "biohub-sep19-dlow800": {
+        "title": "Biohub Sep19 Density Low 800",
+        "env": [
+            ("BIOHUB_DENSITY_ADAPTIVE_RELINK", "1"),
+            ("BIOHUB_DENSITY_LOW_TIGHT_UM", "8.0"),
+            ("BIOHUB_DENSITY_LOW_RELAXED_UM", "11.0"),
+            ("BIOHUB_DENSITY_MIDDLE_TIGHT_UM", "6.5"),
+            ("BIOHUB_DENSITY_MIDDLE_RELAXED_UM", "9.0"),
+            ("BIOHUB_DENSITY_HIGH_TIGHT_UM", "5.5"),
+            ("BIOHUB_DENSITY_HIGH_RELAXED_UM", "10.0"),
+        ],
+        "note": "low bucket 7.25 -> 8.0; second in the held-out sweep",
+    },
+    "biohub-sep19-dlow650": {
+        "title": "Biohub Sep19 Density Low 650",
+        "env": [
+            ("BIOHUB_DENSITY_ADAPTIVE_RELINK", "1"),
+            ("BIOHUB_DENSITY_LOW_TIGHT_UM", "6.5"),
+            ("BIOHUB_DENSITY_LOW_RELAXED_UM", "11.0"),
+            ("BIOHUB_DENSITY_MIDDLE_TIGHT_UM", "6.5"),
+            ("BIOHUB_DENSITY_MIDDLE_RELAXED_UM", "9.0"),
+            ("BIOHUB_DENSITY_HIGH_TIGHT_UM", "5.5"),
+            ("BIOHUB_DENSITY_HIGH_RELAXED_UM", "10.0"),
+        ],
+        "note": "low bucket 7.25 -> 6.5; brackets the low optimum from below (+0.0018)",
+    },
+    "biohub-sep19-dhigh600": {
+        "title": "Biohub Sep19 Density High 600",
+        "env": [
+            ("BIOHUB_DENSITY_ADAPTIVE_RELINK", "1"),
+            ("BIOHUB_DENSITY_LOW_TIGHT_UM", "7.25"),
+            ("BIOHUB_DENSITY_LOW_RELAXED_UM", "11.0"),
+            ("BIOHUB_DENSITY_MIDDLE_TIGHT_UM", "6.5"),
+            ("BIOHUB_DENSITY_MIDDLE_RELAXED_UM", "9.0"),
+            ("BIOHUB_DENSITY_HIGH_TIGHT_UM", "6.0"),
+            ("BIOHUB_DENSITY_HIGH_RELAXED_UM", "10.0"),
+        ],
+        "note": "high bucket 5.5 -> 6.0; the densest videos carry the most public weight",
+    },
+    # Both sweep winners together. The sweep's own greedy combo scored the same
+    # as dmid700 alone, which suggests the two are not additive - this tests
+    # that directly rather than assuming it.
+    "biohub-sep19-dboth": {
+        "title": "Biohub Sep19 Density Middle 700 Low 800",
+        "env": [
+            ("BIOHUB_DENSITY_ADAPTIVE_RELINK", "1"),
+            ("BIOHUB_DENSITY_LOW_TIGHT_UM", "8.0"),
+            ("BIOHUB_DENSITY_LOW_RELAXED_UM", "11.0"),
+            ("BIOHUB_DENSITY_MIDDLE_TIGHT_UM", "7.0"),
+            ("BIOHUB_DENSITY_MIDDLE_RELAXED_UM", "9.0"),
+            ("BIOHUB_DENSITY_HIGH_TIGHT_UM", "5.5"),
+            ("BIOHUB_DENSITY_HIGH_RELAXED_UM", "10.0"),
+        ],
+        "note": "both sweep winners; tests whether they are additive",
+    },
 }
 
 
