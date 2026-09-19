@@ -115,3 +115,62 @@ work should target association or detection inference.
 
 `EDGE_TTA views=8` is the obvious lever on inference, but unlike this change it
 would alter the output, so it costs accuracy and needs its own evidence.
+
+---
+
+# Update 2026-09-19: the carry-forward build
+
+## An integration gap that would have undone the runtime work
+
+The density-adaptive arms (2026-09-18) were built from the *unpatched* source,
+so arm E - submitted on held-out evidence - did not contain the KD-tree relink
+speedup. The two fixes had never been in the same kernel.
+
+| run | total | graph | relink | per-video | projection |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| baseline, KD-tree only | 1264.6 s | 74.3 s | 7.7 s | 229.7 s | 12.79 h |
+| arm E, density only | 1399.6 s | 300.5 s | **219.3 s** | 274.5 s | **15.25 h** |
+| **carry-forward, both** | **1196.8 s** | **76.5 s** | **8.3 s** | **228.1 s** | **12.69 h** |
+
+Arm E's per-video relink profile (24.2 / 19.3 / 1.9 / 174.0 s) is the original
+quadratic signature. Carrying it forward as submitted would have projected
+**15.25 h** - worse than the 15.09 h before any runtime work - and timed out on
+the private rerun, scoring nothing regardless of its held-out Jaccard.
+
+## The carry-forward is proven, not merely assumed
+
+Submission sha `bbca0613a4a7a19b...` - **byte-identical to arm E**. The density
+groups still resolve from the graph (63 -> low @ 7.25; 225.1 and 258.2 ->
+middle @ 5.5; 707 -> high @ 5.5). Same output, relink 219.3 s -> 8.3 s.
+
+The patches compose because they touch disjoint regions of
+`motion_relink_edges`: the density gate is computed before `position_um` and
+consumed by the pass loop after `assign_pass`, while the KD-tree change is
+entirely inside `assign_pass`, whose `gate_um` parameter carries whatever gate
+the density logic supplies.
+
+## Corrections to earlier estimates
+
+* Arm E alone was estimated at "~15.8 h"; measured, **15.25 h**. The conclusion
+  (certain timeout) stands; the number was wrong.
+* Arm E's largest video at 174 s against the pre-KD-tree 150.7 s was flagged as
+  unexplained. The carry-forward shows the same ~15% gap in miniature (4.5 s vs
+  4.0 s), so it is the widened low-density gate plus run variance, not a
+  pathology.
+
+## Still over the limit
+
+**12.69 h against a 12 h limit.** Combining the two fixes bought 0.10 h, not a
+rescue. Roughly **1.06x** more is still needed, from the two blocks the KD-tree
+work did not touch:
+
+| block | per-video share |
+| --- | ---: |
+| detection inference | 61% |
+| association | 31% |
+| graph construction | 8% |
+
+Association is the larger unexamined block and the only remaining place where
+an output-preserving fix is plausible, as the KD-tree change was. Cutting
+`EDGE_TTA views=8` is the obvious lever on inference but would change the
+output, so it needs its own held-out evidence rather than a sha check.
