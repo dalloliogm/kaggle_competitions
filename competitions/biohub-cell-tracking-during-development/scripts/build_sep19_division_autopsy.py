@@ -112,21 +112,30 @@ if VALIDATOR_ENABLE and val_stems and VAL_RAW_GRAPHS:
         _gt_nodes, _gt_edges, _ = VAL_GT[_stem]
 
         # Post-process exactly as the submission does, so the graph examined is
-        # the graph that would be graded.
-        _nb, _eb, _st = filter_output_graph(
-            {k: dict(v) for k, v in _nodes_raw.items()},
-            [dict(e) for e in _edges_raw],
-            dataset=_stem,
-            deepcenter_bundle=DEEPCENTER_VETO_DETECTOR,
-        )
+        # the graph that would be graded. TEST_DIR must be pointed at TRAIN_DIR
+        # for the duration: DeepCenter reads image frames via read_test_frame,
+        # which resolves TEST_DIR/<stem>.zarr, and these are train stems.
+        # score_validator_config does the same swap; omitting it raised
+        # FileNotFoundError on test/44b6_12dfb391.zarr in the first attempt.
+        _real_test_dir = TEST_DIR
+        globals()["TEST_DIR"] = TRAIN_DIR
+        try:
+            _nb, _eb, _st = filter_output_graph(
+                {k: dict(v) for k, v in _nodes_raw.items()},
+                [dict(e) for e in _edges_raw],
+                dataset=_stem,
+                deepcenter_bundle=DEEPCENTER_VETO_DETECTOR,
+            )
+        finally:
+            globals()["TEST_DIR"] = _real_test_dir
 
         _gt_out = {}
         for _s, _t in _gt_edges:
             _gt_out.setdefault(_s, set()).add(_t)
 
         _pred_nodes = {k: (v["t"], v["z"], v["y"], v["x"]) for k, v in _nb.items()}
-        _gt_map = {g: (n[0], n[1], n[2], n[3]) for g, n in _gt_nodes.items()}
-        _p2g, _g2p = match_nodes_bipartite(_pred_nodes, _gt_map,
+        # graph_to_plain already yields {node_id: (t, z, y, x)}.
+        _p2g, _g2p = match_nodes_bipartite(_pred_nodes, _gt_nodes,
                                            VALIDATOR_MATCH_RADIUS_UM)
 
         _pred_out = {}
