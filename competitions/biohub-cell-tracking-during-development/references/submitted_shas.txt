@@ -74,3 +74,4 @@ fca59501532c22486f803af9a64401c6063d0b6f788be45ba263b85b82817e2d  dalloliogm/bio
 d66d407e26d82c0c5a23bbba2901d45370984508c6364f73f9b88046b4b64fae  dalloliogm/biohub-sep19-density-high-600 v1  SEP19-4 high bucket 6.0; probes the 57.2%-weight public video our harness barely covers
 17a5b037a2d492d5439fee207c3a7226ee2a0cd17de2b50c177e781282214987  dalloliogm/biohub-sep19-density-middle-700-low-800 v1  SEP19-5 low 8.0 + middle 7.0; interaction test
 b98e5454279f74d3607ee342295b8a758737615d4452e5c2b96364c15b8c8b06  dalloliogm/biohub-sep19-density-low-650 v1  NOT SUBMITTED - held-out -0.00027 vs arm F; least informative point on the low curve
+fe6f0a6fe5c996b876cd40f85b9cef75421be5e959a5cd859c33fa339888a8d9  dalloliogm/biohub-sep19-deadline-guard-density-full v1  SEP20-1 DELIBERATE re-send of arm F's output from a DIFFERENT kernel: same bytes, but this kernel carries the KD-tree relink and the deadline guard. Private reruns the kernel, not the CSV.
