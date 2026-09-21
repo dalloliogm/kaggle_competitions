@@ -1621,30 +1621,44 @@ the builder had changed only the config cell.
   fewer gap edges. Confirmed: `eace787d` vs `fe6f0a6f`, gap edges 1280 ->
   1258, with relink (119,267) and division (95) counts unchanged.
 
-## An unattributed duplicate submission consumed a slot (2026-09-21)
+## Two agents share one submission budget (2026-09-21)
 
-At 17:00 UTC, `ref=56438988` was submitted with the description
-`"SEP14 DCTTA det099; structurally validated; SHA 60f14085ca06"`. That sha was
-already submitted on 2026-09-14 as SEP14-3 (`ref=56240254`) and **is recorded
-in `references/submitted_shas.txt`**, so whatever sent it did not consult the
-dedup ledger.
+Two submissions appeared mid-afternoon that this session did not send:
+`ref=56438988` at 17:00 UTC (`"SEP14 DCTTA det099"`, sha `60f14085`) and
+`ref=56441713` at 19:05 UTC (`"SEP14 DCTTA gap58"`, sha `a2b6740c`). They were
+**submitted by the user from Codex**, working the SEP14 DCTTA queue in
+parallel.
 
-It did not come from the working session. Checked and ruled out: crontab,
-`/etc/cron.d`, `at` queue, running submitter processes, any script in the repo
-referencing that sha or `det099`, and other Claude sessions (none has touched
-this repo since 2026-09-10). **The source is unidentified.** A leftover job
-outside the container is the best hypothesis - this is the second occurrence
-of the pattern, after the stale background pusher that re-pushed dlow800 as v2
-and pushed a dhigh600 arm that had been dropped - but it is not confirmed.
+They were initially written up here as an unexplained incident, with a runaway
+job as the leading hypothesis. That was wrong, and the reasoning is worth
+keeping because the evidence looked conclusive and was not:
 
-- **The dedup guard only protects the path that calls it.** `already_submitted()`
-  was hardened on 2026-09-14 after exactly this artifact was re-sent, and it
-  still holds for `await_validate_submit.py`. It cannot stop a submitter that
-  does not go through that function. A guard inside one code path is not a
-  guarantee about the account.
-- **Slot accounting must be read from Kaggle, not from a local tally.** The
-  session count said 3 used; the account said 4. Before promising a slot,
-  re-read `kaggle competitions submissions` and count entries inside the
-  current UTC day rather than trusting what this session remembers sending.
-- Practical effect: the remaining budget for the day was one slot, not two,
-  and that had to be corrected to the user after having been stated wrongly.
+- **Ruling out everything inside the container is not the same as identifying
+  a cause.** crontab, `/etc/cron.d`, the `at` queue, running processes, repo
+  scripts and `list_sessions` were all checked and all clean. Every one of
+  those checks was scoped to this container or to Claude sessions, so none of
+  them could ever have seen a second agent on the user's machine. The clean
+  sweep felt like evidence of something sinister when it was just evidence of
+  where I had looked.
+- **The two facts that should have pointed at a second agent** were read as
+  aggravating instead: the artifacts were absent from our dedup ledger, and
+  the submissions carried a house description format we did not write. Another
+  tool working the same account explains both immediately.
+- Escalating to the user as urgent was the right instinct - the budget really
+  was being consumed - but the framing should have been "two unattributed
+  submissions, is this you?" rather than "something is running loose".
+
+The durable lessons stand, and one is new:
+
+- **Read the slot count from Kaggle, never from a local tally.** This session
+  counted 3 used; the account had 5. Count entries inside the current UTC day
+  with `kaggle competitions submissions` immediately before submitting. This
+  caught a doomed submission that would otherwise have been attempted and
+  misreported as sent.
+- **The dedup guard only protects the path that calls it.**
+  `already_submitted()` still works for `await_validate_submit.py`, but a
+  guard inside one code path says nothing about what the account does.
+- **When another agent may share the account, the budget is shared too.**
+  Five per day is per account, not per tool. Before planning a day around N
+  slots, establish whether anything else is submitting.
+
