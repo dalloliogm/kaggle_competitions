@@ -1,0 +1,5 @@
+interface:
+  display_name: "Kaggle Competition Discovery"
+  short_description: "List and choose Kaggle competitions"
+  default_prompt: "List Kaggle competitions and help me choose one to work on."
+

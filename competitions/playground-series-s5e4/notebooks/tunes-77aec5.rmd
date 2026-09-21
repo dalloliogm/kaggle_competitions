@@ -1,0 +1,704 @@
+# %% [code]
+---
+title: "Podcast Listening Time"
+date: '`r Sys.Date()`'
+output:
+  html_document:
+    number_sections: true
+    fig_caption: true
+    toc: true
+    fig_width: 7
+    fig_height: 4.5
+    theme: cosmo
+    highlight: tango
+    code_folding: hide
+---
+  
+# Introduction  {.tabset .tabset-fade .tabset-pills}
+
+The goal of this competition is to predict podcast listening time.
+
+My notebook serves as a demonstration of some of the possible techniques available to arrive at a solution.  I intend to add to this as I have time available. Your questions and comments are welcome.
+
+Lets dive right in.
+
+The Kaggle kernels have many of the common r packages built in.  
+
+## Load libraries
+
+```{r }
+#| label: setup
+#| warning: false
+#| message: false
+
+if (dir.exists("/kaggle")){
+  path <- "/kaggle/input/playground-series-s5e4/"
+
+# options(repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/focal/2021-05-17"))
+# install.packages("ranger", quiet = TRUE)
+    
+options(repos = c(CRAN = "https://packagemanager.posit.co/cran/2021-03-22"))
+#remotes::install_github("tidymodels/plsmod", quiet = TRUE)    
+#remotes::install_github("mayer79/outForest", quiet = TRUE)    
+#remotes::install_github("tidyverts/fable.binary", quiet = TRUE)
+    
+cores <- future::availableCores()
+
+} else {
+  path <- stringr::str_c(here::here("data"),"/")
+  orig_path <- stringr::str_c(here::here("data"),"/")
+
+  cores <- future::availableCores(omit = 2)
+}
+ 
+suppressPackageStartupMessages({
+library(tidyverse, quietly = TRUE) # metapackage of all tidyverse packages
+library(tidymodels) # metapackage see https://www.tidymodels.org/
+
+library(correlationfunnel)    
+   
+library(bonsai)  
+
+library(DALEXtra) # Tidymodels Explainability         
+    
+library(stacks)   # model ensembling
+
+})
+
+tidymodels_prefer()
+conflicted::conflicts_prefer(brulee::coef)
+
+options(tidymodels.dark = TRUE)
+
+theme_set(ggdark::dark_theme_minimal())
+
+```
+
+## Load Data
+
+
+```{r }
+#| label: load data
+#| warning: false
+#| message: false
+
+
+
+
+preprocessor <- function(dataframe) {
+
+dataframe <- dataframe %>%
+    janitor::clean_names() |>
+  
+    mutate(number_of_ads = if_else(number_of_ads > 3 | is.na(number_of_ads), 4, number_of_ads)) |> 
+  
+    mutate(episode_length_minutes = if_else(episode_length_minutes > 121, 121, episode_length_minutes)) |> 
+
+    mutate(across(c(where(is.character)), \(x) as.factor(x))) 
+
+return(dataframe)
+}
+
+raw_df <- read_csv(str_c(path, "train.csv"),
+                   show_col_types = FALSE) |> 
+          preprocessor() 
+
+tst_df <- read_csv(str_c(path, "test.csv"),
+                   show_col_types = FALSE)  |>  
+  preprocessor() 
+
+# because we already know the test set, let's remove the train set factor levels that do not correspond with anything on the test set
+for (col in names(raw_df)) {
+    if (is.factor(raw_df[[col]]) & col != "listening_time_minutes") {
+      # Get levels in train and test dataframes
+      raw_levels <- levels(raw_df[[col]])
+      tst_levels <- levels(tst_df[[col]])
+      
+      # Identify levels in train not in test
+      new_levels <- setdiff(raw_levels, tst_levels)
+      
+      # Set these levels to NA in train dataframe
+      raw_df[[col]] <- factor(raw_df[[col]], levels = c(tst_levels, new_levels))
+      raw_df[[col]][raw_df[[col]] %in% new_levels] <- NA_character_
+    }
+  }
+
+title_podcast_name_fit <- lm(listening_time_minutes ~ episode_title + podcast_name, raw_df |> 
+                                     dplyr::mutate(episode_title = factor(episode_title)))
+
+raw_df <- bind_cols(raw_df, 
+  tibble(episode_weight = predict(title_podcast_name_fit, raw_df |> 
+                                     dplyr::mutate(episode_title = factor(episode_title)))))
+
+tst_df <- bind_cols(tst_df,
+  tibble(episode_weight = predict(title_podcast_name_fit, tst_df|> 
+                                     dplyr::mutate(episode_title = factor(episode_title)))))
+
+# the synthetic playground competitions seem to perform better when numerics are also included as factors
+all_df <-
+    bind_rows(raw_df %>% mutate(source = "train"),
+              tst_df %>% mutate(source = "test")) 
+
+
+train_df <- all_df %>% 
+  filter(source == "train") %>% 
+  select(-source) 
+
+competition_df <- all_df %>% 
+  filter(source == "test") %>% 
+  select(-source, -listening_time_minutes)
+
+
+```
+
+
+# EDA {.tabset .tabset-fade .tabset-pills}
+
+## Features
+
+```{r}
+#| label: Features
+#| warning: false
+#| message: false
+#| fig.width: 6
+
+
+features <- train_df %>%
+  select(-id, -listening_time_minutes) |> 
+  names()
+
+train_df <- train_df %>% 
+  distinct(pick(all_of(features)), .keep_all = TRUE)
+
+nom_features <- train_df %>%
+  select(all_of(features)) %>%
+  select(where(is.character), where(is.factor)) %>%
+  names() 
+
+logical_features <- train_df %>%
+  select(all_of(features)) %>%
+  select(where(is.logical)) %>%
+  names() 
+
+num_features <- train_df %>%
+  select(all_of(features)) %>%
+  select(where(is.numeric)) %>%
+  names()
+```
+
+Nominal features:
+
+`r nom_features`
+
+Numeric features: 
+
+`r num_features`
+
+Logical features: 
+
+`r logical_features`
+
+
+Size of the combined train and competition datasets:
+
+`r nrow(all_df)`
+
+Size of the split made available to machine learning
+
+`r nrow(train_df)`
+
+
+
+## Numeric features
+
+```{r}
+#| label: numeric
+#| warning: false
+#| message: false
+#| fig.height: 6
+#| fig.width: 6
+
+train_df %>% 
+  select(all_of(num_features), listening_time_minutes) %>% 
+  pivot_longer(-listening_time_minutes,
+    names_to = "metric",
+    values_to = "value"
+  ) %>%
+  ggplot(aes(value)) +
+  geom_histogram(aes(fill =  ggplot2::cut_number(listening_time_minutes,5)), position = "identity", bins = 30) +
+  geom_freqpoly(aes(linetype = ggplot2::cut_number(listening_time_minutes,5)), bins = 30) +
+  geom_rug(aes(color = ggplot2::cut_number(listening_time_minutes,5))) +
+  facet_wrap(vars(metric), scales = "free", ncol = 2) +
+  guides(color = "none") +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        legend.position = "top",
+        plot.title.position = "plot") +
+  labs(color = NULL, 
+       title = "Numeric Feature Univariate Distributions",
+       caption = "Data: Kaggle.com | Visual: Jim Gruman")
+
+
+```
+
+## Nominal features
+
+Explore the distribution of outcome class by factor level.
+
+There appears to be some sort of interaction between genre and podcast_name. 
+
+
+```{r}
+#| label: nominal
+#| warning: false
+#| message: false
+#| fig.height: 12
+#| fig.width: 12
+
+
+if(length(nom_features) >0){
+
+train_df %>% 
+  select(all_of(nom_features), listening_time_minutes) %>% 
+  mutate(across(nom_features, fct_lump_n,n = 10, other_level = 'other')) %>%
+  pivot_longer(-listening_time_minutes,
+    names_to = "metric",
+    values_to = "value"
+  ) %>%
+    
+  filter(!is.na(listening_time_minutes)) %>% 
+    
+  summarise(n = n(),
+            .by = c(listening_time_minutes, metric, value)) %>%
+      
+  mutate(value = tidytext::reorder_within(value, n, metric)) %>%
+    
+  ggplot(aes(x = n, y = value, fill = ggplot2::cut_number(listening_time_minutes, 5))) +
+  geom_col() +
+  tidytext::scale_y_reordered() +
+  scale_x_continuous(n.breaks = 3, guide = guide_axis(n.dodge = 2))  +
+  facet_wrap(vars(metric), scales = "free", ncol = 2) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+       legend.position = "bottom") +
+  labs(title = "Nominal Feature Counts",
+       fill = NULL,
+       caption = "Data: Kaggle | Visual: Jim Gruman")
+
+} 
+
+train_df |> 
+  summarise(mean_listening_time = mean(listening_time_minutes),
+    .by = c(podcast_name, genre)) |> 
+  ggplot(aes(genre, podcast_name, fill = mean_listening_time)) +
+    geom_tile() +
+  scale_fill_distiller(limits = c(0,100))
+
+train_df |> 
+  mutate(episode_title = factor(episode_title)) |> 
+  summarise(mean_listening_time = mean(listening_time_minutes),
+    .by = c(podcast_name, episode_title)) |> 
+  ggplot(aes(episode_title, podcast_name, fill = mean_listening_time)) +
+    geom_tile() +
+  scale_fill_distiller(limits = c(0,100))
+
+train_df |> 
+  summarise(mean_listening_time = mean(listening_time_minutes),
+    .by = c(podcast_name, publication_day)) |> 
+  ggplot(aes(publication_day, podcast_name, fill = mean_listening_time)) +
+    geom_tile() +
+  scale_fill_distiller(limits = c(0,100))
+
+train_df |> 
+  summarise(mean_listening_time = mean(listening_time_minutes),
+    .by = c(podcast_name, publication_time)) |> 
+  ggplot(aes(publication_time, podcast_name, fill = mean_listening_time)) +
+    geom_tile() +
+  scale_fill_distiller(limits = c(0,100))
+
+train_df |> 
+  summarise(mean_listening_time = mean(listening_time_minutes),
+    .by = c(episode_sentiment, podcast_name)) |> 
+  ggplot(aes(episode_sentiment, podcast_name, fill = mean_listening_time)) +
+    geom_tile() +
+  scale_fill_distiller(limits = c(0,100))
+
+
+```
+
+
+## Counts of Missingness
+
+The test set is missing one wind direction. We will fill it in with the median of all of the data.
+                  
+```{r}
+#| label: counts of missingness
+
+train_df %>% 
+  summarize(across(all_of(features), function(x) sum(is.na(x)))) %>% 
+  pivot_longer(everything(),
+              names_to = "feature",
+              values_to = "Count of Missing") %>% 
+                   knitr::kable()
+
+competition_df %>% 
+  summarize(across(all_of(features), function(x) sum(is.na(x)))) %>% 
+  pivot_longer(everything(),
+              names_to = "feature",
+              values_to = "Count of Missing") %>% 
+                   knitr::kable()
+
+```
+                   
+I am going to impute, or fill in the missing figures with the combination of train and test data.
+
+
+```{r}
+#| label: impute
+
+impute_elm_rec <- recipe(
+    
+    formula("episode_length_minutes ~ podcast_name + episode_title + genre + host_popularity_percentage + publication_day + publication_time + guest_popularity_percentage + number_of_ads + episode_sentiment"), 
+    data = all_df
+  )  
+
+boost_tree_lgbm_spec <- 
+  boost_tree(
+    trees = 500L
+  ) %>% 
+  set_engine(engine = "lightgbm",
+             is_unbalance = TRUE,
+             num_leaves = 800,
+             num_threads = cores
+             ) %>%
+  set_mode(mode = "regression") 
+
+impute_elm_fit <- fit(workflow(impute_elm_rec, boost_tree_lgbm_spec), all_df)
+
+train_df <- bind_cols(train_df,
+                       predict(impute_elm_fit, train_df)) |> 
+           mutate(episode_length_minutes = if_else(is.na(episode_length_minutes),
+                                                   .pred,
+                                                   episode_length_minutes)) |> 
+           select(-.pred)
+
+competition_df <- bind_cols(competition_df,
+                            predict(impute_elm_fit, competition_df)) |> 
+           mutate(episode_length_minutes = if_else(is.na(episode_length_minutes),
+                                                   .pred,
+                                                   episode_length_minutes)) |> 
+           select(-.pred)
+
+impute_gpp_rec <- recipe(
+    
+    formula("guest_popularity_percentage ~ podcast_name + episode_title + genre + host_popularity_percentage + publication_day + publication_time + episode_length_minutes + number_of_ads + episode_sentiment"), 
+    data = all_df
+  )  
+
+impute_gpp_fit <- fit(workflow(impute_gpp_rec, boost_tree_lgbm_spec), all_df)
+
+train_df <- bind_cols(train_df,
+                      predict(impute_gpp_fit, train_df)) |> 
+           mutate(guest_popularity_percentage = if_else(is.na(guest_popularity_percentage),
+                                                   .pred,
+                                                   guest_popularity_percentage)) |> 
+           select(-.pred)
+
+competition_df <- bind_cols(competition_df,
+                            predict(impute_gpp_fit, competition_df))|> 
+           mutate(guest_popularity_percentage = if_else(is.na(guest_popularity_percentage),
+                                                   .pred,
+                                                   guest_popularity_percentage)) |> 
+           select(-.pred)
+
+train_df %>% 
+  summarize(across(all_of(features), function(x) sum(is.na(x)))) %>% 
+  pivot_longer(everything(),
+              names_to = "feature",
+              values_to = "Count of Missing") %>% 
+                   knitr::kable()
+
+competition_df %>% 
+  summarize(across(all_of(features), function(x) sum(is.na(x)))) %>% 
+  pivot_longer(everything(),
+              names_to = "feature",
+              values_to = "Count of Missing") %>% 
+                   knitr::kable()
+
+
+```
+
+                   
+
+## Counts of Distinct
+                   
+               
+```{r}
+#| label: counts of distinct
+               
+train_df %>%
+  summarize(across(all_of(features), n_distinct)) %>%
+  pivot_longer(everything(), names_to = "feature", values_to = "Count of distinct train") |>
+  left_join(
+    competition_df %>%
+      summarize(across(all_of(features), n_distinct)) %>%
+      pivot_longer(everything(), names_to = "feature", values_to = "Count of distinct test"),
+    by = join_by(feature)
+  ) %>% 
+                   knitr::kable()
+               
+```
+
+## Duplicated
+
+Is this competition transaction already in the training data with a correct listening_time_minutes?
+
+```{r}
+#| label: duplicates
+#| warning: false
+#| message: false
+
+bind_rows(train_df %>% mutate(source = "train"),
+              competition_df %>% mutate(listening_time_minutes= NA, source = "test")) |> 
+    group_by_at(features) %>%
+    mutate(num_dups = n(),
+           dup_id = row_number()) %>% 
+    ungroup() %>%
+    group_by(source) %>%
+    mutate(is_duplicated = dup_id > 1) %>% 
+    count(is_duplicated) %>% 
+                   knitr::kable()
+               
+
+```
+
+## Pairwise Correlations
+                   
+`ggcorrplot` provides a quick look at numeric features where the correlation may be significant. 
+
+```{r}
+#| label: pairwise correlations
+#| fig.width: 6
+#| fig.height: 6                   
+                   
+train_df %>% 
+  select(all_of(num_features), listening_time_minutes) %>%
+  ggcorrplot::cor_pmat() %>% 
+  ggcorrplot::ggcorrplot(hc.order = TRUE, lab = TRUE,
+    type = "lower", insig = "blank") +
+  labs(title = "Pairwise Correlations Training Set")
+                   
+competition_df %>% 
+  select(all_of(num_features)) %>% 
+  ggcorrplot::cor_pmat() %>% 
+  ggcorrplot::ggcorrplot(hc.order = TRUE, lab = TRUE,
+    type = "lower", insig = "blank") +
+  labs(title = "Pairwise Correlations Competition Set")
+
+``` 
+
+## Correlation Funnel
+
+Where the record is not missing, the episode length will drive the listening time.
+
+
+```{r}
+#| label: correlation funnel 
+#| warning: false
+#| message: false
+#| fig.width: 6
+#| fig.height: 6
+
+train_df %>% 
+  select(all_of(features)) %>%          
+    na.omit() |> 
+    binarize(one_hot = TRUE) %>%
+    bind_cols(train_df |> na.omit() |> select(listening_time_minutes)) |> 
+    correlate(target = listening_time_minutes ) %>% 
+    plot_correlation_funnel()
+
+```                   
+               
+
+## Target
+
+The outcome variable ranges from zero to 119.97 within the training set.
+
+```{r}
+#| label: outcome 
+#| warning: false
+#| message: false
+#| fig.width: 6
+
+
+train_df %>% 
+  ggplot(aes(listening_time_minutes)) +
+  geom_histogram(bins = 100) +
+  labs(title = "Listening Time Minutes",
+       caption = "Data: Kaggle.com | Visual: Jim Gruman")
+
+```                            
+           
+                
+# Machine Learning {.tabset .tabset-fade .tabset-pills}
+
+## Recipe
+
+```{r}
+#| label: recipe
+
+base_rec <- recipe(
+    
+    formula(paste0("listening_time_minutes ~ ", 
+               str_c(features,  collapse = " + "))),
+    data = train_df
+  )  
+
+embed_rec <- base_rec |>
+
+  step_interact(~ number_of_ads:episode_sentiment) |>
+                   
+  embed::step_embed(
+    genre,
+    podcast_name,
+    episode_title,  
+    num_terms = 4,
+    outcome = vars(listening_time_minutes)
+  ) |>
+   
+  step_mutate(
+    ads_per_minute = number_of_ads / (episode_length_minutes + 1),
+    epi_guest = guest_popularity_percentage / (episode_length_minutes + 1),
+    epi_host = host_popularity_percentage / (episode_length_minutes + 1),
+    ads_per_guest = number_of_ads / (guest_popularity_percentage + 1),
+    ads_per_host = number_of_ads / (host_popularity_percentage + 1)
+  ) 
+
+```
+
+
+## Fit
+
+```{r}
+#| label: fit
+                   
+boost_tree_lgbm_spec <- 
+  boost_tree(
+    trees = 2000L,
+     min_n = 41,
+    tree_depth = 36,  
+    learn_rate = 0.0378,
+   loss_reduction = 0
+  ) %>% 
+  set_engine(engine = "lightgbm",
+             is_unbalance = TRUE,
+             num_leaves = 800,
+             num_threads = cores
+             ) %>%
+  set_mode(mode = "regression") 
+
+regression_fit <- fit(workflow(embed_rec, boost_tree_lgbm_spec),train_df)
+
+regression_fit |> 
+  vip::vip(num_features = 50L)      
+
+```
+
+
+
+
+## Residuals
+
+```{r}
+#| label: residuals
+
+augment(regression_fit, train_df) |> 
+  rmse(.pred, listening_time_minutes)
+
+augment(regression_fit, train_df) |>
+    slice_sample(prop = 0.01 ) |>
+    ggplot(aes(listening_time_minutes, listening_time_minutes - .pred)) +
+    geom_point(alpha = 0.2) +
+    geom_smooth(se = FALSE) +
+    labs(title = "Listening Time Minutes",
+       caption = "Data: Kaggle.com | Visual: Jim Gruman")
+
+```                   
+
+## DALEX
+
+```{r}
+#| label: explainer
+#| warning: false
+#| message: false
+
+
+explainer <- 
+  explain_tidymodels(
+    regression_fit, 
+    data = train_df %>% dplyr::select(all_of(features)), 
+    y = train_df$listening_time_minutes,
+    label = "Ensemble",
+    verbose = FALSE
+  )  %>% 
+  model_parts()
+
+ggplot_imp <- function(...) {
+  obj <- list(...)
+  metric_name <- attr(obj[[1]], "loss_name")
+  metric_lab <- paste(metric_name, 
+                      "after permutations\n(higher indicates more important)")
+  
+  full_vip <- bind_rows(obj) %>%
+    filter(variable != "_baseline_")
+  
+  perm_vals <- full_vip %>% 
+    filter(variable == "_full_model_") %>% 
+    group_by(label) %>% 
+    summarise(dropout_loss = mean(dropout_loss))
+  
+  p <- full_vip %>%
+    filter(variable != "_full_model_") %>% 
+    mutate(variable = fct_reorder(variable, -dropout_loss)) %>%
+    ggplot(aes(dropout_loss, variable)) 
+  
+  if(length(obj) > 1) {
+    p <- p + 
+      facet_wrap(vars(label)) +
+      geom_vline(data = perm_vals, aes(xintercept = dropout_loss, color = label),
+                 linewidth = 1.4, lty = 2, alpha = 0.7) +
+      geom_boxplot(aes(color = label, fill = label), alpha = 0.2)
+  } else {
+    p <- p + 
+      geom_vline(data = perm_vals, aes(xintercept = dropout_loss),
+                 linewidth = 1.4, lty = 2, alpha = 0.7) +
+      geom_boxplot(fill = "#91CBD765", alpha = 0.4)
+    
+  }
+  p +
+    theme(legend.position = "none") +
+    labs(x = metric_lab, 
+         y = NULL,  fill = NULL,  color = NULL)
+}
+                   
+ggplot_imp(explainer)      
+                   
+
+```                   
+
+## Submission
+```{r }                   
+#| label: submission
+#| warning: false
+#| message: false
+                   
+
+submit_df <-  augment(regression_fit , competition_df) %>%
+       transmute(id = round(id), listening_time_minutes = .pred)
+
+head(submit_df)  %>% 
+     knitr::kable()      
+
+submit_df  %>% 
+  write_csv("submission.csv")
+```  

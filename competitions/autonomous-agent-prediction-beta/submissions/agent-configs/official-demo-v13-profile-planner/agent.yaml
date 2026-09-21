@@ -1,0 +1,6 @@
+agent_class: SequentialAgent
+name: v13_profile_planner
+sub_agents:
+  - config_path: agents/quick.yaml
+  - config_path: agents/portfolio.yaml
+  - config_path: agents/pro.yaml

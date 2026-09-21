@@ -1,0 +1,18 @@
+{
+  "id": "dalloliogm/biohub-exp203-classical-three-model-ensemble",
+  "title": "Biohub Exp203 Classical Three-Model Ensemble",
+  "code_file": "biohub-exp203-classical-ensemble.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "enable_internet": false,
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "dataset_sources": [
+    "xiaoleilian/biohub-unet3d-weights",
+    "xiaoleilian/biohub-unet3d-weights-v2models"
+  ]
+}

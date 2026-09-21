@@ -1,0 +1,287 @@
+{
+  "task161": {
+    "counts": {
+      "requested": 512,
+      "generated": 512,
+      "base_only": 6,
+      "donor_only": 0,
+      "both_correct": 506,
+      "both_wrong_same": 0,
+      "both_wrong_diff": 0,
+      "runtime": 0
+    },
+    "events": [
+      [
+        9,
+        "regression",
+        55
+      ],
+      [
+        46,
+        "regression",
+        75
+      ],
+      [
+        174,
+        "regression",
+        31
+      ],
+      [
+        280,
+        "regression",
+        25
+      ],
+      [
+        312,
+        "regression",
+        90
+      ],
+      [
+        401,
+        "regression",
+        27
+      ]
+    ]
+  },
+  "task188": {
+    "counts": {
+      "requested": 512,
+      "generated": 512,
+      "base_only": 11,
+      "donor_only": 0,
+      "both_correct": 501,
+      "both_wrong_same": 0,
+      "both_wrong_diff": 0,
+      "runtime": 0
+    },
+    "events": [
+      [
+        12,
+        "regression",
+        8
+      ],
+      [
+        99,
+        "regression",
+        8
+      ],
+      [
+        127,
+        "regression",
+        8
+      ],
+      [
+        142,
+        "regression",
+        8
+      ],
+      [
+        212,
+        "regression",
+        8
+      ],
+      [
+        242,
+        "regression",
+        8
+      ],
+      [
+        339,
+        "regression",
+        8
+      ],
+      [
+        375,
+        "regression",
+        8
+      ],
+      [
+        433,
+        "regression",
+        8
+      ],
+      [
+        441,
+        "regression",
+        8
+      ]
+    ]
+  },
+  "task079": {
+    "counts": {
+      "requested": 512,
+      "generated": 512,
+      "base_only": 7,
+      "donor_only": 0,
+      "both_correct": 505,
+      "both_wrong_same": 0,
+      "both_wrong_diff": 0,
+      "runtime": 0
+    },
+    "events": [
+      [
+        85,
+        "regression",
+        16
+      ],
+      [
+        167,
+        "regression",
+        16
+      ],
+      [
+        172,
+        "regression",
+        18
+      ],
+      [
+        184,
+        "regression",
+        14
+      ],
+      [
+        191,
+        "regression",
+        12
+      ],
+      [
+        233,
+        "regression",
+        14
+      ],
+      [
+        411,
+        "regression",
+        14
+      ]
+    ]
+  },
+  "task377": {
+    "counts": {
+      "requested": 1024,
+      "generated": 1024,
+      "base_only": 2,
+      "donor_only": 0,
+      "both_correct": 1021,
+      "both_wrong_same": 0,
+      "both_wrong_diff": 1,
+      "runtime": 0
+    },
+    "events": [
+      [
+        279,
+        "both_wrong_diff",
+        2,
+        42
+      ],
+      [
+        493,
+        "regression",
+        2
+      ],
+      [
+        509,
+        "regression",
+        2
+      ]
+    ]
+  },
+  "task205": {
+    "counts": {
+      "requested": 1024,
+      "generated": 1024,
+      "base_only": 1,
+      "donor_only": 9,
+      "both_correct": 1014,
+      "both_wrong_same": 0,
+      "both_wrong_diff": 0,
+      "runtime": 0
+    },
+    "events": [
+      [
+        58,
+        "improvement",
+        64
+      ],
+      [
+        132,
+        "improvement",
+        41
+      ],
+      [
+        265,
+        "improvement",
+        134
+      ],
+      [
+        292,
+        "improvement",
+        84
+      ],
+      [
+        331,
+        "improvement",
+        38
+      ],
+      [
+        602,
+        "regression",
+        80
+      ],
+      [
+        619,
+        "improvement",
+        42
+      ],
+      [
+        703,
+        "improvement",
+        78
+      ],
+      [
+        851,
+        "improvement",
+        46
+      ],
+      [
+        897,
+        "improvement",
+        86
+      ]
+    ]
+  },
+  "task105": {
+    "counts": {
+      "requested": 512,
+      "generated": 512,
+      "base_only": 4,
+      "donor_only": 0,
+      "both_correct": 508,
+      "both_wrong_same": 0,
+      "both_wrong_diff": 0,
+      "runtime": 0
+    },
+    "events": [
+      [
+        98,
+        "regression",
+        38
+      ],
+      [
+        238,
+        "regression",
+        22
+      ],
+      [
+        355,
+        "regression",
+        34
+      ],
+      [
+        410,
+        "regression",
+        20
+      ]
+    ]
+  }
+}

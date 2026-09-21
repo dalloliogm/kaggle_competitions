@@ -1,0 +1,23 @@
+{
+  "evidence": "STRUCTURAL_PASS",
+  "path": "kaggle_outputs/rishabh-public-0941-repro-review/submission.csv",
+  "sha256": "770bd96805d1d616f002575c3a2714690e8651ea5b6355e8a1a01dac208b2be6",
+  "download_validator": {
+    "valid": true,
+    "errors": [],
+    "counts": {
+      "nodes": 119272,
+      "edges": 114939,
+      "rows": 234211,
+      "max_indeg": 1,
+      "max_outdeg": 2,
+      "divisions": 29
+    }
+  },
+  "independent_harness": {
+    "valid": true,
+    "errors": []
+  },
+  "public_score": null,
+  "promotion": "HELD: grouped independent validation and artifact authorization absent"
+}

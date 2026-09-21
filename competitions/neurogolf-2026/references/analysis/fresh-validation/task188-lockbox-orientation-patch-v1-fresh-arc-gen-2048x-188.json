@@ -1,0 +1,15 @@
+[
+  {
+    "task": "task188",
+    "arc_id": "7b7f7511",
+    "requested": 2048,
+    "generated": 2048,
+    "correct": 2046,
+    "runtime_failures": 0,
+    "generator_failures": 0,
+    "oversize_skipped": 0,
+    "classification": "fresh-gen-fail",
+    "first_failure": "example 654: 8 thresholded cells differ",
+    "failure_indices": "[654, 665]"
+  }
+]

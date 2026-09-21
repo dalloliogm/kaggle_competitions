@@ -1,0 +1,28 @@
+[
+  {
+    "task": "task377",
+    "arc_id": "eb5a1d5d",
+    "requested": 896,
+    "generated": 896,
+    "correct": 893,
+    "runtime_failures": 0,
+    "generator_failures": 0,
+    "oversize_skipped": 0,
+    "classification": "fresh-gen-fail",
+    "first_failure": "example 279: 42 thresholded cells differ",
+    "failure_indices": "[279, 493, 509]"
+  },
+  {
+    "task": "task205",
+    "arc_id": "8731374e",
+    "requested": 896,
+    "generated": 896,
+    "correct": 895,
+    "runtime_failures": 0,
+    "generator_failures": 0,
+    "oversize_skipped": 0,
+    "classification": "fresh-gen-fail",
+    "first_failure": "example 602: 80 thresholded cells differ",
+    "failure_indices": "[602]"
+  }
+]

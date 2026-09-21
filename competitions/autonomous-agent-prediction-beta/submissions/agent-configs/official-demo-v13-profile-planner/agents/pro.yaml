@@ -1,0 +1,12 @@
+agent_class: LlmAgent
+name: bounded_json_planner
+model: gemini-3.1-pro-preview
+instruction: !include ../prompts/pro.md
+tools:
+  - get_status
+  - run_command
+  - write_file
+  - submit_predictions
+skills:
+  - skills/robust-tabular
+generate_content_config: !include ../configs/sampling_pro.yaml

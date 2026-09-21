@@ -1,0 +1,24 @@
+{
+  "id": "dalloliogm/biohub-exp156-trackastra-linker-headtohead",
+  "title": "Biohub Exp156 Trackastra Linker Headtohead",
+  "code_file": "biohub-exp156-trackastra-linker-headtohead.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [
+    "pilkwang/biohub-tracking-support-pack-50ep-v1",
+    "subinium/biohub-trackastra-public-weights-mirror"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "model_sources": [],
+  "machine_shape": "NvidiaTeslaT4"
+}

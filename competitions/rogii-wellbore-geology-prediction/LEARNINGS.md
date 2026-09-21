@@ -1,0 +1,235 @@
+# Learnings
+
+Capture durable information learned while working on this competition. This is for insights that should guide future modeling and prevent repeated mistakes.
+
+## Data
+
+- Train/test are organized as per-well horizontal-well CSVs and paired type-well CSVs.
+- Train also includes PNGs.
+- Pulled notebook metadata indicates competition source ID `132265` and bundle version `17009696`.
+- **The visible `test/` folder (3 wells: `000d7d20`, `00bbac68`, `00e12e8b`, 14,151 rows) is placeholder/example data only — NOT what actually gets scored.** Confirmed by the competition host directly on the forum (discussion 697507, reply to someone who found the same train/test overlap we did): *"The wells you see in test/ are just example data to help you author your submissions. When you submit your notebook, the example test data will be replaced with the actual test data, which does not contain wells in the training set."* A separate forum thread (704273) states the real **public test set has ~52 wells** against 773 train wells — a completely different scale from the 3-well set we can see and download. See "MAJOR FINDING, corrected" below — this resolves a lot of what looked like mysterious behavior in our own experiments.
+- 773 train wells, ~3.78M train "tail" rows usable for offline diagnostics (confirmed via `kaggle competitions files`).
+- Each well = a visible prefix with known `TVT_input` (drilled/geosteered-already portion) + one hidden tail to predict. This is **prefix-conditioned forecasting per well**, not row-level interpolation. `last_known_TVT` (the last prefix value) is a strong anchor/baseline by itself.
+- Train has `TVT` labels plus train-only formation/geology columns (`ANCC`, `ASTNU`, `ASTNL`, `EGFDU`, `EGFDL`, `BUDA`) that do **not** exist in test — usable only as inputs to a fold-safe spatial imputer, never as a direct test-row feature.
+- `TVT_input` should exactly equal `TVT` in the known prefix (sanity-checkable).
+
+## MAJOR FINDING, CORRECTED (2026-07-25): the overlap was real but is irrelevant — visible test/ is placeholder data
+
+**Read this before trusting anything below it or in `APPROACHES.md` about the override/overlap mechanisms.** The original finding (train/test row-level duplication in the visible 3-well set) was real and exhaustively verified — but checking the forum (discussions 697507, 704273) revealed the visible `test/` folder is placeholder/example data that gets **replaced entirely** at actual grading time with a real hidden test set (~52 wells for the public portion alone) that does **not** overlap with train. Someone found this exact overlap back in May 2026 and asked the host directly; the host's answer is unambiguous (quoted above in "Data").
+
+**This resolves the open question from the original finding below**: we couldn't explain why the override (a near-perfect reconstruction of the visible-data overlap) scored 9.565 instead of near-0. The answer: there's no real overlap in the actual hidden test set, so the override either fails to find a match and falls back to something worse, or fires on a false-positive match against an unrelated real well. **The overlap-exploitation angle is a dead end for real scoring** — the capped-overlap-calibration ablation we built and submitted almost certainly does little to nothing at real grading time (no genuine match exists to blend in).
+
+**Broader implication**: every diagnostic we ran against the visible 3 wells (contact-override RMSE, boundary-gap measurements for the continuity fade, "all 3 wells activated the blend" logs, etc.) reflects behavior against placeholder data, not the real ~52+ well scored set. The actual submitted *scores* are still real (grading always uses real hidden data regardless of what we can see), but our reasoning about *why* a given profile scores the way it does, based on inspecting the visible wells, may not transfer. Prefer the competition's built-in visible-prefix self-calibration mechanism (which still works against whatever real wells are actually mounted) over local diagnostics against the 3 visible wells specifically.
+
+### Original finding (still accurate for the placeholder data, kept for context)
+
+While pulling sample data to build a tutorial notebook, downloaded and directly compared `train/<well>__horizontal_well.csv` vs `test/<well>__horizontal_well.csv` for all 3 test wells. Result, verified exhaustively (not spot-checked):
+
+- Same row count, and `MD`/`X`/`Y`/`Z`/`GR` are **byte-identical row-for-row** between train and test for all 3 wells (`000d7d20`: 5278 rows, `00bbac68`: 7559 rows, `00e12e8b`: presumed same pattern given identical file listing structure — confirmed for the first two exhaustively).
+- Train's `TVT` column, at the exact row positions where test's `TVT_input` is hidden, **is the answer** — a full join of all 14,151 `sample_submission.csv` rows against train's `TVT` (matched by `{well}_{row_index}`) resolved **14,151/14,151 with zero missing and zero mismatches**, in the exact id order `sample_submission.csv` expects.
+- This is a **direct positional lookup**, not the indirect "guarded same-well contact override" the public pipelines use (which reconstructs TVT via formation-surface geometry, `T_contact = T_typewell − (Z−C) + b`, and scored *worse* than not using it at all — see Ensembling section below). The public pipelines' own cautious "public-aggressive/same-well overlap" language suggests they've noticed *some* version of this but likely don't realize it's an **exact** duplicate rather than a geological similarity, since a direct lookup would be trivial to implement and they didn't.
+- Built `notebooks/direct-train-lookup-overlap-probe.ipynb` — a minimal, dependency-free notebook that does exactly this lookup and nothing else. Submitted 2026-07-24 to test whether it's actually exploitable; see `APPROACHES.md` for the outcome.
+- **Open question we couldn't resolve locally**: if this is really a clean complete duplicate, a direct lookup should score near 0, but the current #1 public score is 4.859 — not near 0. Either top competitors aren't using this (unaware, or deliberately avoiding it), or Kaggle's actual grading answer key doesn't perfectly match what's published in `train.csv`'s `TVT` column for these rows (a possible deliberate anti-leak trap). Only a real submission resolves this.
+- Since there's only one test input file per well (Kaggle doesn't serve different input data for public vs. private scoring, only splits *submitted rows* after the fact), this overlap — if real — should apply equally regardless of which rows land in the public vs. private evaluation subset. This is a materially different risk profile than the usual "same-well overlap, risky if private has unseen wells" caution, since there are no other wells: all 3 test wells are confirmed to have this property.
+- **Before submitting, diffed this candidate row-by-row against the override-based submission (which we know scored 9.565): mean 0.004 ft apart, max 0.014 ft.** They're essentially the same prediction. This means the override's geometric reconstruction was already achieving almost this same result — so this "leak" is very likely already captured by the override, not sitting unexploited. If Kaggle's actual grading answer key matched what's published in `train.csv`'s `TVT` for these rows, the override would have scored near 0, not 9.565 — so the grading key most likely does **not** match, which would be a deliberate safeguard, not an oversight.
+- **The direct-lookup submission itself threw an exception at grading** (`54946892`, confirmed via the Kaggle website — no traceback exposed via API or UI). My own interactive run of the exact same kernel completed successfully and produced valid, verified output — meaning **Kaggle's submission grading re-executes the notebook in a separate context from the one `kaggle kernels push/status/output` shows**, and that re-execution can fail even when the interactive run didn't. See "Ensembling And Submission Behavior" below for the same issue recurring and what's actually confirmed vs. still uncertain about the cause.
+
+## Target And Metric
+
+- Submission target is `tvt`.
+- Official metric is RMSE, row-weighted (long hidden tails matter more than short ones — a well-averaged RMSE view is a useful secondary diagnostic since a model can help long wells while quietly hurting many short ones).
+- Submission columns are `id,tvt`; `id` = `{well_id}_{row_index}`.
+
+## The Current Public Meta: "Target-Free Geosteering" (read this before modeling)
+
+As of 2026-07-23 the leaderboard is dominated by a technique family that is **not** a standard tabular-features-into-GBM problem — it's closer to signal-processing / state-space tracking, layered with a self-verification trick unique to this competition's data shape. Reviewed 5 top public notebooks (now saved in `notebooks/`): `working-note-target-free-tvt-geosteering.ipynb`, `rogii-eda-target-free-alignment-for-tvt.ipynb` (both by Kaggle user `pilkwang`, likely the originator of this lineage), `9-251-rogii-wellbore-geology-prediction-dwt-based.ipynb` (highest-voted, 690 votes, simpler LGBM+CatBoost+hill-climbing baseline from May), `rogii-lb7295-public-rebuild.ipynb`, and `top-pf-config-branch-conservative-visuals.ipynb`.
+
+Core pipeline (the dominant lineage — dozens of forks differ only in a single config cell):
+
+1. **GR-to-typewell alignment**: gamma-ray (GR) log on the horizontal well is a "stratigraphic barcode." Fit an affine gain/offset calibration `(α, β)` on the visible prefix (heel calibration) so the hidden GR can be rescaled to typewell units before matching.
+2. **Particle filter (PF) / beam search / DTW**: track the most likely hidden TVT path as a state-space problem — particles evolve under a smooth transition prior, weighted by GR-vs-typewell likelihood. Beam search and DTW are alternative/complementary path-finding methods over the same GR-matching idea, blended together ("triple-signal" style).
+3. **Formation-surface prior**: `TVT + Z ≈ S(X,Y) + b_w`, i.e. the target plus depth is approximately a spatial structural surface plus a well-specific offset — fit `S(X,Y)` from train wells only (fold-safe), estimate `b_w` from the visible prefix.
+4. **Learned branch**: LightGBM/CatBoost/Ridge residual models on top of the PF/formation anchor, trained on a "target-free" feature matrix (anchor context, GR texture, typewell alignment features, trajectory geometry) — never on hidden-tail TVT.
+5. **Guarded same-well contact override**: if a test well's `well_id` also appears in train, a direct geological-contact reconstruction can be near-exact — but it's only accepted after checking it reproduces the visible-prefix `TVT_input` within ~1 ft RMSE. This is explicitly flagged by the notebook authors as a "public-aggressive" bet: strong if train/test wells overlap, risky if private evaluation leans on unseen wells.
+6. **Visible-prefix self-calibration**: because part of the true target is already known per test well (`TVT_input`), you can hold out suffixes of that known prefix and rank candidate models/configs by holdout RMSE **per test well, at submission time** — a built-in per-well validation signal that doesn't exist in most Kaggle competitions. Profiles are literally named `conservative` / `balanced` / `aggressive` for how much this is allowed to move the final prediction.
+7. Final blend + smoothing/clipping postprocessing + a hard contract guard (row count, id order, finite values) before writing `submission.csv`.
+
+Shared community tooling (public Kaggle datasets, confirmed legitimate under rules 3.6.b — public sharing is required and explicitly allowed):
+- `koolbox` package (e.g. `phongnguyn23021656/koolbox-offline`, 1107 downloads) — wraps the PF/DTW/beam-search internals.
+- `ravaghi/wellbore-geology-prediction-artifacts` (2.36GB, 4083 downloads) — precomputed Ridge/PF outputs mounted as a dataset so submission notebooks skip expensive recomputation.
+
+**GPU verdict: not required.** All 5 notebooks reviewed use `USE_GPU = os.environ.get("USE_GPU", "auto")` with an `nvidia-smi` detect-and-fallback pattern for LightGBM/CatBoost `device_type`, and the only `torch` usage found was CPU-only inference of a pretrained checkpoint (`torch.load(..., map_location='cpu')`, `torch.device('cpu')`). The whole pipeline is numba/joblib CPU signal processing plus small GBMs. A Kaggle GPU-quota gap does not block progress on this competition's dominant approach.
+
+## Where top-team scores (5.7-6.0) actually come from — beyond the shared pipeline (forum research, 2026-07-25)
+
+The "target-free geosteering" pipeline above plateaus around ~7.1 for us (see Ensembling section below — 3 attempts at model-package-only gave 3 different outcomes, and none of our ablations meaningfully beat 7.1). Checked the competition forum (`kaggle competitions topics list/topic-messages` — see "Operational" section for why this is the only way to actually read forum content) and found concrete, well-evidenced explanations of what separates top-team scores from this pipeline family. None of this is implemented anywhere in the notebooks we've tested.
+
+### 1. Neighbor-well curve transfer (the dominant lever) — discussion 726465, 14-19 votes, detailed multi-competitor thread
+
+Top teams (CV/LB 5.7-6.0) are not primarily winning via better GR signal processing. The dominant signal is **spatial proximity to other wells**: *"top teams simply copy the shape of the old well's path and paste it onto yours... If you have a close neighbor, you basically already know the answer."* Concretely, per-well error splits sharply by distance to the nearest spatially-close well:
+- Wells with a neighbor **<150 ft** away: already at RMSE ~6.70 (matches the theoretical "per-well line oracle" — i.e., just fitting a straight trend per well already gets you here if you have a close neighbor).
+- Wells with **no neighbor within 600 ft**: RMSE ~10.15 (worse than that well's own constant-baseline!) and these wells **dominate the total error**.
+- Going below 6.70 down to 5.7-6.0 requires **full-curve transfer** (borrowing the actual stratigraphic wiggle/curvature from the neighbor, not just a straight-line trend) — genuine cross-well signal, not just per-well signal processing.
+- Pure GR fine-structure/shape matching is reported as fundamentally unreliable here: high-passed lateral-vs-typewell shape-cost minimizes ~20 ft from the true TVT (SNR<1) — "the true position isn't even a low-cost point." This is consistent with the bimodal-datum finding below.
+- One competitor (`tuckerarrants` in the same thread) reports getting **CV 4.5-5.3 ft (5-fold, pooled ~5.18-5.77)** using a proper per-well sequence model (not tabular row-wise) *without* neighbor-well data at all — confirms sub-5ft is achievable on pure per-well modeling too, so this isn't the only path, but neighbor transfer is reported as the more common/accessible route to 5.7-6.0.
+- **Concrete, never-tried second lever from the same thread**: split modeling by **drilling azimuth/direction**. Wells drilled in opposite directions traverse the rock layers in reverse order; training one model on both directions together "confuses" it. Reported to often drop score significantly on its own. Nothing in any notebook we've reviewed does this.
+
+**Locally validated, 2026-07-26**: downloaded all 773 train well IDs (paginated `kaggle competitions files` — the real page token is only exposed in table-format output, not `--format json`, and `--page-token` with a plain integer silently returns page 1 again) and a random sample of 150 well `horizontal_well.csv` files. Built a cross-well nearest-neighbor search (subsampled per-well points, `scipy.spatial.cKDTree`, since a naive combined-point-cloud KD-tree just returns same-well points as "nearest" — each well has thousands of closely-spaced points along its own trajectory). Found real distribution matching the forum almost exactly: 20/150 wells (13.3%) have a neighbor <150 ft, 70/150 (46.7%) <600 ft, median nearest-neighbor distance 675.7 ft. One pair was literally 0.0 ft apart (likely a re-drill/twin well on the same pad).
+
+Tested the actual transfer mechanism on 10 real close-neighbor pairs (treating one well as a pseudo-test well with a masked tail, the other as a "train" well with full labels — exactly analogous to the real competition setup):
+- **Naive absolute-value transfer** (nearest-XY point's raw TVT + one global bias fit on the visible prefix) failed badly — worse than a trivial constant-value baseline in every single pair tested. The reason: the *closest-approach* distance between two wells (22-133 ft) does not mean the whole length of the well stays close — the mean distance from well A's *hidden tail specifically* to the nearest point in well B often balloons to 1,000-4,000+ ft, so the "nearest point" reference is frequently a distant, unrelated part of the neighbor.
+- **Detrended wiggle transfer** (subtract a rolling-mean trend from both wells, transfer only the residual "wiggle," with a scale factor calibrated by correlating the two wells' wiggles on the visible prefix) is far more promising. Rolling-window size matters a lot and does *not* match the ~15-25 ft *vertical* Milankovitch scale directly — MD spacing is exactly 1.0/row, but that 15-25 ft is a *vertical* thickness, which can span hundreds of MD feet along a near-horizontal lateral depending on local dip. Empirically, windows around 400 rows worked best in this sample (swept 11-1200).
+- **Decisive control test**: compared the true nearest-neighbor's win rate against random, spatially-unrelated wells used the same way. **True neighbors won 3/5 (60%), with substantial improvements (21.71→13.71 ft, 7.36→3.86 ft, 5.66→3.38 ft RMSE). Random wells won only 1/15 (6.7%), and that one win was marginal.** This cleanly confirms the effect is genuinely about spatial proximity, not just "any external smoothing/reference helps" — a real, validated signal, not a coincidence from cherry-picking pairs.
+- Caveat: for any given pair, only *one direction* tended to win (e.g., A predicted well from B's data improved, but B predicted from A's did not) — the mechanism isn't simply symmetric, and the self-calibrated scale (correctly near-zero when correlation is weak) is doing real protective work, not just window dressing.
+- **Implementation plan**: for the real hidden test wells, we have full X,Y for the visible prefix (and the host says the trajectory data — not just the well ID — genuinely differs from the placeholder), so the natural approach is: find each test well's nearest train-well neighbor among all 773 (not just a sample), compute the detrended-wiggle transfer with prefix-calibrated scale, and blend it as an additive correction on top of the existing base prediction (no-override blend or model-package) rather than a wholesale replacement — matches the self-limiting behavior already validated locally.
+
+### 2. Bimodal datum ambiguity is real, well-characterized, and we've never enabled the fix — discussion 711878, 19 votes, extensive rigorous multi-competitor collaborative thread
+
+The Eagle Ford is rhythmically bedded with **Milankovitch (orbital) cycles**: limestone-marl couplets repeating on a ~15-25 ft scale. Over a long lateral, horizontal-well GR can genuinely match the typewell at **two stratigraphic positions ~1 bundle apart** — both equally plausible, i.e. a real, physically-motivated bimodal ambiguity, not a modeling failure.
+- Affects a minority of wells (~10-15%) but they carry a large fraction of total squared error (estimates in the thread range ~40-65% depending on method).
+- **When a well is genuinely ~50/50 bimodal, the RMSE-optimal prediction is the midpoint (posterior mean) of the two candidate datums, not committing to either mode.** Committing gives ~0 ft error half the time and ~30 ft the other half (expected RMSE ~21 ft); the midpoint gives a flat ~15 ft. Chasing "the right mode" makes the score worse on these wells, not better.
+- Through extensive collaborative validation in the thread: **~80% of the "tail" (wells with datum bias) is legally recoverable** via proper heel gain/offset calibration (fit only on the visible known prefix) — only a genuine **~12% self-similar core** remains irreducibly bimodal even under oracle-quality calibration.
+- **Our own pipeline already has this exact mechanism** (`RUN_BIMODAL_DETECTOR`, `RUN_VP_BIMODAL_GUARD` / the `bimodal_guarded` profile preset) — but every profile we've tested so far runs with `run_bimodal_detector=False`. Worth testing the `bimodal_guarded` preset specifically, since forum consensus says this is where most of the top-tier residual error genuinely lives.
+- Side-note on process: this thread contains a private-OOF-sharing offer between two competitors that a third party correctly flagged as against the rules (private sharing without a team merge); both parties immediately corrected course and took the shared data down. Good reminder not to do this ourselves — public discussion only.
+
+### 3. Data-structure gotchas relevant to any custom feature engineering (lower priority for us since we're not building from scratch, but useful context)
+
+- **The 6 "formation columns" (`ANCC`, `ASTNU`, `ASTNL`, `EGFDU`, `EGFDL`, `BUDA`) are not 6 independent 3D structural surfaces** — discussion 708167, 25 votes. Layer thickness between adjacent columns is constant along every well (std < 0.01 ft, i.e. rounding noise only) and derived from the typewell's own geology intervals via the "parallel formation assumption" (97.5% of wells match to <1 ft). Effectively **1 degree of freedom**, not 6. Test wells don't have these columns (train-only, as we already knew) since they're derived from the typewell.
+- **These columns are stored in TVD/Z units, not TVT** — discussion 701034, 13 votes. Using them directly against TVT without converting (via the well's own near-perfectly-correlated Z↔TVT relationship, |r|≈0.999) introduces a ~20,000 ft error. Not leakage to do this conversion — `Z` is provided for all wells including test, and only the known/visible `TVT_input` portion is used to fit the interpolator.
+- TVT in this dataset is a **cumulative vertical distance** (`TVT[i] = TVT[i-1] + |ΔZ_vertical|`), not literally "true vertical thickness of a single layer" in the traditional geological sense — in the horizontal section the vertical component ≈ 0 so TVT barely changes row-to-row, consistent with "prefix-conditioned forecasting" framing elsewhere in this file.
+
+## BREAKTHROUGH (2026-07-27): GS1.30 — a one-line change that beats everything else we tried, found via a notebook worked on from another machine
+
+While the primary session was mid-flight on the neighbor-transfer/bimodal-hedge levers above, separate work happened directly on Kaggle (another machine) that found something much simpler and far more effective: **`dalloliogm/rogii-public-score-frontier-lab-visuals`, a fork of a highly-voted public notebook (346 votes), scored 6.474** — our best result of the entire session by a wide margin (previous best ~7.1-7.15). Rank ~718/5793 (top 12.4%) as of 2026-07-27; bronze needs ≤6.463 (0.011 away), silver ≤6.427.
+
+**The actual change (cell 31), one line:**
+```python
+gs = float(np.clip(np.nanstd(kn.GR.fillna(0).values - tw_at_k), 10., 60.)) * 1.3
+```
+This widens the particle filter's gamma-ray likelihood tolerance (`σ_GR`) by 30% versus the vanilla calculation (present unchanged elsewhere in the same notebook, cells 8 and 30, for comparison). Effect: the PF becomes less confident/less willing to commit hard to a single GR-match hypothesis when the horizontal-well GR doesn't perfectly track the typewell — philosophically the same spirit as bimodal-hedging (don't overcommit to a possibly-wrong match) but achieved as a single fundamental parameter change rather than a detection-and-correction layer. The notebook's own markdown states the upstream lineage reports **6.568** for GS1.30 alone; our 6.474 likely also benefits from this pipeline family's existing 128-seed PF ensemble + guarded bimodal branch-hedge machinery, which was already active (`vp_balanced_modelpkg_005` profile) independent of GS1.30.
+
+**Forum corroboration**: discussion 728712 ("Observation: a small `gs` (GR noise scale) tweak in a public notebook — sharing for transparency", posted 2026-07-24) is almost certainly about this exact change — we saw the title earlier but hadn't opened it before this was independently rediscovered.
+
+**Practical implication**: this dwarfs the effect size of everything in the "Where top-team scores actually come from" section above. If revisiting Phase 2 work, GS1.30 (or further tuning the multiplier) should be the starting point, not the neighbor-transfer/bimodal-hedge ablations — those may still add incremental value *on top of* GS1.30, but haven't been tested in combination with it yet.
+
+### WARNING: a later cell in the same notebook ("Q0522") hardcodes the placeholder test data and will very likely crash at real grading
+
+A subsequent cell (47) in the *current* (root-committed) version of this notebook adds an experiment labeled "Q0522" that is a clear instance of the placeholder-vs-real-data trap this file already warns about elsewhere:
+
+```python
+_EX_EXPECTED_WELL = '00e12e8b'          # one of our 3 known PLACEHOLDER test wells
+_EX_EXPECTED_BASE_SHA = 'b192d3f3...'   # hardcoded SHA256 of the upstream output
+_EX_EXTRA_SHIFT = 0.522                 # added to an existing +2.0ft branch shift, total "2.522"
+```
+It asserts the upstream `submission.csv` matches this exact hash/well/row-count and applies a manually-tuned shift to that one hardcoded well — with **no try/except, no graceful fallback**. Since the real hidden test set does not contain well `00e12e8b` (host-confirmed, see the MAJOR FINDING section above), this cell should reliably throw `RuntimeError` the moment it runs against real grading data (`_mask.sum()` will be 0, tripping an explicit `raise`). This is textbook public-LB-probing: a value (2.522) that can only have been chosen by iteratively resubmitting and reading back the public score, tuned to data that doesn't represent the real test set at all.
+
+Our successful 6.474 submission and its reproducibility check both explicitly used `kernel_version=1` of this kernel, which most likely predates this cell (it reads as a later, in-progress experiment layered on top of the working GS1.30 base). **Do not submit a version of this notebook that includes the Q0522 cell as-is** — either remove it or gate it behind a flag that's off by default, since as written it will burn a submission slot on a guaranteed failure against real data.
+
+## Validation
+
+- Treat well ID as the grouping unit for validation (`GroupKFold(well_id)`).
+- Avoid row-level random splits across the same well.
+- The competition's own visible-prefix mechanism (hold out suffixes of the known `TVT_input` prefix, score candidates on that holdout) is a legitimate *additional*, per-test-well validation signal on top of GroupKFold — prefer it over blind public-LB probing when choosing between PF/blend configs, since submissions are capped at 5/day.
+- Baselines worth beating explicitly: constant anchor (`y = last_known_TVT`) and linear prefix extrapolation. If a model can't beat these on drifting wells without hurting flat wells, it isn't adding value.
+
+## Leakage And Rules
+
+- Public code/dataset sharing is **explicitly allowed** by competition rules (3.6.b) as long as it's shared publicly on Kaggle (forums/notebooks) — using the public "target-free geosteering" lineage and `koolbox`/`artifacts` datasets is fully compliant, not a gray area.
+- Submission limits: 5/day max, up to 2 Final Submissions selected for judging, team size ≤5. Plan final-submission picks (see `TASKS.md`) rather than defaulting to auto-selection.
+- Explicit leakage boundary (from the public EDA notebook's own risk table):
+  - Safe/"strict": current-row `MD/X/Y/Z/GR`, prefix `TVT_input` and anything derived only from it, backward/trailing GR windows, typewell GR at prefix-derived baselines, prefix-only affine GR calibration.
+  - Safe/"offline batch" (fine for Kaggle submission, not real-time geosteering): centered/lead-lag GR, tail length/fraction, candidate-path and beam-path typewell features, formation-plane/KNN spatial references fit only on training wells.
+  - **Never**: true hidden-tail `TVT` in any form, `TVT_input_bfill` (reads ahead), train-only formation surfaces copied directly into test rows, fold leakage from validation wells entering a spatial imputer.
+- Same-well train/test overlap (a test `well_id` also present in train) is a distinct, real signal — not leakage by itself — but is explicitly called a "public-aggressive" bet by the notebook authors: strong when it applies, risky for generalization if the private evaluation includes structurally different or non-overlapping wells. Since public/private most likely differ only by *row* here (only 3 test wells exist total, not by *well*), this risk is more about robustness across the hidden tail than a classic public/private well-swap shakeup — but it's still worth keeping a conservative (overlap-disabled) submission as a hedge (see `TASKS.md`).
+- Online/calibration-zone training (from our own older notebook) needs explicit review before trusting leaderboard gains — same spirit as the visible-prefix guardrails above.
+
+## Features
+
+- Existing (our own, older) notebooks emphasize trajectory (`X`, `Y`, `Z`, `MD`), GR, lag/rolling features, type-well alignment, and calibration from known `TVT_input` — directionally correct, but missing the PF/DTW/contact-override machinery that now drives the top of the leaderboard.
+- See the "Current Public Meta" section above for the fuller target-free feature taxonomy (anchor/prefix, trajectory, GR texture, typewell/physics paths, formation plane, row-level dense-surface corrections).
+
+## Models
+
+- Initial copied notebooks (ours, from May) cover PyTorch NN, TCN, and LightGBM approaches — pre-dates the PF/geosteering meta shift.
+- Current public SOTA stack: PF/beam/DTW anchor + LightGBM/CatBoost/Ridge residual learner + guarded contact override + visible-prefix calibration (see above). Highest-voted alternative/simpler lineage: LightGBM + CatBoost + hill-climbing ensemble (`9-251-...dwt-based.ipynb`, DWT-based GR alignment instead of PF) — useful as an independent signal for ensemble diversity rather than a replacement.
+
+## Ensembling And Submission Behavior
+
+- **For our 3 test wells specifically, the same-well contact override dominates completely and makes everything upstream irrelevant.** Ran both `rogii-lb7295-public-rebuild.ipynb` (simple, 3 datasets) and `working-note-target-free-tvt-geosteering.ipynb` (adds visible-prefix calibration, bimodal hedge, model-package/TabICL blending, 7 datasets) on 2026-07-23: both produced **byte-identical** `submission.csv` (sha256 `fdf4a817...`). The override fires for all 3 test wells with near-perfect visible-prefix reconstruction (RMSE 0.008-0.01 ft, 100% of rows overridden per well in both runs), so whatever the PF/ridge/learned-branch/model-package/TabICL layers compute gets fully overwritten. The model-package correction layer even self-gated off (`model package p95 diff 26.701 > 25.000`, above its own 25.0 threshold).
+- Before pushing another variant notebook from this lineage, diff its output `submission.csv` hash against what we already have — don't assume added complexity changed anything.
+- **CRITICAL, confirmed by real scores (2026-07-24): the contact override actively hurts, it doesn't just dominate/neutral-out.** Ran a 5-point ablation sweep isolating each pipeline component and submitted all 5 (`54927668` through `54935199`, all 2026-07-23/24):
+
+  | Candidate | Score | Rank (of 5572) |
+  |---|---|---|
+  | Model-package-only (pure pretrained model, no PF, no override) | **7.097** | ~1317 (top 23.6%) |
+  | No-override blend (PF/ridge + learned branch, override off) | 7.102 | ~1335 (top 24.0%) |
+  | Pure learned-branch (GBM boosters alone) | 7.856 | ~2408 (top 43.2%) |
+  | Contact-override ("aggressive"/self-verified-anchor, our original pick) | 9.565 | ~3004 (top 53.9%) |
+  | Pure PF/ridge anchor alone | *(threw an exception at grading — see below, not a data issue)* | — |
+
+  So despite reconstructing the visible prefix to ~0.01 ft RMSE, the override **generalizes worse to the hidden tail than just not using it at all** — a genuine overfitting case, not a rounding difference (9.565 vs. 7.097-7.102 is a huge gap). **Do not default to the contact-override profile for this competition; the two non-override candidates above are the current best starting points**, and are close enough to each other (0.005 apart) to be worth ensembling (they come from different signal paths: a separate pretrained model vs. a PF+GBM blend).
+- The pure-learned-branch-alone score (7.856) being clearly worse than the blend/model-package tells us the PF/ridge anchor and/or model-package are adding real value beyond the raw GBM boosters — don't drop those components even though the override should go.
+
+## Operational: submission grading re-executes the notebook separately from your own run
+
+Two submissions (`54935199` pure-anchor-ablation, `54946892` direct-train-lookup-probe) showed `SubmissionStatus.COMPLETE` with an empty `publicScore` via the API, and the Kaggle website confirms this means **"Notebook Threw Exception"** at grading time — with no traceback exposed anywhere (API or UI). Both of these had a kernel `kaggle kernels status` reported `COMPLETE`, and `kaggle kernels output` produced valid, verified files. **This means grading a code-competition submission triggers Kaggle to re-run the notebook in a context separate from whatever `kaggle kernels push/status/output` shows you** — your own successful interactive run is not proof the grading run will succeed.
+
+- Investigated the likely cause for the ensemble/model-package fragility specifically: `submission_model_package_only.csv` is written **conditionally** in the pipeline (`if _mp_pkg_sub is None: [skip] else: [write it]` — confirmed by reading the actual code, not guessing). If the model-package prediction fails to build on a given run (dataset mount hiccup, etc.), that file is simply never created. Any appended cell that reads it (like our ensemble notebook's final cell) will throw `FileNotFoundError` if that happens on the grading re-run even though it existed on your interactive run.
+- Checked the same for pure-anchor's dependency (`sp45_projection_submission.csv`) and it's actually written **unconditionally** — no `if` guard. So that specific file probably wasn't the cause; the failure there is more likely generic flakiness somewhere in the shared pipeline (pure-anchor and pure-learned-ablation share every cell except the last one, and pure-learned succeeded), not something specific to what we appended.
+- **Lesson for future ablation forks**: don't assume an intermediate/diagnostic file (anything not part of the pipeline's own guaranteed final-output contract) will reliably exist on every execution. Either check `os.path.exists(...)` defensively with a clear fallback/error message before reading it, or only patch via files confirmed to be unconditionally written.
+
+### Escalation (2026-07-25): grading instability isn't just "throws or doesn't" — it can silently produce a wildly different score for byte-identical input
+
+Submitted `submission_model_package_only.csv` from `dalloliogm/rogii-modelpkg-repro-test` v1 — a file **proven byte-for-byte identical (same SHA-256)** to the file that scored 7.097 on 2026-07-23 (submission `54929149`), via two independent interactive kernel reruns. The resubmission (`54955977`) scored **20.067**. Not a rounding difference — a ~3x-worse result for provably identical input.
+
+This is a stronger and more concerning finding than the earlier exception cases: it's not just "the notebook sometimes throws" (already known), it's "the notebook can silently produce a substantially different, wrong-looking result on some grading runs, with the file itself giving no indication anything is different." Combined with the same-day exception on the no-override-blend reproducibility test (`54958529`, another empty score) — **two independent confirmations that this pipeline family is unreliable at actual grading time**, not just occasionally slow or occasionally throwing.
+
+**Implication for Final Submission selection**: none of our observed scores (7.097, 7.102, 7.856, 9.565, 11.736, 20.067) should be treated as a stable expectation for that configuration — each is one sample from what may be a noisy process. Before locking in Final Submissions, get repeat confirmations of whichever candidate(s) we're relying on, and weight submission-count budget toward reproducibility checks over blind exploration of new variants as the deadline approaches. A tie-breaker third sample of the model-package-only config is in flight (`54968605`) to see whether 7.097 or 20.067 (or something else) is closer to typical.
+
+### RESOLVED (2026-07-25): root cause is unseeded PF randomness, confirmed by the community — not a platform bug, not our code
+
+The forum has extensive, directly on-point discussion of this exact phenomenon:
+
+- Discussion 704663 ("...why my score keeps on varying even though I submit the same notebook?"): a competitor submitted one specific public notebook **3 times** and got **8.354, 8.188, 8.438** — three different scores from an unmodified notebook. Top-voted community explanation: *"we do things like particle filter features. To create a new column we literally generate a bunch of random numbers and then compute stuff from those random numbers... If we were to compute the new column twice it would be different each time."* Unlike normal feature engineering (deterministic formulas), the PF-based feature generation in this pipeline family is **not seeded**, so every fresh execution (every `kaggle kernels push`, and — critically — every grading re-execution, since grading re-runs the notebook from scratch each time per our own confirmed finding above) produces genuinely different derived values.
+- Tellingly: *"A few weeks ago, one could get top 5 on the public LB (not private LB) just submitting the best public notebook like 10 times haha."* — confirms the top-of-leaderboard public scores are partly a matter of a lucky random draw, not purely skill, at least historically. (Also implies repeat-submitting a good config and keeping the best draw is a legitimate, community-known tactic for Final Submission purposes — not overfitting to public-only noise, since the random seed affects all rows in one submission uniformly, not a per-row public/private split artifact.)
+- Discussion 707695 ("Private Test Update and Rescore") independently confirms competitors hitting **the exact same symptom we saw** — a previously-best-scoring submission suddenly erroring, with an identical resubmission then working — and the host's response ("I've alerted the team") treated it as a genuine platform-side issue, not user error.
+- Discussion 703883 (practical notes from another competitor stress-testing notebooks) confirms independently: *"A few notebooks that look quite different in code can collapse into almost identical predictions, especially in the physical/PF-style family"* — matching our own finding that `rogii-lb7295-public-rebuild` and `working-note-target-free-tvt-geosteering` produced byte-identical submissions.
+
+**Bottom line**: our 7.097 → 20.067 swing is an extreme instance of a well-documented, community-understood phenomenon (unseeded PF randomness resampled fresh on every grading execution), not a bug specific to our forks or a Kaggle platform failure. Given this, resubmitting a promising, already-verified-format candidate multiple times near the final-submission deadline and keeping whichever draw scores best is a legitimate strategy, not risky overfitting — but any *single* score (ours or a public notebook's self-reported title, e.g. "LB 6.40") should be treated as one noisy sample, not a stable fact, until repeated.
+
+## Parallel final-week research (2026-08-01)
+
+The notebook titled "ROGII Physics LB 7.872 v48" is not the independent model family its title suggested. Timestamp-matched version archaeology points to upstream v65 as the likely source of our 6.505 fork: it contains all 104 functions from clean GS1.30, 102 with exact normalized AST matches, and adds the active hard-coded Q0522 correction. Do not treat it as an ensemble-diversity candidate.
+
+A refresh of 120 recently updated discussion topics and 825 comments found stronger evidence for whole-well CV and model diversity than for public-LB selection. It found no new measured azimuth ablation and no deployable-RMSE evidence for median/FFT denoising. Azimuth remains a clean hypothesis, but it must earn deployment through paired whole-well and masked-prefix validation.
+
+The current learned branch loads fixed external boosters: exactly 196 ordered features and three root-level LightGBM regressors averaged without a scaler. Adding direction columns to the inference notebook alone would therefore do nothing. A valid azimuth experiment requires paired newly trained control/conditioned artifacts built from the same feature frame, folds, and seeds; otherwise retraining and PF randomness confound the comparison.
+
+The paired azimuth builder completed on all 773 wells and 3,783,989 rows. The result is a clean rejection: pooled final-proxy OOF worsened from 11.408466 to 11.408850, only folds 3 and 4 improved, and the well-bootstrap improvement was −0.00041 with a 95% interval of [−0.01184, +0.01023]. Although two of three 60-well masked-prefix fractions improved, that secondary screen cannot override the flat full OOF result. Do not spend compute on the all-eligible run or submission inference; direction as four global features adds no credible signal to this learner.
+
+## GR denoising experiments (2026-07-31 to 2026-08-01)
+
+Applying a centered rolling median (window 7) to the GR signal used by the selector PF, beam tracker, and learned-trajectory PF was a strong regression: submission `55141310` scored **9.325** versus the usual GS1.30 band near 6.5. Broad local GR smoothing is therefore not a safe improvement on this stack.
+
+The FFT-notch experiment exposed a separate operational issue: Kaggle may mount identical declared inputs under either the namespaced paths (`/kaggle/input/competitions/...`, `/kaggle/input/datasets/...`) or legacy paths (`/kaggle/input/...`). New forks should resolve both layouts before constructing `CFG`; otherwise a kernel can fail with an empty training-well list even when its metadata declares the competition source correctly.
+
+The completed FFT grading rerun scored **10.819** (`55157951`), worse than rolling median's 9.325 and far outside the clean GS1.30 band. Together these two isolated tests reject broad local GR denoising for this stack; do not spend further slots on smoothing or frequency-notch variants.
+
+On the three visible placeholder wells, median and FFT produced byte-identical final `submission.csv` files even though their upstream trajectories differed materially. The visible-prefix/model-package/branch-gating stack can collapse genuinely different upstream signals to the same final choice. Inspect intermediate artifacts before declaring a code variant a no-op, while remembering that the grading rerun may make different gate decisions on hidden wells.
+
+## Leaderboard Notes
+
+### s4000 and lateral self-alignment (2026-08-02)
+
+The clean GS1.30 seed-offset +4000 submission `55170737` scored **6.435**, improving the account best from 6.473 by 0.038 ft. This makes it the leading Final Submission candidate, but the known PF grading variance means the score should be treated as an empirical draw rather than proof that offset +4000 is intrinsically better.
+
+Discussion 698825 supplied a legitimate geological hypothesis: when a lateral path moves backward through TVT, its hidden GR may align better to the same well's higher-resolution pre-boundary GR than to the typewell. A standalone reverse-beam implementation was tested with nested prefix calibration on 60 deterministic wells at three mask fractions. The strict gate improved the negative-tail diagnostic by 0.2947 ft but gained only 0.0259 ft pooled; its 2,000-draw well-bootstrap interval was [-0.1995,+0.2700], and only the 0.75 fraction improved. It therefore failed the predeclared integration gates.
+
+The more permissive correlation-only gate activated on 97.2% of cases and regressed by roughly 48.8 ft. Lateral GR is highly autocorrelated even when the inferred TVT path is wrong; high GR correlation alone is not evidence of correct stratigraphic alignment. Any future version needs repeated nested-cut consistency and must be evaluated on fresh wells after gate design. Do not modify s4000 with the current implementation.
+
+- Full public LB CSVs saved at `references/rogii-wellbore-geology-prediction-publicleaderboard-2026-07-23T08:29:24.csv` (5504 teams, stale baseline) and `references/rogii-wellbore-geology-prediction-publicleaderboard-2026-07-24T05:15:25.csv` (5572 teams, current).
+- Rank history: 3504/5504 at 11.107 (stale, from a 2026-05-10 submission — missed ~2.5 months of meta evolution) → **~1317/5572 at 7.097** (2026-07-24, top 23.6%) after one day of catch-up work.
+- Medal cutoffs as of 2026-07-24 (5572 teams, Kaggle's usual top-10+0.2%N / top-5% / top-10% gold/silver/bronze formula): gold ≈ ≤5.902 (rank ~21), silver ≈ ≤6.471 (rank ~278), bronze ≈ ≤6.538 (rank ~557), top25% ≈ ≤7.125, median ≈ 8.814. These shift slightly day to day as more teams submit — recompute from a fresh leaderboard download rather than trusting old numbers for anything precision-sensitive.
+- Our current best (7.097) is inside top25% but ~0.56 short of bronze — closing that gap is the next concrete target, not a medal yet.
+- Hundreds of public forks (many literally just re-forks of the same "Contact-Gated Stratigraphic Alignment" notebook with one config value changed) cluster in the 6-9 public-score range — but per the ablation sweep above, many of those forks are likely leaving score on the table by defaulting to the override/aggressive profile rather than testing without it.
+- The top of the leaderboard moves in real time (multiple sub-6 submissions dated the same day) — this is an active, fast-iterating public meta, not a settled one.

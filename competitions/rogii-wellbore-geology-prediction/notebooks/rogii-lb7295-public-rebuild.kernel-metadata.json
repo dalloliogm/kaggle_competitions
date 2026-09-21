@@ -1,0 +1,21 @@
+{
+  "id": "dalloliogm/rogii-lb7295-rebuild-catchup",
+  "title": "ROGII LB7295 Rebuild Catchup",
+  "code_file": "rogii-lb7295-public-rebuild.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": [
+    "phongnguyn23021656/koolbox-offline",
+    "fleongg/rogii-claude-models-pub",
+    "ravaghi/wellbore-geology-prediction-artifacts"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "rogii-wellbore-geology-prediction"
+  ],
+  "model_sources": []
+}

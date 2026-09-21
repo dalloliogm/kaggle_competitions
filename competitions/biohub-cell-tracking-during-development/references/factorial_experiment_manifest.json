@@ -1,0 +1,40 @@
+{
+  "status": "V1_ERROR_LOCAL_FIX_READY",
+  "source": "notebooks/public-reproductions/rishabh-division-geometry-080/rishabh-division-geometry-080.ipynb",
+  "source_sha256": "3027efce79fe9baa0c1d2e8cbd10deb22c78ae2a3a5be40bab28c86eff6732b6",
+  "notebook_sha256": "ad400de20d82f10c718003c9e7e4bc1a01a4ada30def040f682a4f2b968eb964",
+  "hypothesis": "Gap distance and division image threshold interact; isolate main effects and interaction at fixed .80 fusion.",
+  "arms": {
+    "incumbent": [
+      5.8,
+      0.12
+    ],
+    "gap_only": [
+      5.0,
+      0.12
+    ],
+    "threshold_only": [
+      5.8,
+      0.25
+    ],
+    "both": [
+      5.0,
+      0.25
+    ],
+    "divisions_off": [
+      5.8,
+      0.12
+    ]
+  },
+  "scorer_revision": "075fc5f5a52d11077f9dc2b074644618f26939e2",
+  "split_manifest_sha256": "865002a8f4c3bf56b8c3f597489a8eb201d627e4bf4776870245a0334d72b8cf",
+  "max_movie_regression": 0.002,
+  "synthetic_branch": "HELD: require actual detector candidates on current base",
+  "selection_rule": "Diagnostic only while checkpoint exposure prevents an independent holdout; no promotion on this run.",
+  "kernel": "dalloliogm/biohub-frozen-gap-division-factorial",
+  "kernel_version": 1,
+  "launched_at": "2026-09-05T09:10:00Z",
+  "user_authorization": "Explicit approval in current task",
+  "failure": "tracksdata from_geff returned tuple, corrected loader in runtime helper",
+  "rerun": "Deferred behind user-approved four-candidate GPU batch"
+}

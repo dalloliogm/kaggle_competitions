@@ -1,0 +1,22 @@
+[
+  {
+    "task": "task157",
+    "arc_id": "6a1e5592",
+    "requested": 256,
+    "generated": 256,
+    "both_correct": 243,
+    "base_only": 0,
+    "donor_only": 11,
+    "both_wrong_same": 0,
+    "both_wrong_diff": 1,
+    "base_runtime": 1,
+    "donor_runtime": 0,
+    "both_runtime": 0,
+    "oversize_skipped": 0,
+    "generator_failures": 0,
+    "net_correct": 11,
+    "classification": "runtime-or-empty",
+    "first_issue": "example 16: donor-only correct, base differs by 18 cells",
+    "issue_indices": "[16, 24, 25, 39, 48, 72, 101, 110, 114, 131, 199, 209, 235]"
+  }
+]

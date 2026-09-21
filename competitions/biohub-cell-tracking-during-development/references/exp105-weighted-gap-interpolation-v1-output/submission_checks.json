@@ -1,0 +1,44 @@
+{
+  "base_path": "kaggle_outputs/biohub-exp092-threshold-plus-density-gap-candidate/submission.csv",
+  "columns_ok": true,
+  "delta_vs_base": {
+    "edges": 1,
+    "nodes": 2,
+    "rows": 3
+  },
+  "division_like_by_dataset": {
+    "44b6_0113de3b": 37,
+    "44b6_0b24845f": 96,
+    "6bba_05b6850b": 19,
+    "6bba_05db0fb1": 266
+  },
+  "division_like_sources": 418,
+  "duplicate_edges": 0,
+  "duplicate_node_keys": 0,
+  "edge_sentinel_bad": 0,
+  "edges": 124074,
+  "gap_inserted_synthetic_sum": 2020,
+  "gap_pairs_selected_sum": 2020,
+  "gap_refined_synthetic_sum": 2020,
+  "gap_weighted_motion_clamped_sum": 0,
+  "gap_weighted_motion_fallback_linear_sum": 0,
+  "gap_weighted_motion_used_sum": 2019,
+  "id_contiguous": true,
+  "id_unique": true,
+  "max_indegree": 1,
+  "max_outdegree": 2,
+  "missing_edge_sources": 0,
+  "missing_edge_targets": 0,
+  "node_sentinel_bad": 0,
+  "nodes": 128614,
+  "nonconsecutive_edges": 0,
+  "null_cells": 0,
+  "path": "kaggle_outputs/biohub-exp105-weighted-gap-interpolation/submission.csv",
+  "row_types": {
+    "edge": 124074,
+    "node": 128614
+  },
+  "rows": 252688,
+  "same_sha_as_base": false,
+  "sha256": "5ff0b84ea080fb9954fd8d2578823f32ff2a34653dbc4ede561bb4e913f4d964"
+}

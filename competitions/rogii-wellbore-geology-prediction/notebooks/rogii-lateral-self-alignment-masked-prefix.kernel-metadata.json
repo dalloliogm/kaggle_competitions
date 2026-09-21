@@ -1,0 +1,16 @@
+{
+  "id": "dalloliogm/rogii-lateral-self-alignment-masked-prefix",
+  "title": "ROGII Lateral Self Alignment Masked Prefix",
+  "code_file": "rogii-lateral-self-alignment-masked-prefix.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": false,
+  "competition_sources": [
+    "rogii-wellbore-geology-prediction"
+  ],
+  "dataset_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

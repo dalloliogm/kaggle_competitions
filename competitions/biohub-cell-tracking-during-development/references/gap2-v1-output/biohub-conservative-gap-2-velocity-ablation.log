@@ -1,0 +1,160 @@
+[{"stream_name":"stderr","time":7.745507411,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":7.745595014,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":7.745601162,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":7.745649077,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":8.486525639,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":8.486567029,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":8.486588407,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":8.486591821,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":54.920622784,"data":"ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n"}
+,{"stream_name":"stderr","time":54.920670938,"data":"bigframes 2.39.0 requires google-cloud-bigquery-storage\u003c3.0.0,\u003e=2.30.0, which is not installed.\n"}
+,{"stream_name":"stderr","time":54.920679407,"data":"google-adk 1.29.0 requires google-cloud-bigquery-storage\u003e=2.0.0, which is not installed.\n"}
+,{"stream_name":"stderr","time":54.920685672,"data":"datasets 5.0.0 requires fsspec[http]\u003c=2026.4.0,\u003e=2023.1.0, but you have fsspec 2026.6.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":54.92069159,"data":"ydata-profiling 4.18.4 requires numba\u003c0.63,\u003e=0.60, but you have numba 0.65.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":54.920699285,"data":"ydata-profiling 4.18.4 requires numpy\u003c2.4,\u003e=1.22, but you have numpy 2.4.6 which is incompatible.\n"}
+,{"stream_name":"stderr","time":54.920709818,"data":"ydata-profiling 4.18.4 requires scipy\u003c1.17,\u003e=1.8, but you have scipy 1.18.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":54.920713907,"data":"distributed 2026.3.0 requires dask\u003c2026.3.1,\u003e=2026.3.0, but you have dask 2026.6.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":54.920717893,"data":"google-colab 1.0.0 requires jupyter-server==2.14.0, but you have jupyter-server 2.12.5 which is incompatible.\n"}
+,{"stream_name":"stderr","time":54.920988992,"data":"google-colab 1.0.0 requires pandas==2.2.2, but you have pandas 2.3.3 which is incompatible.\n"}
+,{"stream_name":"stderr","time":54.921010536,"data":"google-colab 1.0.0 requires requests==2.32.4, but you have requests 2.34.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":54.921017607,"data":"dopamine-rl 4.1.2 requires gym\u003c=0.25.2, but you have gym 0.26.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":54.921023927,"data":"ibis-framework 9.5.0 requires toolz\u003c1,\u003e=0.11, but you have toolz 1.1.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":54.921029832,"data":"moviepy 1.0.3 requires decorator\u003c5.0,\u003e=4.0.2, but you have decorator 5.3.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":54.921035705,"data":"bigframes 2.39.0 requires rich\u003c14,\u003e=12.4.4, but you have rich 15.0.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":54.921042027,"data":"pyiceberg 0.11.1 requires rich\u003c15.0.0,\u003e=10.11.0, but you have rich 15.0.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":54.921047986,"data":"gcsfs 2025.3.0 requires fsspec==2025.3.0, but you have fsspec 2026.6.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":54.921066926,"data":"gradio 5.50.0 requires pillow\u003c12.0,\u003e=8.0, but you have pillow 12.2.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":54.921071932,"data":"gradio 5.50.0 requires pydantic\u003c=2.12.3,\u003e=2.0, but you have pydantic 2.13.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128195608,"data":"ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n"}
+,{"stream_name":"stderr","time":55.128224815,"data":"bigframes 2.39.0 requires google-cloud-bigquery-storage\u003c3.0.0,\u003e=2.30.0, which is not installed.\n"}
+,{"stream_name":"stderr","time":55.12823036,"data":"google-adk 1.29.0 requires google-cloud-bigquery-storage\u003e=2.0.0, which is not installed.\n"}
+,{"stream_name":"stderr","time":55.12823476,"data":"datasets 5.0.0 requires fsspec[http]\u003c=2026.4.0,\u003e=2023.1.0, but you have fsspec 2026.6.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128239443,"data":"ydata-profiling 4.18.4 requires numba\u003c0.63,\u003e=0.60, but you have numba 0.65.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128243633,"data":"ydata-profiling 4.18.4 requires numpy\u003c2.4,\u003e=1.22, but you have numpy 2.4.6 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128248912,"data":"ydata-profiling 4.18.4 requires scipy\u003c1.17,\u003e=1.8, but you have scipy 1.18.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128253941,"data":"distributed 2026.3.0 requires dask\u003c2026.3.1,\u003e=2026.3.0, but you have dask 2026.6.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128259013,"data":"google-colab 1.0.0 requires jupyter-server==2.14.0, but you have jupyter-server 2.12.5 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128264094,"data":"google-colab 1.0.0 requires pandas==2.2.2, but you have pandas 2.3.3 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128268417,"data":"google-colab 1.0.0 requires requests==2.32.4, but you have requests 2.34.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128272723,"data":"dopamine-rl 4.1.2 requires gym\u003c=0.25.2, but you have gym 0.26.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128277606,"data":"ibis-framework 9.5.0 requires toolz\u003c1,\u003e=0.11, but you have toolz 1.1.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.1282821,"data":"moviepy 1.0.3 requires decorator\u003c5.0,\u003e=4.0.2, but you have decorator 5.3.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128288377,"data":"bigframes 2.39.0 requires rich\u003c14,\u003e=12.4.4, but you have rich 15.0.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128298003,"data":"pyiceberg 0.11.1 requires rich\u003c15.0.0,\u003e=10.11.0, but you have rich 15.0.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128301243,"data":"gcsfs 2025.3.0 requires fsspec==2025.3.0, but you have fsspec 2026.6.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128304438,"data":"gradio 5.50.0 requires pillow\u003c12.0,\u003e=8.0, but you have pillow 12.2.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128307551,"data":"gradio 5.50.0 requires pydantic\u003c=2.12.3,\u003e=2.0, but you have pydantic 2.13.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128310817,"data":"\n"}
+,{"stream_name":"stderr","time":55.12831474,"data":"ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n"}
+,{"stream_name":"stderr","time":55.128327136,"data":"bigframes 2.39.0 requires google-cloud-bigquery-storage\u003c3.0.0,\u003e=2.30.0, which is not installed.\n"}
+,{"stream_name":"stderr","time":55.128330289,"data":"google-adk 1.29.0 requires google-cloud-bigquery-storage\u003e=2.0.0, which is not installed.\n"}
+,{"stream_name":"stderr","time":55.128333268,"data":"datasets 5.0.0 requires fsspec[http]\u003c=2026.4.0,\u003e=2023.1.0, but you have fsspec 2026.6.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128336189,"data":"ydata-profiling 4.18.4 requires numba\u003c0.63,\u003e=0.60, but you have numba 0.65.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128339137,"data":"ydata-profiling 4.18.4 requires numpy\u003c2.4,\u003e=1.22, but you have numpy 2.4.6 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128342017,"data":"ydata-profiling 4.18.4 requires scipy\u003c1.17,\u003e=1.8, but you have scipy 1.18.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128345368,"data":"distributed 2026.3.0 requires dask\u003c2026.3.1,\u003e=2026.3.0, but you have dask 2026.6.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128348342,"data":"google-colab 1.0.0 requires jupyter-server==2.14.0, but you have jupyter-server 2.12.5 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128351295,"data":"google-colab 1.0.0 requires pandas==2.2.2, but you have pandas 2.3.3 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128354185,"data":"google-colab 1.0.0 requires requests==2.32.4, but you have requests 2.34.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128357035,"data":"dopamine-rl 4.1.2 requires gym\u003c=0.25.2, but you have gym 0.26.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128359877,"data":"ibis-framework 9.5.0 requires toolz\u003c1,\u003e=0.11, but you have toolz 1.1.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128362755,"data":"moviepy 1.0.3 requires decorator\u003c5.0,\u003e=4.0.2, but you have decorator 5.3.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128365627,"data":"bigframes 2.39.0 requires rich\u003c14,\u003e=12.4.4, but you have rich 15.0.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128368521,"data":"pyiceberg 0.11.1 requires rich\u003c15.0.0,\u003e=10.11.0, but you have rich 15.0.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128371408,"data":"gcsfs 2025.3.0 requires fsspec==2025.3.0, but you have fsspec 2026.6.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.128374229,"data":"gradio 5.50.0 requires pillow\u003c12.0,\u003e=8.0, but you have pillow 12.2.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":55.12837722,"data":"gradio 5.50.0 requires pydantic\u003c=2.12.3,\u003e=2.0, but you have pydantic 2.13.4 which is incompatible.\n"}
+,{"stream_name":"stdout","time":63.883588895,"data":"Competition: /kaggle/input/competitions/biohub-cell-tracking-during-development\n"}
+,{"stream_name":"stdout","time":63.883720873,"data":"Artifacts: /kaggle/input/datasets/thibautgoldsborough/cellmot-baseline-artifacts/cellmot-baseline-artifacts\n"}
+,{"stream_name":"stdout","time":63.88372943,"data":"Official metric environment NumPy/SciPy: 2.4.6 1.18.0\n"}
+,{"stream_name":"stdout","time":63.883736771,"data":"Main kernel NumPy: 2.0.2\n"}
+,{"stream_name":"stdout","time":63.883746311,"data":"Train videos: 199\n"}
+,{"stream_name":"stdout","time":63.883750176,"data":"Test videos: 4\n"}
+,{"stream_name":"stdout","time":66.990702464,"data":"Frozen baseline: {\n"}
+,{"stream_name":"stdout","time":66.990755184,"data":"  \"detector\": \"blob\",\n"}
+,{"stream_name":"stdout","time":66.990780564,"data":"  \"xy_downsample\": 4,\n"}
+,{"stream_name":"stdout","time":66.990785479,"data":"  \"dog_small_um\": 1.5,\n"}
+,{"stream_name":"stdout","time":66.990789607,"data":"  \"dog_large_um\": 4.0,\n"}
+,{"stream_name":"stdout","time":66.99079376,"data":"  \"dog_scales\": [\n"}
+,{"stream_name":"stdout","time":66.990804266,"data":"    [\n"}
+,{"stream_name":"stdout","time":66.990807562,"data":"      1.5,\n"}
+,{"stream_name":"stdout","time":66.990810467,"data":"      4.0\n"}
+,{"stream_name":"stdout","time":66.99081311,"data":"    ],\n"}
+,{"stream_name":"stdout","time":66.990815784,"data":"    [\n"}
+,{"stream_name":"stdout","time":66.990818418,"data":"      2.2,\n"}
+,{"stream_name":"stdout","time":66.990821107,"data":"      5.5\n"}
+,{"stream_name":"stdout","time":66.99082378599999,"data":"    ]\n"}
+,{"stream_name":"stdout","time":66.990826429,"data":"  ],\n"}
+,{"stream_name":"stdout","time":66.990829686,"data":"  \"rel_threshold\": 0.045,\n"}
+,{"stream_name":"stdout","time":66.990850346,"data":"  \"abs_percentile\": 50.0,\n"}
+,{"stream_name":"stdout","time":66.990855278,"data":"  \"min_distance_um\": 3.2,\n"}
+,{"stream_name":"stdout","time":66.990860091,"data":"  \"max_peaks\": 40000,\n"}
+,{"stream_name":"stdout","time":66.990864855,"data":"  \"sigma\": 1.0,\n"}
+,{"stream_name":"stdout","time":66.99086976,"data":"  \"percentile\": 99.0,\n"}
+,{"stream_name":"stdout","time":66.99087447,"data":"  \"refine\": true,\n"}
+,{"stream_name":"stdout","time":66.990878893,"data":"  \"linker\": \"hungarian\",\n"}
+,{"stream_name":"stdout","time":66.990883016,"data":"  \"motion_weight\": 0.5,\n"}
+,{"stream_name":"stdout","time":66.990887027,"data":"  \"max_miss\": 0,\n"}
+,{"stream_name":"stdout","time":66.990891102,"data":"  \"max_link_um\": 8.0,\n"}
+,{"stream_name":"stdout","time":66.990895192,"data":"  \"allow_divisions\": false,\n"}
+,{"stream_name":"stdout","time":66.990899345,"data":"  \"division_max_um\": 6.0,\n"}
+,{"stream_name":"stdout","time":66.990903323,"data":"  \"close_gaps\": true,\n"}
+,{"stream_name":"stdout","time":66.990907299,"data":"  \"max_gap\": 1,\n"}
+,{"stream_name":"stdout","time":66.990911208,"data":"  \"gap_dist_um\": 6.0,\n"}
+,{"stream_name":"stdout","time":66.990915181,"data":"  \"prune_isolated\": true,\n"}
+,{"stream_name":"stdout","time":66.990919274,"data":"  \"recover_gap2\": false,\n"}
+,{"stream_name":"stdout","time":66.990925264,"data":"  \"gap2_max_total_um\": 10.2,\n"}
+,{"stream_name":"stdout","time":66.990932598,"data":"  \"gap2_max_step_um\": 4.4,\n"}
+,{"stream_name":"stdout","time":66.99093546,"data":"  \"gap2_max_links_frac\": 0.0045,\n"}
+,{"stream_name":"stdout","time":66.990939322,"data":"  \"gap2_max_links_abs\": 180,\n"}
+,{"stream_name":"stdout","time":66.990957298,"data":"  \"gap2_require_context\": true\n"}
+,{"stream_name":"stdout","time":66.990962239,"data":"}\n"}
+,{"stream_name":"stdout","time":66.990966822,"data":"Candidate-only changes: {'recover_gap2': True}\n"}
+,{"stream_name":"stdout","time":71.294975466,"data":"{'edge_tp': 2, 'edge_fp': 0, 'edge_fn': 0, 'adj_edge_jaccard': 1.0}\n"}
+,{"stream_name":"stdout","time":71.295023881,"data":"Gap-2 structural smoke test passed: {'gap2_links': 1, 'gap2_nodes': 2, 'gap2_edges': 3, 'gap2_candidates': 1, 'gap2_cap': 1, 'gap2_max_total_um': 10.2, 'gap2_max_step_um': 4.4}\n"}
+,{"stream_name":"stdout","time":71.780344075,"data":"Validation videos: ['44b6_0113de3b', '6bba_05b6850b']\n"}
+,{"stream_name":"stdout","time":99.101678596,"data":"[1/2] 44b6_0113de3b baseline: score=0.9410 edge=49/2/1 nodes=26110 gap2=0\n"}
+,{"stream_name":"stdout","time":104.922701554,"data":"[1/2] 44b6_0113de3b gap2_velocity: score=0.9407 edge=49/2/1 nodes=26194 gap2=38\n"}
+,{"stream_name":"stdout","time":128.070197391,"data":"[2/2] 6bba_05b6850b baseline: score=0.7859 edge=712/61/133 nodes=6361 gap2=0\n"}
+,{"stream_name":"stdout","time":132.813703834,"data":"[2/2] 6bba_05b6850b gap2_velocity: score=0.7851 edge=712/61/133 nodes=6425 gap2=26\n"}
+,{"stream_name":"stdout","time":132.845943017,"data":"Overall exact summaries: {\n"}
+,{"stream_name":"stdout","time":132.845980391,"data":"  \"baseline\": {\n"}
+,{"stream_name":"stdout","time":132.845987658,"data":"    \"n\": 2,\n"}
+,{"stream_name":"stdout","time":132.845993668,"data":"    \"adj_edge_jaccard\": 0.7943044375425781,\n"}
+,{"stream_name":"stdout","time":132.846000517,"data":"    \"division_jaccard\": NaN,\n"}
+,{"stream_name":"stdout","time":132.846005818,"data":"    \"score\": 0.7943044375425781,\n"}
+,{"stream_name":"stdout","time":132.846010947,"data":"    \"edge_tp\": 761,\n"}
+,{"stream_name":"stdout","time":132.846016027,"data":"    \"edge_fp\": 63,\n"}
+,{"stream_name":"stdout","time":132.846020875,"data":"    \"edge_fn\": 134,\n"}
+,{"stream_name":"stdout","time":132.846026269,"data":"    \"division_tp\": 0,\n"}
+,{"stream_name":"stdout","time":132.846031435,"data":"    \"division_fp\": 0,\n"}
+,{"stream_name":"stdout","time":132.846036414,"data":"    \"division_fn\": 0\n"}
+,{"stream_name":"stdout","time":132.846041992,"data":"  },\n"}
+,{"stream_name":"stdout","time":132.846047543,"data":"  \"gap2_velocity\": {\n"}
+,{"stream_name":"stdout","time":132.846054265,"data":"    \"n\": 2,\n"}
+,{"stream_name":"stdout","time":132.846059574,"data":"    \"adj_edge_jaccard\": 0.7935401013071401,\n"}
+,{"stream_name":"stdout","time":132.84606498,"data":"    \"division_jaccard\": NaN,\n"}
+,{"stream_name":"stdout","time":132.846071179,"data":"    \"score\": 0.7935401013071401,\n"}
+,{"stream_name":"stdout","time":132.846076917,"data":"    \"edge_tp\": 761,\n"}
+,{"stream_name":"stdout","time":132.846083155,"data":"    \"edge_fp\": 63,\n"}
+,{"stream_name":"stdout","time":132.846088729,"data":"    \"edge_fn\": 134,\n"}
+,{"stream_name":"stdout","time":132.846095122,"data":"    \"division_tp\": 0,\n"}
+,{"stream_name":"stdout","time":132.84610055,"data":"    \"division_fp\": 0,\n"}
+,{"stream_name":"stdout","time":132.846106237,"data":"    \"division_fn\": 0\n"}
+,{"stream_name":"stdout","time":132.846111698,"data":"  }\n"}
+,{"stream_name":"stdout","time":132.846117737,"data":"}\n"}
+,{"stream_name":"stdout","time":132.846123477,"data":"{'overall_delta': -0.0007643362354379235, 'embryo_safe': True, 'selected_variant': 'baseline'}\n"}
+,{"stream_name":"stdout","time":157.107801868,"data":"[1/4] 44b6_0113de3b: nodes=26110 edges=25128\n"}
+,{"stream_name":"stdout","time":182.864398726,"data":"[2/4] 44b6_0b24845f: nodes=31472 edges=28303\n"}
+,{"stream_name":"stdout","time":200.5237087,"data":"[3/4] 6bba_05b6850b: nodes=6361 edges=5974\n"}
+,{"stream_name":"stdout","time":235.480033729,"data":"[4/4] 6bba_05db0fb1: nodes=65346 edges=62223\n"}
+,{"stream_name":"stdout","time":236.686346439,"data":"Wrote /kaggle/working/submission.csv with 250,917 rows\n"}
+,{"stream_name":"stderr","time":240.125454917,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":240.125518613,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":240.300895607,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":240.300947907,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":241.124787115,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":241.518147666,"data":"[NbConvertApp] Writing 95163 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":244.547076555,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":245.866392346,"data":"[NbConvertApp] Writing 570478 bytes to __results__.html\n"}
+]

@@ -1,0 +1,75 @@
+{
+  "baseline_sha256": "650be35eeebb3489001a3ff32f1fbde0a8c0bd2f02bacb18046c23fece534587",
+  "candidate_sha256": "b8f6273f7203f6af09122ccd431858dded862dbfa031cd32942e407f657b056f",
+  "per_movie": {
+    "44b6_0113de3b": {
+      "baseline": {
+        "nodes": 25470,
+        "edges": 24719,
+        "divisions": 16
+      },
+      "candidate": {
+        "nodes": 25474,
+        "edges": 24719,
+        "divisions": 13
+      },
+      "delta": {
+        "nodes": 4,
+        "edges": 0,
+        "divisions": -3
+      }
+    },
+    "44b6_0b24845f": {
+      "baseline": {
+        "nodes": 18540,
+        "edges": 17320,
+        "divisions": 10
+      },
+      "candidate": {
+        "nodes": 18540,
+        "edges": 17316,
+        "divisions": 6
+      },
+      "delta": {
+        "nodes": 0,
+        "edges": -4,
+        "divisions": -4
+      }
+    },
+    "6bba_05b6850b": {
+      "baseline": {
+        "nodes": 6044,
+        "edges": 5842,
+        "divisions": 2
+      },
+      "candidate": {
+        "nodes": 6044,
+        "edges": 5842,
+        "divisions": 2
+      },
+      "delta": {
+        "nodes": 0,
+        "edges": 0,
+        "divisions": 0
+      }
+    },
+    "6bba_05db0fb1": {
+      "baseline": {
+        "nodes": 69285,
+        "edges": 67151,
+        "divisions": 19
+      },
+      "candidate": {
+        "nodes": 69285,
+        "edges": 67149,
+        "divisions": 17
+      },
+      "delta": {
+        "nodes": 0,
+        "edges": -2,
+        "divisions": -2
+      }
+    }
+  },
+  "interpretation": "Graph diagnostic only; not correctness or independent holdout evidence."
+}

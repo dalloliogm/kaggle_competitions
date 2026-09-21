@@ -1,0 +1,20 @@
+{
+  "division_like_sources": 531,
+  "duplicate_edges": 0,
+  "duplicate_node_keys": 0,
+  "edge_sentinel_bad": 0,
+  "edges": 123858,
+  "experiment_tag": "exp101_safe_div_recall_expansion",
+  "id_contiguous": true,
+  "id_unique": true,
+  "max_indegree": 1,
+  "max_outdegree": 2,
+  "missing_edge_sources": 0,
+  "missing_edge_targets": 0,
+  "node_sentinel_bad": 0,
+  "nodes": 128316,
+  "nonconsecutive_edges": 0,
+  "null_cells": 0,
+  "rows": 252174,
+  "sha256": "fe0ff72842d2bb43590d974e0394f5faf2a8a710d4ceacf48b347878d4689479"
+}

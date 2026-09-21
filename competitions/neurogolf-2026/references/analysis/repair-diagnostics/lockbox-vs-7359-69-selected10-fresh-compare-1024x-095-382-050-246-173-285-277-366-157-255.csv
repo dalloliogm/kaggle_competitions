@@ -1,0 +1,9 @@
+task,arc_id,requested,generated,both_correct,base_only,donor_only,both_wrong_same,both_wrong_diff,base_runtime,donor_runtime,both_runtime,oversize_skipped,generator_failures,net_correct,classification,first_issue,issue_indices
+task095,4258a5f9,1024,1024,1020,4,0,0,0,0,0,0,0,0,-4,net-negative-risk,"example 163: base-only correct, donor differs by 2 cells","[163, 381, 389, 486]"
+task382,f15e1fac,1024,1024,1022,2,0,0,0,0,0,0,0,0,-2,net-negative-risk,"example 189: base-only correct, donor differs by 18 cells","[189, 222]"
+task050,253bf280,1024,1024,1019,5,0,0,0,0,0,0,0,0,-5,net-negative-risk,"example 145: base-only correct, donor differs by 4 cells","[145, 532, 747, 1010, 1011]"
+task246,a2fd1cf0,1024,1024,1020,4,0,0,0,0,0,0,0,0,-4,net-negative-risk,"example 307: base-only correct, donor differs by 2 cells","[307, 486, 674, 1012]"
+task173,72322fa7,1024,1024,1018,0,0,6,0,0,0,0,0,0,0,no-regression,"example 247: both wrong same, differ by 8 cells","[247, 307, 338, 395, 526, 938]"
+task285,b775ac94,1024,1024,1015,0,0,7,0,0,0,2,0,0,0,runtime-or-empty,"example 2: both wrong same, differ by 6 cells","[2, 98, 182, 293, 357, 417, 497, 626, 631]"
+task277,b230c067,1024,1024,1021,3,0,0,0,0,0,0,0,0,-3,net-negative-risk,"example 715: base-only correct, donor differs by 8 cells","[715, 820, 1003]"
+task366,e6721834,1024,972,962,0,0,10,0,0,0,0,52,0,0,no-regression,"example 78: both wrong same, differ by 34 cells","[78, 82, 152, 235, 329, 455, 501, 792, 832, 927]"

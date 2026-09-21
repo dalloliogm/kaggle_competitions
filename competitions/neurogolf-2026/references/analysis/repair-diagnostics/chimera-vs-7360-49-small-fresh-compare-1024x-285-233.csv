@@ -1,0 +1,2 @@
+task,arc_id,requested,generated,both_correct,base_only,donor_only,both_wrong_same,both_wrong_diff,base_runtime,donor_runtime,both_runtime,oversize_skipped,generator_failures,net_correct,classification,first_issue,issue_indices
+task285,b775ac94,1024,1024,1016,0,0,6,0,0,0,2,0,0,0,runtime-or-empty,"example 92: both wrong same, differ by 4 cells","[92, 176, 287, 351, 411, 491, 620, 625]"

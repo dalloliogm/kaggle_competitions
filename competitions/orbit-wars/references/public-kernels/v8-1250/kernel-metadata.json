@@ -1,0 +1,24 @@
+{
+  "id": "evgendvorkin/orbit-wars-v8-max-1250-score",
+  "id_no": 116101800,
+  "title": "Orbit Wars V8 Max 1250 score",
+  "code_file": "orbit-wars-v8-max-1250-score.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [],
+  "dataset_sources": [
+    "evgendvorkin/orbit-lite",
+    "slawekbiel/producer-orbit-wars-utils"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "orbit-wars"
+  ],
+  "model_sources": [],
+  "docker_image": "gcr.io/kaggle-images/python@sha256:c370a5ff133d162d17c2dca332b50f3e85c0b0ed1471ee18e98e3009eee80b08",
+  "machine_shape": "None"
+}

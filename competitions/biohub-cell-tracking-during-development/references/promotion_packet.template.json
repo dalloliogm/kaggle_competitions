@@ -1,0 +1,52 @@
+{
+  "status": "HELD",
+  "kernel": null,
+  "kernel_version": null,
+  "artifact_sha256": null,
+  "reviewer": null,
+  "reviewed_at": null,
+  "max_movie_regression": 0.002,
+  "review_checks": {
+    "hypothesis_preregistered": false,
+    "checkpoint_exposure_reviewed": false,
+    "scorer_revision_verified": false,
+    "mechanism_off_control_reviewed": false,
+    "grouped_stability_passed": false,
+    "holdout_reviewed": false,
+    "image_review_passed": false
+  },
+  "evidence": {
+    "incumbent_report": {
+      "path": null,
+      "sha256": null
+    },
+    "candidate_report": {
+      "path": null,
+      "sha256": null
+    },
+    "split_manifest": {
+      "path": null,
+      "sha256": null
+    },
+    "stability_report": {
+      "path": null,
+      "sha256": null
+    },
+    "mechanism_off_report": {
+      "path": null,
+      "sha256": null
+    },
+    "image_review": {
+      "path": null,
+      "sha256": null
+    },
+    "experiment_manifest": {
+      "path": null,
+      "sha256": null
+    },
+    "official_scorer_manifest": {
+      "path": null,
+      "sha256": null
+    }
+  }
+}

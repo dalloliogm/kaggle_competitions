@@ -1,0 +1,2009 @@
+# Tasks
+
+## September 13 recommended public-reproduction queue
+
+Three new public directions are prepared locally and ordered for execution:
+
+1. `sep13-v1329-original-guard`: V1329/V1327 learned map with the original
+   V1290 detector guard restored (`josephadamski91/biohub-v1329-v1327-original-guard`).
+2. `sep13-deepcenter-tta`: DeepCenter/detection-TTA candidate
+   (`sushanthtiruvaipati/biohub-deepcenter-tta-v1`).
+3. `sep13-champion-v5-thr099b`: detector threshold `.99` plus adaptive
+   short-track rescue and the public division controls
+   (`caassicca/biohub-champion-v5-thr099b`).
+
+The first two private kernels are running as version 1; the third is prepared
+locally and waits behind Kaggle's two-session GPU cap. These are reproductions,
+not submissions; each must complete and pass the structural audit before any
+upload is considered.
+
+## September 12 five-candidate preparation
+
+Live Kaggle refresh on 2026-09-12 shows no submission made today. The
+September 7 edge-feature reproduction is complete at `0.946` (ref `56075335`).
+Five distinct public-kernel reproductions are now locally downloaded,
+structurally validated, and prepared under `notebooks/public-reproductions/`:
+
+| Candidate | Public source score | Output SHA prefix | Validation | State |
+| --- | ---: | --- | --- | --- |
+| LF DCTTA | 0.947 | `a69c7822` | valid; 122,794 nodes / 118,512 edges | Submitted `56189963`; PENDING |
+| LF DCTTA v020 | 0.947 | `d3453380` | valid; 122,808 nodes / 118,548 edges | Submitted `56189965`; PENDING |
+| LF DCTTA v3 SECW060 | Unscored | `1c6f89d9` | valid; 123,962 nodes / 119,619 edges | Submitted `56202058`; PENDING |
+| LF DCTTA sister16 | 0.947 | `925d65e3` | valid; 122,807 nodes / 118,545 edges | Submitted `56202064`; PENDING |
+| Lineage Forge | 0.946 | `22ef93cf` | valid; 122,792 nodes / 118,514 edges | Submitted `56211128`; PENDING |
+
+All five pass the structural harness with four datasets, no warnings, and no
+errors. The public `0.946` artifact already submitted on September 7 is excluded
+by the SHA duplicate guard. These are public-source reproductions, not private-
+leaderboard or independent-holdout evidence. Full provenance and hashes are in
+`references/sep12-ready-submissions.json`. Four candidates have now completed,
+passed validation, and been submitted as refs `56189963`, `56189965`, `56202058`,
+and `56202064`; all four are PENDING. Lineage Forge subsequently completed its
+private run and was submitted as `56211128`; it is also PENDING.
+
+## September 7 public-notebook reproductions
+
+Two private, exact-source reproductions completed successfully:
+
+| Candidate | Public provenance | Artifact result | Kaggle state |
+| --- | --- | --- | --- |
+| Edge-feature TTA | `redoctopusk/biohub-942tta` v1, verified public LB 0.946 | Byte-identical SHA `a852d1d...95b3e`; both validators pass | Submitted once as ref 56075335; PENDING |
+| Detection threshold .960 | `busyaprime/biohub-0-942-lb-one-knob-past-the-public-line` v2, verified public LB 0.942 | Byte-identical SHA `8218ae3...c41b9`; both validators pass | Audited reserve; not submitted |
+
+The primary used one September 7 slot; four remain. Wait for ref 56075335 to
+reach a terminal score. Submit the .942 reserve only if the primary fails or
+does not reproduce; do not spend a second slot merely to confirm a weaker public
+score. Artifact and execution details are frozen in
+`references/sep07-public-reproduction-execution.json`.
+
+Exact public-output identity establishes reproduction of the public artifact,
+not private-leaderboard transfer or an independent holdout result.
+
+## September 6 final results and handoff
+
+All five submissions completed. Best public result is **0.939**, submission
+56050357 (image threshold .08), versus the preserved 0.938 control 56010101.
+
+| Candidate | Ref | Public score |
+| --- | --- | ---: |
+| Image .08 | 56050357 | 0.939 |
+| Divergence 5.0 | 56050349 | 0.933 |
+| Image .08 + divergence 5.0 | 56050780 | 0.933 |
+| Symmetry .45 | 56050782 | 0.933 |
+| Retention .95 | 56051153 | 0.937 |
+
+Both validators passed for every distinct output; the runner completed and the
+reserve was unused. September 5/6 authorizations are date-bound and do not
+permit September 7 uploads. Final score evidence: `references/sep06-live-submissions.json`.
+
+The 0.001 public gain is not established private-transfer improvement. The
+winning output changes only movie 6bba_05db0fb1: 18 node rows change, two edge
+rows are removed and three added (excluding CSV row IDs). All four local
+validation movies were exposed to secondary checkpoint training; primary and
+veto checkpoint exposure remains unknown. Keep the 0.938 reference intact.
+Pause further threshold sweeps; prioritize complete-movie/embryo validation
+excluded from every checkpoint's training, using the official metric and
+per-movie regression checks. Retraining may be necessary to obtain that split.
+
+September 6 public leaderboard snapshot: rank 444/3180 at .939; approximate
+bronze boundary rank 318 at .941, with .941 spanning ranks 149-361. These are
+historical public positions, not final medal evidence or current September 7 ranks.
+The .942 band (ranks 94-148 then) was a clearer public target.
+
+The frozen factorial v1 failed at GEFF loading; tuple compatibility is fixed
+locally, but the diagnostic has not been rerun. It cannot establish an independent
+holdout on the existing exposed movies. Historical entries below retain their dates.
+
+## Five-probe results — 2026-09-05 20:18 UTC
+
+All five submissions are COMPLETE. None improves the .80 / 0.938 incumbent.
+
+| Gap um | Division threshold | Submission ref | Public LB |
+| --- | --- | --- | ---: |
+| 5.0 | .25 | 56029383 | 0.935 |
+| 5.0 | .12 | 56032186 | 0.938 |
+| 5.8 | .25 | 56032312 | 0.935 |
+| 5.0 | .18 | 56032624 | 0.936 |
+| 5.4 | .25 | 56032813 | 0.935 |
+
+All arms use .80 fusion. Gap-only ties the incumbent; tightening the division
+image threshold regresses. The public 0.941 claim was not reproduced. At the
+reported three-decimal precision, the four-arm factorial shows no beneficial
+gap/threshold interaction. Retain the frozen incumbent and avoid extending this
+threshold sweep without new evidence. Private transfer remains unknown.
+All five daily slots are used. Earlier pending-status blocks below are historical.
+
+## Live batch completion — 2026-09-05 12:51 UTC
+
+All five requested submissions are confirmed on Kaggle; all remain PENDING.
+No daily slots remain. Every output was distinct and passed both structural validators.
+
+| Gap um | Division threshold | Submission ref | Status |
+| --- | --- | --- | --- |
+| 5.0 | .25 | 56029383 | PENDING |
+| 5.0 | .12 | 56032186 | PENDING |
+| 5.8 | .25 | 56032312 | PENDING |
+| 5.0 | .18 | 56032624 | PENDING |
+| 5.4 | .25 | 56032813 | PENDING |
+
+All arms use .80 fusion. The incumbent remains .80 / 0.938; no new score yet.
+The earlier upload-approval and GPU-queue entries below are historical.
+
+
+## Approved five-submission batch — 2026-09-05
+
+User explicitly requested five submissions today. Candidate 1/5 was submitted
+as `56029383` from `rishabh-public-0941-repro` **v2**; pending evaluation.
+Kaggle confirmed four slots remain. V1 had no output and rejected requests created
+no submissions. Four new controlled candidates are built by
+`references/build_five_probe_batch.py`. The user subsequently explicitly approved all four private uploads/GPU runs and
+submissions. Gap-only and threshold-only kernels launched as v1; the other two
+are queued locally behind Kaggle's two-session GPU cap. The date-bound runner
+`scripts/run_approved_sep05_batch.py` validates and submits each exactly once;
+execution records are in `references/sep05-batch-execution.json`.
+See `references/authorized-five-batch-2026-09-05.json`. This is an explicitly
+authorised exploratory batch, not a claim that independent holdout gates passed.
+
+
+## Current plan — 2026-09-05
+
+The frozen incumbent is `.80 / 0.938`, submission `56010101`, kernel
+`dalloliogm/rishabh-division-geometry-080` v1. `.75` completed at `0.935`
+(`56017062`) and `.85` at `0.932` (`56017063`). The newer geometry stack does
+not establish the older recipe's broad `.80–.85` optimum. Private transfer is unknown.
+
+Implemented in this review:
+
+- Corrected metric comparison: official weighted edge aggregation, pooled
+  division confusion counts, combined score, per-movie and embryo deltas;
+  reject incomplete, duplicate, non-finite and edge-only evidence.
+- Pinned the official scorer at `075fc5f5a52d11077f9dc2b074644618f26939e2`
+  with source hashes and license; removed the harness's legacy scorer fallback.
+- Submission helper defaults to audit-only. Explicit submission requires both
+  validators, a matching artifact/kernel/version, and a reviewed promotion packet
+  with checksummed evidence. Failed CLI operations no longer enter the SHA ledger.
+- Downloaded and audited all four fusion artifacts and the completed public
+  `0.941` reproduction. See `references/fusion-output-diagnostics-2026-09-05.json`
+  and `references/public-0941-output-audit-2026-09-05.json`.
+- Frozen the incumbent and development movie list in
+  `references/incumbent_manifest.json` and `references/validation_split_manifest.json`.
+- Built a private five-arm diagnostic (four factorial combinations plus
+  divisions-off), with shared raw detections, pinned official scoring, stage
+  counters and graph exports. Builder: `references/build_validation_factorial.py`.
+  Analysis/review queue: `scripts/summarize_factorial.py`.
+
+Critical validation finding: all four existing validator movies are in the
+secondary checkpoint's 199-movie training list. Primary and DeepCenter exposure
+remain unknown. These are checkpoint-exposed diagnostic folds, NOT an independent
+holdout. No final holdout has been invented or marked passed. The old notebooks'
+custom-score reports remain legacy proxy evidence; re-aggregating them does not
+make their division matching official.
+
+Next execution:
+
+1. User explicitly approved the private diagnostic on 2026-09-05. Uploaded
+   `dalloliogm/biohub-frozen-gap-division-factorial` v1 at approximately 09:10 UTC.
+   V1 failed after inference: tracksdata GEFF loader returned (graph, metadata).
+   The loader compatibility fix is tested locally; diagnostic rerun is deferred
+   behind today's explicitly requested submission batch.
+2. Download `factorial_validation/`, run `scripts/summarize_factorial.py`, review
+   changed events plus seeded unchanged controls in the images. Measure the
+   gap/threshold interaction and stage activation before considering tighter sweeps.
+3. Audit complete training provenance for all checkpoints. Define genuinely
+   unexposed validation data or retrain fold-specific models before claiming
+   independent holdout evidence. Keep the current baseline while this is unresolved.
+4. Synthetic branch stays HELD. A retry must use actual current-detector candidates,
+   include the geometry control, improve graph decisions, and preserve ordinary links.
+5. No competition submission until the promotion packet is complete and the exact
+   artifact is authorised. Do not submit an older candidate merely to spend slots.
+
+The public `0.941` reproduction is COMPLETE and STRUCTURAL_PASS, not a verified
+`0.941` result: 119,272 nodes, 114,939 edges, 29 divisions. Its gap and image-threshold
+changes reduce division count from the incumbent's 47 to 29, concentrated in two
+movies; accuracy requires labelled/image review.
+
+All sections below are historical audit records. Their old pending statuses,
+"current best" labels and next actions do not override this plan.
+
+## Historical plan and execution trail
+
+## CURRENT STATUS - 2026-09-04 (division-geometry candidate scored 0.936)
+
+The Rishabh division-geometry stack on the `.65` agreement-fusion control is
+complete and scored `0.936` on both Kaggle records `55979072` and `55979076`.
+The two records are duplicate outputs from one submission attempt, so this is
+one independent result, not two confirmations. It improves the previous own
+frontier of `0.930`; private-LB transfer remains unknown.
+
+No kernel is currently known to be running from the live refresh. The next
+work should follow `references/validation_protocol.md`:
+
+1. Freeze the `.65` / `0.936` artifact as the incumbent and record its exact
+   SHA, graph counts, and per-dataset diagnostics.
+2. Build a grouped, movie-level validation comparison of the incumbent against
+   the Rishabh `div45` geometry extension (`14um` sister cap, `9um` maximum
+   cap, `4.5um` divergence cap), with a mechanism-off control.
+3. Run stability checks across embryo-aware folds and small predeclared
+   perturbations before using another public slot.
+4. Keep the synthetic-dataset work separate until its image-evidence transfer
+   beats the geometry control on held-out real sequences.
+5. Submit only a completed, downloaded, structurally audited artifact whose
+   output is distinct from the incumbent and whose promotion evidence is
+   recorded here and in `APPROACHES.md`.
+
+The detailed historical entries below are retained as an audit trail; older
+"next" sections should not override this current block.
+
+## PUBLIC SCAN - 2026-09-04
+
+New public kernels include `qrz1201/biohub-division-9-14-4-5-repro`,
+`rishabhr0y/940-biohub-sdec12`,
+`reyhanksatria/wider-divisions-calmer-fusion-0-939-lb`, and
+`sardorrazikov/biohub-fork-agreement-gated`. Their source configurations show
+that the `9/14/4.5` geometry family is already present in our scored `.65`
+candidate. The two separable follow-ups are therefore:
+
+- `rishabh-division-geometry-080`: identical geometry and downstream pipeline,
+  detector-fusion weight `.80`.
+- `rishabh-division-geometry-sdec12`: identical `.65` geometry pipeline,
+  `SAFE_DIV_EXISTING_CHILD_MAX_UM=12.0`.
+
+These are prepared privately under `notebooks/public-reproductions/` and have
+not been pushed or submitted. Public discussion remains cautionary: recent
+threads describe crowded-frame division failures, weak local/public agreement,
+and concern about small leaderboard changes being overfit. The new public
+claims are consequently hypotheses to test through the grouped validation gate,
+not validation evidence.
+
+Submission workflows started 2026-09-04 for both candidates. Kaggle kernels
+`dalloliogm/rishabh-division-geometry-080` and
+`dalloliogm/rishabh-division-geometry-sdec12` were launched. The
+guarded workflow will download each `submission.csv`, run the structural
+validators, reject duplicates or malformed graphs, and submit only after a
+successful audit.
+
+Update: both kernels completed. The `.80` candidate passed validation and was
+submitted as Kaggle ref `56010101`; it completed at public LB `0.938`. This is
+the current own scored frontier, improving the `.65 / 0.936` incumbent by
+`0.002`. The
+`sdec12` artifact passed validation but is byte-identical to the frozen `.65`
+incumbent (`d58525ea2cd974e097b6838cc21682296bc362b6f935339026fa082e994cc992`),
+so the duplicate guard correctly refused to submit it. Its audit counts are
+`120,190` nodes, `115,904` edges, and `49` divisions.
+
+The grouped-report comparator is now available at
+`scripts/compare_validation_reports.py`. It reports paired mean/median deltas,
+standard deviation, worst-case movie, regressions, improvements, ties, and
+missing datasets, so a candidate cannot be promoted from a pooled mean alone.
+
+Next: treat `.80 / 0.938` as the incumbent, check whether the improvement is
+stable in grouped validation and nearby predeclared weights, then move to the
+synthetic transfer gate if the fusion gain is not stable. Do not resubmit the
+`sdec12` configuration unless its output is made materially distinct.
+
+The predeclared stability bracket is now running on Kaggle: `.75` via
+`dalloliogm/rishabh-division-geometry-075` and `.85` via
+`dalloliogm/rishabh-division-geometry-085`. Both are private T4 kernels with
+internet disabled; their guarded submission workflows are waiting for
+completion and audit.
+
+Update: both completed the audit and were submitted as refs `56017062` (`.75`)
+and `56017063` (`.85`). Both are pending evaluation.
+
+The public `0.941` reproduction is also in flight as private kernel
+`dalloliogm/rishabh-public-0941-repro`, with `.80` fusion, gap close `5.0um`,
+and DeepCenter safe-division threshold `.25`. Its guarded workflow is waiting
+for completion; no submission ref has been created yet.
+
+## UPDATE - 2026-09-01 (Rishabh detector-fusion sweep complete)
+
+The five corrected offline sweep submissions completed with public scores:
+`0.65 -> 0.927`, `0.75 -> 0.928`, `0.80 -> 0.930`, `0.85 -> 0.929`, and
+`0.95 -> 0.928`. The current scored frontier is `0.930` at detector-fusion
+weight `0.80`; the public Rishabh `.933` result is not fully reproduced.
+
+Next experiments are the exact public `.80` reproduction with an explicit
+runtime manifest, followed by the public agreement-gated per-frame secondary
+detector ramp. Keep all Rishabh downstream settings fixed so the detector
+fusion axis remains identifiable. The synthetic-dataset work remains in the
+parallel chat and is not mixed into these submissions.
+
+## UPDATE - 2026-08-20 (Exp203 causal ablations in progress)
+
+Exp209 safe-divisions-only control is now running as private Kaggle kernel
+`dalloliogm/exp209-three-model-divisions-only-v1`. It keeps the three-model
+detector, TTA, linker, line fit, and safe divisions from Exp203 while disabling
+only snap-only gap repair; no competition submission has been made.
+
+The synthetic-dataset/division-pretraining work is being developed in a
+separate chat and remains a parallel, held branch. It is not mixed into these
+public-checkpoint ablations or their submissions.
+
+The controlled ablation notebooks are generated under
+`notebooks/ablations/`, with `references/compare_exp203_ablations.py` for
+output hashes, graph counts, per-movie counts, and edge overlap. They are
+private diagnostics only; none has been submitted to the competition.
+
+Completed intermediate results:
+
+- Exp205 two-model detector plus the Exp203 downstream stack completed as
+  `dalloliogm/exp205-two-model-detector-ablation-v2`. It produced 145,402 nodes,
+  138,411 edges, and 440 divisions versus Exp203's 126,419 nodes, 121,191
+  edges, and 352 divisions. Edge overlap is 0.002684, so the third checkpoint
+  materially changes detection density and the resulting graph.
+- Exp207 three-model detector with TTA and gap snap only completed as
+  `dalloliogm/exp207-three-model-ensemble-with-gap-snap-only-v2`. It produced
+  131,271 nodes, 124,602 edges, and zero safe divisions, with 0.967068 edge
+  overlap against Exp203. Safe-division recovery therefore changes the final
+  graph materially, including which orphan nodes are retained.
+
+Exp206 three-model/no-graph-patches completed as
+`dalloliogm/exp206-nopatches-ablation-v3`: 130,818 nodes, 124,064 edges,
+zero divisions, and 0.962951 edge overlap against Exp203. It scored public
+`0.890` as submission `55648862`. Exp207 three-model/gap-only produced 131,271
+nodes, 124,602 edges, zero divisions, and 0.967068 edge overlap; it scored the
+same public `0.890` as submission `55648867`. Removing graph patches loses
+0.027 versus Exp203, while adding gap snap without safe divisions does not
+recover the loss. Exp208
+third-model-only completed as `dalloliogm/exp208-third-model-only-v2`: 106,232
+nodes, 101,699 edges, 281 divisions, and 0.002546 edge overlap against
+Exp203. It is a strong diagnostic difference, not a safe default candidate.
+The first failed Exp205/Exp207 runs were discarded as
+notebook-generation failures caused by a missing `_FLIP_VIEWS` constant, not
+model results; corrected v2/v3 kernels include the fix.
+
+Submission recommendation for today: if using diagnostic slots, prioritize
+Exp206 (three models without graph patches) and Exp207 (three models with gap
+snap but without safe divisions). Together they isolate the graph-patch gain
+most cleanly. Hold Exp205 (two-model density overshoot) and Exp208 (third-model
+only under-coverage) unless a later local/public result gives them a reason to
+be promoted. None of these ablation outputs has a leaderboard score yet.
+
+Exp209 safe-divisions-only was submitted as `55664709` after structural
+validation (`130,818` nodes, `124,449` edges, `385` divisions). It is pending;
+this is the cleanest test of whether safe divisions alone recover Exp203's
+`0.917`.
+
+## PREPARED - 2026-08-18 (synthetic division pretraining adapter; diagnostic only)
+
+Source audit: `references/synthetic-dataset-source-audit-2026-08-18.md`.
+The public sequence build is parametric and calibrated from one training embryo;
+its divisions are simulated graph branches rather than observed mitotic morphology.
+`scripts/biohub_synthetic_sequence_adapter.py` is a smoke-tested, data-free
+adapter that verifies the source graph and converts native `(z,y,x)` labels to
+pooled image coordinates by `(1,4,4)`. It emits provenance-preserving
+second-child candidates only. Do not attach the full dataset, train a model, or
+submit this branch without a separately authorised, frozen Exp183 control.
+
+## UPDATE - 2026-08-20 (Exp203 scores 0.917; isolate the source of the gain)
+
+Exp203 submission `55626138` completed at public LB `0.917`, moving the own
+scored frontier above Exp183's `0.915`. The kernel is complete and its output
+is byte-identical to the downloaded outputs of both newly published public
+`0.917` notebooks. The private score is not yet available.
+
+The result does not prove that the third U-Net caused the gain. The public
+recipe changes several coupled factors at once: the extra
+`unet3d_v2_tophat_b32.pt` checkpoint, flip-quartet TTA, confidence-aware
+velocity linking, snap-only gap repair, safe divisions, short-track filtering,
+and line fitting. Earlier evidence still says the existing detector's labelled
+node recall was effectively saturated, so the next work should be ablation,
+not another blind detector-training project.
+
+Next controlled sequence, keeping the same T4 notebook and output audit:
+
+1. Exp205: original two-model detector, but with the Exp203 TTA/linker/repair
+   stack.
+2. Exp206: three-model detector and TTA, with graph patches disabled.
+3. Exp207: three-model detector with TTA and linker, adding only graph patches
+   one at a time (gap snap, then safe divisions).
+4. Exp208: third checkpoint only, with the same downstream stack, as a
+   diagnostic rather than an assumed submission candidate.
+
+Compare node counts, per-movie counts, score distributions, edge/division
+statistics, and output hashes before using submission slots. The winning
+explanation should account for both the public score and whether the private
+score remains stable.
+
+## UPDATE - 2026-08-19 (Exp203 exactly reproduces the new 0.917 public recipe)
+
+Exp203 T4 v2 exactly reproduces the two newly published public `0.917`
+notebooks: `hitoshisaito/biohub-kunal-0917-exact-repro` and
+`reyhanksatria/graph-patches-for-cell-tracking-0-917-lb`. Their downloaded
+`submission.csv` files and our Exp203 v2 output have the same SHA256
+`d7ba9e6af86a6bb0be8bd04a36d0c61564e857e03fbadf9a81508211a4a4f2bb`.
+The shared recipe is a three-model pooled U-Net ensemble with flip-quartet
+TTA, physical NMS, velocity/appearance-aware Hungarian linking, snap-only
+one-frame gap repair, safe divisions, short-track filtering, and line-fit
+smoothing. It is one method lineage, not two independent improvements.
+
+The exact reproduction was submitted as Kaggle submission `55626138` from
+kernel version 2 after correcting the machine type to T4. It subsequently
+completed at public `0.917` on 2026-08-20. This verifies both reproducibility
+and our own scored result; the private score remains unavailable.
+
+## UPDATE - 2026-08-14 (live batch resolved except Exp124)
+
+Exp116 and Exp119 completed at public `0.877` and `0.875`; Exp120 errored on a
+missing `biohub_tracking` import and was not submitted. Exp123 completed at
+`0.908`, Exp194 at `0.914`, and Exp193/Exp195 tied the frontier at `0.915`.
+Exp124 (`55499181`) completed at public `0.907`. Exp121 is held because its copied notebook
+still uses the 8-view selector rather than verified 9-public TTA. Five
+submission slots remain unused today (live quota shows no submissions yet). The detection-density/count-calibration notebook
+is still diagnostic-only; do not promote calibration without frozen-control
+per-movie precision and edge checks.
+
+## UPDATE - 2026-08-13 (minimal direct-export batch and count calibration)
+
+Exp116 and Exp119 were pushed as Kaggle kernel version 2 and submitted as
+`55484317` and `55484319`. Exp120 (point threshold `0.9500`) is running.
+Exp121 is held until the copied notebook's TTA selector is verified as
+`do_tta_9public` rather than the inherited 8-view selector.
+
+The new diagnostic notebook
+`notebooks/diagnostics/biohub-detection-density-count-calibration.ipynb`
+records the known per-movie estimated node counts and defines a bounded target
+ratio grid. It is intentionally diagnostic-only: first measure the direct
+export's per-movie count and edge behavior, then test threshold/pool-radius
+changes, and only afterward apply a per-movie count target if precision holds.
+
+## BATCH PREP - 2026-08-12 (public model and post-processing sweep)
+
+Five owned kernels were prepared from newly discovered public notebook
+lineages, using the remaining five-slot daily plan:
+
+| exp | axis | local kernel | live state |
+| --- | --- | --- | --- |
+| exp191 | 350-epoch primary checkpoint, detector threshold 0.9825 | `dalloliogm/biohub-exp191-350ep-scale982` | running |
+| exp192 | 350-epoch primary checkpoint, detector threshold 0.975 | `dalloliogm/biohub-exp192-350ep-scale975` | running |
+| exp193 | joint monotonically decreasing Gap-2 node budget | `dalloliogm/biohub-exp193-gap2-joint` | queued behind GPU capacity |
+| exp194 | boundary/truncated-track rescue | `dalloliogm/biohub-exp194-boundary-rescue` | queued behind GPU capacity |
+| exp195 | stable public control/post-processing baseline | `dalloliogm/biohub-exp195-stable-control` | queued behind GPU capacity |
+
+The first two kernels were pushed successfully. Kaggle permits only two
+concurrent GPU sessions, so the remaining three pushes must wait for capacity;
+no duplicate runs were created.
+
+## UPDATE - 2026-08-11 (Exp187 submitted; Exp188 was inactive)
+
+Exp187 is submitted as Kaggle submission `55428011` and is pending evaluation.
+It keeps the Exp183 harmonic-fusion / edge-TTA stack but changes the local ranker
+from global `full_motion_assignment` to `low_margin_top2_rescue`. The ranker saw
+554 ambiguous rows and made 179 constrained rescue adjustments; the output changed
+by only 5 rows versus Exp183 and passed the structural harness with 123,088 nodes,
+119,010 edges, and 309 division-like sources.
+
+Exp188 disabled forward acceleration lookahead and completed cleanly, but produced
+the exact Exp183 output signature (123,088 nodes, 119,005 edges, 311 divisions).
+`forward_lookahead_bonus_edges` was zero, proving the lookahead branch is inactive
+on the test set. It was nevertheless submitted as control `55428127` by explicit
+decision to use an additional daily slot; it is pending.
+
+## CURRENT STATUS - 2026-08-10 (the public frontier passed us; adopting + decomposing it)
+
+**We are now BELOW the public baseline.** A public notebook lineage
+(`yusuketogashi/no-hack-biohub-cell-another-approch-3rd`, 127 votes) is the backbone of
+a **177-team tie block at `0.915`**, larger than the 146-team block at our `0.913`.
+**317 teams score above us.** Rank ~`332/2201` and sliding. Full scan:
+`references/public-scan-2026-08-10.md`.
+
+The one genuinely new component is **`pilkwang/biohub-local-association-ranker-unet300-v1`**
+- a 22-feature MLP reranking association candidates, blended 85/15. **It has been sitting
+in our own `public-model-inventory-2026-07-22.md` for three weeks, unused**, while
+exp158-182 spent ~15 slots proving post-processing and candidate admission are exhausted.
+It acts on exactly the stage Exp178 identified as our ceiling.
+
+### Submitted 2026-08-10 - a four-way decomposition (all pending)
+
+| exp | isolates | rows / nodes |
+| --- | --- | --- |
+| exp183 | the full public stack, forked verbatim | 242,099 / 123,090 |
+| exp184 | the ranker ALONE on our exp148 backbone | 240,041 / 122,120 |
+| exp185 | the ranker at `0.50/0.50` instead of `0.85/0.15` | 240,003 / 122,100 |
+| exp186 | forward-only 4-view edge-stage TTA, no ranker | 241,641 / 122,926 |
+
+exp184 lands within ~20 rows of the exp148 baseline (240,020), i.e. the ranker changes
+WHICH edges are chosen without changing the graph's shape - a clean substitution.
+
+### Ranker runs GLOBALLY, against its own manifest
+
+`run_stats.csv` for both exp183 and exp184 shows `local_ranker_scored` = **100%** of
+candidates (139,518 and 139,067), with `local_ranker_ambiguous_rows` = 0 and
+`local_ranker_rescue_adjustments` = 0. The constrained tie-breaker paths are dead code.
+
+The artifact manifest says: *"Use only as a constrained local association tie-breaker,
+not as a global edge veto."* Both the public notebook and our port ignore that. This is
+NOT a mis-calibration like Exp180 - `full_motion_assignment` mode is defined to score
+everything - but a component pushed outside its stated design intent is a private-LB
+risk, especially with the bronze line inside a tie block. **exp185 exists to find out
+whether the gain survives at a defensible weight.**
+
+### CAVEAT on exp186 - not a faithful port
+
+In the public notebook the edge-TTA block is **welded to the reverse-time harmonic
+fusion**: its per-view probability helper calls `predict_edges` twice (forward+reverse)
+and blends, and guards against a zero bidirectional weight. Since we exclude harmonic
+fusion (tested in isolation, exp166/167/168, all tied `0.913`), the port substitutes a
+forward-only helper. View construction, JS-reliability weighting and log-pooling are
+verbatim.
+
+**Therefore: if exp186 gains, the result is ours and clean. If it does NOT gain, the
+public edge-TTA is NOT ruled out** - only this variant. The better-posed follow-up is to
+port edge-TTA WITH harmonic as a coupled unit; since harmonic alone is neutral, a gain
+from the pair would cleanly implicate the TTA.
+
+
+## CURRENT STATUS - 2026-08-08 (Exp178 closes item 3: half the loss is a model limit)
+
+**Exp178 answered exp169's item 3**, the question exp169 called "the decisive one".
+Dumping the raw pre-filter probability matrix splits the 97 missed GT edges:
+
+- **44** die **below the 0.48 candidate threshold** at median p `0.128` (vs `0.935`
+  for correct links), rank-1 only 16% of the time. **Pure model limit** - no graph
+  or assignment work recovers these.
+- **42** were **rank-1 at p `0.861` and selected by the ILP**, then destroyed by our
+  post-processing. Not a model problem at all.
+- 3 lost to greedy cap / ILP, 8 unlocatable.
+
+Full write-up: `references/exp178-candidate-prob-analysis-2026-08-08.md`.
+Raw artifacts: `references/exp178-candidate-prob-dump/`.
+
+**Newly closed:** confidence and rank CANNOT isolate relink's mistakes. The 42
+destroyed edges sit at median `0.861`, BELOW the `0.935` TP median, and are rank-1
+in 100% of cases against 99% of TPs. Exp180 proved this the expensive way - a `0.80`
+protection threshold fired on 80% of all edges. See LEARNINGS for the base-rate rule
+and the free `run_stats.csv` selectivity check that catches it.
+
+**Also settled:** divisions are worth ~`0.008` on the hidden set (Exp158 vetoed them
+all -> `0.905`), despite looking like pure loss on the 3-division labelled split. And
+the node-count penalty does NOT explain the 08-05 ladder inversion - tested with the
+true adjusted metric, the ordering does not flip, so the anti-predictive-harness
+conclusion stands and is better evidenced.
+
+### RESULT 2026-08-08 - all three scored, none beat the plateau
+
+| exp | change | selectivity | LB |
+| --- | --- | --- | ---: |
+| exp179 | edge candidate threshold `0.48 -> 0.30` | +2.2k nodes | `0.913` (tie) |
+| exp180 | protect ILP edges with p >= `0.80` from relink | fires on **80%** of edges | `0.913` (tie) |
+| exp181 | reject relink turns > `90 deg` from the ILP child | fires on **1.09%**, restores 1,007 | **`0.912`** |
+
+**Both predictions were wrong.** exp180 was expected to land ~`0.909-0.911` because
+80% protection is near relink-off (and exp172 relink-off scored `0.911`); it tied at
+`0.913` instead. exp181 was the well-grounded candidate and is the only one that
+LOST ground. Restoring 1,007 direction-reversing relink replacements cost `-0.001`,
+so on the hidden set those replacements are on net *helping*, even the ones that
+reverse direction against the ILP.
+
+### SETTLED - the post-processing axis is closed by direct experiment
+
+Three structurally different interventions on the self-inflicted error class have now
+been measured on the leaderboard, and none beats `0.913`:
+
+- blanket disable (exp172 `0.911`, exp174 `0.909`)
+- confidence-gated protection (exp180 `0.913`)
+- direction-gated protection (exp181 `0.912`)
+
+Combined with Exp178's finding that 44 of 97 misses are model-limited (median p
+`0.128`), this closes post-processing as a source of gain. **The remaining lever is
+the linker model itself.** Stop designing graph-repair rules.
+
+### RESULT 2026-08-09 - Exp182 scored `0.912`. The candidate-threshold axis is CLOSED.
+
+Full sweep, all on the exp148 backbone, one env var each:
+
+| `BIOHUB_DUAL_SEED_EDGE_THRESHOLD` | nodes | LB |
+| ---: | ---: | ---: |
+| `0.48` (exp148 default) | 122,107 | **`0.913`** |
+| `0.30` (exp179) | 124,316 | `0.913` |
+| `0.15` (exp182) | 125,400 | `0.912` |
+
+Lowering the threshold does not recover the 44 model-limited misses - it costs
+`0.001`. The advance signal was right: the graph grew by only ~3.3k nodes at a 3x
+lower threshold because the ILP admits the extra low-probability candidates and then
+rejects nearly all of them. **The model's low scores on those edges are CORRECT.**
+
+### SETTLED - both post-ILP axes are now closed by direct experiment
+
+- post-processing: blanket disable `0.911`/`0.909`, confidence-gated `0.913`,
+  direction-gated `0.912` - three structurally different designs, none gains.
+- candidate admission: `0.48` and `0.30` tie, `0.15` loses.
+
+Exp178 already showed 44/97 misses sit at median p `0.128` against `0.935` for correct
+links. Both remedies for that class have now been tested and neither works. **The
+linker model is the ceiling. Do not spend further slots on graph or admission
+tuning.**
+
+### Superseded - Exp182 pre-registration (kept for the reasoning trail)
+
+`BIOHUB_DUAL_SEED_EDGE_THRESHOLD` `0.48 -> 0.15` on the exp148 backbone, one env var.
+Rationale: exp179 at `0.30` TIED rather than degrading, so the ILP absorbs extra
+candidates without harm. Exp178 put the 44 model-limited misses at median p `0.128` -
+only 13/44 are in `[0.25,0.48)` but 24/44 are above `0.10`, so `0.30` could never
+reach most of them.
+
+Output: `246,649` rows / `125,400` nodes (vs exp148 `122,107`, exp179 `124,316`). Note
+the graph grew by only ~3.3k nodes despite a 3x lower threshold - **the ILP is
+admitting the extra candidates and then rejecting almost all of them**, which already
+hints the model's low scores are correct.
+
+How to read the result:
+- beats `0.913` -> low-confidence edges ARE recoverable; bracket `0.10` / `0.20`.
+- ties -> the ILP admits and correctly rejects them, i.e. the model's low scores are
+  right and those 44 edges are genuinely unrecoverable. **This confirms the linker is
+  the ceiling** and is the most likely outcome given the node-count evidence above.
+- drops -> extra false candidates outweigh recoveries; `0.30` was already the limit.
+
+### Next - model axis only
+
+Untried and training-free: **TTA on the edge/linker stage.** The existing TTA patch
+augments `det_logits` (detection) only; `model.predict_edges(...)` is called once, in
+the original orientation. Averaging edge logits over D4 orientations attacks the 44
+low-confidence misses directly, which is the only class left with headroom.
+
+Best public LB remains **`0.913`**; rank `292 / 2156` and still drifting as the field
+improves. Leader `0.949`.
+
+
+## CURRENT STATUS - 2026-08-05 (the ablation ladder INVERTED; local harness is anti-predictive)
+
+`exp172` (motion relink off) scored **`0.911`** and `exp174` (relink off +
+short-track off) scored **`0.909`**, against the Exp148 baseline of **`0.913`**.
+Local mean edge Jaccard for those same two configs was `0.9476` and `0.9558`
+versus a `0.9214` baseline - so **the bigger the local gain, the bigger the
+leaderboard loss, monotone across all three points.**
+
+**Do not use the labelled-movie harness to guide post-processing changes.** It
+is anti-predictive, not merely weak. The steps we ablated were calibrated
+against the leaderboard in the first place, so they are fitted to the hidden
+test and look harmful on the five labelled movies. Full analysis and the list of
+quality signals that were all present and all useless:
+`references/exp170-origin-analysis-2026-08-04.md`.
+
+Exp170's measurement stands (43% of labelled-movie misses were correct in the
+ILP and removed by post-processing); its implication does not (recovering them
+loses score). The FP rule finding - `source_or_target`, exact on all five movies
+- survives, being a measurement fact rather than a generalization.
+
+Best public LB remains **`0.913`** (Exp148). Newly closed axis: post-processing
+ablation guided by local labelled-movie score.
+
+
+## CURRENT STATUS - 2026-08-04 (Exp170: the plateau is self-inflicted)
+
+**Exp170 v2 changed the picture.** Scoring the ILP-solved graph and the final
+submission against the same ground truth shows that **42 of 97 missed GT edges
+(43%) were CORRECT IN THE ILP and were destroyed by our own post-processing**
+(32 of 80 in the dense movie). This loss class sits entirely in code we control,
+and it refutes the pessimistic reading of Exp169 that the plateau is a
+linker-model limit. Full write-up:
+`references/exp170-origin-analysis-2026-08-04.md`.
+
+Mechanism: 33 of the 42 keep exactly one predicted child, so a step *replaced*
+the correct ILP child - and the substitute sits at a median **128.8 deg** from
+the true step, i.e. roughly the opposite direction. 8 more end with zero
+children (a correct edge deleted). The true child node still exists in our
+output in 39 of 42 cases, so detection is not involved, and all 42 have
+`gt_parent_n_children == 1`, so division ambiguity is not involved either.
+
+**Exp170 also solved the FP accounting.** The `source_or_target` rule (a
+predicted edge is FP when *either* endpoint matched an annotated GT node)
+reproduces the official FP count exactly on all five movies - 2/3/0/19/138.
+Exp169's open trust boundary is closed; FP conclusions are now usable.
+
+Local baseline for ablations, per-dataset edge Jaccard under current Exp148:
+`0.9038 / 0.9038 / 1.0000 / 0.9641 / 0.8350`, mean **`0.9213`**.
+
+### In flight - Exp171 post-processing ablation (no submission slot)
+
+All post-processing steps are env-gated, so ablation needs no code edits.
+`biohub-exp171a-motion-relink-off` (`BIOHUB_OUTPUT_MOTION_RELINK=0`) and
+`biohub-exp171b-linefit-off` (`BIOHUB_OUTPUT_LINEFIT_SMOOTH=0`) are the prime
+suspects for the 33 replacements; the short-track filter
+(`BIOHUB_OUTPUT_MIN_TRACK_LEN`) is the suspect for the 8 deletions.
+
+**Caveat that must not be dropped:** a local win is a hypothesis, not proof.
+No-safe-divisions improved local validation (`0.9548 -> 0.9606`) and *lost* on
+the LB (`0.893 -> 0.886`). Verify any ablation winner on the leaderboard.
+
+
+## CURRENT STATUS - 2026-08-02 (bidirectional fusion axis opened)
+
+Exp165 scored **`0.913`**, tying Exp148 - so the pre-registered trigger fired:
+port the reverse-time harmonic fusion. Ten consecutive experiments (Exp155-165)
+now tie at `0.913`; Exp163 replaced 637 associations and Exp165 replaced 687 and
+neither moved the third decimal. Post-processing on this backbone is saturated.
+
+LEADERBOARD MOVED AGAINST US (pulled 2026-08-02): **1898 teams** (was 1768), top
+`0.944`. Our `0.913` best-rank slipped **~#62 -> ~#138**. But the plateau is
+dense and that is leverage: 149 teams sit at exactly `0.913` and 71 at `0.914`,
+so **`0.913` -> `0.914` alone jumps ~#138 -> ~#67**, i.e. into silver territory
+(silver ~top 95, bronze ~top 190). One thousandth is worth a medal tier here.
+
+### Exp166/167/168 - reverse-time harmonic fusion + weight bracket (IN FLIGHT)
+
+Model-level change, not post-processing - the first such probe since Exp148.
+For each adjacent frame pair the PRIMARY model is re-evaluated with source/target
+swapped; forward and reverse logits are calibrated to a common scale, converted
+to probabilities, fused with a weighted HARMONIC mean (penalizes any link that
+either temporal direction doubts), then rescaled to the forward logit scale so
+the candidate threshold, dual-seed fusion and ILP are untouched.
+
+Ported from `zoli800/biohub-cell-another-approch-2nd` (public versions `0.914`,
+`0.914`, `0.914`). Their backbone is WEAKER than ours - they use
+`low_margin_consensus` (our Exp144 = 0.912) and disable DeepCenter, while we keep
+`adaptive` fusion (Exp148 = 0.913) plus DeepCenter gap confirmation. So we graft
+only their orthogonal idea onto our better base.
+
+Cost is ONE extra `predict_edges` call on the SAME primary model - no third model
+is loaded, so the >=3-model rerun-timeout failure mode does not apply.
+
+ALL THREE RAN TO COMPLETE AND ARE SUBMITTED (2026-08-02, PENDING):
+- Exp166 `dalloliogm/biohub-exp166-bidirectional-harmonic` weight **0.20**
+  (zoli's value) -> submission `55195447`.
+- Exp167 `dalloliogm/biohub-exp167-bidirectional-w030` weight **0.30** (stronger)
+  -> submission `55195539`.
+- Exp168 `dalloliogm/biohub-exp168-bidirectional-w010` weight **0.10** (weaker)
+  -> submission `55195793`.
+
+### RESOLVED 2026-08-03: ALL THREE WEIGHTS TIE AT `0.913`
+
+`55195447` w0.20 = **0.913**; `55195539` w0.30 = **0.913**; `55195793` w0.10 =
+**0.913**. Case (b) of the pre-registered rule: even a MODEL-LEVEL change cannot
+move this backbone. The reverse-time harmonic fusion axis is CLOSED - do not
+probe further weights (0.05/0.35), and do not stack it with Exp165.
+
+## THE PLATEAU IS REAL - STOP MICRO-OPTIMIZING (2026-08-03)
+
+Thirteen consecutive experiments now land on exactly `0.913` (Exp159, 160, 161,
+162-held, 163, 164-diagnostic, 165, 166, 167, 168), with Exp155 the only mover at
+`0.912`. These were NOT trivial variations - they include:
+- division budget 2x / 0.5x and two evidence-ranked division orderings,
+- Exp163 replacing **637** association edges (edge Jaccard 0.9892),
+- Exp165 replacing **687** edges in the dense movie (edge Jaccard 0.9807),
+- Exp166-168 a genuine model-level bidirectional fusion at three weights.
+
+### CORRECTION 2026-08-03: the two paragraphs originally written here were WRONG
+
+Retracted claim 1 - "one 0.001 step needs ~118 net correct edges out of ~118,000".
+FALSE. The GT is SPARSE. Per the harness table in `LEARNINGS.md` only about
+**2,258 edges are scored in total** across the five labelled movies, with
+**167 total errors**, and `6bba_05db0fb1` alone carries **56%** of the weight
+(`1,095` TP / `79` FP / `88` FN, `D = 1,262`). Using this repo's own derivation
+(`d(J)` per mis-link fixed `= (1+J)/D`, mis-links counting double because edge FP
+and FN are coupled), one mis-link fixed in that movie is worth
+`1.867/1262 * 0.559` = about **`+0.0008` aggregate**. So roughly **1-2 mis-links
+= `+0.001`**, and clearing all 167 errors is worth about `+0.07`. The metric is
+extremely SENSITIVE, not insensitive.
+
+Retracted claim 2 - "only a better DETECTOR can move this". FALSE, and it
+contradicts a measurement already in `LEARNINGS.md`:
+**`node_recall` is `1.0000` and `0.9988` - detection is saturated and ALL edge
+loss is linking loss.** A better detector has essentially no headroom. Do not
+start a from-scratch detector training project on this basis.
+
+### THE ACTUAL REASON FOR THE 13 TIES
+
+We have been editing edges the metric never scores. `6bba_05db0fb1` contains
+about `70,000` PREDICTED edges but only `1,262` SCORED ones (~1.8%). Exp165
+replaced `687` edges there, which in expectation touches only about
+`687 * 1262/70000` = **~12 scored edges**; if those break about as many as they
+fix, the aggregate change is zero - exactly what was observed. Exp163's 637
+replacements have the same problem. The perturbations were large in absolute
+terms and negligible in scored terms.
+
+IMPLICATION - change the METHOD, not the axis. Blind LB submissions that reshuffle
+hundreds of unscored edges are near-guaranteed ties. The local harness reports
+per-movie edge TP/FP/FN, so it can say directly whether a change fixes any of the
+`167` known errors. Use it as the gate BEFORE spending a submission slot: require
+a candidate to reduce FP+FN on `6bba_05db0fb1` locally, then submit.
+
+Caveats to respect: the harness under-reads absolute score by about `0.035` and is
+a RANKING signal only; the labelled set has just `3` annotated divisions so the
+division term is nearly unmeasurable locally; and the hidden test movies differ,
+so a local fix must be a general linking improvement rather than an overfit to
+these `167` cases.
+
+CAUTION ON THE PUBLIC 0.914 CLAIM: zoli800's own versions scored
+`0.914, 0.911, 0.914, 0.914, 0.913` - a `0.003` spread across their own runs. Their
+`0.914` is therefore not solid evidence that bidirectional fusion is worth
+`+0.001`; it is within their own run-to-run variation. We ported the mechanism
+correctly (kernels completed, guard verified) and it is neutral on our backbone.
+
+WHAT WOULD ACTUALLY MOVE `0.913` -> `0.914+`: fixing MIS-LINKS, specifically in
+`6bba_05db0fb1`. Only 1-2 corrected mis-links are needed per displayed step. This
+is a LINKING problem, not a detection or model-capacity problem, and it is
+concentrated in dense regions of one movie.
+
+NEXT SESSION SHOULD START HERE (not with another blind submission):
+1. Re-run the local harness on Exp148 and DUMP THE 167 ERRORS individually
+   (`79` FP + `88` FN in `6bba_05db0fb1`, plus `3`/`24` in `6bba_05b6850b`) with
+   their coordinates, frames, and the competing candidate parents.
+2. Inspect them for a common failure mode - crossing trajectories, dense-cluster
+   ambiguity, division neighbourhoods, frame-to-frame velocity outliers. Exp164
+   already showed generic pair-swapping finds nothing, so the fix must be
+   targeted at whatever pattern the errors actually show.
+3. Gate any candidate on reducing local FP+FN BEFORE spending a submission slot.
+
+Still-dead axes (do not revisit): division budget/ranking, ILP costs, learned
+bonus strength, post-mix temperature, edge/detection blend weights, reseed
+ensembles, Trackastra linker swap, alternate public detectors.
+
+STATUS: Exp148 `0.913` remains the standing submission and is safe. The deadline
+is 2026-09-29, so there is ample time to do the error-analysis work properly
+rather than continuing to spend slots on unscored-edge perturbations.
+
+The port is VERIFIED APPLIED, not silently skipped: each notebook carries a
+runtime guard that raises `Bidirectional fusion patch expected one anchor` if the
+anchor block is missing, and additionally validates
+`0 < BIOHUB_BIDIRECTIONAL_EDGE_WEIGHT <= 0.35`. All three kernels reached
+COMPLETE, so the anchor matched and the fusion ran in every case. Runtime was
+~22 min per kernel, comparable to Exp148, confirming the extra `predict_edges`
+call does not approach the rerun timeout.
+
+All three banked the SAME day deliberately: the grading queue has hung 3h+ every
+day this week, so waiting for Exp166's score before bracketing would waste slots
+that expire at UTC midnight. Same tactic that mapped the temperature axis on
+2026-07-28. Slots 2026-08-02: Exp165 used 1; these three take it to 4 of 5.
+
+When they score:
+- Any > `0.913` -> reverse-time fusion is the plateau breaker; refine the weight
+  around the winner and consider stacking with Exp165's tiled dense relinking
+  (the two are orthogonal: model-level vs dense spatial).
+- All == `0.913` -> even a model-level change cannot move this backbone; the
+  remaining honest options are a genuinely different detector (none competitive
+  in the public pool - see the 2026-07-30 investigation) or accepting the plateau.
+
+Reserve, NOT submitted: Exp162 symmetry-aware division ranking (kernel complete,
+changes only 7 division sources). The division axis is closed - Exp155 2x = 0.912,
+Exp159 half = 0.913, Exp160/161 evidence-ranked = 0.913 - so Exp162 is a
+near-certain tie and is not worth a slot.
+
+## CURRENT STATUS - 2026-08-01
+
+- Exp148 remains best at **`0.913`**.
+- Exp155 (`55104669`) doubled the safe-division budget with unchanged geometry
+  and scored **`0.912`**. More division proposals therefore hurt slightly;
+  do not continue to a 3x budget.
+- Exp158 is a one-factor precision response on the Exp148 backbone:
+  `BIOHUB_DEEPCENTER_SAFE_DIV_VETO=1` requires independent image evidence for
+  newly proposed division children. Its output was valid and distinct, but the
+  veto rejected all candidate divisions (`0` remained), making it equivalent to
+  a known weak no-division direction. Do not submit it.
+- Exp159 instead halves Exp148's frame/global safe-division caps to
+  `0.0038` / `0.001875`. This preserves the strongest division candidates while
+  testing the precision side of the budget bracket. Kaggle v1 completed with
+  `122,020` nodes, `117,728` edges, and `213` divisions; exact structural and
+  duplicate-output checks passed. Submission `55120117` scored **`0.913`**,
+  tying Exp148. Division count alone is flat between 213 and 333; 2x is worse.
+- Exp160 uses continuous DeepCenter evidence to rank the same bounded division
+  proposals. It retains 333 divisions, scores all 367 candidates, and changes
+  16 division sources versus Exp148. Exact output checks passed; submitted as
+  `55130094`; public LB **`0.913`**, tying Exp148.
+- Exp161 ranks division proposals by transformer edge probability, then
+  geometry. Learned scores cover 60/367 candidates; the output retains 333
+  divisions and changes 3 division sources. Exact output checks passed;
+  submitted as `55129038`; public LB **`0.913`**, tying Exp148.
+- Exp162 is the geometry-only symmetry fallback. Its valid output retains 333
+  divisions and changes 7 division sources versus Exp148. Kernel v1 is complete
+  but deliberately **not submitted** because both learned-evidence branches
+  activated; keep it as a reserve rather than spending a third slot.
+- Exp163 changes the main association graph only for geometrically ambiguous
+  targets: when the best two parent costs are within `0.75 um`, the learned
+  bonus rises from `1.0` to `3.0`. The rule activated on 1,656 targets and
+  replaced 637/117,913 Exp148 edges (edge Jaccard `0.9892`). Exact checks passed
+  with 122,103 nodes, 117,914 edges, and 335 divisions. Submitted as `55141367`;
+  submitted as `55141367`; public LB **`0.913`**, tying Exp148. Replacing 637
+  association edges was therefore not enough to move the three-decimal score;
+  do not continue with stronger/weaker learned-bonus brackets.
+- Exp164 was the next structurally different test. It keeps Exp148 fixed, then
+  considers pairwise assignment swaps only when complete four-frame context is
+  available (predecessor, source, target, successor). A swap must improve the
+  combined acceleration/geometry/learned cost by at least `1.0 um`, reduce it
+  to at most `80%` of the incumbent cost, and not overlap another accepted
+  repair. A synthetic crossing unit test passed. Private Kaggle v1 was launched
+  as `dalloliogm/biohub-exp164-bidirectional-crossing-repair`. The kernel
+  completed with exact structural output, but accepted **0 swaps**: 0 of 5,842
+  examined pairs survived the `1.0 um` / `0.80` cost gates. Its output counts
+  are identical to Exp148 (`122,107` nodes, `117,913` edges, `333` divisions),
+  so it is diagnostic only and must not be submitted. The run statistics also
+  reveal a stale `experiment_tag` label (`exp148_adaptive_edge_fusion`), which
+  should be corrected before any rerun.
+- Exp164 v2 corrected that label and widened the gates to `0.3 um` / `0.95`.
+  It still accepted **0 swaps** (`0` proposals from `966` feasible pairs) and
+  reproduced Exp148 exactly (`122,107` nodes, `117,913` edges, `333` divisions).
+  Do not submit either version. Instrument the best candidate cost before any
+  further widening.
+- Exp164 v3 logged the best feasible costs. The strongest candidate was only
+  `+0.066 um` improvement at ratio `0.996` in `6bba_05db0fb1`; all other
+  datasets had negative best improvements. This closes the crossing-repair
+  hypothesis; do not spend another Kaggle run on threshold calibration.
+- Exp165 completed as `dalloliogm/biohub-exp165-tiled-dense-relink`. It keeps
+  the three sparse movies graph-identical to Exp164/Exp148 and changes only the
+  dense movie: 687 incumbent edges are removed and 652 replacements added
+  (edge Jaccard `0.9807`), with 8 fewer nodes and 6 more division-like sources.
+  The output has 239,977 rows and passes the dependency-light harness with no
+  schema, dangling-edge, duplicate-frame-pair, or degree-invariant errors. It
+  is a genuinely distinct, targeted candidate. It was submitted as Kaggle
+  reference `55184986`; the public score is pending.
+- Public notebook review: `zoli800/biohub-cell-another-approch-2nd` has verified
+  version scores `0.914, 0.911, 0.914, 0.914, 0.913`. Its useful mechanism is
+  calibrated reverse-time association fused through a weighted harmonic mean;
+  this is orthogonal to Exp165's tiled dense relinking. Do not copy the whole
+  notebook. If Exp165 disappoints, isolate that reverse-time fusion as the next
+  experiment.
+
+## READ FIRST - 2026-07-20 CORRECTION (supersedes the earlier "strategic reset")
+
+**The earlier reset was wrong and is retracted. See the RETRACTION section at the
+top of `LEARNINGS.md`.**
+
+Measured public LB, not inferred:
+
+| Branch | Config | Divisions | Public LB |
+| --- | --- | ---: | ---: |
+| Exp110 post-processing | Exp073 family + ILP 0.0/1.4 | 320 | **`0.909`** |
+| Exp116 minimal, clean | identical to hengck23 notebook | 0 | `0.877` |
+
+**The minimal branch is WORSE by `0.032`. Post-processing ADDS score.** Exp110
+remains the working baseline. Do not delete the post-processing stack.
+
+Why the earlier claim was wrong: I attributed the `0.950` leaderboard score of
+the *author* hengck23 to their public notebook. A team's LB entry is the best of
+all their submissions (hengck23 had 12), not any single notebook's score.
+
+Because clean minimal = `0.877` while hacked forks = `0.950`, **the division
+hack is still paying `+0.073` on the live leaderboard** - the patch is not yet
+live in scoring. The `0.950` cluster is hack-inflated and should collapse toward
+~`0.877` on rescore. Our clean `0.909` already sits above that. **Do not chase
+`0.950`, and do not copy the hack.**
+
+Axes closed by measurement - do NOT re-test:
+- ILP division weight (Exp117): `1.0` optimal.
+- ILP cost grid on minimal branch (Exp118): inherited `0.0 / 1.4 / -1.0` already
+  optimal; all 10 configs within `0.007`.
+- ILP disappearance on the old branch (Exp110-115): flat `0.908`-`0.909`.
+
+Most promising open direction: divisions. Exp110's `320` safe divisions are the
+most plausible source of its `+0.032` over the division-free minimal branch, and
+the old no-safe-divisions test (`0.886` vs `0.893`) points the same way. Exp117's
+"zero division TPs" was a local artifact - the labelled split has only `3`
+annotated divisions, so it had no power to measure this.
+
+## CURRENT STATUS - 2026-07-28 (live scores confirmed)
+
+Best public LB is now **`0.913`** from Exp148 (adaptive two-seed edge fusion).
+Live submission scores pulled from Kaggle on 2026-07-28:
+
+| Sub | Exp | Change | Public LB |
+| --- | --- | --- | ---: |
+| `54996564` | Exp144 | det weight 0.475, edge 0.15, low_margin fusion | `0.912` |
+| `55007462` | Exp145 | det weight 0.40 | `0.910` |
+| `55019565` | Exp146 | det weight 0.325 | `0.909` |
+| `55026280` | Exp147 | det weight 0.55 | `0.909` |
+| `55029450` | Exp148 | det 0.475 + **adaptive** edge fusion, edge weight 0.15 | **`0.913`** |
+| `55046291` | Exp149 | adaptive, edge weight 0.15->0.25 | `0.912` (regressed) |
+
+Conclusions:
+- Detection blend weight `0.475` is the confirmed optimum (0.40/0.325/0.55 all
+  worse). Do not re-sweep it.
+- Adaptive edge fusion beats low_margin_consensus by `+0.001` (Exp148 vs Exp144).
+- **Edge-weight axis peaked at the 0.15 adaptive floor**: 0.25 regressed `-0.001`.
+  Do not push edge weight higher.
+- `notebooks/biohub-exp150-adaptive-edge-w035.ipynb` (edge weight 0.35) is BUILT
+  but should NOT be submitted - it continues the regressed direction. Hold/retire.
+- Next probe is orthogonal: `notebooks/biohub-exp151-adaptive-temp085.ipynb`
+  keeps the Exp148 confirmed-best config (det 0.475, adaptive, edge 0.15) and only
+  sharpens the post-mix edge logits via `SECONDARY_MIX_TEMPERATURE` 1.0 -> 0.85.
+  NOT yet run/submitted.
+
+Submission slots on 2026-07-28: 2 used (Exp149 `55046291` at 05:39 UTC; Exp151
+`55056483` at 13:44 UTC), 3 left.
+
+- `55056483` Exp151: Exp148 backbone (det 0.475, adaptive edge fusion, edge weight
+  0.15) with post-mix `SECONDARY_MIX_TEMPERATURE` 1.0 -> 0.85 (sharpen blended
+  edge logits). Kaggle kernel v1 `dalloliogm/biohub-exp151-adaptive-temp085` ran
+  to COMPLETE and was submitted directly via the code-submission API. Local
+  re-validation was skipped because `www.kaggleusercontent.com` (the kernel
+  output CDN) is egress-blocked in this environment; the in-kernel structural
+  harness ran before writing `submission.csv`, and temp=0.85 is a distinct config
+  so a byte-duplicate is impossible. Kaggle grading PENDING at submit time.
+  If it beats `0.913`, sharpen further (temp 0.75); if it regresses, try softening
+  (temp 1.15) instead.
+  - UPDATE 2026-07-28 ~15:17 UTC: still PENDING ~93 min after submit, well past the
+    sub-hour grading every other Exp got today. Matches the known queue-hang mode
+    (cf. `54894521`, which sat PENDING and never scored). The kernel v1 ran to
+    COMPLETE, so the output exists; only grading is stuck. Candidate remedy:
+    resubmit the same kernel version as a fresh slot to dislodge it (as done for
+    exp133), which costs 1 of the 3 remaining slots today. Awaiting user decision.
+  - UPDATE 2026-07-28 ~19:52 UTC: user approved resubmit. Same kernel v1 output
+    resubmitted as `55063831` (PENDING) to dislodge the queue-hang; original
+    `55056483` still PENDING. Slots today now 3 used, 2 left. Whichever grades
+    first gives the temp-0.85 score.
+  - RESOLVED: Exp151 (temp 0.85) scored **`0.912`** (`55056483` graded; resubmit
+    `55063831` redundant, echoes it). That is `-0.001` vs the temp 1.0 baseline
+    (exp148 = 0.913): mild sharpening of the blended edge logits REGRESSES.
+    Incumbent best stays **`0.913`** (Exp148).
+
+Temperature axis so far: temp 1.0 = 0.913 (exp148), temp 0.85 = 0.912 (worse).
+End-of-day bracket to map the rest of the axis (last 2 slots of 2026-07-28):
+- Exp152 `dalloliogm/biohub-exp152-adaptive-temp075` temp 0.75 (sharpen more) -
+  expected <= 0.912 given 0.85 already regressed; confirms the sharpen direction.
+- Exp153 `dalloliogm/biohub-exp153-adaptive-temp115` temp 1.15 (soften) - the more
+  promising side; the only untested direction on this axis.
+Both same backbone (det 0.475, adaptive edge fusion, edge 0.15); only
+SECONDARY_MIX_TEMPERATURE differs. Auto-submitted on kernel COMPLETE. If softening
+helps (Exp153 > 0.913), next probe is temp 1.3; if the whole axis is flat/worse,
+temperature is exhausted and 1.0 is optimal - move to a new axis.
+- Both auto-submitted 2026-07-28 ~20:20 UTC: Exp153 (1.15) = `55064248`, Exp152
+  (0.75) = `55064277`, both PENDING. All 5 slots for 2026-07-28 used (none wasted).
+  Scores expected 2026-07-29 given today's slow grading queue.
+  - UPDATE 2026-07-29 ~02:26 UTC: both Exp152/Exp153 STILL PENDING ~6h after
+    submit; the 2026-07-28 grading queue never caught up (queue-hang mode). The
+    Exp151 resubmit `55063831` did complete = 0.912 (echoes the original).
+    Auto-recheck loop stopped; bracket scores expected 2026-07-29. When they land:
+    if Exp153 (1.15 soften) > 0.913 -> next probe temp 1.3; if both <= 0.913 the
+    temperature axis is exhausted (1.0 optimal) -> pivot to the new detection-side
+    axis: Exp154 = Exp148 backbone + indarkarhana framewise retention guard (see
+    references/public-notebooks-scan-2026-07-28.md).
+  - RESOLVED 2026-07-29: bracket scored. Exp152 (temp 0.75) = **0.913** (ties
+    incumbent), Exp153 (temp 1.15) = **0.909** (softening hurts -0.004).
+
+TEMPERATURE AXIS FULLY MAPPED and EXHAUSTED: 0.75=0.913, 0.85=0.912, 1.0=0.913,
+1.15=0.909. Nothing beats 0.913; softening clearly worse, sharpening only ties.
+All three linking/blend knobs are now pinned at Exp148 (det weight 0.475, edge
+weight 0.15, temperature 1.0). DO NOT probe temperature further.
+
+NEXT DIRECTION - new orthogonal DETECTION-SIDE axis:
+- Exp154 = Exp148 backbone + indarkarhana framewise detection-field retention
+  guard (per-frame: if blended local-max candidates / primary candidates < 0.90,
+  that frame falls back to primary-only detection). Detection-side, orthogonal to
+  every knob tuned so far; independently scores 0.913. Graft the runtime patch
+  onto our cell 10 det-blend block, gated by
+  BIOHUB_DUAL_SEED_MIN_CANDIDATE_RETENTION=0.90. Details in
+  references/public-notebooks-scan-2026-07-28.md.
+- Secondary options if the guard is flat: alternate architectures
+  (justinkim1216 nnU-Net flow detector, subinium Trackastra linker) or the v34
+  independent-ensemble Exp135.
+
+## CURRENT STATUS - 2026-07-29 (Exp154 detection retention guard SUBMITTED)
+
+Exp154 built and submitted: `55073211` (PENDING). Kernel
+`dalloliogm/biohub-exp154-retention-guard` v1 ran to COMPLETE and produced
+submission.csv, confirming the guard graft is valid (repo symbols
+`_detect_cells_pooled`/`pool_k`/`frame_indices` present). It grafts indarkarhana's
+framewise detection-field retention guard onto the Exp148 incumbent
+(det 0.475, adaptive edge fusion, edge 0.15, temp 1.0); env var
+`BIOHUB_DUAL_SEED_MIN_CANDIDATE_RETENTION=0.90`. First DETECTION-SIDE probe,
+orthogonal to the now-exhausted linking/blend knobs. Guard scores 0.913
+standalone (indarkarhana); the bet is that stacking with adaptive edge fusion
+exceeds 0.913.
+
+Push note: hit the account-wide 2-concurrent-GPU-session cap; a background retry
+loop pushed once a slot freed (~10 min). Slots today (2026-07-29): 1 used, 4 left.
+
+UPDATE 2026-07-29 ~09:13 UTC: Exp154 still PENDING ~3h20m after submit (queue-hang
+mode again). Auto-recheck loop stopped; score expected later.
+
+RESOLVED 2026-07-29: Exp154 = **0.913**, exactly TIES the incumbent. The framewise
+detection retention guard is NEUTRAL on our backbone - layered on adaptive edge
+fusion it neither helps nor hurts (rarely triggers on the test movies, or the
+effect is below public-LB precision). The guard does NOT stack.
+
+ALL CHEAP INCREMENTAL KNOBS ARE NOW EXHAUSTED at 0.913:
+- detection blend weight (0.475 optimal), edge weight (0.15 floor), post-mix
+  temperature (1.0 optimal), framewise detection retention guard (neutral).
+Everything reachable by tuning the pilkwang two-seed backbone tops out at 0.913.
+Public LB shows no movement from any single-knob change since Exp148.
+
+NEXT DIRECTION - MODEL DIVERSITY (requires more than a one-param graft):
+The only remaining lever is a genuinely different model, not a post-processing
+tweak. In effort order (all ship PRETRAINED weights - no training from scratch):
+1. v34 independent-ensemble (Exp135, already built): average an INDEPENDENTLY
+   retrained unet_transformer (subinium/biohub-v34-retrain-weights-mirror) into
+   the detection field. Same architecture => drop-in; highest chance of a clean
+   +epsilon from decorrelated errors. Start here.
+2. Alternate detector architecture: justinkim1216/biohub-nnunet-flow-support-v1
+   (flow/center nnU-Net, ships source/model.py) or drkongvis 3D U-Net - needs
+   pipeline plumbing to convert their output into our detection format.
+3. Trackastra LINKER (subinium/biohub-trackastra-public-weights-mirror) - needs
+   the trackastra package + a detection/mask input; biggest build.
+Recommend (1) first: it is the cheapest diversity play and already coded.
+
+UPDATE 2026-07-29 ~16:00 UTC: Exp135 (v34 independent-ensemble) RUN + SUBMITTED as
+`55086681` (PENDING). NOTE it runs on the STALE Exp126 recipe (0.910), NOT the
+current two-seed 0.913 backbone - so it is a SCREEN for whether v34 adds signal,
+not a direct attempt to beat 0.913. Slots today (2026-07-29): 2 used, 3 left.
+Interpretation when it scores:
+- Exp135 clearly > 0.910 -> v34 is decorrelated/useful -> build Exp155 = graft v34
+  as a third detection seed into the Exp148 backbone (the real >0.913 attempt).
+- Exp135 ~= 0.910 (flat) -> v34 redundant -> skip the graft; alternate
+  architectures (nnU-Net flow detector / Trackastra) become the only levers.
+
+UPDATE 2026-07-29 ~19:33 UTC: Exp135 still PENDING ~3.5h after submit (queue-hang
+mode again). Auto-recheck loop stopped; score expected later. Decision logic
+unchanged (Exp155 v34 graft if >0.910, else architectural detector). Trackastra
+kickoff prompt saved at references/trackastra-kickoff-prompt.md.
+
+RESOLVED 2026-07-29 (late): both diversity screens graded, BOTH FAILED to beat
+0.913.
+- Exp135 (v34 reseed ensemble) = **0.908** on the 0.910 recipe -> BELOW baseline.
+  v34 is redundant with our incumbent detector and slightly hurts. DECISION: do
+  NOT build the Exp155 v34-into-Exp148 graft; reseed diversity is a dead end.
+- Exp157 (Trackastra ctc transformer REPLACING our linker, ref 55092602) = **0.898**
+  (built by a parallel Trackastra session from references/trackastra-kickoff-
+  prompt.md). Well under the 0.913 incumbent; local exp156 head-to-head had it
+  -0.031 under our linker. Trackastra's 2D ctc linker does not transfer to this 3D
+  data - matches the pre-flagged 2D/3D risk. DECISION: Trackastra linker-
+  replacement is a dead end; do not pursue further unless a 3D-native variant
+  appears.
+
+STATE OF PLAY: incumbent 0.913 (Exp148) is unbeaten. Exhausted so far - all
+linking/blend knobs (det weight, edge weight, temperature, retention guard), v34
+reseed ensemble, and the Trackastra linker swap.
+
+## STRATEGIC RESET 2026-07-30 (corrects stale "rank ~200 / cliff 0.950" framing)
+
+TWO facts change everything:
+
+1. LEADERBOARD WAS RESCORED (division-hack patch). The 0.950 cluster COLLAPSED.
+   Downloaded public LB 2026-07-30: 1768 teams. Top = 0.942 (ONE team), only 3 at
+   >=0.930, 15 at >=0.920, 44 at >=0.915. Our 0.913 ranks ~#62 = TOP 3.5%, NOT
+   rank 200. 0.913 is a TIED PLATEAU of ~117 teams = the public two-seed notebook
+   ceiling. Approx medals (1768 teams): gold ~top14 (~0.921+), silver ~top88
+   (~0.914+), bronze ~top177 (~0.913). We are on the silver/bronze bubble; +0.007
+   reaches gold territory. This is a real, winnable position - do NOT give up.
+
+2. ENSEMBLES TIME OUT (LEARNINGS.md CRITICAL 2026-07-23): the kernel RE-RUNS on
+   the hidden test with a time limit; >=3-model sequential inference times out
+   (Exp133 scored blank). So "more models" is a dead path. Budget = ~2 models +
+   post-processing. This is WHY v34-as-3rd-seed (Exp155) is doubly wrong (redundant
+   AND risks timeout), and why the alternate-detector ensemble idea is dead.
+
+ALTERNATE-DETECTOR PROBE - INVESTIGATED, NOT VIABLE (2026-07-30):
+- justinkim1216 center/flow nnU-Net: ships model.py but the WEIGHTS ARE A 1-EPOCH
+  x 4-STEP CPU/P100 SMOKE-RUN SCAFFOLD (per its DATACARD: "rerun training for
+  competitive weights"). Untrained - would inject noise. Not usable without
+  training from scratch.
+- drkongvis 3D U-Net: has 16MB/49MB weights but NO model.py, NO datacard -
+  undocumented blackbox; integrating means reverse-engineering the state_dict with
+  unknown quality/IO. High risk, low expected value.
+Conclusion: no clean competitive drop-in alternate detector exists in the public
+pool. Do not spend a slot here.
+
+NEW DIRECTION - break the 0.913 plateau within the ~2-model time budget:
+A. STRONGER SINGLE DETECTOR (drop-in, same architecture, fits budget): swap the
+   pilkwang 50ep pack for a HIGHER-EPOCH checkpoint of the same net -
+   hongdaekim/biohub-300ep-checkpoint-pin-v1 / -350ep. Same unet_transformer =>
+   loads into our existing dual-seed machinery. Most promising cheap probe.
+B. ILP GRAPH EXPORT vs our greedy edge rebuild: the old unresolved clue was that
+   our filter_output_graph rebuilds edges greedily and discards the ILP optimum.
+   Re-test exporting the ILP graph more directly now that the hack is patched.
+C. LEGITIMATE DIVISION RECALL: metric has a 0.1*division_jaccard term; the hack is
+   patched so REAL divisions now count. Our safe-division insertion is very
+   conservative. A clean division-recall improvement is on-strategy and untried
+   post-patch.
+Recommend A first (cheapest, drop-in, directly targets detection quality).
+
+### A IS DEAD - VERIFIED 2026-07-30, DO NOT RETRY
+The hongdaekim "300ep"/"350ep" checkpoint pins are NOT stronger than our incumbent.
+Their README states they pin `pilkwang/biohub-tracking-support-pack-50ep-v1`
+**version 8** = artifact `biohub-tracking-support-pack-300ep-snapshot-v1`, weight
+sha256 `12b5d32ad8982e4736f74c41bc54403094917fe75f5a9f78b1b5aad41de26877`.
+The CURRENT pilkwang pack that Exp148 already uses is artifact
+`biohub-tracking-support-pack-400ep-snapshot-v1`, weight sha256
+`12f6881ee3620a831697ca098ff8f48e687a24225f4e048b538deec3562fe771`.
+Same run, same config (unet_out_channels 32, layers [32,64,128], downsample
+[1,4,4], window_size 2, pool_kernel_um 5.0) - the pins are EARLIER, LESS-trained
+snapshots. Swapping them in is a DOWNGRADE. No higher-epoch checkpoint than our
+400ep incumbent exists in the public pool.
+
+### B IS LARGELY DEAD TOO (measured, pre-existing evidence)
+Direct ILP graph export was already measured: Exp116 (clean minimal, ILP exported
+verbatim, no post-processing) = 0.877 vs Exp110 post-processing = 0.909. Our
+post-processing ADDS +0.032. Do not "just export the ILP graph".
+
+## LEVER C IN FLIGHT - Exp155 division budget 2x (2026-07-30)
+
+Submitted `55104669` (PENDING). Kernel `dalloliogm/biohub-exp155-division-budget-2x`
+v1 ran to COMPLETE. Rationale: the metric is
+`adjusted_edge_jaccard + 0.1*division_jaccard` and the division term is the ONLY
+part of the objective never optimized POST-PATCH. Our safe-division policy is still
+tuned from the hack era and is very conservative (Exp148 emitted only 333
+division-like sources). Exp155 doubles ONLY the budget caps
+(`frame_frac_cap 0.0076->0.0152`, `global_frac_cap 0.00375->0.0075`) and leaves all
+geometric gates unchanged (`max_um 4.66`, `sister 8.5`, `existing_child 7.65`), so
+it admits more candidates of the same plausibility class. Still 2 models => no
+timeout risk. Slots 2026-07-30: 1 used, 4 left.
+
+Follow-ups when it scores:
+- Exp155 > 0.913 -> division recall is live headroom; push further (3x budget, then
+  loosen the geometry gate) - this is the plateau-breaking axis.
+- Exp155 < 0.913 -> the conservative cap was load-bearing (extra divisions are FPs);
+  pivot from BUDGET to better division CANDIDATE GENERATION/scoring rather than
+  simply allowing more.
+- Exp155 == 0.913 -> the budget was not the binding constraint (few candidates
+  exist); go to candidate generation directly.
+
+UPDATE 2026-07-30 ~12:22 UTC: Exp155 still PENDING ~3.5h after submit (queue-hang
+mode, seen every day this week). Auto-recheck loop STOPPED; score expected later.
+Decision rules above are unchanged and still apply when it grades.
+
+## EXP156/157 TRACKASTRA LINKER - MEASURED AND REJECTED (2026-07-29/30)
+
+The parallel Trackastra branch is now reconciled into this history. Exp156 is a
+diagnostic head-to-head on byte-identical cached detections. It compares
+`ilp_only`, `incumbent_full`, and Trackastra coordinate scales `2`, `3`, and `4`
+using the official local metric. The best Trackastra arm (`scale=3`) scored
+`0.8631`, versus `0.8936` for `incumbent_full` and `0.9104` for `ilp_only`.
+Evidence is under `references/exp156-trackastra-headtohead-v1-output/`.
+
+The failure is concentrated in dense-frame association. `6bba_05db0fb1` puts
+about `2,900` tokens into each four-frame window, well above Trackastra's
+training limit of `1,024`; agreement with our ILP edges falls to `0.72-0.80`.
+Two plausible repairs were measured and rejected:
+
+- Disabling Trackastra divisions removes the excess forks but changes edge
+  agreement by only about `+0.002`; division gating is not the cause.
+- Per-movie coordinate-scale selection is worth only about `+0.001`; the scale
+  axis is closed.
+
+Because the local harness can invert graph-construction rankings, Exp157
+submitted the Trackastra replacement anyway as `55092602`. The live public LB
+score is **`0.898`**, decisively below the Exp148 incumbent at `0.913`. This
+confirms that Trackastra linker replacement is closed. Spatially tiling dense
+frames into <=`1,024`-token windows is the only technically supported revival,
+but its likely upside is parity with the raw ILP rather than a gain over the
+incumbent post-processing stack.
+
+## CURRENT STATUS - 2026-07-27
+
+Best public LB is now **`0.912`** from Exp144:
+
+- `54996564` Exp144: Pilkwang two-seed detection logit blend, secondary detection
+  weight `0.475`, edge weight `0.15`, DeepCenter gap confirmation. COMPLETE,
+  public LB `0.912`.
+- `55007462` Exp145: same two-seed blend with secondary detection weight `0.40`.
+  COMPLETE, public LB `0.910`; moving toward the incumbent seed was worse.
+- `55019565` Exp146: same two-seed blend with secondary detection weight `0.325`.
+  Submitted from this Codex session using Kaggle kernel v1
+  `dalloliogm/biohub-exp146-two-seed-blend-w0325`; PENDING at submit time.
+  Visible-output validation passed before submission: SHA256
+  `bf5e8a1c0b3a070c7764b31806d23b450df54e62f7ad2da04248808e785e05e2`,
+  `235,706` rows, `119,965` nodes, `115,741` edges, `313` division-like
+  sources, no nulls, no dangling edges, no negative times/coordinates.
+- `55026280` Exp147: same two-seed blend with secondary detection weight `0.55`,
+  above Exp144's `0.475`. Submitted from this Codex session using Kaggle kernel
+  v1 `dalloliogm/biohub-exp147-two-seed-blend-w055`; PENDING at submit time.
+  Visible-output validation passed before submission: SHA256
+  `a9adfc43cfec82de9a85a37bf90d067c917eba7e6b67a55bb20f536a74f461dc`,
+  `233,061` rows, `118,606` nodes, `114,455` edges, `304` division-like
+  sources, no nulls, no dangling edges, no negative times/coordinates.
+- Exp148: freezes Exp144's secondary detection weight at `0.475` and changes
+  only two-seed edge fusion from `low_margin_consensus` to `adaptive`. Kaggle
+  kernel v1 `dalloliogm/biohub-exp148-adaptive-edge-fusion` completed and was
+  submitted as `55029450` on 2026-07-27 under the user's explicit same-day
+  authorization. Visible output SHA256 is
+  `052a4d5807210868de98fad7c26f0d25bd831a460a3183c5af6fd7d9520146d8`:
+  `240,020` rows, `122,107` nodes, `117,913` edges, and `333` division-like
+  sources. The structural harness passed with all four datasets, no warnings or
+  errors, max indegree `1`, and max outdegree `2`. It differs materially from
+  Exp144 (`233,902` rows, `117,913` versus `114,863` edges), so the adaptive
+  linker branch is active. Kaggle grading is PENDING.
+
+Interpretation so far: Exp144's `0.475` is better than `0.40`, so do not keep
+moving toward lower secondary-seed weights unless Exp146 surprisingly beats
+`0.912`. If Exp146 scores below Exp144, the next two-seed probe should move the
+other direction from Exp144, not farther toward the incumbent.
+
+## Superseded: earlier strategic reset (2026-07-20, RETRACTED)
+
+The Exp073/Exp110 post-processing branch is a dead end. Full reasoning and
+evidence is in `LEARNINGS.md` (see the CRITICAL section). Summary:
+
+- `hengck23/minimal-baseline-tta-2gpu` scores public LB `0.950` using the SAME
+  weights pack, ILP costs, threshold, and D4 TTA as Exp110 (`0.909`), differing
+  only in that it exports the ILP graph verbatim with NO post-processing.
+- Our `filter_output_graph` step 4 (`edges = motion_edges`) discards all
+  ~114,860 ILP edges and rebuilds them with a greedy causal Hungarian sweep. The
+  global optimum is thrown away, which is why the ILP cost sweep is flat
+  (`1.2 -> 0.908`; `1.4/1.5/1.6/1.8 -> 0.909`) and why the whole heavy
+  post-processing lineage is stuck at `0.903` (`pilkwang` 80 subs, `beicicc` 71).
+- Live LB: 1414 teams. Our `0.909` is rank ~209. Bronze AND silver both need
+  `>= 0.950`; gold needs `>= 0.968`. The curve is a cliff: `0.940` -> rank ~190,
+  `0.950` -> rank ~46. Tuning below `0.950` is close to worthless.
+- The `0.950` cluster is NOT the division exploit. Hacked forks score the same
+  as the clean original, so the patch is already live in scoring.
+
+DO NOT resume tuning motion relink, gap closing, safe divisions, short-track
+filtering, or ILP costs on top of the old post-processing stack.
+
+## PLAN - GPU BLOCKED ~52h (as of 2026-07-22 evening)
+
+Weekly 30h GPU quota does NOT reset overnight - Kaggle reports ~52h to reset
+(~2026-07-24 evening). So no GPU kernel can run until then. Submission slots DO
+reset daily at UTC midnight, but we cannot produce new distinct predictions
+without compute, so slots alone don't help.
+
+Exp135 (the v34 independent-ensemble ceiling test) is built and committed but
+**cannot run on GPU until ~2026-07-24**.
+
+### The only GPU-free path to still test ideas: CPU kernels
+
+Kaggle CPU kernels do NOT count against the GPU quota and have a ~12h limit.
+The models are small (64^3 working volumes, ~2M params), so CPU inference is
+plausible for a SINGLE model with modest TTA, though the full 8-way x multi-model
+ensemble likely exceeds 12h. Candidate CPU jobs, in value order:
+
+1. **v34 ALONE on the best recipe (CPU, reduced TTA).** Tests v34's standalone
+   quality - the prerequisite for the ensemble. If v34 alone is much weaker than
+   our 0.910 incumbent, averaging it in will not help and we skip Exp135. If it is
+   comparable, the ensemble case is strong. Needs: remove the CUDA hard guard,
+   force device=cpu, cap TTA to fit ~12h. A distinct submission either way.
+2. Reduced-TTA 2-model ensemble on CPU, only if (1) fits comfortably in time.
+
+CPU feasibility is UNVERIFIED - the 3D conv stack may be too slow even at 64^3.
+Build (1), watch the first movie's timing, and abort early if it will not fit.
+
+### GPU-free prep for when the quota returns
+
+- Wire up a genuinely different architecture so it fires instantly at ~52h:
+  `justinkim1216/biohub-nnunet-flow-support-v1` (flow detector, ships
+  `source/model.py`) is the most self-contained. Trackastra is higher-ceiling but
+  needs the package + a mask/detection input - bigger build.
+
+### Nothing to submit in the meantime
+
+Out of distinct already-computed outputs (last one, Exp133 v1, submitted
+2026-07-22). New submissions require new compute = CPU kernels above, or wait.
+
+## Other pretrained models found (2026-07-22) - all public, drop-in candidates
+## Other pretrained models found (2026-07-22) - all public, drop-in candidates
+
+Same `unet_transformer` architecture (drop straight into the ensemble glob):
+- `subinium/biohub-v34-retrain-weights-mirror` - INDEPENDENT retrain (Exp135 uses it)
+- `hongdaekim/biohub-300ep-checkpoint-pin-v1`, `...-350ep-...` - snapshots of the
+  pilkwang run (correlated, less diverse than v34)
+
+Genuinely different architectures (would need pipeline work, higher ceiling):
+- `justinkim1216/biohub-nnunet-flow-support-v1` / `...-center-...` - flow/center
+  nnU-Net detectors, compact `source/model.py` included
+- `drkongvis/biohub-v4-3dunet-pretrained-weights` - different 3D U-Net detector
+- `subinium/biohub-trackastra-public-weights-mirror` - Trackastra LINKER (ctc +
+  general_2d); needs the trackastra package and a detection/mask input
+- `pilkwang/biohub-local-association-ranker-unet300-v1` - small alternate linker/reranker
+
+## SUBMISSION SLOT USAGE - 2026-07-22
+
+5/day budget. Used 2:
+- `54894521` Exp133 v2 (3-member equal-weight ensemble) - COMPLETE, unscored (queue)
+- `54910912` Exp133 v1 (4-member unequal ensemble) - PENDING
+
+3 slots left but NOT usable today: the weekly GPU quota is exhausted, so no new
+distinct prediction can be produced, and every remaining candidate needs a fresh
+inference run. Did NOT burn slots on byte-duplicates of already-scored outputs
+(no information, and the sha guard in await_validate_submit.py refuses them).
+
+Best public LB remains `0.910` (Exp126/Exp128).
+
+## Operational gotchas
+
+- Kaggle caps **concurrent batch GPU sessions at 2**. Further pushes fail with
+  `Maximum batch GPU session count of 2 reached`; retry when one frees.
+- Kaggle derives the kernel slug from the **title**, not the metadata `id`. A
+  title containing `0.9800` produced slug `...-0-9800`, and `kernels status` on
+  the intended id returned a permission error. Submission with
+  `-k owner/slug -v <version>` needs the slug from the notebook URL.
+
+## Current Goal
+
+- Strict strategy decision on 2026-07-20: stay with biologically plausible
+  trackers. Do not add negative-time hubs, impossible coordinates, or artificial
+  fork chains from metric-hack public notebooks unless the user explicitly
+  reopens a metric-risk branch. This is now also the pragmatic choice, not only
+  the principled one: the hack is scoring-neutral post-patch (hacked forks score
+  the same `0.950` as the clean original).
+- **Exp116 - TWO INDEPENDENT IMPLEMENTATIONS CONVERGED.** Both agents built the
+  same minimal pipeline from different starting points on 2026-07-20:
+  - `notebooks/biohub-exp116-minimal-ilp-direct-export-candidate.ipynb` ->
+    `dalloliogm/biohub-exp116-minimal-ilp-direct-export`, derived from
+    `hengck23/minimal-baseline-tta-2gpu` (already clean). Kernel v1 COMPLETE:
+    `240,529` rows, `124,743` nodes, `115,786` edges, **0 divisions**, all
+    structural checks passed. Submitted as `54845958`, PENDING as of 07:22.
+  - `notebooks/biohub-exp116-clean-public-solution-ablation.ipynb` ->
+    `dalloliogm/biohub-exp116-clean-public-solution-ablation`, derived from
+    `kaiwalyaatulraut/biohub-cell-tracking-solution` with the hack stripped.
+  Both carry identical config (`POINT_THRESHOLD 0.9700`, ILP
+  `-1.0 / 0.0 / 1.4 / 1.0`, `USE_TTA=True`, same 50ep weights pack) because
+  kaiwalyaatulraut is a verbatim copy of hengck23 plus the hub hack. Expect
+  near-identical outputs. Downloaded outputs are byte-identical:
+  SHA256 `dbba5f419e5b341bf0b413154ebf785bcf9caa19857f21f6242b012ebc65cd90`,
+  `240,529` rows, `124,743` nodes, `115,786` edges, **0 divisions**. Do not spend
+  a second submission slot on the clean-ablation kernel while the direct-export
+  submission is pending.
+- **Exp117** (`dalloliogm/biohub-exp117-ilp-division-weight-sweep`) is a
+  diagnostic that writes NO submission and costs NO slot. It sweeps
+  `ILP_DIVISION_WEIGHT` over `[1.0, 0.5, 0.25, 0.0, -0.25, -0.5, -1.0]`, reusing
+  one cached inference pass per movie, and scores every setting with the OFFICIAL
+  metric on labelled train movies. This doubles as the trustworthy offline
+  harness the workspace has lacked. Kernel v3 COMPLETE. Local aggregate score was
+  best at the inherited default `division_weight=1.0` (`0.914831`, 0 forks);
+  making divisions cheaper created many forks but no division true positives on
+  the labelled split (`division_weight=0.5`: 984 forks, 14 div FP, 0 div TP,
+  score `0.912502`; negative weights worse). Conclusion: division improvement
+  needs better division candidates/scoring, not only cheaper ILP division cost.
+  v1 failed on a float-index bug, v2 on `GraphView.copy()` - both fixed (see
+  Gotchas).
+- Submission mechanism for this code competition: raw CSV upload fails with a
+  generic `400`. Use
+  `kaggle competitions submit <slug> -k owner/kernel-slug -v <version> -f submission.csv -m "..."`
+  as documented in `.codex/skills/kaggle-competition-workspace/SKILL.md`.
+
+## Gotchas when reusing the minimal notebook
+
+- `np.savez` round-trips everything as float64. `build_graph` uses the edge
+  endpoints as list indices, so they must be cast back to `int`.
+- `ILPSolver.solve()` returns a `GraphView`. The official `evaluate()` internally
+  calls `pred_graph.copy()`, which `GraphView` rejects - call `.detach()` first.
+  hengck23's notebook sidesteps this by round-tripping through geff.
+
+## Open findings worth acting on
+
+- **The ILP never emits a division.** Exp116 has max outdegree 1 across all
+  `115,786` edges. `ILP_DIVISION_WEIGHT=1.0` was inherited and never varied
+  across Exp110-115. Exp110's `320` "division-like sources" came from
+  `add_safe_divisions_postlink` (post-processing), not the optimizer. So the
+  whole `0.1 * division_jaccard` term is unclaimed, and Exp101-104 were tuning a
+  heuristic bolted onto an optimizer that was silently refusing to divide.
+  Exp117 tests both cost directions because the tracksdata sign convention is
+  unverified.
+- **GT labels are very unevenly distributed.** Measured GT edge counts:
+  `44b6_0113de3b` 50, `44b6_0b24845f` 49, `6bba_05b6850b` 845,
+  `6bba_05db0fb1` 1,183, `44b6_33b596bf` 49. Since `adj_edge_jaccard` is
+  weight-averaged by `TP+FP+FN`, any local score is ~95% determined by the two
+  6bba movies. Treat local conclusions as 6bba-specific.
+- **We under-predict `44b6_0b24845f` by ~30%** (`22,937` nodes vs
+  `n_total = 32,795`). ~10k cells never detected in that movie. This contradicts
+  the earlier "detection is solved" conclusion, which rested on
+  `node_recall ~ 1.0` measured only on the two well-labelled movies. Unexplored.
+- Measured `n_total` per movie (for node-count calibration; the metric pays a
+  bonus multiplier > 1 when `N_pred < N_true`):
+  `44b6_0113de3b` 25,755, `44b6_0b24845f` 32,795, `6bba_05b6850b` 6,362,
+  `6bba_05db0fb1` 69,800, `44b6_33b596bf` 23,330.
+
+## Superseded goals (kept for history)
+
+- Publish a readable public version of
+  `dalloliogm/biohub-exp110-ilp-birth-death-cost` (Kaggle v2 completed
+  successfully). Low value now that the branch is superseded.
+- Improve beyond Exp110 public LB `0.909` (verified from Kaggle submissions on
+  2026-07-20). Exp073 `0.903`, copied LB893 `0.893`, no-safe `0.886`, and
+  conservative-safe `0.889` are all superseded.
+- Submission `54758569`, copied `dalloliogm/biohub-exp073-gap-5-8-public`,
+  completed with public LB `0.903`, byte-identical to `lucashmateo/biohub-ct-exp073`.
+- `scripts/biohub_validation_harness.py` remains useful for STRUCTURAL checks,
+  but Exp117 supersedes it for official-metric scoring.
+
+## Next Experiments
+
+- Run one-factor improvements around Exp073:
+  `DET_THRESHOLD=0.96875`, gap-close radius, short-track filtering, density-
+  adaptive gap close, and stable long-track bridge extension.
+- Current completed candidate: Exp073 + only `DET_THRESHOLD=0.96875` (Exp084
+  idea), implemented as
+  `notebooks/biohub-exp084-threshold-096875-candidate.ipynb`. Kaggle v1 completed
+  with valid output, was submitted as `54768957`, and tied Exp073 with public LB
+  `0.903`.
+- Second recommended probe: Exp073 + density-adaptive gap close from
+  `romanrozen/biohub-best-score`, implemented as
+  `notebooks/biohub-exp090-density-adaptive-gap-candidate.ipynb` with adaptive
+  short-track rescue disabled for the first controlled run.
+- Third recommended probe: Exp073 + stable long-track bridge extension from
+  `yusuketogashi/biohub-another-approach`, implemented as
+  `notebooks/biohub-exp096-stable-long-track-bridge-candidate.ipynb`; run only
+  after Exp090 so the bridge effect can be separated from density adaptation.
+- Current division-calibration probe: Exp100 post-processes the Exp073 output by
+  pruning the farther daughter edge for the top 5% riskiest division-like
+  parents. Kaggle v1 completed as `dalloliogm/biohub-exp100-division-risk-prune`
+  and was submitted as `54776292`; Kaggle rejected it as invalid submission
+  format despite passing local structural checks. Do not resubmit Exp100 as-is.
+- Current upstream division-calibration probe: Exp101 loosens Exp073 safe-division
+  insertion gates/caps before graph serialization. Kaggle v1 completed as
+  `dalloliogm/biohub-exp101-safe-division-recall-expansion`; structural checks
+  passed and submission `54780672` is pending public LB.
+- Second upstream division-calibration probe: Exp102 is a milder safe-division
+  expansion between Exp073 and Exp101. Kaggle v1 completed as
+  `dalloliogm/biohub-exp102-mild-safe-division-expansion`; structural checks
+  passed and submission `54781687` is pending public LB.
+- Third batch probe: Exp103 combines Exp092 threshold+density-gap behavior with
+  Exp102's mild safe-division settings. Kaggle v1 completed as
+  `dalloliogm/biohub-exp103-threshold-density-mild-division`; structural checks
+  passed and submission `54784028` is pending public LB.
+- Fourth batch probe: Exp104 tests the precision side of Exp073 by tightening
+  safe-division insertion upstream (`4.42`, `7.90`, `7.25`, `0.0069`,
+  `0.0033`) instead of post-hoc edge deletion. Kaggle v1 completed as
+  `dalloliogm/biohub-exp104-safe-division-precision`; structural checks passed
+  and submission `54785550` scored public LB `0.903`, tying Exp073.
+- Current next probe: Exp105 weighted gap-node interpolation. This keeps the
+  Exp092 threshold+density-gap graph recipe but places inserted synthetic gap
+  nodes using a local-motion blend (`BIOHUB_GAP_MIDPOINT_MOTION_WEIGHT=0.5`,
+  clamp `4.0 um`) instead of a pure midpoint. Notebook:
+  `notebooks/biohub-exp105-weighted-gap-interpolation-candidate.ipynb`. Kaggle
+  v1 completed as `dalloliogm/biohub-exp105-weighted-gap-interpolation`;
+  structural checks passed and submission `54800958` scored public LB `0.903`,
+  tying Exp073.
+- Parallel queued probe: Exp106 density spacing gate. This keeps Exp092's
+  midpoint/refinement behavior, raises density-gap gain to `0.04375`, and blocks
+  candidates outside the reference `0.040` density mask unless local spacing is
+  at least `8.50 um`. Notebook:
+  `notebooks/biohub-exp106-density-spacing-gate-candidate.ipynb`. Kaggle v1
+  completed as `dalloliogm/biohub-exp106-density-spacing-gate`; structural checks
+  passed with rows `252,696`, nodes `128,617`, edges `124,079`, and divisions
+  `418`. CLI submit attempts returned HTTP 400 `CreateSubmission`; the user
+  manually submitted it as `54802933`; public LB `0.903`, tying Exp073.
+- Additional queued probe: Exp107 density gain `0.0475`. This keeps Exp092's
+  midpoint/refinement behavior and all safe-division settings, changing only
+  `BIOHUB_GAP_DENSITY_GAIN` from `0.040` to `0.0475`. Notebook:
+  `notebooks/biohub-exp107-density-gain-0475-candidate.ipynb`. Kaggle v1
+  completed as `dalloliogm/biohub-exp107-density-gain-0475`; structural checks
+  passed with rows `252,696`, nodes `128,616`, edges `124,080`, and divisions
+  `418`. CLI submit attempts returned HTTP 400 `CreateSubmission`; the user
+  manually submitted it as `54802935`; public LB `0.903`, tying Exp073.
+- Forum-derived next probe: build an original frozen-transition-aware candidate
+  on top of Exp073/Exp092. Detect exact or near-exact duplicate adjacent frames
+  in each test movie; across frozen transitions prefer zero/near-zero
+  displacement links and suppress normal extrapolation; after a frozen run ends,
+  allow a small one-step relaxed jump gate because real motion may be accumulated.
+  Keep this conditional on detected duplicated transitions only.
+- Prepared Exp108 frozen-transition-aware notebooks:
+  `notebooks/biohub-exp108-frozen-transition-validation.ipynb` for labeled-train
+  exact validation and
+  `notebooks/biohub-exp108-frozen-transition-aware-candidate.ipynb` for test
+  inference. The graph delta is conditional: exact duplicated adjacent frames use
+  a near-zero relink gate with no velocity extrapolation; the first transition
+  after a frozen pair uses a relaxed no-velocity release gate; gap closing through
+  frozen pairs is suppressed. Local notebook Python syntax checks passed.
+- Exp108 candidate completed on Kaggle v2 as
+  `dalloliogm/biohub-exp108-frozen-transition-aware`; downloaded output passed
+  `scripts/biohub_validation_harness.py --skip-metric` with `252,282` rows,
+  `128,421` nodes, `123,861` edges, and no structural warnings. Frozen handling
+  activated only for the `6bba` movies (`10` exact frozen pairs each). Submitted
+  notebook version 2 with output `submission.csv` as Kaggle submission
+  `54813931`; current status `PENDING`. The paired Exp108 train-validation
+  kernel errored and should not be treated as validation evidence.
+- Last-slot split candidate Exp109:
+  `notebooks/biohub-exp109-exp092-exp108-6bba05db-split.ipynb`. It is a
+  CSV-only notebook that uses Exp092 for `44b6_0113de3b`, `44b6_0b24845f`, and
+  `6bba_05b6850b`, and Exp108 only for `6bba_05db0fb1`. Kaggle v1 completed as
+  `dalloliogm/biohub-exp109-exp092-exp108-6bba05db-split`; downloaded output
+  passed the structural harness with `252,306` rows, `128,435` nodes,
+  `123,871` edges, and no warnings. Submitted as Kaggle submission `54815064`;
+  Kaggle rejected it with the generic incorrect-format message. This is a
+  checker gap: local schema, dtype, dataset coverage, contiguous row IDs, and
+  dangling-edge checks all passed, but the competition-side validation still
+  failed. Do not spend more slots on direct CSV-spliced outputs until the
+  stricter failure condition is identified.
+- Add component-size diagnostics to the submission validator before any stronger
+  graph repair. The forum reports scoring timeouts may depend on connected
+  component structure, not just node count.
+- Integrate `scripts/biohub_validation_harness.py` into every new candidate
+  notebook immediately after writing `submission.csv`. Require a valid
+  `validation_report.json` before submission.
+- Build a train-mode Exp073/Exp092 runner that emits candidate train predictions
+  and calls the harness with `--train-dir` and `--tracking-repo`, so controlled
+  exact validation becomes routine rather than notebook-specific.
+- Medium-effort forum-derived branch: affinity rescoring from existing learned
+  edge probabilities plus local motion consistency, inspired by the temporal
+  affinity/flow-field discussion. Do this after the frozen-transition probe or
+  when current Exp105/106/107 results return.
+- Public-notebook follow-up plan from the 2026-07-17 scan:
+  1. Exp105 weighted gap-node interpolation, using local motion to place
+     inserted gap nodes instead of pure midpoint placement.
+  2. Exp106 outside-base spacing gate for density-adaptive gap candidates,
+     initially `8.50 um`, if density-gap branches look promising.
+  3. Exp107 TTA plus ILP-cost branch, higher runtime and broader changes.
+  4. Larger detector-preprocessing branch from bright/top-hat U-Net mix only
+     after inspecting its weight artifact and output density.
+  Detailed notes: `references/recent-public-notebooks-2026-07-17.md`.
+- Current breakthrough: Exp110 ILP birth/death costs. Inspection of Exp092/107/108
+  logs showed that D4-style detection TTA was already active, so this is not a
+  new TTA enablement experiment. It keeps the Exp092 threshold+density-gap graph
+  recipe and changes only ILP appearance/disappearance weights to `0.0` / `1.4`,
+  matching the public TTA/ILP-cost idea's distinctive cost setting. Notebook:
+  `notebooks/biohub-exp110-ilp-birth-death-cost-candidate.ipynb`. Kaggle v1
+  completed as `dalloliogm/biohub-exp110-ilp-birth-death-cost`; downloaded
+  output passed the structural harness with `238,534` rows, `121,403` nodes,
+  `117,131` edges, `320` division-like sources, and no warnings. It is
+  materially different from Exp092: `12,141` semantic rows added and `26,292`
+  removed. This satisfies the "do not submit if count-identical" rule, but it is
+  a more conservative graph, so the strategic question is whether to spend a
+  slot testing fewer nodes/edges/divisions after many `0.903` ties. Submitted as
+  Kaggle submission `54826078`; user reported completed public LB `0.909`. This
+  breaks the repeated `0.903` plateau and makes ILP-cost/graph-size calibration
+  the highest-priority follow-up axis. CLI verification remains pending because
+  the approval service rejected live Kaggle polling in the recording turn.
+- Prepared controlled Exp110 follow-ups:
+  `notebooks/biohub-exp112-ilp-disappearance-1-2-candidate.ipynb` and
+  `notebooks/biohub-exp113-ilp-disappearance-1-6-candidate.ipynb`. Both keep ILP
+  appearance cost at `0.0` and change only disappearance cost around Exp110's
+  winning `1.4` setting (`1.2` tests less aggressive pruning; `1.6` tests more
+  aggressive pruning). Local notebook JSON and Python syntax checks passed.
+  Next action: upload/run both on Kaggle T4, download outputs, run the structural
+  harness, compare row/node/edge/division deltas against Exp110, then decide
+  which if any deserves a submission slot. Uploaded both as Kaggle v1 kernels on
+  2026-07-19; both initially reported `RUNNING`.
+- Exp112 and Exp113 completed on Kaggle and both passed the structural harness
+  with no warnings. Exp112 (`disappearance=1.2`) produced `240,779` rows,
+  `122,541` nodes, `118,238` edges, and `336` division-like sources; versus
+  Exp110 this is `+2,245` rows, `+1,138` nodes, `+1,107` edges, and `+16`
+  divisions. Exp113 (`disappearance=1.6`) produced `235,895` rows, `120,065`
+  nodes, `115,830` edges, and `304` division-like sources; versus Exp110 this is
+  `-2,639` rows, `-1,338` nodes, `-1,301` edges, and `-16` divisions. Evidence:
+  `references/exp112-ilp-disappearance-1-2-v1-output/` and
+  `references/exp113-ilp-disappearance-1-6-v1-output/`. If only one gets a slot,
+  prefer Exp113 because it continues the pruning direction that likely drove
+  Exp110's `0.909`; Exp112 is a useful control for whether Exp110 over-pruned.
+- User manually submitted both Exp112 and Exp113 on 2026-07-19. Live Kaggle list
+  shows two new pending blank-description submissions: `54835643` at
+  `17:02:32.247` and `54835647` at `17:02:40.103`. Because descriptions are
+  blank, the user clarified the order: Exp113 was submitted first as `54835643`,
+  and Exp112 was submitted second as `54835647`. Both have now completed:
+  Exp113 scored public LB `0.909`, tying Exp110; Exp112 scored public LB `0.908`,
+  so relaxing the disappearance penalty back toward denser graphs appears worse.
+- Prepared two more same-day ILP-cost candidates while Exp112/Exp113 are pending:
+  `notebooks/biohub-exp114-ilp-disappearance-1-5-candidate.ipynb` and
+  `notebooks/biohub-exp115-ilp-disappearance-1-8-candidate.ipynb`. Both keep ILP
+  appearance cost `0.0` and change only disappearance cost. Exp114 (`1.5`) is a
+  near-optimum interpolation between Exp110 `1.4` and Exp113 `1.6`; Exp115
+  (`1.8`) tests stronger pruning. Local notebook JSON and Python syntax checks
+  passed. Next action: upload/run both on Kaggle, download outputs, run
+  structural validation, then submit manually if valid and materially different.
+  Uploaded both as Kaggle v1 kernels on 2026-07-19; both initially reported
+  `RUNNING`.
+- Exp114 and Exp115 completed on Kaggle on 2026-07-19. Downloaded outputs passed
+  fast structural checks. Exp114 produced `237,078` rows, `120,663` nodes,
+  `116,415` edges, and `310` division-like sources; submitted as `54838832`,
+  and scored public LB `0.909`. Exp115 produced `233,682` rows, `118,940` nodes, `114,742`
+  edges, and `290` division-like sources; submitted as `54838833`, status
+  `COMPLETE`, public LB `0.909`. A direct raw-CSV submission attempt returned Kaggle `400 Bad
+  Request`; code-submitting the completed kernel versions with `-k ... -v 1 -f
+  submission.csv` succeeded. This means the disappearance-cost sweep from `1.4`
+  to `1.8` is flat on public LB, while `1.2` is slightly worse; do not keep
+  spending slots on tiny disappearance-cost changes without new validation
+  evidence.
+- Operating rule for the rest of this challenge: Kaggle submissions may take
+  several hours to validate, and user time is limited. If daily submission slots
+  remain, run/validate/submit multiple independent candidates without waiting for
+  the previous pending submission to score. Later, compare all completed public
+  LB results together.
+- Do not spend more slots on LB893 safe-division-only tuning unless Exp073-family
+  probes regress sharply.
+- Prepared strict Exp116 clean-public-solution ablation:
+  `notebooks/biohub-exp116-clean-public-solution-ablation.ipynb`. It starts from
+  public `kaiwalyaatulraut/biohub-cell-tracking-solution` but removes the final
+  negative-time hub/fork augmentation and adds strict checks rejecting negative
+  frame indices, negative coordinates, dangling edges, nulls, and malformed row
+  IDs. Purpose: measure the real learned+ILP tracker without metric-hack graph
+  structures. Local notebook JSON and Python syntax checks passed; upload/run on
+  Kaggle next. Uploaded as Kaggle v1 on 2026-07-20:
+  `dalloliogm/biohub-exp116-clean-public-solution-ablation`; initial status
+  `RUNNING`.
+- Manually submit Kaggle version 1 of
+  `dalloliogm/biohub-lb893-conservative-safe-divisions-candidate` and record the
+  public LB before further safe-division tuning.
+- Run one-factor ablations from `references/lb893-v1-output/ablation_plan.json`,
+  continuing with `no_motion_relink`, `no_gap_close`, `no_gap2`, and
+  `no_linefit`.
+- Prioritize `no_gap2` and `no_gap_close` after safe-division tuning; these
+  components add many synthetic nodes/edges and may be easier to improve without
+  relying on division-heavy validation.
+- PREPARED: `notebooks/biohub-lb893-nogap2-candidate.ipynb` and
+  `notebooks/biohub-lb893-nogapclose-candidate.ipynb`. Each = the conservative
+  candidate's proven machinery on the default `safe_div_precision_050` preset
+  (the full LB893 `0.893` baseline) with exactly one flag flipped
+  (`BIOHUB_OUTPUT_GAP2_RECOVERY=0` / `BIOHUB_OUTPUT_GAP_CLOSE=0`) and no safe-div
+  tightening. Run each with `VALIDATE_FIRST=True` first, compare exact score to
+  the full_lb893 baseline `0.954802`, and only submit the winner
+  (`VALIDATE_FIRST=False`).
+- Push and run `notebooks/biohub-graph-consensus-ensemble.ipynb`. Attach the
+  three diverse candidate outputs (LB893 `0.893` anchor, classical NMS-3.8
+  `0.834`, learned U-Net/ILP `0.810`), verify the pairwise-agreement matrix shows
+  real diversity, submit the consensus `submission.csv`, and record public LB.
+- Optionally run the notebook's discovery layer once with `DISCOVER_PUBLIC=1`
+  (internet ON + Kaggle/OpenRouter secrets) to auto-pull ORIGINAL public
+  tracking pipelines as extra sources; then re-run internet-off to submit. Sanity
+  check the LLM keep/drop decisions before trusting them.
+- Then tune the ensemble `TAU_NODE_FRAC`/`TAU_EDGE_FRAC`/`TAU_DIV_FRAC` with
+  `VALIDATION_MODE=1` on labeled train movies (needs per-source train submissions
+  + support pack) before further submissions.
+
+## Done
+
+- Initialized the competition workspace and downloaded Kaggle overview,
+  evaluation, rules, and file-list references.
+- Queried the top public notebooks by votes/hotness, downloaded nine
+  representative sources, and recorded the source-level comparison in
+  `references/top-notebooks-analysis.md`.
+- Created `notebooks/biohub-exact-dog-hungarian-baseline.ipynb` with the frozen
+  official metric implementation, an exact-metric smoke test, one-video-per-embryo
+  validation, full test inference, and submission-schema checks.
+- Passed notebook JSON/Python syntax validation and synthetic tests for DoG
+  detection, Hungarian linking, interpolated one-frame gap closure, and pruning.
+- Prepared Kaggle kernel metadata with the competition and
+  `thibautgoldsborough/cellmot-baseline-artifacts` attached.
+- Uploaded private Kaggle kernel version 4 as
+  `dalloliogm/biohub-exact-validation-and-dog-hungarian-baseline`. Version 4
+  passed the exact-metric toy test, then finished with error before producing a
+  real validation result. Versions 1 and 3 exposed dependency setup failures;
+  version 2 lacked attached inputs and was superseded immediately.
+- Fixed offline GEFF/Zarr evaluation in version 7, which completed successfully.
+- Submitted version 7 as Kaggle submission `54297736`; public score `0.827`.
+- Created and uploaded `notebooks/biohub-cell-tracking-competition-tutorial.ipynb`,
+  including the expanded Hungarian-assignment explanation.
+- Created `notebooks/biohub-gap2-velocity-ablation.ipynb`. It changes only the
+  gap-2 recovery switch, shares detections between variants, compares exact
+  metrics by embryo, and automatically falls back to the frozen baseline unless
+  the candidate improves overall without a regression worse than `0.002`.
+- Passed notebook JSON/Python validation and a structural test confirming one
+  accepted `t -> t+3` bridge inserts exactly two nodes and three consecutive edges.
+- Completed the exact gap-2 ablation. Baseline scored `0.794304`; candidate
+  `0.793540` (delta `-0.000764`). Edge counts were identical, while candidate
+  nodes increased from `32,471` to `32,619`; automatic selection kept baseline.
+- Created validation-only `notebooks/biohub-detector-screening.ipynb` with the
+  frozen baseline plus one-factor threshold `0.030/0.060` and physical-NMS
+  `2.8/3.8 um` candidates. Local syntax and config-isolation checks passed.
+- Completed the exact detector screen. NMS `3.8 um` scored `0.810458` versus
+  baseline `0.794304` (`+0.016153`) and improved both held-out embryos.
+- Created `notebooks/biohub-nms38-candidate.ipynb` with candidate-only delta
+  `min_distance_um=3.8`, exact validation, full test inference, and schema checks.
+  Local JSON/Python and config-isolation checks passed.
+- Kaggle candidate version 1 completed. It reproduced exact validation
+  `0.8104577161`, processed all four test movies, passed edge endpoint/schema
+  assertions, and wrote a `235,923`-row `submission.csv`.
+- Submitted NMS `3.8 um` as `54307212`; public LB improved `0.827 -> 0.834`.
+- Leaderboard snapshot: rank `203/630`; approximate top-10% cutoff `0.856`.
+- Created validation-only `notebooks/biohub-learned-unet-ilp-validation.ipynb`.
+  It isolates artifact dependencies, runs the real pretrained U-Net/transformer/ILP
+  script, scores predicted GEFF graphs exactly, and cannot emit a submission.
+- Passed notebook JSON/Python validation and syntax validation of the embedded
+  exact-metric runner. Full execution requires the Kaggle artifact and GPU.
+- Learned validation version 1 failed because Kaggle assigned a P100 incompatible
+  with PyTorch 2.10 (`sm_60` unsupported). Version 2 pinned a Tesla T4 and passed.
+- Default learned exact score: `0.8394088969`, delta `+0.0289511808` versus the
+  NMS-3.8 classical benchmark; aggregate edge TP/FP/FN `815/58/80`.
+- Created `notebooks/biohub-learned-unet-ilp-candidate.ipynb` with locked learned
+  parameters, isolated GEFF-to-CSV conversion, full dataset/schema assertions,
+  and no automatic submission. Notebook and embedded writer compile locally.
+- Uploaded learned candidate version 1 with a Tesla T4. The kernel completed in
+  472 seconds and processed all four 100-frame test movies.
+- Generated `304,792` rows: `164,682` nodes, `140,110` edges, and 12 divisions.
+  Independent validation confirmed exact columns, unique IDs, no missing values,
+  valid endpoints, consecutive-frame edges, and lineage degrees of at most two
+  outgoing and one incoming edge. No competition submission was created.
+- Learned submission `54323397` scored `0.810`, below NMS-3.8's `0.834`; the
+  exact aggregate validation gain did not transfer to the public leaderboard.
+- Built `notebooks/biohub-prefix-hybrid-candidate.ipynb`, selecting classical
+  `44b6` and learned `6bba` rows based on per-embryo exact validation. The hybrid
+  exact score is `0.842616`; local top-to-bottom composition produced `260,287`
+  structurally valid rows.
+- Hybrid kernel version 1 failed because private notebook outputs mount under
+  `/kaggle/input/notebooks/<owner>/<slug>/`, not the assumed direct slug path.
+  Version 2 discovers both files by exact row-count fingerprints and completed.
+- Kaggle version 2 produced the same `260,287`-row CSV as the local execution;
+  both files have SHA-256 `abbbb913fa188f505e314a7c6c4a5846e6c6377c0788025d6ba799f0b9d968b0`.
+- Copied LB893 source into
+  `notebooks/biohub-lb893-safe-divisions-source.ipynb` and preserved its Kaggle
+  metadata under `references/top_notebooks/lb893-safe-divisions/`.
+- Copied LB893 run evidence into `references/lb893-v1-output/`: kernel log,
+  `run_stats.csv`, and `ablation_plan.json`. The large `submission.csv` remains
+  ignored.
+- Created `notebooks/biohub-lb893-postprocessing-ablation.ipynb` as a lightweight
+  local controller and `notebooks/biohub-lb893-validation-ablation.ipynb` as the
+  Kaggle GPU exact-validation runner. All code cells parse locally.
+- Uploaded `dalloliogm/biohub-lb893-validation-ablation`. Version 1 failed on a
+  bad validation train path; the error log is preserved in
+  `references/lb893-validation-v1-output/`. Version 2 fixes the path and is
+  completed prediction/metric scoring but failed while writing the summary due a
+  bad `CONFIG` reference. The v2 error log is preserved in
+  `references/lb893-validation-v2-output/`; version 3 patches summary writing.
+- Version 3 completed successfully. Exact validation artifacts are preserved in
+  `references/lb893-validation-v3-output/`. Full LB893 validation score on the
+  selected two train movies is `0.9548016411`; the next step is not submission,
+  but one-factor validation ablations against this baseline.
+- Created and ran
+  `notebooks/biohub-lb893-no-safe-divisions-validation.ipynb`. Disabling only
+  safe-division insertion improved exact validation to `0.9606407955`, removed
+  division false positives (`0/4/0 -> 0/0/0`), and preserved evidence under
+  `references/lb893-no-safe-divisions-v1-output/`.
+- Created `notebooks/biohub-lb893-no-safe-divisions-candidate.ipynb` for the
+  real test set. It forces `BIOHUB_VALIDATION_MODE=0`,
+  `BIOHUB_TEST_DIR=/kaggle/input/competitions/biohub-cell-tracking-during-development/test`,
+  and `BIOHUB_OUTPUT_SAFE_DIVISIONS=0`.
+- Uploaded `dalloliogm/biohub-lb893-no-safe-divisions-candidate`; version 1
+  completed on Kaggle T4. It produced `283,092` rows: `145,034` nodes and
+  `138,058` edges, with zero division-like sources and zero safe divisions.
+  Local structural checks passed: unique contiguous ids, no missing values, no
+  duplicate node keys, all edge endpoints present, and no nonconsecutive edges.
+  Evidence is preserved under
+  `references/lb893-no-safe-divisions-candidate-v1-output/`. No automatic
+  competition submission was made.
+- Submitted no-safe-divisions candidate; public LB was `0.886`. This is below
+  the copied LB893 public baseline `0.893`, so complete removal of safe divisions
+  is rejected as a replacement.
+- Created `notebooks/biohub-lb893-conservative-safe-divisions-candidate.ipynb`
+  as the next original candidate. It keeps the LB893 graph pipeline intact and
+  only tightens safe-division gates/caps.
+- Uploaded `dalloliogm/biohub-lb893-conservative-safe-divisions-candidate`;
+  version 1 completed on Kaggle T4. It produced `283,385` rows: `145,040` nodes
+  and `138,345` edges, with `287` safe divisions. Local structural checks passed:
+  unique contiguous ids, no missing values, no duplicate node keys, all edge
+  endpoints present, no nonconsecutive edges, max indegree `1`, and max outdegree
+  `2`. Evidence is preserved under
+  `references/lb893-conservative-safe-divisions-candidate-v1-output/`. No
+  automatic competition submission was made.
+- Reviewed recent public notebooks from 2026-07-16 and saved the analysis in
+  `references/recent-public-notebooks-2026-07-16.md`. Pulled public sources under
+  `references/public-kernels-2026-07-16/` and our exact copied Exp073 source
+  under `references/own-kernels-2026-07-16/biohub-exp073-gap-5-8-public/`.
+  Downloaded our copied Exp073 output locally; its submission `54758569` is still
+  pending on Kaggle.
+- Reviewed recent public notebooks from 2026-07-17 and saved the ranked plan in
+  `references/recent-public-notebooks-2026-07-17.md`. Pulled five representative
+  sources under `references/public-notebooks-2026-07-17/`: weighted
+  interpolation, outside-spacing/density gap, TTA/ILP-cost, bright/top-hat
+  detector mix, and local-validation reliability.
+- Created `notebooks/biohub-exp084-threshold-096875-candidate.ipynb` as the first
+  original Exp073-family probe. The only intentional code-path delta is
+  `BIOHUB_DET_THRESHOLD=0.96875`; all other Exp073 graph-calibration settings are
+  unchanged.
+- Created `notebooks/biohub-exp090-density-adaptive-gap-candidate.ipynb` as the
+  second Exp073-family probe. It enables the local density-adaptive gap-radius
+  branch from `romanrozen/biohub-best-score` but keeps adaptive short-track rescue
+  disabled, so its first output isolates gap-radius behavior.
+- Created `notebooks/biohub-exp096-stable-long-track-bridge-candidate.ipynb` as
+  the third queued probe. It keeps the density-adaptive gap recipe and enables
+  Yusuke's stable long-track bridge extension; run after Exp090, not before.
+- Exp084 Kaggle v1 completed under
+  `dalloliogm/biohub-exp084-threshold-0-96875-candidate`; saved output evidence
+  to `references/exp084-threshold-096875-candidate-v1-output/`. Structural checks
+  passed. Versus Exp073 it produced +457 rows, +234 nodes, +223 edges, and +1
+  division-like source.
+- Exp090 Kaggle v2 completed under
+  `dalloliogm/biohub-exp090-density-adaptive-gap-candidate`; saved output
+  evidence to `references/exp090-density-adaptive-gap-candidate-v2-output/`.
+  Structural checks passed. Density-adaptive gap branch activated: 124 expanded
+  candidates, 52 selected outside the base gate, 0 restricted candidates, and
+  short-track rescue remained off.
+- Exp096 Kaggle v2 completed under
+  `dalloliogm/biohub-exp096-stable-long-track-bridge-candidate`; saved output
+  evidence to `references/exp096-stable-long-track-bridge-candidate-v2-output/`.
+  Structural checks passed, but output is byte-identical to Exp090. Bridge branch
+  checked 87 candidates, 61 passed context, 0 passed motion, and 0 were selected.
+  Do not submit Exp096 unless the bridge gates are changed.
+- Submitted Exp090 density-adaptive gap as competition submission `54768948`;
+  status pending at submit time.
+- Submitted Exp084 threshold as competition submission `54768957`; status pending
+  at submit time.
+- Exp091, Exp092, Exp084, and Exp090 all completed with public LB `0.903`,
+  tying Exp073 but not improving it. Exp096 was byte-identical to Exp090 and was
+  not submitted.
+- Created and submitted Exp100 division-risk prune. It leaves all nodes unchanged,
+  removes 21 high-risk division daughter edges, and reduces division-like sources
+  from `418` to `397`. Submission `54776292` was rejected by Kaggle as invalid
+  submission format despite passing local checks. Evidence:
+  `references/exp100-division-risk-prune-v1-output/`.
+- Created, ran, validated, and submitted Exp101 upstream safe-division recall
+  expansion as competition submission `54780672`. Compared with Exp073, it
+  changes rows `251,900 -> 252,174`, nodes `128,217 -> 128,316`, edges
+  `123,683 -> 123,858`, and division-like sources `418 -> 531`. Evidence:
+  `references/exp101-safe-division-recall-expansion-v1-output/`.
+- Created, ran, validated, and submitted Exp102 mild upstream safe-division
+  expansion as competition submission `54781687`. Compared with Exp073, it
+  changes rows `251,900 -> 252,001`, nodes `128,217 -> 128,262`, edges
+  `123,683 -> 123,739`, and division-like sources `418 -> 442`. Evidence:
+  `references/exp102-mild-safe-division-expansion-v1-output/`.
+- Created, ran, validated, and submitted Exp103 threshold+density gap plus mild
+  safe-divisions as competition submission `54784028`. Compared with Exp073, it
+  changes rows `251,900 -> 252,784`, nodes `128,217 -> 128,656`, edges
+  `123,683 -> 124,128`, and division-like sources `418 -> 442`. Evidence:
+  `references/exp103-threshold-density-mild-division-v1-output/`.
+- Created, ran, validated, and submitted Exp104 safe-division precision
+  tightening as competition submission `54785550`. Compared with Exp073, it
+  changes rows `251,900 -> 251,832`, nodes `128,217 -> 128,216`, edges
+  `123,683 -> 123,616`, and division-like sources `418 -> 351`. Evidence:
+  `references/exp104-safe-division-precision-v1-output/`.
+- Public LB returned for the 2026-07-17 division batch: Exp101 `0.902`, Exp102
+  `0.903`, Exp103 `0.902`, Exp104 `0.903`. Broadening or tightening safe
+  divisions did not improve beyond Exp073, so the next active axis is gap-node
+  geometry.
+- Created and uploaded Exp105 weighted gap-node interpolation candidate as
+  `dalloliogm/biohub-exp105-weighted-gap-interpolation`. Local notebook JSON and
+  Python syntax checks passed. Kaggle v1 completed with rows `252,688`, nodes
+  `128,614`, edges `124,074`; weighted motion used for `2019/2020` synthetic
+  gap nodes. Submitted as `54800958`. Evidence:
+  `references/exp105-weighted-gap-interpolation-v1-output/`.
+- Created and uploaded Exp106 density spacing gate candidate as
+  `dalloliogm/biohub-exp106-density-spacing-gate`. Local notebook JSON and
+  Python syntax checks passed; Kaggle v1 is running.
+- Created and uploaded Exp107 density gain `0.0475` candidate as
+  `dalloliogm/biohub-exp107-density-gain-0475`. Local notebook JSON and Python
+  syntax checks passed; Kaggle v1 is running.
+- Exp106 and Exp107 both completed on Kaggle and were downloaded locally under
+  `kaggle_outputs/`. Structural checks passed for both using dataset-local
+  `node_id` keys. Exp106 output SHA-256:
+  `f4689e43df5b769dc45117b96e09c91753b73326a9ad2157c232df6bb63d3565`; Exp107
+  output SHA-256:
+  `c8429be1242e8bfb342e46e66620d491b87674ab73aa45e6a59a5c345a528029`.
+  Evidence preserved in
+  `references/exp106-density-spacing-gate-v1-output/` and
+  `references/exp107-density-gain-0475-v1-output/`.
+- Tried to submit Exp106 and Exp107 after validation on 2026-07-18. Both uploads
+  reached Kaggle, but `CreateSubmission` returned HTTP 400 and neither attempt
+  created a new submission record. Current live submission list still has only
+  Exp105 (`54800958`) pending for 2026-07-18.
+- The user manually submitted the two validated CSVs on 2026-07-18. Kaggle
+  submission records were created: Exp106 is assumed to be `54802933` and Exp107
+  is assumed to be `54802935`, based on the order and timestamps of the manual
+  uploads. Both completed with public LB `0.903`.
+- Exp105 (`54800958`), Exp106 (`54802933`), and Exp107 (`54802935`) all completed
+  with public LB `0.903`. These tied Exp073 and did not improve the leaderboard.
+  The next branch should move away from small density/gap-radius tweaks and
+  toward the frozen-frame-aware candidate or the validation-harness train-mode
+  work.
+- Created `scripts/biohub_validation_harness.py` and
+  `references/validation-harness-plan.md`. The harness was smoke-tested on
+  downloaded Exp106 and Exp107 outputs with `--skip-metric`; both produced valid
+  reports with no structural errors. Exact metric mode remains environment-gated
+  until train GEFF and `biohub_tracking`/`traccuracy` dependencies are attached.
+- Created, ran, validated, and submitted Exp091 density gap + adaptive
+  short-track rescue as competition submission `54769343`. Short-track rescue
+  activated and recovered 177 nodes across 40 components.
+- Created, ran, validated, and submitted Exp092 threshold `0.96875` + density
+  gap as competition submission `54769344`.
+- Created Exp111 original-branch exploration notebook:
+  `notebooks/biohub-exp111-original-branch-exploration.ipynb`. This freezes the
+  Exp092/0.903-family graph recipe and adds diagnostics rather than a new scoring
+  tweak. Static notebook JSON and Python syntax checks passed. Next action:
+  upload/run on Kaggle T4, download `run_stats.csv` and
+  `exp111_original_branch_diagnostics.csv`, then decide the next targeted branch
+  from measured relaxed-link, long-edge, gap, division, and short-track patterns.
+- Exp111 completed and its downloaded output is under
+  `kaggle_outputs/biohub-exp111-original-branch-exploration/`. Created
+  `scripts/generate_exp111_suspicious_events_report.py` and the first static
+  review artifact at `reports/exp111_suspicious_events.html`. The report contains
+  100 events: 40 safe-division boundary cases, 30 synthetic gap insertions
+  prioritized to `44b6_0b24845f`, 20 explicitly marked relaxed-motion proxies,
+  and the 10 longest final edges. It includes all eight requested manual labels,
+  but labels are not persisted. Raw test image Zarr volumes are not local, so the
+  current report contains graph-derived tables and clear crop placeholders.
+  Next action: review this queue, attach/download the competition `test/*.zarr`
+  volumes and regenerate with `--image-root` if crops are useful, then choose one
+  targeted Exp112 rule from the reviewed labels. Do not build a full UI yet.
+- Created the public-facing, submission-agnostic review notebook
+  `notebooks/biohub-suspicious-tracking-event-review.ipynb` plus its sidecar
+  Kaggle kernel metadata. It discovers or accepts one or more `submission.csv`
+  files, ranks division-like sources, long edges, midpoint-like gap nodes,
+  fragmented movies, and low edge-to-node-ratio movies, and shows four-frame XY
+  projections when competition OME-Zarr data is attached. The graph-only path
+  ran top-to-bottom locally on two example submissions; notebook JSON, every
+  Python cell, metadata JSON, and the image-unavailable placeholder were
+  validated. This artifact is a notebook/kernel only and was not submitted to
+  the competition. Published Kaggle kernel version 1, then attached the public
+  `romanrozen/biohub-best-score` output as the generic example submission for
+  version 2 so the public notebook can run immediately without private inputs.
+  The subsequent presentation revision hides every code cell by default and
+  enlarges the four-frame event viewer into a 2x2 grid for easier inspection.
+
+## Questions
+
+- What are the notebook runtime and accelerator limits?
+- Which LB893 post-processing components are actually positive under exact
+  embryo-disjoint validation?
+- What are the exact aggregate and per-embryo validation metrics from version 7?
+  The kernel completed, but `ListKernelSessionOutput` still returns HTTP 429.
+- Exp111 decision question: after diagnostics run, which single failure regime
+  is largest enough to justify exp112: relaxed motion links, long gap edges,
+  dataset-specific density, or safe-division burden?
+- Exp111 review question: which event class has the highest manual false-event
+  rate, and does that support a narrow upstream rule that can be validated before
+  another submission?

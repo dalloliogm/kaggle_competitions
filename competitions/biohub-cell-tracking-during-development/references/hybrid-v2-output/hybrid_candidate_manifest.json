@@ -1,0 +1,15 @@
+{
+  "strategy": "classical_44b6_learned_6bba",
+  "validation_score": 0.8426160044335661,
+  "rows": 260287,
+  "nodes": 137648,
+  "edges": 122639,
+  "divisions": 7,
+  "datasets": [
+    "44b6_0113de3b",
+    "44b6_0b24845f",
+    "6bba_05b6850b",
+    "6bba_05db0fb1"
+  ],
+  "schema_validated": true
+}

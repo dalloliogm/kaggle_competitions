@@ -1,0 +1,2 @@
+task,arc_id,requested,generated,both_correct,base_only,donor_only,both_wrong_same,both_wrong_diff,base_runtime,donor_runtime,both_runtime,oversize_skipped,generator_failures,net_correct,classification,first_issue,issue_indices
+task157,6a1e5592,256,256,243,0,11,0,1,1,0,0,0,0,11,runtime-or-empty,"example 17: donor-only correct, base differs by 18 cells","[17, 25, 26, 40, 49, 73, 102, 111, 115, 132, 200, 210, 236]"

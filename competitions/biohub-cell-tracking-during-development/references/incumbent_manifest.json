@@ -1,0 +1,43 @@
+{
+  "frozen_at": "2026-09-05",
+  "kernel": "dalloliogm/rishabh-division-geometry-080",
+  "kernel_version": 1,
+  "submission_ref": 56010101,
+  "public_score": 0.938,
+  "private_score": null,
+  "artifact_sha256": "650be35eeebb3489001a3ff32f1fbde0a8c0bd2f02bacb18046c23fece534587",
+  "artifact_path": "kaggle_outputs/rishabh-division-geometry-080-review/submission.csv",
+  "notebook": "notebooks/public-reproductions/rishabh-division-geometry-080/rishabh-division-geometry-080.ipynb",
+  "notebook_sha256": "3027efce79fe9baa0c1d2e8cbd10deb22c78ae2a3a5be40bab28c86eff6732b6",
+  "per_movie_counts": [
+    {
+      "dataset": "44b6_0113de3b",
+      "nodes": 25470,
+      "edges": 24719,
+      "divisions": 16,
+      "frames": 100
+    },
+    {
+      "dataset": "44b6_0b24845f",
+      "nodes": 18540,
+      "edges": 17320,
+      "divisions": 10,
+      "frames": 100
+    },
+    {
+      "dataset": "6bba_05b6850b",
+      "nodes": 6044,
+      "edges": 5842,
+      "divisions": 2,
+      "frames": 100
+    },
+    {
+      "dataset": "6bba_05db0fb1",
+      "nodes": 69285,
+      "edges": 67151,
+      "divisions": 19,
+      "frames": 100
+    }
+  ],
+  "holdout_status": "NOT_ESTABLISHED"
+}

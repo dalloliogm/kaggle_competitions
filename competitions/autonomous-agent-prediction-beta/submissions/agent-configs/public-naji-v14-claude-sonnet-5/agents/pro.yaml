@@ -1,0 +1,13 @@
+agent_class: LlmAgent
+name: claude_sonnet_optimizer
+model: claude-sonnet-5
+instruction: !include ../prompts/pro.md
+tools:
+  - get_status
+  - run_command
+  - write_file
+  - edit_file
+  - submit_predictions
+skills:
+  - skills/robust-tabular
+generate_content_config: !include ../configs/sampling_pro.yaml

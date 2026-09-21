@@ -1,0 +1,22 @@
+[
+  {
+    "task": "task173",
+    "arc_id": "72322fa7",
+    "requested": 1024,
+    "generated": 1024,
+    "both_correct": 1018,
+    "base_only": 0,
+    "donor_only": 0,
+    "both_wrong_same": 6,
+    "both_wrong_diff": 0,
+    "base_runtime": 0,
+    "donor_runtime": 0,
+    "both_runtime": 0,
+    "oversize_skipped": 0,
+    "generator_failures": 0,
+    "net_correct": 0,
+    "classification": "no-regression",
+    "first_issue": "example 247: both wrong same, differ by 8 cells",
+    "issue_indices": "[247, 307, 338, 395, 526, 938]"
+  }
+]

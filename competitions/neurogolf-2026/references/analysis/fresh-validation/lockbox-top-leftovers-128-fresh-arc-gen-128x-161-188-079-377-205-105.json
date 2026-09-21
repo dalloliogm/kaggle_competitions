@@ -1,0 +1,80 @@
+[
+  {
+    "task": "task161",
+    "arc_id": "6cdd2623",
+    "requested": 128,
+    "generated": 128,
+    "correct": 126,
+    "runtime_failures": 0,
+    "generator_failures": 0,
+    "oversize_skipped": 0,
+    "classification": "fresh-gen-fail",
+    "first_failure": "example 9: 55 thresholded cells differ",
+    "failure_indices": "[9, 46]"
+  },
+  {
+    "task": "task188",
+    "arc_id": "7b7f7511",
+    "requested": 128,
+    "generated": 128,
+    "correct": 125,
+    "runtime_failures": 0,
+    "generator_failures": 0,
+    "oversize_skipped": 0,
+    "classification": "fresh-gen-fail",
+    "first_failure": "example 12: 8 thresholded cells differ",
+    "failure_indices": "[12, 99, 127]"
+  },
+  {
+    "task": "task079",
+    "arc_id": "39a8645d",
+    "requested": 128,
+    "generated": 128,
+    "correct": 127,
+    "runtime_failures": 0,
+    "generator_failures": 0,
+    "oversize_skipped": 0,
+    "classification": "fresh-gen-fail",
+    "first_failure": "example 85: 16 thresholded cells differ",
+    "failure_indices": "[85]"
+  },
+  {
+    "task": "task377",
+    "arc_id": "eb5a1d5d",
+    "requested": 128,
+    "generated": 128,
+    "correct": 128,
+    "runtime_failures": 0,
+    "generator_failures": 0,
+    "oversize_skipped": 0,
+    "classification": "fresh-gen-pass",
+    "first_failure": "",
+    "failure_indices": "[]"
+  },
+  {
+    "task": "task205",
+    "arc_id": "8731374e",
+    "requested": 128,
+    "generated": 128,
+    "correct": 128,
+    "runtime_failures": 0,
+    "generator_failures": 0,
+    "oversize_skipped": 0,
+    "classification": "fresh-gen-pass",
+    "first_failure": "",
+    "failure_indices": "[]"
+  },
+  {
+    "task": "task105",
+    "arc_id": "4612dd53",
+    "requested": 128,
+    "generated": 128,
+    "correct": 127,
+    "runtime_failures": 0,
+    "generator_failures": 0,
+    "oversize_skipped": 0,
+    "classification": "fresh-gen-fail",
+    "first_failure": "example 98: 38 thresholded cells differ",
+    "failure_indices": "[98]"
+  }
+]

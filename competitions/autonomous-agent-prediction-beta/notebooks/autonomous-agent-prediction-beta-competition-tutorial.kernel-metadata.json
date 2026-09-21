@@ -1,0 +1,23 @@
+{
+  "id": "dalloliogm/autonomous-agent-prediction-beta-tutorial",
+  "title": "Autonomous Agent Prediction Beta Tutorial",
+  "code_file": "autonomous-agent-prediction-beta-competition-tutorial.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [
+    "tutorial",
+    "automl",
+    "agents",
+    "feature-engineering"
+  ],
+  "dataset_sources": [],
+  "kernel_sources": [],
+  "competition_sources": [
+    "autonomous-agent-prediction-beta"
+  ],
+  "model_sources": []
+}

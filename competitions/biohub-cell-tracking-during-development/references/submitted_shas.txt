@@ -1,0 +1,79 @@
+619834e194e7b9a5ee9a7f5405c8491ef7a5fbfd233d0ec2d966910aee566624  dalloliogm/biohub-exp128-motion-combined v1  exp128 Exp110 branch, LEARNED_BONUS 1.5 + TIGHT_UM 7.0 combined; tests whether t
+7bdfc1f4320a99be3e4ecec45734a78f8790fa3124ba49d21d9603d51a819506  dalloliogm/biohub-exp130-min-track-10 v1  exp130 best branch + OUTPUT_MIN_TRACK_LEN 6->10 (prune more short tracks; node-c
+c3c934f2aa047e17a0e6e55d188cf734f888c2270d56dd118f6d6e649080966b  dalloliogm/biohub-exp131-min-track-4 v1  exp131 best branch + OUTPUT_MIN_TRACK_LEN 6->4 (prune fewer short tracks; node-c
+1b09c9bce1fe4db7a0cc1b4614a47757a2c610c458b80e12de24f33ad8eaa738  dalloliogm/biohub-exp132-detection-threshold-098 v1  exp132 best branch + DET_THRESHOLD 0.96875->0.98 (fewer detections at source; no
+1ff2097be0907f233872b57dd84ecc51cca095c282fcdac5118fcbf8ae0c685a  dalloliogm/biohub-exp129-finetuned-model v2  exp129 FINE-TUNED model (fold1, resumed from epoch 402, +14 epochs lr 2e-5) on t
+732fe190707c2f72d2b5af16498728b3f619a9b14320617e912730fbc4f30332  dalloliogm/biohub-exp133-checkpoint-ensemble v2  exp133 3-checkpoint detection ensemble (logit avg, content-deduped) on best reci
+932b65eace351e14ab75a86dbedce8ba49f667abd75de6e82c763be90bbd7172  dalloliogm/biohub-exp133-checkpoint-ensemble v1  exp133 v1 4-model ensemble
+98b2751192fdc755a7264ffdac5625aa017d77214f2b9c496e942d2660a05981  dalloliogm/biohub-exp136-v34-cpu-standalone v1  exp136 v34 INDEPENDENT model standalone on CPU (4-way TTA, best recipe TIGHT_UM 
+98b2751192fdc755a7264ffdac5625aa017d77214f2b9c496e942d2660a05981  dalloliogm/biohub-exp136-v34-cpu-standalone v1  exp136 v34 standalone
+b1e6eb8e2436df1af49799a3c04e7b2f0641a5ae4d50a89208a559561325affc  dalloliogm/biohub-exp140-soup-ft-gpu-submission v1  exp140 weight-aligned soup incumbent+exp129 fine-tune (0.7/0.3), in-memory singl
+7b11f0ce7b06b20543ab443962b3d41ebe68210c8f8110ab16deb434850b39bb  dalloliogm/biohub-exp142-incumbent-sanitized v1  exp142 BARE INCUMBENT (exp126 recipe: GPU 8-way TTA TIGHT_UM 7.0) + format sanit
+22b22e94babe04e0ab4971734fb75ee073819ce88b425a8a7985ec8c84a6bdfb  dalloliogm/biohub-exp126-tight-gate-7um v1  exp126 BARE INCUMBENT (no sanitizer), diagnostic pair vs exp142 - isolates wheth
+bf5e8a1c0b3a070c7764b31806d23b450df54e62f7ad2da04248808e785e05e2  dalloliogm/biohub-exp146-two-seed-blend-w0325 v1  exp146 two-seed blend secondary detection weight 0.325; submission 55019565
+a9adfc43cfec82de9a85a37bf90d067c917eba7e6b67a55bb20f536a74f461dc  dalloliogm/biohub-exp147-two-seed-blend-w055 v1  exp147 two-seed blend secondary detection weight 0.55; submission 55026280
+052a4d5807210868de98fad7c26f0d25bd831a460a3183c5af6fd7d9520146d8  dalloliogm/biohub-exp148-adaptive-edge-fusion v1  exp148 fixed detection blend 0.475 with adaptive two-seed edge fusion; submission 55029450
+78598f236bee33d2228096f4a4c19286e9a53cd49f2bcdf9eca2c652283fea3d  dalloliogm/biohub-exp144-two-seed-blend v1  exp144 pilkwang TWO-SEED logit blend (seed A incumbent + seed B 314159, det w=0.
+bf4184016317269932cf179c8ef6455c79d01ca8f7911168b4be855490858a05  dalloliogm/biohub-exp145-twoseed-detw040 v2  exp145 two-seed blend, secondary DETECTION weight 0.40 (favor incumbent seed A) 
+c8bb6bd846e4671fc4d1f4121931e3425502be82dc914795f430f5eed45abc43  dalloliogm/biohub-exp149-adaptive-edge-w025 v2  exp149 adaptive edge fusion, secondary EDGE weight 0.15->0.25 (more second-seed 
+b4ec8373db07b4fa43319a61835c8083a2456bde2f3d62b3af8cccaa7817edf6  dalloliogm/biohub-exp159-half-division-budget v1  exp159 Exp148 backbone with half safe-division budget (frame 0.0038, global 0.00
+184001a896ce8381ac55485fde26fac88bcec76a0df2d1c999a9e3e26f9b902a  dalloliogm/biohub-exp161-learned-division-rank v1  exp161 Exp148 backbone; rank safe-division candidates by transformer edge probab
+4691b1b3249623b05406b045f4edf2edd21bbbb1634c41d5423e6229d6d7467b  dalloliogm/biohub-exp160-deepcenter-division-rank v1  exp160 Exp148 backbone; rank safe-division candidates by continuous DeepCenter e
+031a95a0b332a36fba01bbd767fe211eb805a85e0ea2844e6148b761ee338a84  dalloliogm/biohub-exp163-ambiguity-gated-association v1  exp163 Exp148 backbone; learned bonus 1->3 only when top two geometric parents a
+b914823aaa99fbc3e8745447fdc626dbbe311c00d67e89fb9601d0520f663edf  dalloliogm/biohub-exp172-motion-relink-off v1  exp172: DISABLE motion relink on the exp148 backbone. Exp170 origin analysis fou
+e22f940cb081c1f1f8f71f3192514bfb47c09913e85b76e10911452be9b5d5f2  dalloliogm/biohub-exp174-relink-off-shorttrack-off v1  exp174: motion relink OFF + short-track filter OFF (min_track_len=1) on the exp1
+a1cb29e4825c531498991d277b0dd7af79ea5b30c751202e5626bce72368f1df  dalloliogm/biohub-exp162-symmetry-division-rank v1  exp162 Exp148 backbone; symmetry-aware safe-division ranking
+9ce88089fc048e11a78dab92adba24fa46abd2e631d2290350c0d53b071d31e0  dalloliogm/biohub-exp158-deepcenter-division-veto v1  exp158 Exp148 backbone; DeepCenter safe-division veto
+98e588849488d0c953fa6f9eb3e0abcdae623704f4cc66cb27e7687597a07e5a  dalloliogm/biohub-exp180-relink-protect-guard v1  exp180: protect ILP edges with learned prob >= 0.80 from motion relink replaceme
+085490ede6a76f3b971f9f8b6c677d3bfd443c248ce14b50c1a13223978732e7  dalloliogm/biohub-exp179-edge-threshold-030 v1  exp179: edge candidate threshold 0.48 -> 0.30 on exp148 backbone (exp178: 44/97 
+cad891269bb2009011ead3acf19f0ed99032ea789004a3cdb75a8c33e6d5ea9d  dalloliogm/biohub-exp181-relink-angle-guard v1  exp181: reject motion-relink replacements that turn >90deg from the ILP child, r
+549776f60825920d338fc4b6c1f7c0d546f1ee82db57af04a209342a58d136d0  dalloliogm/biohub-exp182-edge-threshold-015 v1  exp182: edge candidate threshold 0.48 -> 0.15 (exp179 at 0.30 tied; exp178 put 2
+0f282cfd0e87274299ba5c823b78db2f6061ff8f76b6e41757675845fa5ff5ad  dalloliogm/biohub-exp183-public-ranker-fork v1  exp183: fork of public yusuketogashi no-hack-biohub-cell-another-approch-3rd (lo
+7f0186c03279fe6b29b0c5a07d45bcf435cf0baa72014fbf3e4563eb884495b3  dalloliogm/biohub-exp184-local-ranker-only v1  exp184: local association ranker (85/15 full_motion_assignment) ported onto the 
+6f4d2377d186656d3c5d679d6046da851729c335642c4b4008e56ae22b853794  dalloliogm/biohub-exp185-ranker-weight-050 v1  exp185: local association ranker at 0.50/0.50 instead of 0.85/0.15 - closer to t
+44472cec82a56b3ed7c6eb5b6cd915f867aa54a522cf2eb30bc88978305388d2  dalloliogm/biohub-exp186-edge-tta-only v1  exp186: forward-only 4-view edge-stage TTA with JS-reliability log-pooling on th
+d7ba9e6af86a6bb0be8bd04a36d0c61564e857e03fbadf9a81508211a4a4f2bb  dalloliogm/biohub-exp203-classical-three-model-ensemble v2  Exp203 independent classical three-model detector-linker
+f64d94e3f9263d8eadaabe2f08f361ce6b9268c0d444955eb651c979ac8ee070  dalloliogm/exp206-nopatches-ablation-v3 v1  Exp206 three-model detector without graph patches; causal ablation of Exp203
+6014a6cca8c4435d96fee10c244305dd9c11c47a08bfa87769cd0bc29aeec3e4  dalloliogm/exp207-three-model-ensemble-with-gap-snap-only-v2 v1  Exp207 three-model detector with gap snap only; safe-division ablation
+0df960aed4ff7b5b225924a25c81d5ad21d2d4db187a2fe4eb71feb38b69e97e  dalloliogm/exp209-three-model-divisions-only-v1 v1  Exp209 three-model detector with safe divisions only; gap-snap ablation
+f58d10cf6b4594e53e8862dfc3259115bea3d76d9053ea4eb1d43ee818f408d5  dalloliogm/biohub-agreement-adaptive080-v1 v1  2026-09-01 agreement-gated adaptive edge fusion
+ad7a75a837c4725e987664f862c36cd570854cabd7e1c299b213f2878ebb57db  dalloliogm/biohub-agreement-wm075-lm035-v1 v1  2026-09-01 agreement-gated secondary detection 0.75
+d58525ea2cd974e097b6838cc21682296bc362b6f935339026fa082e994cc992  dalloliogm/biohub-rishabh-division-geometry-065-v1 v1  Rishabh division geometry stack on .65 agreement fusion control; Kaggle refs 55979072 and 55979076 (duplicate pending records)
+650be35eeebb3489001a3ff32f1fbde0a8c0bd2f02bacb18046c23fece534587  dalloliogm/rishabh-division-geometry-080 v1  Rishabh div45 geometry with detector-fusion weight 0.80
+5f1b2fc33663bc117e0e24eeb34a2a4eef4beca500a37d20d39aa89fdabd1c08  dalloliogm/rishabh-division-geometry-075 v1  Rishabh div45 geometry with detector-fusion weight 0.75
+36e1c74ca30a9ff899614a3d918958ebc3c1798dec9fff47f67ed48766a41819  dalloliogm/rishabh-division-geometry-085 v1  Rishabh div45 geometry with detector-fusion weight 0.85
+770bd96805d1d616f002575c3a2714690e8651ea5b6355e8a1a01dac208b2be6  dalloliogm/rishabh-public-0941-repro v2  Approved exploratory batch 1/5; ref 56029383
+15f1b0908fa540f2271b0d315023a6da7bdcbce422e5972f89b89f5a5a5cd063  dalloliogm/biohub-sep05-gap50 v1  [SEP05:gap50] refs [56032186]
+ae67517009dbab883d7fd828dfc0f3f52f02313ec69a1b4b434936017382a415  dalloliogm/biohub-sep05-div25 v1  [SEP05:div25] refs [56032312]
+bb524d8302e0296ebad89da09e1e7b31f206ad8a6f8b6b54f9e3bfe04f48af84  dalloliogm/biohub-sep05-gap50-div18 v1  [SEP05:gap50-div18] refs [56032624]
+1b26962c8c1eab9aef045eb65a6cb00e601930405ad5dca5a88fceb0850933fc  dalloliogm/biohub-sep05-gap54-div25 v1  [SEP05:gap54-div25] refs [56032813]
+b8f6273f7203f6af09122ccd431858dded862dbfa031cd32942e407f657b056f  dalloliogm/biohub-sep06-diverge50 v1  [SEP06:diverge50] refs [56050349]
+11551f0e73e710a3b8d19bdf222ca1d469a12cec350fc4a4153bad47d22f4933  dalloliogm/biohub-sep06-image08 v1  [SEP06:image08] refs [56050357]
+f47108bbc6c37064e0c4c35b3bb283050a300dd609417ea952325dcb3c3eed4c  dalloliogm/biohub-sep06-image08-diverge50 v1  [SEP06:image08-diverge50] refs [56050780]
+f5c1ca733d625eb78b81f944e57ec8a389a8e574466f277616892b19cd755ce0  dalloliogm/biohub-sep06-symmetry45 v1  [SEP06:symmetry45] refs [56050782]
+f146c2a51a394af0213c2820b53b27bffd1a6d74d2bf8f3cbbc90330e82e0de9  dalloliogm/biohub-sep06-retention95 v1  [SEP06:retention95] refs [56051153]
+a852d1d07ff8c9307d9b10db7f9b4b12e8b1882f14c5dbeb1316d099f0795b3e  dalloliogm/biohub-sep07-edge-feature-tta-0946-repro v1  [SEP07:edge-feature-tta-0946-repro] refs [56075335]
+a69c78229c6556d06d5fe9ff050074254b4a326e83249efbf578b843aec7a848  dalloliogm/biohub-sep12-lf-dctta-0947 v1  [SEP12:lf-dctta-0947] refs [56189963]
+d34533806b3153ddd4f33f3bbc1dea70af2d5406bb1ea48e42c135a97c213f60  dalloliogm/biohub-sep12-lf-dctta-v020-0947 v1  [SEP12:lf-dctta-v020-0947] refs [56189965]
+1c6f89d96695ba314f6837e59864b3c14c2df0baacb044329a37bae5c3942f8c  dalloliogm/biohub-sep12-lf-dctta-v3-secw060 v1  [SEP13:lf-dctta-v3-secw060] refs [56202058]
+925d65e3939cb3ec2325178fe73cd0be45b874159f6c771ffb1b4eab6f5a8d99  dalloliogm/biohub-sep12-lf-dctta-sister16-0947 v1  [SEP13:lf-dctta-sister16-0947] refs [56202064]
+22ef93cf2b78eae39e1247d8370f31aa3c6cbd66ce0fe2aed05fa4d2c50d3605  dalloliogm/biohub-sep12-lineage-forge-0946 v1  [SEP13:lineage-forge-0946] refs [56211128]
+a69c78229c6556d06d5fe9ff050074254b4a326e83249efbf578b843aec7a848  dalloliogm/biohub-sep13-deepcenter-tta v1  SEP14-1 DeepCenter TTA
+60f14085  ref 56240254  2026-09-14  SEP14-3 DCTTA detection threshold 0.99 (prefix only; full digest not retained)
+da8ab1b84ebf94c914a308edae61e876650bccd3c9e5663179e85c7fac48a48b  dalloliogm/biohub-sep14-motion-relink-tight-50 v1  SEP14-4 MOTION_RELINK_TIGHT_UM 5.0; ref 56240559
+d3c053316a051db624c1d3930c447b9f95e21621eae418f301b0871de9e958cc  dalloliogm/biohub-sep14-safe-division-half-budget v1  SEP14-5 safe-division caps halved; ref 56240562
+30835489677cb403a7e936d9ad3f2219da3ea59d88aa4841ae7273c1253e2042  dalloliogm/biohub-sep17-division-rank-gates-open v1  SEP17-1 DeepCenter-ranked divisions, gates off; 382 divisions
+d43147a6040d62876c0f6bead0bb519317c134cd6136f9801b4dda7f77168dd0  dalloliogm/biohub-sep17-geometry-rank-gates-open v1  SEP17-2 CONTROL geometry ranker, same gates as SEP17-1
+b2a6f055c1ce0d5e1d9b7a851964158e6fa39b4b8df0f16cd59a9443e98b10fb  dalloliogm/biohub-sep17-division-rank-gates-mid v1  SEP17-3 DeepCenter-ranked divisions, gates half-open; 342 divisions
+a567aee2f3f54586a49413a218c301ea44bcdadaf9eb82f6124b460e34ccf59f  dalloliogm/biohub-sep17-division-rank-deepcenter v1  NOT SUBMITTED - arm A, counters identical to baseline, 7 rows from a scored artifact
+bbca0613a4a7a19ba7e18d23be9e66e9133bb4abeefafdedf13998160f14ff23  dalloliogm/biohub-sep18-density-adaptive-low-only v1  SEP18-2 density-adaptive LOW BUCKET ONLY; held back until validated, then submitted on paired 24-video evidence (+0.00167 adj edge, CI excludes zero)
+fe6f0a6fe5c996b876cd40f85b9cef75421be5e959a5cd859c33fa339888a8d9  dalloliogm/biohub-sep18-density-adaptive-full-table v1  SEP18-1 density-adaptive relink, full three-bucket table
+471044e7089083bd2176e55062edc1c845c1788148e0da7ba8dc7e34a59a5e4c  dalloliogm/biohub-sep19-density-low-800 v1  SEP19-1 density low bucket 8.0; only arm supported over F by the restricted paired test
+fca59501532c22486f803af9a64401c6063d0b6f788be45ba263b85b82817e2d  dalloliogm/biohub-sep19-density-middle-700 v1  SEP19-2 middle bucket 7.0; aggregate-vs-paired prediction test (3/9 W-L)
+968be0e36b7ee06c3b4decf7634428101450208ec82026c0f3ca0431af9c9b85  dalloliogm/biohub-sep19-density-low-900 v1  SEP19-3 low bucket 9.0; extends the supported gradient
+d66d407e26d82c0c5a23bbba2901d45370984508c6364f73f9b88046b4b64fae  dalloliogm/biohub-sep19-density-high-600 v1  SEP19-4 high bucket 6.0; probes the 57.2%-weight public video our harness barely covers
+17a5b037a2d492d5439fee207c3a7226ee2a0cd17de2b50c177e781282214987  dalloliogm/biohub-sep19-density-middle-700-low-800 v1  SEP19-5 low 8.0 + middle 7.0; interaction test
+b98e5454279f74d3607ee342295b8a758737615d4452e5c2b96364c15b8c8b06  dalloliogm/biohub-sep19-density-low-650 v1  NOT SUBMITTED - held-out -0.00027 vs arm F; least informative point on the low curve
+fe6f0a6fe5c996b876cd40f85b9cef75421be5e959a5cd859c33fa339888a8d9  dalloliogm/biohub-sep19-deadline-guard-density-full v1  SEP20-1 DELIBERATE re-send of arm F's output from a DIFFERENT kernel: same bytes, but this kernel carries the KD-tree relink and the deadline guard. Private reruns the kernel, not the CSV.
+eace787d4b19b7cb5e8a1761d77292cc324df53c8447e47947b2758981ceda23  SEP21-1 gap45 (GAP_CLOSE_UM 4.5) ref=56427646 2026-09-21
+e494d6de1ee35688ded7239db168325c4406392be67feaf3665028dceaf529b4  SEP21-2 gap45+dlow800 ref=56437708 2026-09-21

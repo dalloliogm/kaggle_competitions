@@ -1,0 +1,41 @@
+[{"stream_name":"stderr","time":9.458374572,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":9.459313746,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":9.459320967,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":9.459326594,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":10.312195881,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":10.31223599,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":10.312241999,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":10.312247089,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":234.194146592,"data":"Discovered /kaggle/input/notebooks/dalloliogm/biohub-learned-unet-ilp-candidate/submission.csv: 304,792 rows\n"}
+,{"stream_name":"stdout","time":234.194201388,"data":"Discovered /kaggle/input/notebooks/dalloliogm/biohub-nms-3-8-submission-candidate/submission.csv: 235,923 rows\n"}
+,{"stream_name":"stdout","time":319.660068449,"data":"Discovered /kaggle/input/notebooks/dalloliogm/biohub-learned-unet-ilp-candidate/submission.csv: 304,792 rows\n"}
+,{"stream_name":"stdout","time":319.660128973,"data":"Discovered /kaggle/input/notebooks/dalloliogm/biohub-nms-3-8-submission-candidate/submission.csv: 235,923 rows\n"}
+,{"stream_name":"stdout","time":319.660136609,"data":"Classical: /kaggle/input/notebooks/dalloliogm/biohub-nms-3-8-submission-candidate/submission.csv\n"}
+,{"stream_name":"stdout","time":319.660143027,"data":"Learned: /kaggle/input/notebooks/dalloliogm/biohub-learned-unet-ilp-candidate/submission.csv\n"}
+,{"stream_name":"stdout","time":320.422789431,"data":"Datasets: ['44b6_0113de3b', '44b6_0b24845f', '6bba_05b6850b', '6bba_05db0fb1']\n"}
+,{"stream_name":"stdout","time":320.422834763,"data":"Rows: 260,287\n"}
+,{"stream_name":"stdout","time":321.7136217,"data":"{\n"}
+,{"stream_name":"stdout","time":321.71366726,"data":"  \"strategy\": \"classical_44b6_learned_6bba\",\n"}
+,{"stream_name":"stdout","time":321.71367472,"data":"  \"validation_score\": 0.8426160044335661,\n"}
+,{"stream_name":"stdout","time":321.713680417,"data":"  \"rows\": 260287,\n"}
+,{"stream_name":"stdout","time":321.713685617,"data":"  \"nodes\": 137648,\n"}
+,{"stream_name":"stdout","time":321.713690647,"data":"  \"edges\": 122639,\n"}
+,{"stream_name":"stdout","time":321.713695953,"data":"  \"divisions\": 7,\n"}
+,{"stream_name":"stdout","time":321.713701482,"data":"  \"datasets\": [\n"}
+,{"stream_name":"stdout","time":321.713707287,"data":"    \"44b6_0113de3b\",\n"}
+,{"stream_name":"stdout","time":321.713713018,"data":"    \"44b6_0b24845f\",\n"}
+,{"stream_name":"stdout","time":321.71371866,"data":"    \"6bba_05b6850b\",\n"}
+,{"stream_name":"stdout","time":321.713724826,"data":"    \"6bba_05db0fb1\"\n"}
+,{"stream_name":"stdout","time":321.713730208,"data":"  ],\n"}
+,{"stream_name":"stdout","time":321.713735466,"data":"  \"schema_validated\": true\n"}
+,{"stream_name":"stdout","time":321.713741078,"data":"}\n"}
+,{"stream_name":"stdout","time":321.71374683,"data":"Wrote: /kaggle/working/submission.csv\n"}
+,{"stream_name":"stderr","time":325.293713404,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":325.293783669,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":325.517515697,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":325.517547716,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":326.370177159,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":326.790018303,"data":"[NbConvertApp] Writing 15211 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":330.103742392,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":331.263369428,"data":"[NbConvertApp] Writing 304205 bytes to __results__.html\n"}
+]

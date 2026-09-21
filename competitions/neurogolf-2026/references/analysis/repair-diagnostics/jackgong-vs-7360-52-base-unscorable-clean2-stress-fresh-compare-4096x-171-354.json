@@ -1,0 +1,42 @@
+[
+  {
+    "task": "task171",
+    "arc_id": "6f8cd79b",
+    "requested": 4096,
+    "generated": 4096,
+    "both_correct": 4096,
+    "base_only": 0,
+    "donor_only": 0,
+    "both_wrong_same": 0,
+    "both_wrong_diff": 0,
+    "base_runtime": 0,
+    "donor_runtime": 0,
+    "both_runtime": 0,
+    "oversize_skipped": 0,
+    "generator_failures": 0,
+    "net_correct": 0,
+    "classification": "no-regression",
+    "first_issue": "",
+    "issue_indices": "[]"
+  },
+  {
+    "task": "task354",
+    "arc_id": "ddf7fa4f",
+    "requested": 4096,
+    "generated": 4096,
+    "both_correct": 4096,
+    "base_only": 0,
+    "donor_only": 0,
+    "both_wrong_same": 0,
+    "both_wrong_diff": 0,
+    "base_runtime": 0,
+    "donor_runtime": 0,
+    "both_runtime": 0,
+    "oversize_skipped": 0,
+    "generator_failures": 0,
+    "net_correct": 0,
+    "classification": "no-regression",
+    "first_issue": "",
+    "issue_indices": "[]"
+  }
+]

@@ -1,0 +1,64 @@
+[{"stream_name":"stderr","time":5.857236993,"data":"/usr/local/lib/python3.12/dist-packages/nbformat/__init__.py:96: MissingIDFieldWarning: Cell is missing an id field, this will become a hard error in future nbformat versions. You may want to use `normalize()` on your notebooks before validations (available since nbformat 5.1.4). Previous versions of nbformat are fixing this issue transparently, and will stop doing so in the future.\n"}
+,{"stream_name":"stderr","time":5.857305413,"data":"  validate(nb)\n"}
+,{"stream_name":"stderr","time":6.749713311,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":6.749746133,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":6.749752145,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":6.749756617,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":7.461310837,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":7.461352058,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":7.461358207,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":7.461362955,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":9.582955378,"data":"INPUT_PATH /kaggle/input/notebooks/dalloliogm/biohub-exp073-gap-5-8-public/submission.csv\n"}
+,{"stream_name":"stdout","time":9.583014362,"data":"OUTPUT_PATH /kaggle/working/submission.csv\n"}
+,{"stream_name":"stdout","time":9.583019609,"data":"EXPERIMENT_TAG exp100_division_risk_prune_top5pct\n"}
+,{"stream_name":"stdout","time":13.033696004,"data":"division_like_sources 418\n"}
+,{"stream_name":"stdout","time":13.033729572,"data":"prune_edges 21\n"}
+,{"stream_name":"stdout","time":13.033735319,"data":"      dataset  source_id     risk  max_parent_um  sister_um  drop_edge_index\n"}
+,{"stream_name":"stdout","time":13.033740331,"data":"44b6_0b24845f       6733 5.454098       6.107277   4.958913            97034\n"}
+,{"stream_name":"stdout","time":13.033745368,"data":"6bba_05db0fb1      19890 5.364790       5.090298   6.989389           200020\n"}
+,{"stream_name":"stdout","time":13.033750327,"data":"44b6_0113de3b      13852 5.242255       5.343384   6.039340            50126\n"}
+,{"stream_name":"stdout","time":13.033755274,"data":"6bba_05db0fb1      35053 5.099857       4.614113   7.233076           213876\n"}
+,{"stream_name":"stdout","time":13.033760927,"data":"44b6_0113de3b       2452 5.002425       4.908737   5.915089            27750\n"}
+,{"stream_name":"stdout","time":13.033765906,"data":"6bba_05b6850b       6238 4.985500       5.138701   5.090298           108646\n"}
+,{"stream_name":"stdout","time":13.03377074,"data":"44b6_0b24845f      33545 4.895877       4.958913   5.025035            97061\n"}
+,{"stream_name":"stdout","time":13.033775631,"data":"44b6_0113de3b      15067 4.853899       4.162824   7.665110            39641\n"}
+,{"stream_name":"stdout","time":13.033780407,"data":"44b6_0b24845f       6367 4.851073       4.908737   6.147678            78415\n"}
+,{"stream_name":"stdout","time":13.033785015,"data":"6bba_05db0fb1      32657 4.818733       4.542013   6.809991           251757\n"}
+,{"stream_name":"stdout","time":13.033789814,"data":"44b6_0b24845f       2909 4.800261       5.008586   5.970631            76144\n"}
+,{"stream_name":"stdout","time":13.033794634,"data":"6bba_05db0fb1      40103 4.716029       4.142953   7.083211           218599\n"}
+,{"stream_name":"stdout","time":13.033811988,"data":"44b6_0b24845f      14890 4.696827       4.942245   4.958913            84203\n"}
+,{"stream_name":"stdout","time":13.033816164,"data":"44b6_0113de3b       9587 4.648599       4.082762   6.918188            50119\n"}
+,{"stream_name":"stdout","time":13.033819986,"data":"44b6_0b24845f      12687 4.582056       4.487178   5.873088            82681\n"}
+,{"stream_name":"stdout","time":13.033823866,"data":"44b6_0b24845f      13075 4.519144       4.001098   6.712352            82943\n"}
+,{"stream_name":"stdout","time":13.033827719,"data":"6bba_05db0fb1      34847 4.507255       4.394266   5.701990           213688\n"}
+,{"stream_name":"stdout","time":13.033831621,"data":"44b6_0b24845f       3354 4.489667       4.162824   5.984436            76456\n"}
+,{"stream_name":"stdout","time":13.033835491,"data":"44b6_0113de3b      20928 4.439180       4.337563   5.859021            45241\n"}
+,{"stream_name":"stdout","time":13.033839397,"data":"44b6_0b24845f        629 4.376835       4.614113   4.823951            74655\n"}
+,{"stream_name":"stdout","time":13.783282064,"data":"                    experiment_tag                                                                     input_path  input_rows  output_rows  input_nodes  output_nodes  input_edges  output_edges  input_division_like_sources  pruned_division_edges  output_division_like_sources  prune_frac  risk_min_pruned  risk_max_pruned\n"}
+,{"stream_name":"stdout","time":13.783320273,"data":"exp100_division_risk_prune_top5pct /kaggle/input/notebooks/dalloliogm/biohub-exp073-gap-5-8-public/submission.csv      251900       251879       128217        128217       123683        123662                          418                     21                           397        0.05         4.372546         5.454098\n"}
+,{"stream_name":"stdout","time":14.809332724,"data":"{\n"}
+,{"stream_name":"stdout","time":14.809370638,"data":"  \"division_like_sources\": 397,\n"}
+,{"stream_name":"stdout","time":14.809376043,"data":"  \"duplicate_node_keys\": 0,\n"}
+,{"stream_name":"stdout","time":14.809379989,"data":"  \"edges\": 123662,\n"}
+,{"stream_name":"stdout","time":14.809384156,"data":"  \"experiment_tag\": \"exp100_division_risk_prune_top5pct\",\n"}
+,{"stream_name":"stdout","time":14.809387611,"data":"  \"id_contiguous\": true,\n"}
+,{"stream_name":"stdout","time":14.809391439,"data":"  \"id_unique\": true,\n"}
+,{"stream_name":"stdout","time":14.809395227,"data":"  \"max_indegree\": 1,\n"}
+,{"stream_name":"stdout","time":14.809399475,"data":"  \"max_outdegree\": 2,\n"}
+,{"stream_name":"stdout","time":14.809403127,"data":"  \"missing_edge_sources\": 0,\n"}
+,{"stream_name":"stdout","time":14.809406932,"data":"  \"missing_edge_targets\": 0,\n"}
+,{"stream_name":"stdout","time":14.809423376,"data":"  \"nodes\": 128217,\n"}
+,{"stream_name":"stdout","time":14.809430816,"data":"  \"nonconsecutive_edges\": 0,\n"}
+,{"stream_name":"stdout","time":14.809434824,"data":"  \"null_cells\": 0,\n"}
+,{"stream_name":"stdout","time":14.8094388,"data":"  \"rows\": 251879,\n"}
+,{"stream_name":"stdout","time":14.809442899,"data":"  \"sha256\": \"a430267cc5a856f753450b12f39265fab31dd40391cd367bbfcde2fc88c7c072\"\n"}
+,{"stream_name":"stdout","time":14.80944728,"data":"}\n"}
+,{"stream_name":"stderr","time":18.143861086,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":18.143902088,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":18.326048845,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":18.326094254,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":19.082982291,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":19.460371334,"data":"[NbConvertApp] Writing 16024 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":22.495541533,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":23.525364085,"data":"[NbConvertApp] Writing 320532 bytes to __results__.html\n"}
+]

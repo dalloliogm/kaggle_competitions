@@ -1,0 +1,23 @@
+{
+  "id": "AmgedAlfaqih/apex-hybrid-dynamic-ring-control-border-defense",
+  "id_no": 123753442,
+  "title": "Apex Hybrid \u2013Dynamic Ring Control & Border Defense",
+  "code_file": "apex-hybrid-dynamic-ring-control-border-defense.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [],
+  "dataset_sources": [
+    "slawekbiel/producer-orbit-wars-utils"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "orbit-wars"
+  ],
+  "model_sources": [],
+  "docker_image": "gcr.io/kaggle-private-byod/python@sha256:57e612b484cf3df5026ee4dcc3cb176974b22b2bc0937fb1e16132a8be4cb13c",
+  "machine_shape": "NvidiaTeslaT4"
+}

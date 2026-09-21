@@ -1,0 +1,444 @@
+# %% [code]
+---
+title: "Playground S5E5 - Regression Prediction of Calorie Expenditure"
+date: '`r Sys.Date()`'
+output:
+  html_document: 
+    number_sections: true
+    toc: FALSE
+    fig_width: 10
+    fig_height: 4
+    fig_align: "center"
+---
+
+![](https://www.kaggle.com/competitions/91716/images/header)
+
+# Data Preparation
+
+## Load Libraries
+
+```{r, message=FALSE, error=FALSE, warning=FALSE}
+# Load libraries
+library(tidyverse)
+library(catboost)
+library(caret)
+library(kableExtra)
+library(e1071)
+library(factoextra)
+library(cluster)
+```
+
+## Import Data
+
+```{r, message=FALSE, error=FALSE, warning=FALSE}
+# Load data
+train_data <- read.csv('/kaggle/input/playground-series-s5e5/train.csv')
+test_data <- read.csv('/kaggle/input/playground-series-s5e5/test.csv')
+
+# Preprocess both train and test sets
+preprocess_data <- function(df) {
+  df %>%
+    mutate(
+      # Convert categoricals to factors (CatBoost handles natively)
+      Sex = as.factor(Sex),
+      # Feature Engineering of high importance features (from previous runs)
+      BMI = Weight / (Height/100)^2,
+      Duration_x_Heart_Rate = Duration * Heart_Rate,
+      Duration_x_Body_Temp = Duration * Body_Temp,
+      Body_Temp_x_Heart_Rate = Body_Temp * Heart_Rate
+    )
+}
+
+train_processed <- preprocess_data(train_data)
+test_processed <- preprocess_data(test_data)
+```
+
+## Data Dimensions
+
+```{r, message=FALSE, error=FALSE, warning=FALSE}
+# Inspect the data
+str(train_processed)
+```
+
+## Missing and Duplicate Values
+
+```{r, message=FALSE, error=FALSE, warning=FALSE}
+# Remove duplicate rows
+train_processed <- unique(train_processed)
+
+# Missing Values
+# Summarize NA and blank values
+# Train data
+missing_summary_train <- train_processed %>%
+  summarise_all(~ sum(is.na(.) | . == "")) %>%
+  gather(key = "Variable", value = "Missing_Count") %>%
+  mutate(
+    Total_Values = nrow(train_processed),
+    Missing_Percentage = round((Missing_Count / Total_Values) * 100, 2)
+  ) %>%
+  arrange(desc(Missing_Percentage))
+
+# Missing summary
+missing_summary_train %>%
+  kable(caption = 'Missing Summary (Train)',
+        'html',
+        digits = 1,
+        align = 'cccc',
+        format.args = list(scientific = FALSE)) %>%
+  kable_styling(full_width = FALSE,
+                c('striped', 'hover', 'condensed'))
+
+# Summarize NA and blank values
+# Test data
+missing_summary_test <- test_processed %>%
+  summarise_all(~ sum(is.na(.) | . == "")) %>%
+  gather(key = "Variable", value = "Missing_Count") %>%
+  mutate(
+    Total_Values = nrow(test_processed),
+    Missing_Percentage = round((Missing_Count / Total_Values) * 100, 2)
+  ) %>%
+  arrange(desc(Missing_Percentage))
+
+# Missing summary
+missing_summary_test %>%
+  kable(caption = 'Missing Summary (Test)',
+        'html',
+        digits = 1,
+        align = 'cccc',
+        format.args = list(scientific = FALSE)) %>%
+  kable_styling(full_width = FALSE,
+                c('striped', 'hover', 'condensed'))
+```
+
+## Outliers
+
+```{r, message=FALSE, error=FALSE, warning=FALSE}
+# IQR-based outlier removal
+remove_outliers_iqr <- function(df, target, id_col = "id", iqr_multiplier = 1.5) {
+  df_clean <- df
+  exclude <- c(id_col, target)
+  
+  numeric_cols <- df_clean %>%
+    select(where(is.numeric)) %>%
+    select(-all_of(exclude)) %>%
+    colnames()
+  
+  for (col in numeric_cols) {
+    Q1 <- quantile(df_clean[[col]], 0.25, na.rm = TRUE)
+    Q3 <- quantile(df_clean[[col]], 0.75, na.rm = TRUE)
+    IQR_val <- Q3 - Q1
+    lower <- Q1 - iqr_multiplier * IQR_val
+    upper <- Q3 + iqr_multiplier * IQR_val
+    
+    df_clean <- df_clean %>%
+      filter(.data[[col]] >= lower, .data[[col]] <= upper)
+  }
+  
+  return(df_clean)
+}
+
+# IQR-based outlier removal results
+n_before <- nrow(train_processed)
+train_processed <- remove_outliers_iqr(train_processed, target = "Calories")
+n_after <- nrow(train_processed)
+cat("Records removed:", n_before - n_after, "\n")
+```
+
+## Skew
+
+```{r, message=FALSE, error=FALSE, warning=FALSE}
+# Transform high skew features
+transform_skewed_vars <- function(train, test, target, id_col = "id", threshold = 1) {
+  # Drop excluded cols and get numeric features
+  exclude <- c(id_col, target)
+  numeric_cols <- setdiff(
+    colnames(train)[sapply(train, is.numeric)],
+    exclude
+  )
+  
+  # Compute skewness on train only
+  skew_train <- sapply(train[numeric_cols], skewness, na.rm = TRUE)
+  skewed_vars <- names(skew_train[abs(skew_train) > threshold])
+  
+  # Filter to only those columns present in both train and test
+  skewed_vars <- intersect(skewed_vars, intersect(colnames(train), colnames(test)))
+  
+  # Apply log1p transform to skewed vars
+  train_transformed <- train
+  test_transformed <- test
+  
+  if (length(skewed_vars) > 0) {
+    train_transformed[skewed_vars] <- lapply(train_transformed[skewed_vars], log1p)
+    test_transformed[skewed_vars]  <- lapply(test_transformed[skewed_vars], log1p)
+  }
+  
+  # Compute skewness after transformation
+  skew_after <- sapply(train_transformed[numeric_cols], skewness, na.rm = TRUE)
+  skew_summary <- data.frame(
+    variable = numeric_cols,
+    skew_before = skew_train,
+    skew_after = skew_after
+  )
+  
+  list(
+    train_processed = train_transformed,
+    test_processed = test_transformed,
+    skew_summary = skew_summary,
+    transformed_vars = skewed_vars
+  )
+}
+
+# Skew transform results
+result <- transform_skewed_vars(train = train_processed, test = test_processed, target = "Calories")
+
+train_processed <- result$train_processed
+test_processed <- result$test_processed
+skew_summary <- result$skew_summary
+print(skew_summary)
+```
+
+# Exploratory Data Analysis (EDA)
+
+## Continuous
+
+```{r, message=FALSE, error=FALSE, warning=FALSE, fig.height=12, fig.width=12, fig.align='center'}
+# prep for continuous variable histograms 
+data.num <- train_processed %>% select(Age,
+                                       Height,
+                                       Weight,
+                                       Duration,
+                                       Heart_Rate,
+                                       Body_Temp,
+                                       BMI,
+                                       Body_Temp_x_Heart_Rate,
+                                       Duration_x_Heart_Rate,
+                                       Duration_x_Body_Temp)
+
+# Set up the plotting area
+par(mfrow = c(4, 3))
+
+# Plot histograms 
+for (i in 1:10) {   
+  hist(data.num[ , i], breaks = 10, probability = TRUE, col = 'grey', 
+       main = paste('Histogram of ', names(data.num)[i]), 
+       xlab = names(data.num)[i])   
+  lines(density(data.num[ , i], adjust = 2.5), col = 'blue', lwd = 2)   
+  lines(density(data.num[ , i], adjust = 5), lty = 'dotted', col = 'darkgreen', lwd = 2) 
+}
+
+# Change the panel layout back to 1 x 1
+par(mfrow = c(1, 1))
+```
+
+## Cluster Analysis
+
+```{r, message=FALSE, error=FALSE, warning=FALSE}
+# Scale features
+features_to_use <- setdiff(names(train_processed), c("id", "Calories"))
+
+# Get numeric features only
+train_scaled <- train_processed %>%
+  select(where(is.numeric)) %>%
+  select(-id, -Calories) %>%
+  scale()
+
+test_scaled <- test_processed %>%
+  select(where(is.numeric)) %>%
+  select(-id) %>%
+  scale()
+
+# Run k-means on train
+set.seed(123)
+kmeans_model <- kmeans(train_scaled, centers = 3, nstart = 25)
+
+# Visualize clusters on train set
+fviz_cluster(kmeans_model, 
+             data = train_scaled,
+             geom = "point",
+             ellipse.type = "convex",
+             palette = "jco",
+             ggtheme = theme_minimal(),
+             main = "K-means Clustering (3 Clusters) on Train Data")
+
+# Assign clusters to train data
+train_processed$cluster <- as.factor(kmeans_model$cluster)
+
+# Assign clusters to test data using nearest centroid
+assign_clusters <- function(scaled_data, centers) {
+  apply(scaled_data, 1, function(row) {
+    distances <- apply(centers, 1, function(center) sum((row - center)^2))
+    which.min(distances)
+  })
+}
+
+# Assign clusters to test data
+test_processed$cluster <- as.factor(assign_clusters(test_scaled, kmeans_model$centers))
+
+# View cluster assignments
+head(train_processed) %>% 
+  knitr::kable(caption = 'Cluster Group Assignment',
+               'html',
+               digits = 1,
+               align = c(rep('c', times = 15)),
+               format.args = list(scientific = FALSE)) %>%
+    kable_styling(full_width = FALSE, c('striped', 'hover', 'condensed'))
+
+# Compute mean Calories by cluster in train
+cluster_means <- train_processed %>%
+  group_by(cluster) %>%
+  summarise(cluster_mean = mean(Calories, na.rm = TRUE))
+
+# Merge with train and test
+train_processed <- left_join(train_processed, cluster_means, by = "cluster")
+test_processed <- left_join(test_processed, cluster_means, by = "cluster")
+        
+# Inspect
+str(train_processed)
+```
+
+# Model Preprocessing
+
+```{r, message=FALSE, error=FALSE, warning=FALSE}
+# Log1p-transform the target in training (for RMSLE evaluation metric)
+train_processed$Calories <- log1p(train_processed$Calories)
+        
+# Prepare data for CatBoost
+train_features <- train_processed %>% 
+  select(-c(id, Calories)) %>% 
+  mutate(across(where(is.character), as.factor))
+
+test_features <- test_processed %>% 
+  select(-c(id)) %>% 
+  mutate(across(where(is.character), as.factor))
+
+# Identify categorical features (factors)
+cat_features <- which(sapply(train_features, is.factor)) - 1  # 0-based index
+
+# Create CatBoost pools
+train_pool <- catboost.load_pool(
+  data = train_features,
+  label = train_processed$Calories,
+  cat_features = cat_features
+)
+
+test_pool <- catboost.load_pool(
+  data = test_features,
+  cat_features = cat_features
+)
+```
+
+# CatBoost Modeling
+
+## Model Formulation
+
+```{r, message=FALSE, error=FALSE, warning=FALSE}
+# Train model
+params <- list(
+  iterations = 30000,                  # Allow more rounds to explore; early stopping will cap it
+  learning_rate = 0.02,                # Slightly slower to reduce overfitting risk
+  depth = 6,                           # Allow slightly more complexity; test vs depth 5
+  l2_leaf_reg = 10,                    # Ease up regularization slightly
+  random_strength = 3,                 # Calmer feature noise
+  border_count = 128,                  # Finer splits (improves fit for numeric vars)
+  loss_function = "RMSE",
+  bootstrap_type = "Bernoulli",
+  subsample = 0.8,                     # Slightly more data in each tree (can reduce variance)
+  od_type = "Iter",
+  od_wait = 50,
+  verbose = 1000
+)
+
+model <- catboost.train(train_pool, params = params)
+```
+
+## Feature Importance
+
+```{r, message=FALSE, error=FALSE, warning=FALSE}
+# Extract feature importance
+features <- names(train_features)
+feature_importance <- catboost.get_feature_importance(model)
+feature_importance_df <- data.frame(Feature = features, Importance = feature_importance) %>%
+  arrange(desc(Importance))
+
+# Calculate cumulative importance
+feature_importance_df <- feature_importance_df %>%
+  mutate(Cumulative = cumsum(Importance) / sum(Importance))
+
+# Select top 15 features by importance
+selected_features <- feature_importance_df %>%
+  slice_max(order_by = Importance, n = 15)  # Top 15 features
+rownames(selected_features) <- NULL
+
+# Pivot for facet plot
+feature_importance_long <- selected_features %>%
+  tidyr::pivot_longer(
+    cols = c(Importance, Cumulative),
+    names_to = 'Metric',
+    values_to = 'Value'
+  )
+
+# Reorder the levels of Metric to keep importance first
+feature_importance_long$Metric <- factor(
+  feature_importance_long$Metric,
+  levels = c('Importance', 'Cumulative')
+)
+
+# Ensure sorting of Feature for 'Importance'
+feature_importance_long <- feature_importance_long %>%
+  mutate(
+    Feature = factor(
+      Feature,
+      levels = feature_importance_long %>%
+        filter(Metric == "Importance") %>%
+        arrange((Value)) %>%
+        pull(Feature)
+    )
+  )
+
+# Visualization of Top Features
+ggplot(feature_importance_long, aes(x = Feature, y = Value, fill = Metric)) +
+  geom_bar(stat = 'identity', position = 'dodge') +
+  scale_fill_manual(values = c('Importance' = 'steelblue', 'Cumulative' = 'indianred')) +
+  coord_flip() +
+  facet_wrap(~ Metric, scales = 'free_x') +
+  labs(
+    title = 'Feature Importance and Cumulative Contribution to Model',
+    subtitle = 'Top predictors with cumulative impact on model prediction',
+    x = 'Feature',
+    y = 'Importance Value'
+  ) +
+  theme_bw() +
+  theme(legend.position = 'none') +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+# Submission
+
+```{r, message=FALSE, error=FALSE, warning=FALSE}
+# Create submission
+submission <- data.frame(
+  id = test_data$id,
+  Calories = expm1(catboost.predict(model, test_pool)) # unwind log transform of target variable
+)
+
+# Save the submission file as CSV for Kaggle
+write.csv(submission, "/kaggle/working/submission.csv", row.names = FALSE)
+
+# Distribution of predictions
+ggplot(submission, aes(x = Calories)) +
+  geom_histogram(aes(y = ..density..), bins = 20, fill = "steelblue", color = 'black', alpha = 0.7) +
+  geom_density(adjust = 3.5, color = "indianred", linewidth = 1) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "black", linewidth = 1) +  # Zero line
+  labs(
+    title = "Distribution of Predictions",
+    subtitle = "Prediction Values from Submission File",
+    x = "Calories",
+    y = "Density"
+  ) +
+  theme_bw()
+
+# Inspect submission file
+head(submission)
+
+sessionInfo()
+```

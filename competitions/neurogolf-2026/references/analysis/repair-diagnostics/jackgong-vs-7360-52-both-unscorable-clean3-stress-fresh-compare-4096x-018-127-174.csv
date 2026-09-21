@@ -1,0 +1,4 @@
+task,arc_id,requested,generated,both_correct,base_only,donor_only,both_wrong_same,both_wrong_diff,base_runtime,donor_runtime,both_runtime,oversize_skipped,generator_failures,net_correct,classification,first_issue,issue_indices
+task018,0e206a2e,4096,4096,4017,0,0,79,0,0,0,0,0,0,0,no-regression,"example 55: both wrong same, differ by 14 cells","[55, 75, 114, 132, 203, 262, 337, 610, 628, 651, 683, 708, 719, 798, 864, 1154, 1224, 1229, 1234, 1261, 1264, 1313, 1363, 1389, 1538, 1607, 1622, 1640, 1679, 1695, 1771, 1957, 2086, 2093, 2096, 2174, 2234, 2257, 2469, 2503, 2511, 2514, 2555, 2597, 2654, 2742, 2902, 2968, 2973, 3036]"
+task127,54d9e175,4096,4096,4096,0,0,0,0,0,0,0,0,0,0,no-regression,,[]
+task174,72ca375d,4096,4096,4096,0,0,0,0,0,0,0,0,0,0,no-regression,,[]

@@ -1,0 +1,43 @@
+{
+  "date": "2026-09-07",
+  "authorization": "User requested implementation of the proposed public-notebook reproduction plan",
+  "primary": {
+    "kernel": "dalloliogm/biohub-sep07-edge-feature-tta-0946-repro",
+    "kernel_version": 1,
+    "public_source": "redoctopusk/biohub-942tta/1",
+    "public_score": 0.946,
+    "artifact": "kaggle_outputs/biohub-sep07-edge-feature-tta-0946-repro/submission.csv",
+    "sha256": "a852d1d07ff8c9307d9b10db7f9b4b12e8b1882f14c5dbeb1316d099f0795b3e",
+    "byte_identical_to_public_scored_output": true,
+    "structural_validators_passed": 2,
+    "rows": 241400,
+    "nodes": 122841,
+    "edges": 118559,
+    "divisions": 102,
+    "status": "SUBMITTED_PENDING",
+    "submission_ref": 56075335
+  },
+  "fallback": {
+    "kernel": "dalloliogm/biohub-sep07-threshold-0960-0942-repro",
+    "kernel_version": 1,
+    "public_source": "busyaprime/biohub-0-942-lb-one-knob-past-the-public-line/2",
+    "public_score": 0.942,
+    "artifact": "kaggle_outputs/biohub-sep07-threshold-0960-0942-repro/submission.csv",
+    "sha256": "8218ae3fbc7ce2d41f2568bae45256c531ce6e87aa9e1707495f3093fa9c41b9",
+    "byte_identical_to_public_scored_output": true,
+    "structural_validators_passed": 2,
+    "status": "AUDITED_RESERVE"
+  },
+  "live_pre_submit_check": {
+    "today_submission_count": 0,
+    "daily_limit": 5,
+    "primary_duplicate_found": false
+  },
+  "live_post_submit_check": {
+    "submission_ref": 56075335,
+    "status": "PENDING",
+    "remaining_today": 4,
+    "last_refreshed_date": "2026-09-07",
+    "note": "Live Kaggle refresh confirmed the primary remains pending; threshold-.960 reserve remains held."
+  }
+}

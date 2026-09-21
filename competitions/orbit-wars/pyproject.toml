@@ -1,0 +1,10 @@
+[project]
+name = "orbit-wars"
+version = "0.1.0"
+description = "Orbit Wars Kaggle competition agent"
+requires-python = ">=3.10"
+dependencies = [
+    "kaggle-environments",
+    "torch",
+    "numpy",
+]

@@ -1,0 +1,1192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exp111 suspicious tracking events</title>
+<style>
+:root { color-scheme: dark; --bg:#0b1020; --panel:#111827; --line:#334155; --text:#e5e7eb; --muted:#94a3b8; --accent:#22d3ee; }
+* { box-sizing:border-box; } body { margin:0; background:var(--bg); color:var(--text); font:14px/1.45 system-ui,sans-serif; }
+header, main { max-width:1800px; margin:auto; padding:22px; } h1 { margin:0 0 6px; } h2 { margin-top:28px; } p { max-width:1100px; }
+.metrics { display:flex; gap:12px; flex-wrap:wrap; margin:18px 0; } .metric { min-width:150px; padding:12px 16px; background:var(--panel); border:1px solid var(--line); border-radius:9px; }
+.metric strong { display:block; font-size:24px; color:var(--accent); } .metric span,.muted { color:var(--muted); }
+.notice { padding:13px 16px; border:1px solid #0e7490; background:#083344; border-radius:8px; margin:16px 0; } .warning { border-color:#b45309; background:#451a03; }
+code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; } table { border-collapse:collapse; width:100%; } th { position:sticky; top:0; background:#172033; z-index:2; text-align:left; } th,td { border:1px solid var(--line); padding:8px; vertical-align:top; } tbody tr:nth-child(even) { background:#0f172a; }
+.compact { max-width:1000px; } .tag { display:inline-block; margin-top:4px; padding:2px 6px; border-radius:10px; background:#164e63; color:#cffafe; font-size:12px; }
+.ordinal { color:var(--muted); text-align:right; } .crop { width:520px; max-width:38vw; height:auto; } .placeholder { width:420px; max-width:34vw; min-height:120px; display:grid; place-content:center; text-align:center; border:1px dashed #64748b; color:var(--muted); background:#111827; }
+.feature-json { white-space:pre-wrap; overflow-wrap:anywhere; display:block; max-width:360px; } details summary { cursor:pointer; color:var(--accent); } fieldset { min-width:190px; border:0; padding:0; } legend { color:var(--muted); margin-bottom:5px; } fieldset label { display:block; white-space:nowrap; }
+@media (max-width:900px) { .crop,.placeholder { max-width:none; width:300px; } table { font-size:12px; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Exp111 suspicious tracking events</h1>
+  <p class="muted">Static first-pass review artifact. It does not modify or submit any competition output.</p>
+  <div class="metrics"><div class="metric"><strong>40</strong><span>division_boundary</span></div><div class="metric"><strong>30</strong><span>gap_insertion</span></div><div class="metric"><strong>20</strong><span>relaxed_motion_proxy</span></div><div class="metric"><strong>10</strong><span>longest_final_edge</span></div></div>
+  <p><strong>Dataset distribution:</strong> 44b6_0b24845f: 58, 6bba_05db0fb1: 24, 44b6_0113de3b: 15, 6bba_05b6850b: 3</p>
+  <div class="notice warning"><strong>Microscopy crops unavailable.</strong> The report is using graph geometry and placeholders. Supply <code>--image-root PATH</code> where PATH contains <code>&lt;dataset&gt;.zarr</code> test volumes. Checked:<ul><li><code>/Users/giovannidallolio/workspace/kaggle_competitions/competitions/biohub-cell-tracking-during-development/data/test</code></li><li><code>/Users/giovannidallolio/workspace/kaggle_competitions/data/biohub-cell-tracking-during-development/test</code></li><li><code>/kaggle/input/competitions/biohub-cell-tracking-during-development/test</code></li><li><code>/kaggle/input/biohub-cell-tracking-during-development/test</code></li></ul><span>No local raw test Zarr root was found.</span></div>
+  <div class="notice warning"><strong>Interpretation limit:</strong> Exp111 records relaxed-motion counts only at dataset level. The 20 <code>relaxed_motion_proxy</code> rows are the highest-distance eligible final links after reserving the exact top 10 longest edges; they are not proven members of the relaxed assignment pass.</div>
+</header>
+<main>
+  <h2>Run-level context</h2>
+  <table class="dataframe compact">
+  <thead>
+    <tr style="text-align: right;">
+      <th>dataset</th>
+      <th>division_like_sources</th>
+      <th>gap_added_nodes</th>
+      <th>motion_relink_relaxed_edges</th>
+      <th>short_track_nodes_removed</th>
+      <th>long_edges_gt_6um</th>
+      <th>edge_dist_max_um</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>44b6_0113de3b</td>
+      <td>37</td>
+      <td>100</td>
+      <td>572</td>
+      <td>465</td>
+      <td>3</td>
+      <td>6.551</td>
+    </tr>
+    <tr>
+      <td>44b6_0b24845f</td>
+      <td>96</td>
+      <td>1047</td>
+      <td>1177</td>
+      <td>3930</td>
+      <td>21</td>
+      <td>7.358</td>
+    </tr>
+    <tr>
+      <td>6bba_05b6850b</td>
+      <td>19</td>
+      <td>65</td>
+      <td>204</td>
+      <td>405</td>
+      <td>0</td>
+      <td>5.688</td>
+    </tr>
+    <tr>
+      <td>6bba_05db0fb1</td>
+      <td>266</td>
+      <td>808</td>
+      <td>1915</td>
+      <td>1501</td>
+      <td>2</td>
+      <td>6.663</td>
+    </tr>
+  </tbody>
+</table>
+  <p class="muted">Short-track removal is visible at dataset level, but removed components cannot be enumerated faithfully from the emitted final graph. Adaptive rescue was disabled in Exp111.</p>
+  <h2>Review queue (100 events)</h2>
+  <p>Radio choices are intentionally local browser state only and are not persisted when the page is closed or reloaded.</p>
+  <table id="events">
+    <thead><tr><th>#</th><th>Dataset / type</th><th>Source → targets</th><th>Frame / coordinates</th><th>Distances (µm)</th><th>Automatic flags</th><th>Visual crop</th><th>Manual label</th></tr></thead>
+    <tbody>
+            <tr data-event-type="division_boundary" data-dataset="44b6_0113de3b">
+              <td class="ordinal">1</td>
+              <td><strong>44b6_0113de3b</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>15072</code><br>→ <code>15369, 15362</code></td>
+              <td>t=60<br>z,y,x=(39.000, 215.000, 128.000)</td>
+              <td>4.163, 3.565, 7.665</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 0.8349, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [4.1628, 3.5648], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 7.6651}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-1" value="real_division"> real_division</label><label><input type="radio" name="label-1" value="false_division"> false_division</label><label><input type="radio" name="label-1" value="real_gap"> real_gap</label><label><input type="radio" name="label-1" value="false_gap"> false_gap</label><label><input type="radio" name="label-1" value="good_link"> good_link</label><label><input type="radio" name="label-1" value="bad_link"> bad_link</label><label><input type="radio" name="label-1" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-1" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="44b6_0b24845f">
+              <td class="ordinal">2</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>2938</code><br>→ <code>3323, 3345</code></td>
+              <td>t=7<br>z,y,x=(10.000, 127.000, 219.000)</td>
+              <td>5.009, 3.634, 5.971</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.0264, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [5.0086, 3.6336], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 5.9706}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-2" value="real_division"> real_division</label><label><input type="radio" name="label-2" value="false_division"> false_division</label><label><input type="radio" name="label-2" value="real_gap"> real_gap</label><label><input type="radio" name="label-2" value="false_gap"> false_gap</label><label><input type="radio" name="label-2" value="good_link"> good_link</label><label><input type="radio" name="label-2" value="bad_link"> bad_link</label><label><input type="radio" name="label-2" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-2" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">3</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>34279</code><br>→ <code>35097, 35032</code></td>
+              <td>t=42<br>z,y,x=(32.000, 244.000, 223.000)</td>
+              <td>3.833, 3.634, 6.613</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.0264, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.8326, 3.6336], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 6.6133}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-3" value="real_division"> real_division</label><label><input type="radio" name="label-3" value="false_division"> false_division</label><label><input type="radio" name="label-3" value="real_gap"> real_gap</label><label><input type="radio" name="label-3" value="false_gap"> false_gap</label><label><input type="radio" name="label-3" value="good_link"> good_link</label><label><input type="radio" name="label-3" value="bad_link"> bad_link</label><label><input type="radio" name="label-3" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-3" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">4</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>38824</code><br>→ <code>39640, 39583</code></td>
+              <td>t=48<br>z,y,x=(24.000, 136.000, 35.000)</td>
+              <td>3.833, 3.634, 6.613</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.0264, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.8326, 3.6336], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 6.6133}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-4" value="real_division"> real_division</label><label><input type="radio" name="label-4" value="false_division"> false_division</label><label><input type="radio" name="label-4" value="real_gap"> real_gap</label><label><input type="radio" name="label-4" value="false_gap"> false_gap</label><label><input type="radio" name="label-4" value="good_link"> good_link</label><label><input type="radio" name="label-4" value="bad_link"> bad_link</label><label><input type="radio" name="label-4" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-4" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="44b6_0b24845f">
+              <td class="ordinal">5</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>18113</code><br>→ <code>18460, 18421</code></td>
+              <td>t=52<br>z,y,x=(61.000, 209.000, 88.000)</td>
+              <td>3.745, 3.565, 4.062</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.0952, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.7454, 3.5648], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 4.0625}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-5" value="real_division"> real_division</label><label><input type="radio" name="label-5" value="false_division"> false_division</label><label><input type="radio" name="label-5" value="real_gap"> real_gap</label><label><input type="radio" name="label-5" value="false_gap"> false_gap</label><label><input type="radio" name="label-5" value="good_link"> good_link</label><label><input type="radio" name="label-5" value="bad_link"> bad_link</label><label><input type="radio" name="label-5" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-5" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="44b6_0113de3b">
+              <td class="ordinal">6</td>
+              <td><strong>44b6_0113de3b</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>11841</code><br>→ <code>12112, 12113</code></td>
+              <td>t=49<br>z,y,x=(13.000, 173.000, 56.000)</td>
+              <td>3.854, 3.495, 5.203</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.1653, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.854, 3.4947], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 5.2025}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-6" value="real_division"> real_division</label><label><input type="radio" name="label-6" value="false_division"> false_division</label><label><input type="radio" name="label-6" value="real_gap"> real_gap</label><label><input type="radio" name="label-6" value="false_gap"> false_gap</label><label><input type="radio" name="label-6" value="good_link"> good_link</label><label><input type="radio" name="label-6" value="bad_link"> bad_link</label><label><input type="radio" name="label-6" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-6" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="44b6_0113de3b">
+              <td class="ordinal">7</td>
+              <td><strong>44b6_0113de3b</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>22352</code><br>→ <code>22645, 22624</code></td>
+              <td>t=86<br>z,y,x=(3.000, 36.000, 52.000)</td>
+              <td>3.918, 3.495, 6.148</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.1653, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.9177, 3.4947], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 6.1477}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-7" value="real_division"> real_division</label><label><input type="radio" name="label-7" value="false_division"> false_division</label><label><input type="radio" name="label-7" value="real_gap"> real_gap</label><label><input type="radio" name="label-7" value="false_gap"> false_gap</label><label><input type="radio" name="label-7" value="good_link"> good_link</label><label><input type="radio" name="label-7" value="bad_link"> bad_link</label><label><input type="radio" name="label-7" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-7" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="44b6_0b24845f">
+              <td class="ordinal">8</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>12844</code><br>→ <code>13169, 13193</code></td>
+              <td>t=36<br>z,y,x=(3.000, 200.000, 223.000)</td>
+              <td>3.656, 3.495, 5.466</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.1653, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.6562, 3.4947], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 5.4655}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-8" value="real_division"> real_division</label><label><input type="radio" name="label-8" value="false_division"> false_division</label><label><input type="radio" name="label-8" value="real_gap"> real_gap</label><label><input type="radio" name="label-8" value="false_gap"> false_gap</label><label><input type="radio" name="label-8" value="good_link"> good_link</label><label><input type="radio" name="label-8" value="bad_link"> bad_link</label><label><input type="radio" name="label-8" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-8" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05b6850b">
+              <td class="ordinal">9</td>
+              <td><strong>6bba_05b6850b</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>6443</code><br>→ <code>6514, 6519</code></td>
+              <td>t=88<br>z,y,x=(9.000, 116.000, 64.000)</td>
+              <td>3.679, 3.495, 6.989</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.1653, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.6788, 3.4947], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 6.9894}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-9" value="real_division"> real_division</label><label><input type="radio" name="label-9" value="false_division"> false_division</label><label><input type="radio" name="label-9" value="real_gap"> real_gap</label><label><input type="radio" name="label-9" value="false_gap"> false_gap</label><label><input type="radio" name="label-9" value="good_link"> good_link</label><label><input type="radio" name="label-9" value="bad_link"> bad_link</label><label><input type="radio" name="label-9" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-9" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">10</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>31873</code><br>→ <code>32654, 32697</code></td>
+              <td>t=39<br>z,y,x=(30.000, 113.000, 176.000)</td>
+              <td>3.565, 3.495, 4.614</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.1653, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.5648, 3.4947], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 4.6141}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-10" value="real_division"> real_division</label><label><input type="radio" name="label-10" value="false_division"> false_division</label><label><input type="radio" name="label-10" value="real_gap"> real_gap</label><label><input type="radio" name="label-10" value="false_gap"> false_gap</label><label><input type="radio" name="label-10" value="good_link"> good_link</label><label><input type="radio" name="label-10" value="bad_link"> bad_link</label><label><input type="radio" name="label-10" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-10" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">11</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>33576</code><br>→ <code>34345, 34383</code></td>
+              <td>t=41<br>z,y,x=(38.000, 239.000, 156.000)</td>
+              <td>4.022, 3.495, 6.398</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.1653, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [4.0217, 3.4947], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 6.3976}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-11" value="real_division"> real_division</label><label><input type="radio" name="label-11" value="false_division"> false_division</label><label><input type="radio" name="label-11" value="real_gap"> real_gap</label><label><input type="radio" name="label-11" value="false_gap"> false_gap</label><label><input type="radio" name="label-11" value="good_link"> good_link</label><label><input type="radio" name="label-11" value="bad_link"> bad_link</label><label><input type="radio" name="label-11" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-11" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="44b6_0113de3b">
+              <td class="ordinal">12</td>
+              <td><strong>44b6_0113de3b</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>11843</code><br>→ <code>12115, 12121</code></td>
+              <td>t=49<br>z,y,x=(14.000, 232.000, 48.000)</td>
+              <td>4.163, 3.471, 5.171</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.189, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [4.1628, 3.471], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 5.1707}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-12" value="real_division"> real_division</label><label><input type="radio" name="label-12" value="false_division"> false_division</label><label><input type="radio" name="label-12" value="real_gap"> real_gap</label><label><input type="radio" name="label-12" value="false_gap"> false_gap</label><label><input type="radio" name="label-12" value="good_link"> good_link</label><label><input type="radio" name="label-12" value="bad_link"> bad_link</label><label><input type="radio" name="label-12" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-12" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="44b6_0b24845f">
+              <td class="ordinal">13</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>3828</code><br>→ <code>4255, 4230</code></td>
+              <td>t=9<br>z,y,x=(19.000, 138.000, 115.000)</td>
+              <td>3.495, 3.471, 6.462</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.189, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.4947, 3.471], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 6.4618}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-13" value="real_division"> real_division</label><label><input type="radio" name="label-13" value="false_division"> false_division</label><label><input type="radio" name="label-13" value="real_gap"> real_gap</label><label><input type="radio" name="label-13" value="false_gap"> false_gap</label><label><input type="radio" name="label-13" value="good_link"> good_link</label><label><input type="radio" name="label-13" value="bad_link"> bad_link</label><label><input type="radio" name="label-13" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-13" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">14</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>58625</code><br>→ <code>59363, 59295</code></td>
+              <td>t=75<br>z,y,x=(40.000, 152.000, 96.000)</td>
+              <td>3.495, 3.471, 6.810</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.189, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.4947, 3.471], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 6.81}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-14" value="real_division"> real_division</label><label><input type="radio" name="label-14" value="false_division"> false_division</label><label><input type="radio" name="label-14" value="real_gap"> real_gap</label><label><input type="radio" name="label-14" value="false_gap"> false_gap</label><label><input type="radio" name="label-14" value="good_link"> good_link</label><label><input type="radio" name="label-14" value="bad_link"> bad_link</label><label><input type="radio" name="label-14" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-14" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="44b6_0113de3b">
+              <td class="ordinal">15</td>
+              <td><strong>44b6_0113de3b</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>24593</code><br>→ <code>24871, 24863</code></td>
+              <td>t=94<br>z,y,x=(2.000, 129.000, 9.000)</td>
+              <td>3.565, 3.447, 4.755</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.2129, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.5648, 3.4471], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 4.755}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-15" value="real_division"> real_division</label><label><input type="radio" name="label-15" value="false_division"> false_division</label><label><input type="radio" name="label-15" value="real_gap"> real_gap</label><label><input type="radio" name="label-15" value="false_gap"> false_gap</label><label><input type="radio" name="label-15" value="good_link"> good_link</label><label><input type="radio" name="label-15" value="bad_link"> bad_link</label><label><input type="radio" name="label-15" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-15" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05b6850b">
+              <td class="ordinal">16</td>
+              <td><strong>6bba_05b6850b</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>7003</code><br>→ <code>7068, 7065</code></td>
+              <td>t=96<br>z,y,x=(14.000, 219.000, 183.000)</td>
+              <td>3.854, 3.447, 6.725</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.2129, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.854, 3.4471], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 6.7246}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-16" value="real_division"> real_division</label><label><input type="radio" name="label-16" value="false_division"> false_division</label><label><input type="radio" name="label-16" value="real_gap"> real_gap</label><label><input type="radio" name="label-16" value="false_gap"> false_gap</label><label><input type="radio" name="label-16" value="good_link"> good_link</label><label><input type="radio" name="label-16" value="bad_link"> bad_link</label><label><input type="radio" name="label-16" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-16" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">17</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>15032</code><br>→ <code>15839, 15807</code></td>
+              <td>t=18<br>z,y,x=(61.000, 233.000, 147.000)</td>
+              <td>4.083, 3.447, 6.201</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.2129, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [4.0828, 3.4471], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 6.2011}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-17" value="real_division"> real_division</label><label><input type="radio" name="label-17" value="false_division"> false_division</label><label><input type="radio" name="label-17" value="real_gap"> real_gap</label><label><input type="radio" name="label-17" value="false_gap"> false_gap</label><label><input type="radio" name="label-17" value="good_link"> good_link</label><label><input type="radio" name="label-17" value="bad_link"> bad_link</label><label><input type="radio" name="label-17" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-17" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">18</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>32690</code><br>→ <code>33482, 33533</code></td>
+              <td>t=40<br>z,y,x=(34.000, 50.000, 30.000)</td>
+              <td>4.542, 3.447, 6.810</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.2129, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [4.542, 3.4471], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 6.81}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-18" value="real_division"> real_division</label><label><input type="radio" name="label-18" value="false_division"> false_division</label><label><input type="radio" name="label-18" value="real_gap"> real_gap</label><label><input type="radio" name="label-18" value="false_gap"> false_gap</label><label><input type="radio" name="label-18" value="good_link"> good_link</label><label><input type="radio" name="label-18" value="bad_link"> bad_link</label><label><input type="radio" name="label-18" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-18" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">19</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>41360</code><br>→ <code>42094, 42109</code></td>
+              <td>t=51<br>z,y,x=(39.000, 215.000, 143.000)</td>
+              <td>3.980, 3.447, 4.450</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.2129, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.9804, 3.4471], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 4.4502}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-19" value="real_division"> real_division</label><label><input type="radio" name="label-19" value="false_division"> false_division</label><label><input type="radio" name="label-19" value="real_gap"> real_gap</label><label><input type="radio" name="label-19" value="false_gap"> false_gap</label><label><input type="radio" name="label-19" value="good_link"> good_link</label><label><input type="radio" name="label-19" value="bad_link"> bad_link</label><label><input type="radio" name="label-19" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-19" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">20</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>35090</code><br>→ <code>35855, 35901</code></td>
+              <td>t=43<br>z,y,x=(34.000, 160.000, 11.000)</td>
+              <td>4.614, 2.873, 7.233</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.2669, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [4.6141, 2.8726], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 7.2331}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-20" value="real_division"> real_division</label><label><input type="radio" name="label-20" value="false_division"> false_division</label><label><input type="radio" name="label-20" value="real_gap"> real_gap</label><label><input type="radio" name="label-20" value="false_gap"> false_gap</label><label><input type="radio" name="label-20" value="good_link"> good_link</label><label><input type="radio" name="label-20" value="bad_link"> bad_link</label><label><input type="radio" name="label-20" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-20" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">21</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>42417</code><br>→ <code>43150, 43138</code></td>
+              <td>t=53<br>z,y,x=(8.000, 63.000, 73.000)</td>
+              <td>3.350, 3.350, 4.875</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.31, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.35, 3.35], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 4.875}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-21" value="real_division"> real_division</label><label><input type="radio" name="label-21" value="false_division"> false_division</label><label><input type="radio" name="label-21" value="real_gap"> real_gap</label><label><input type="radio" name="label-21" value="false_gap"> false_gap</label><label><input type="radio" name="label-21" value="good_link"> good_link</label><label><input type="radio" name="label-21" value="bad_link"> bad_link</label><label><input type="radio" name="label-21" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-21" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">22</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>54235</code><br>→ <code>54917, 54969</code></td>
+              <td>t=69<br>z,y,x=(24.000, 180.000, 229.000)</td>
+              <td>3.375, 3.350, 6.148</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.31, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.3746, 3.35], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 6.1477}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-22" value="real_division"> real_division</label><label><input type="radio" name="label-22" value="false_division"> false_division</label><label><input type="radio" name="label-22" value="real_gap"> real_gap</label><label><input type="radio" name="label-22" value="false_gap"> false_gap</label><label><input type="radio" name="label-22" value="good_link"> good_link</label><label><input type="radio" name="label-22" value="bad_link"> bad_link</label><label><input type="radio" name="label-22" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-22" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">23</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>33408</code><br>→ <code>34235, 34187</code></td>
+              <td>t=41<br>z,y,x=(29.000, 40.000, 117.000)</td>
+              <td>3.350, 3.300, 6.525</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.3596, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.35, 3.3004], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 6.5253}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-23" value="real_division"> real_division</label><label><input type="radio" name="label-23" value="false_division"> false_division</label><label><input type="radio" name="label-23" value="real_gap"> real_gap</label><label><input type="radio" name="label-23" value="false_gap"> false_gap</label><label><input type="radio" name="label-23" value="good_link"> good_link</label><label><input type="radio" name="label-23" value="bad_link"> bad_link</label><label><input type="radio" name="label-23" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-23" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="44b6_0b24845f">
+              <td class="ordinal">24</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>6410</code><br>→ <code>6753, 6788</code></td>
+              <td>t=15<br>z,y,x=(61.000, 245.000, 43.000)</td>
+              <td>4.909, 3.275, 6.148</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.3847, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [4.9087, 3.2753], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 6.1477}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-24" value="real_division"> real_division</label><label><input type="radio" name="label-24" value="false_division"> false_division</label><label><input type="radio" name="label-24" value="real_gap"> real_gap</label><label><input type="radio" name="label-24" value="false_gap"> false_gap</label><label><input type="radio" name="label-24" value="good_link"> good_link</label><label><input type="radio" name="label-24" value="bad_link"> bad_link</label><label><input type="radio" name="label-24" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-24" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">25</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>40147</code><br>→ <code>40931, 40895</code></td>
+              <td>t=50<br>z,y,x=(6.000, 15.000, 17.000)</td>
+              <td>4.143, 3.040, 7.083</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.4168, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [4.143, 3.0401], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 7.0832}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-25" value="real_division"> real_division</label><label><input type="radio" name="label-25" value="false_division"> false_division</label><label><input type="radio" name="label-25" value="real_gap"> real_gap</label><label><input type="radio" name="label-25" value="false_gap"> false_gap</label><label><input type="radio" name="label-25" value="good_link"> good_link</label><label><input type="radio" name="label-25" value="bad_link"> bad_link</label><label><input type="radio" name="label-25" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-25" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05b6850b">
+              <td class="ordinal">26</td>
+              <td><strong>6bba_05b6850b</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>755</code><br>→ <code>833, 831</code></td>
+              <td>t=9<br>z,y,x=(59.000, 77.000, 129.000)</td>
+              <td>3.447, 3.173, 4.163</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.4871, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.4471, 3.1729], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 4.1628}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-26" value="real_division"> real_division</label><label><input type="radio" name="label-26" value="false_division"> false_division</label><label><input type="radio" name="label-26" value="real_gap"> real_gap</label><label><input type="radio" name="label-26" value="false_gap"> false_gap</label><label><input type="radio" name="label-26" value="good_link"> good_link</label><label><input type="radio" name="label-26" value="bad_link"> bad_link</label><label><input type="radio" name="label-26" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-26" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">27</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>8581</code><br>→ <code>9377, 9394</code></td>
+              <td>t=10<br>z,y,x=(58.000, 241.000, 25.000)</td>
+              <td>3.495, 3.173, 5.405</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.4871, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.4947, 3.1729], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 5.4048}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-27" value="real_division"> real_division</label><label><input type="radio" name="label-27" value="false_division"> false_division</label><label><input type="radio" name="label-27" value="real_gap"> real_gap</label><label><input type="radio" name="label-27" value="false_gap"> false_gap</label><label><input type="radio" name="label-27" value="good_link"> good_link</label><label><input type="radio" name="label-27" value="bad_link"> bad_link</label><label><input type="radio" name="label-27" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-27" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">28</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>13014</code><br>→ <code>13844, 13819</code></td>
+              <td>t=16<br>z,y,x=(31.000, 197.000, 67.000)</td>
+              <td>3.300, 3.173, 4.614</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.4871, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.3004, 3.1729], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 4.6141}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-28" value="real_division"> real_division</label><label><input type="radio" name="label-28" value="false_division"> false_division</label><label><input type="radio" name="label-28" value="real_gap"> real_gap</label><label><input type="radio" name="label-28" value="false_gap"> false_gap</label><label><input type="radio" name="label-28" value="good_link"> good_link</label><label><input type="radio" name="label-28" value="bad_link"> bad_link</label><label><input type="radio" name="label-28" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-28" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">29</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>23256</code><br>→ <code>24045, 24088</code></td>
+              <td>t=28<br>z,y,x=(60.000, 227.000, 75.000)</td>
+              <td>3.634, 3.173, 5.466</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.4871, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.6336, 3.1729], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 5.4655}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-29" value="real_division"> real_division</label><label><input type="radio" name="label-29" value="false_division"> false_division</label><label><input type="radio" name="label-29" value="real_gap"> real_gap</label><label><input type="radio" name="label-29" value="false_gap"> false_gap</label><label><input type="radio" name="label-29" value="good_link"> good_link</label><label><input type="radio" name="label-29" value="bad_link"> bad_link</label><label><input type="radio" name="label-29" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-29" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">30</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>32240</code><br>→ <code>33064, 33065</code></td>
+              <td>t=40<br>z,y,x=(3.000, 10.000, 74.000)</td>
+              <td>3.275, 3.173, 3.040</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.4871, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.2753, 3.1729], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 3.0401}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-30" value="real_division"> real_division</label><label><input type="radio" name="label-30" value="false_division"> false_division</label><label><input type="radio" name="label-30" value="real_gap"> real_gap</label><label><input type="radio" name="label-30" value="false_gap"> false_gap</label><label><input type="radio" name="label-30" value="good_link"> good_link</label><label><input type="radio" name="label-30" value="bad_link"> bad_link</label><label><input type="radio" name="label-30" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-30" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">31</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>19909</code><br>→ <code>20756, 20714</code></td>
+              <td>t=24<br>z,y,x=(56.000, 172.000, 165.000)</td>
+              <td>5.090, 2.601, 6.989</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.5106, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [5.0903, 2.6013], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 6.9894}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-31" value="real_division"> real_division</label><label><input type="radio" name="label-31" value="false_division"> false_division</label><label><input type="radio" name="label-31" value="real_gap"> real_gap</label><label><input type="radio" name="label-31" value="false_gap"> false_gap</label><label><input type="radio" name="label-31" value="good_link"> good_link</label><label><input type="radio" name="label-31" value="bad_link"> bad_link</label><label><input type="radio" name="label-31" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-31" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="44b6_0b24845f">
+              <td class="ordinal">32</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>6778</code><br>→ <code>7113, 7135</code></td>
+              <td>t=16<br>z,y,x=(63.000, 117.000, 44.000)</td>
+              <td>6.107, 1.675, 4.959</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.5427, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [6.1073, 1.675], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 4.9589}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-32" value="real_division"> real_division</label><label><input type="radio" name="label-32" value="false_division"> false_division</label><label><input type="radio" name="label-32" value="real_gap"> real_gap</label><label><input type="radio" name="label-32" value="false_gap"> false_gap</label><label><input type="radio" name="label-32" value="good_link"> good_link</label><label><input type="radio" name="label-32" value="bad_link"> bad_link</label><label><input type="radio" name="label-32" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-32" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">33</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>16718</code><br>→ <code>17535, 17549</code></td>
+              <td>t=21<br>z,y,x=(5.000, 17.000, 42.000)</td>
+              <td>3.350, 3.094, 3.300</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.5661, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.35, 3.0939], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 3.3004}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-33" value="real_division"> real_division</label><label><input type="radio" name="label-33" value="false_division"> false_division</label><label><input type="radio" name="label-33" value="real_gap"> real_gap</label><label><input type="radio" name="label-33" value="false_gap"> false_gap</label><label><input type="radio" name="label-33" value="good_link"> good_link</label><label><input type="radio" name="label-33" value="bad_link"> bad_link</label><label><input type="radio" name="label-33" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-33" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="44b6_0113de3b">
+              <td class="ordinal">34</td>
+              <td><strong>44b6_0113de3b</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>9591</code><br>→ <code>9849, 9852</code></td>
+              <td>t=40<br>z,y,x=(45.000, 73.000, 189.000)</td>
+              <td>4.083, 2.844, 6.918</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.5818, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [4.0828, 2.8438], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 6.9182}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-34" value="real_division"> real_division</label><label><input type="radio" name="label-34" value="false_division"> false_division</label><label><input type="radio" name="label-34" value="real_gap"> real_gap</label><label><input type="radio" name="label-34" value="false_gap"> false_gap</label><label><input type="radio" name="label-34" value="good_link"> good_link</label><label><input type="radio" name="label-34" value="bad_link"> bad_link</label><label><input type="radio" name="label-34" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-34" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">35</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>32446</code><br>→ <code>33245, 33263</code></td>
+              <td>t=40<br>z,y,x=(17.000, 164.000, 180.000)</td>
+              <td>3.447, 3.067, 4.394</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.5929, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.4471, 3.0671], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 4.3943}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-35" value="real_division"> real_division</label><label><input type="radio" name="label-35" value="false_division"> false_division</label><label><input type="radio" name="label-35" value="real_gap"> real_gap</label><label><input type="radio" name="label-35" value="false_gap"> false_gap</label><label><input type="radio" name="label-35" value="good_link"> good_link</label><label><input type="radio" name="label-35" value="bad_link"> bad_link</label><label><input type="radio" name="label-35" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-35" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="44b6_0113de3b">
+              <td class="ordinal">36</td>
+              <td><strong>44b6_0113de3b</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>18786</code><br>→ <code>19076, 19070</code></td>
+              <td>t=73<br>z,y,x=(34.000, 115.000, 99.000)</td>
+              <td>5.281, 3.040, 3.918</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.6199, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [5.2812, 3.0401], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 3.9177}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-36" value="real_division"> real_division</label><label><input type="radio" name="label-36" value="false_division"> false_division</label><label><input type="radio" name="label-36" value="real_gap"> real_gap</label><label><input type="radio" name="label-36" value="false_gap"> false_gap</label><label><input type="radio" name="label-36" value="good_link"> good_link</label><label><input type="radio" name="label-36" value="bad_link"> bad_link</label><label><input type="radio" name="label-36" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-36" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">37</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>61067</code><br>→ <code>61740, 61757</code></td>
+              <td>t=79<br>z,y,x=(13.000, 65.000, 60.000)</td>
+              <td>4.163, 3.040, 2.958</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.6199, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [4.1628, 3.0401], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 2.9575}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-37" value="real_division"> real_division</label><label><input type="radio" name="label-37" value="false_division"> false_division</label><label><input type="radio" name="label-37" value="real_gap"> real_gap</label><label><input type="radio" name="label-37" value="false_gap"> false_gap</label><label><input type="radio" name="label-37" value="good_link"> good_link</label><label><input type="radio" name="label-37" value="bad_link"> bad_link</label><label><input type="radio" name="label-37" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-37" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="44b6_0113de3b">
+              <td class="ordinal">38</td>
+              <td><strong>44b6_0113de3b</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>18910</code><br>→ <code>19187, 19198</code></td>
+              <td>t=73<br>z,y,x=(60.000, 39.000, 217.000)</td>
+              <td>3.173, 2.958, 4.022</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.7025, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.1729, 2.9575], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 4.0217}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-38" value="real_division"> real_division</label><label><input type="radio" name="label-38" value="false_division"> false_division</label><label><input type="radio" name="label-38" value="real_gap"> real_gap</label><label><input type="radio" name="label-38" value="false_gap"> false_gap</label><label><input type="radio" name="label-38" value="good_link"> good_link</label><label><input type="radio" name="label-38" value="bad_link"> bad_link</label><label><input type="radio" name="label-38" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-38" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="44b6_0113de3b">
+              <td class="ordinal">39</td>
+              <td><strong>44b6_0113de3b</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>24594</code><br>→ <code>24874, 24861</code></td>
+              <td>t=94<br>z,y,x=(3.000, 112.000, 19.000)</td>
+              <td>3.375, 2.958, 5.203</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.7025, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.3746, 2.9575], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 5.2025}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-39" value="real_division"> real_division</label><label><input type="radio" name="label-39" value="false_division"> false_division</label><label><input type="radio" name="label-39" value="real_gap"> real_gap</label><label><input type="radio" name="label-39" value="false_gap"> false_gap</label><label><input type="radio" name="label-39" value="good_link"> good_link</label><label><input type="radio" name="label-39" value="bad_link"> bad_link</label><label><input type="radio" name="label-39" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-39" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="division_boundary" data-dataset="44b6_0b24845f">
+              <td class="ordinal">40</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">division_boundary</span></td>
+              <td><code>8160</code><br>→ <code>8455, 8480</code></td>
+              <td>t=20<br>z,y,x=(62.000, 211.000, 191.000)</td>
+              <td>3.634, 2.958, 6.359</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;added_daughter_identity_retained&quot;: false, &quot;best_gate_assignment_slack_um&quot;: 1.7025, &quot;near_decision_boundary&quot;: false, &quot;parent_to_child_um&quot;: [3.6336, 2.9575], &quot;safe_div_existing_child_max_um&quot;: 7.65, &quot;safe_div_max_um&quot;: 4.66, &quot;safe_div_sister_max_um&quot;: 8.5, &quot;safe_division_added_in_run&quot;: true, &quot;sister_distance_um&quot;: 6.3588}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-40" value="real_division"> real_division</label><label><input type="radio" name="label-40" value="false_division"> false_division</label><label><input type="radio" name="label-40" value="real_gap"> real_gap</label><label><input type="radio" name="label-40" value="false_gap"> false_gap</label><label><input type="radio" name="label-40" value="good_link"> good_link</label><label><input type="radio" name="label-40" value="bad_link"> bad_link</label><label><input type="radio" name="label-40" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-40" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">41</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>15810</code><br>→ <code>33913, 16413</code></td>
+              <td>t=46<br>z,y,x=(43.000, 151.000, 183.000)</td>
+              <td>5.450, 5.343, 10.756</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 10.756, &quot;frames&quot;: [45, 46, 47], &quot;incoming_step_um&quot;: 5.4504, &quot;outgoing_step_um&quot;: 5.3434, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 33913}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-41" value="real_division"> real_division</label><label><input type="radio" name="label-41" value="false_division"> false_division</label><label><input type="radio" name="label-41" value="real_gap"> real_gap</label><label><input type="radio" name="label-41" value="false_gap"> false_gap</label><label><input type="radio" name="label-41" value="good_link"> good_link</label><label><input type="radio" name="label-41" value="bad_link"> bad_link</label><label><input type="radio" name="label-41" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-41" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">42</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>3924</code><br>→ <code>33559, 4723</code></td>
+              <td>t=10<br>z,y,x=(32.000, 166.000, 102.000)</td>
+              <td>5.774, 4.959, 10.601</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 10.6015, &quot;frames&quot;: [9, 10, 11], &quot;incoming_step_um&quot;: 5.7739, &quot;outgoing_step_um&quot;: 4.9589, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 33559}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-42" value="real_division"> real_division</label><label><input type="radio" name="label-42" value="false_division"> false_division</label><label><input type="radio" name="label-42" value="real_gap"> real_gap</label><label><input type="radio" name="label-42" value="false_gap"> false_gap</label><label><input type="radio" name="label-42" value="good_link"> good_link</label><label><input type="radio" name="label-42" value="bad_link"> bad_link</label><label><input type="radio" name="label-42" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-42" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">43</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>3334</code><br>→ <code>33540, 4188</code></td>
+              <td>t=9<br>z,y,x=(8.000, 147.000, 133.000)</td>
+              <td>5.009, 5.009, 10.017</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 10.0172, &quot;frames&quot;: [8, 9, 10], &quot;incoming_step_um&quot;: 5.0086, &quot;outgoing_step_um&quot;: 5.0086, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 33540}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-43" value="real_division"> real_division</label><label><input type="radio" name="label-43" value="false_division"> false_division</label><label><input type="radio" name="label-43" value="real_gap"> real_gap</label><label><input type="radio" name="label-43" value="false_gap"> false_gap</label><label><input type="radio" name="label-43" value="good_link"> good_link</label><label><input type="radio" name="label-43" value="bad_link"> bad_link</label><label><input type="radio" name="label-43" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-43" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">44</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>13031</code><br>→ <code>33814, 13657</code></td>
+              <td>t=37<br>z,y,x=(43.000, 190.000, 240.000)</td>
+              <td>4.892, 4.892, 9.784</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 9.7838, &quot;frames&quot;: [36, 37, 38], &quot;incoming_step_um&quot;: 4.8919, &quot;outgoing_step_um&quot;: 4.8919, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 33814}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-44" value="real_division"> real_division</label><label><input type="radio" name="label-44" value="false_division"> false_division</label><label><input type="radio" name="label-44" value="real_gap"> real_gap</label><label><input type="radio" name="label-44" value="false_gap"> false_gap</label><label><input type="radio" name="label-44" value="good_link"> good_link</label><label><input type="radio" name="label-44" value="bad_link"> bad_link</label><label><input type="radio" name="label-44" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-44" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">45</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>644</code><br>→ <code>33446, 1413</code></td>
+              <td>t=2<br>z,y,x=(18.000, 202.000, 248.000)</td>
+              <td>5.644, 4.062, 9.691</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 9.6906, &quot;frames&quot;: [1, 2, 3], &quot;incoming_step_um&quot;: 5.6438, &quot;outgoing_step_um&quot;: 4.0625, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 33446}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-45" value="real_division"> real_division</label><label><input type="radio" name="label-45" value="false_division"> false_division</label><label><input type="radio" name="label-45" value="real_gap"> real_gap</label><label><input type="radio" name="label-45" value="false_gap"> false_gap</label><label><input type="radio" name="label-45" value="good_link"> good_link</label><label><input type="radio" name="label-45" value="bad_link"> bad_link</label><label><input type="radio" name="label-45" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-45" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">46</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>27874</code><br>→ <code>34314, 28593</code></td>
+              <td>t=82<br>z,y,x=(30.000, 149.000, 91.000)</td>
+              <td>3.854, 5.658, 9.510</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 9.5101, &quot;frames&quot;: [81, 82, 83], &quot;incoming_step_um&quot;: 3.854, &quot;outgoing_step_um&quot;: 5.6584, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 34314}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-46" value="real_division"> real_division</label><label><input type="radio" name="label-46" value="false_division"> false_division</label><label><input type="radio" name="label-46" value="real_gap"> real_gap</label><label><input type="radio" name="label-46" value="false_gap"> false_gap</label><label><input type="radio" name="label-46" value="good_link"> good_link</label><label><input type="radio" name="label-46" value="bad_link"> bad_link</label><label><input type="radio" name="label-46" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-46" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">47</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>4621</code><br>→ <code>33576, 5434</code></td>
+              <td>t=12<br>z,y,x=(14.000, 191.000, 60.000)</td>
+              <td>3.833, 5.155, 8.919</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 8.919, &quot;frames&quot;: [11, 12, 13], &quot;incoming_step_um&quot;: 3.8326, &quot;outgoing_step_um&quot;: 5.1547, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 33576}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-47" value="real_division"> real_division</label><label><input type="radio" name="label-47" value="false_division"> false_division</label><label><input type="radio" name="label-47" value="real_gap"> real_gap</label><label><input type="radio" name="label-47" value="false_gap"> false_gap</label><label><input type="radio" name="label-47" value="good_link"> good_link</label><label><input type="radio" name="label-47" value="bad_link"> bad_link</label><label><input type="radio" name="label-47" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-47" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">48</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>14167</code><br>→ <code>33854, 14815</code></td>
+              <td>t=41<br>z,y,x=(9.000, 141.000, 44.000)</td>
+              <td>4.318, 4.614, 8.919</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 8.919, &quot;frames&quot;: [40, 41, 42], &quot;incoming_step_um&quot;: 4.3185, &quot;outgoing_step_um&quot;: 4.6141, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 33854}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-48" value="real_division"> real_division</label><label><input type="radio" name="label-48" value="false_division"> false_division</label><label><input type="radio" name="label-48" value="real_gap"> real_gap</label><label><input type="radio" name="label-48" value="false_gap"> false_gap</label><label><input type="radio" name="label-48" value="good_link"> good_link</label><label><input type="radio" name="label-48" value="bad_link"> bad_link</label><label><input type="radio" name="label-48" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-48" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">49</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>30510</code><br>→ <code>34411, 31023</code></td>
+              <td>t=90<br>z,y,x=(6.000, 18.000, 90.000)</td>
+              <td>4.614, 4.143, 8.723</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 8.7226, &quot;frames&quot;: [89, 90, 91], &quot;incoming_step_um&quot;: 4.6141, &quot;outgoing_step_um&quot;: 4.143, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 34411}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-49" value="real_division"> real_division</label><label><input type="radio" name="label-49" value="false_division"> false_division</label><label><input type="radio" name="label-49" value="real_gap"> real_gap</label><label><input type="radio" name="label-49" value="false_gap"> false_gap</label><label><input type="radio" name="label-49" value="good_link"> good_link</label><label><input type="radio" name="label-49" value="bad_link"> bad_link</label><label><input type="radio" name="label-49" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-49" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">50</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>3187</code><br>→ <code>33538, 4079</code></td>
+              <td>t=8<br>z,y,x=(60.000, 113.000, 19.000)</td>
+              <td>3.811, 4.909, 8.694</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 8.6941, &quot;frames&quot;: [7, 8, 9], &quot;incoming_step_um&quot;: 3.811, &quot;outgoing_step_um&quot;: 4.9087, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 33538}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-50" value="real_division"> real_division</label><label><input type="radio" name="label-50" value="false_division"> false_division</label><label><input type="radio" name="label-50" value="real_gap"> real_gap</label><label><input type="radio" name="label-50" value="false_gap"> false_gap</label><label><input type="radio" name="label-50" value="good_link"> good_link</label><label><input type="radio" name="label-50" value="bad_link"> bad_link</label><label><input type="radio" name="label-50" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-50" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">51</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>13516</code><br>→ <code>33833, 14171</code></td>
+              <td>t=39<br>z,y,x=(8.000, 180.000, 104.000)</td>
+              <td>4.375, 4.394, 8.608</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 8.6083, &quot;frames&quot;: [38, 39, 40], &quot;incoming_step_um&quot;: 4.3754, &quot;outgoing_step_um&quot;: 4.3943, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 33833}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-51" value="real_division"> real_division</label><label><input type="radio" name="label-51" value="false_division"> false_division</label><label><input type="radio" name="label-51" value="real_gap"> real_gap</label><label><input type="radio" name="label-51" value="false_gap"> false_gap</label><label><input type="radio" name="label-51" value="good_link"> good_link</label><label><input type="radio" name="label-51" value="bad_link"> bad_link</label><label><input type="radio" name="label-51" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-51" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">52</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>3694</code><br>→ <code>33551, 4537</code></td>
+              <td>t=10<br>z,y,x=(2.000, 53.000, 30.000)</td>
+              <td>4.824, 3.854, 8.531</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 8.5312, &quot;frames&quot;: [9, 10, 11], &quot;incoming_step_um&quot;: 4.824, &quot;outgoing_step_um&quot;: 3.854, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 33551}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-52" value="real_division"> real_division</label><label><input type="radio" name="label-52" value="false_division"> false_division</label><label><input type="radio" name="label-52" value="real_gap"> real_gap</label><label><input type="radio" name="label-52" value="false_gap"> false_gap</label><label><input type="radio" name="label-52" value="good_link"> good_link</label><label><input type="radio" name="label-52" value="bad_link"> bad_link</label><label><input type="radio" name="label-52" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-52" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">53</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>6208</code><br>→ <code>33626, 6920</code></td>
+              <td>t=16<br>z,y,x=(20.000, 96.000, 55.000)</td>
+              <td>2.873, 5.873, 8.492</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 8.4925, &quot;frames&quot;: [15, 16, 17], &quot;incoming_step_um&quot;: 2.8726, &quot;outgoing_step_um&quot;: 5.8731, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 33626}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-53" value="real_division"> real_division</label><label><input type="radio" name="label-53" value="false_division"> false_division</label><label><input type="radio" name="label-53" value="real_gap"> real_gap</label><label><input type="radio" name="label-53" value="false_gap"> false_gap</label><label><input type="radio" name="label-53" value="good_link"> good_link</label><label><input type="radio" name="label-53" value="bad_link"> bad_link</label><label><input type="radio" name="label-53" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-53" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">54</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>23418</code><br>→ <code>34168, 24140</code></td>
+              <td>t=69<br>z,y,x=(25.000, 138.000, 6.000)</td>
+              <td>3.833, 4.614, 8.385</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 8.3849, &quot;frames&quot;: [68, 69, 70], &quot;incoming_step_um&quot;: 3.8326, &quot;outgoing_step_um&quot;: 4.6141, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 34168}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-54" value="real_division"> real_division</label><label><input type="radio" name="label-54" value="false_division"> false_division</label><label><input type="radio" name="label-54" value="real_gap"> real_gap</label><label><input type="radio" name="label-54" value="false_gap"> false_gap</label><label><input type="radio" name="label-54" value="good_link"> good_link</label><label><input type="radio" name="label-54" value="bad_link"> bad_link</label><label><input type="radio" name="label-54" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-54" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">55</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>31281</code><br>→ <code>34442, 31788</code></td>
+              <td>t=93<br>z,y,x=(2.000, 227.000, 180.000)</td>
+              <td>3.471, 5.025, 8.385</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 8.3849, &quot;frames&quot;: [92, 93, 94], &quot;incoming_step_um&quot;: 3.471, &quot;outgoing_step_um&quot;: 5.025, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 34442}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-55" value="real_division"> real_division</label><label><input type="radio" name="label-55" value="false_division"> false_division</label><label><input type="radio" name="label-55" value="real_gap"> real_gap</label><label><input type="radio" name="label-55" value="false_gap"> false_gap</label><label><input type="radio" name="label-55" value="good_link"> good_link</label><label><input type="radio" name="label-55" value="bad_link"> bad_link</label><label><input type="radio" name="label-55" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-55" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">56</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>728</code><br>→ <code>33452, 1532</code></td>
+              <td>t=2<br>z,y,x=(36.000, 131.000, 58.000)</td>
+              <td>4.318, 3.980, 8.296</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 8.2959, &quot;frames&quot;: [1, 2, 3], &quot;incoming_step_um&quot;: 4.3185, &quot;outgoing_step_um&quot;: 3.9804, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 33452}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-56" value="real_division"> real_division</label><label><input type="radio" name="label-56" value="false_division"> false_division</label><label><input type="radio" name="label-56" value="real_gap"> real_gap</label><label><input type="radio" name="label-56" value="false_gap"> false_gap</label><label><input type="radio" name="label-56" value="good_link"> good_link</label><label><input type="radio" name="label-56" value="bad_link"> bad_link</label><label><input type="radio" name="label-56" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-56" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">57</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>16780</code><br>→ <code>33941, 17343</code></td>
+              <td>t=49<br>z,y,x=(52.000, 206.000, 168.000)</td>
+              <td>4.909, 3.375, 8.216</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 8.2159, &quot;frames&quot;: [48, 49, 50], &quot;incoming_step_um&quot;: 4.9087, &quot;outgoing_step_um&quot;: 3.3746, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 33941}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-57" value="real_division"> real_division</label><label><input type="radio" name="label-57" value="false_division"> false_division</label><label><input type="radio" name="label-57" value="real_gap"> real_gap</label><label><input type="radio" name="label-57" value="false_gap"> false_gap</label><label><input type="radio" name="label-57" value="good_link"> good_link</label><label><input type="radio" name="label-57" value="bad_link"> bad_link</label><label><input type="radio" name="label-57" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-57" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">58</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>20379</code><br>→ <code>34060, 21058</code></td>
+              <td>t=60<br>z,y,x=(26.000, 142.000, 166.000)</td>
+              <td>3.495, 4.755, 8.176</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 8.1756, &quot;frames&quot;: [59, 60, 61], &quot;incoming_step_um&quot;: 3.4947, &quot;outgoing_step_um&quot;: 4.755, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 34060}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-58" value="real_division"> real_division</label><label><input type="radio" name="label-58" value="false_division"> false_division</label><label><input type="radio" name="label-58" value="real_gap"> real_gap</label><label><input type="radio" name="label-58" value="false_gap"> false_gap</label><label><input type="radio" name="label-58" value="good_link"> good_link</label><label><input type="radio" name="label-58" value="bad_link"> bad_link</label><label><input type="radio" name="label-58" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-58" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">59</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>7650</code><br>→ <code>33662, 8298</code></td>
+              <td>t=20<br>z,y,x=(20.000, 179.000, 50.000)</td>
+              <td>4.614, 3.656, 8.166</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 8.1655, &quot;frames&quot;: [19, 20, 21], &quot;incoming_step_um&quot;: 4.6141, &quot;outgoing_step_um&quot;: 3.6562, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 33662}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-59" value="real_division"> real_division</label><label><input type="radio" name="label-59" value="false_division"> false_division</label><label><input type="radio" name="label-59" value="real_gap"> real_gap</label><label><input type="radio" name="label-59" value="false_gap"> false_gap</label><label><input type="radio" name="label-59" value="good_link"> good_link</label><label><input type="radio" name="label-59" value="bad_link"> bad_link</label><label><input type="radio" name="label-59" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-59" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">60</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>16405</code><br>→ <code>33931, 17001</code></td>
+              <td>t=48<br>z,y,x=(31.000, 171.000, 191.000)</td>
+              <td>5.009, 3.300, 8.145</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 8.1453, &quot;frames&quot;: [47, 48, 49], &quot;incoming_step_um&quot;: 5.0086, &quot;outgoing_step_um&quot;: 3.3004, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 33931}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-60" value="real_division"> real_division</label><label><input type="radio" name="label-60" value="false_division"> false_division</label><label><input type="radio" name="label-60" value="real_gap"> real_gap</label><label><input type="radio" name="label-60" value="false_gap"> false_gap</label><label><input type="radio" name="label-60" value="good_link"> good_link</label><label><input type="radio" name="label-60" value="bad_link"> bad_link</label><label><input type="radio" name="label-60" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-60" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">61</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>24853</code><br>→ <code>34223, 25358</code></td>
+              <td>t=73<br>z,y,x=(51.000, 149.000, 134.000)</td>
+              <td>4.143, 4.022, 8.145</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 8.1453, &quot;frames&quot;: [72, 73, 74], &quot;incoming_step_um&quot;: 4.143, &quot;outgoing_step_um&quot;: 4.0217, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 34223}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-61" value="real_division"> real_division</label><label><input type="radio" name="label-61" value="false_division"> false_division</label><label><input type="radio" name="label-61" value="real_gap"> real_gap</label><label><input type="radio" name="label-61" value="false_gap"> false_gap</label><label><input type="radio" name="label-61" value="good_link"> good_link</label><label><input type="radio" name="label-61" value="bad_link"> bad_link</label><label><input type="radio" name="label-61" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-61" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">62</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>4851</code><br>→ <code>33587, 5610</code></td>
+              <td>t=12<br>z,y,x=(50.000, 202.000, 91.000)</td>
+              <td>4.375, 3.833, 8.054</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 8.0536, &quot;frames&quot;: [11, 12, 13], &quot;incoming_step_um&quot;: 4.3754, &quot;outgoing_step_um&quot;: 3.8326, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 33587}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-62" value="real_division"> real_division</label><label><input type="radio" name="label-62" value="false_division"> false_division</label><label><input type="radio" name="label-62" value="real_gap"> real_gap</label><label><input type="radio" name="label-62" value="false_gap"> false_gap</label><label><input type="radio" name="label-62" value="good_link"> good_link</label><label><input type="radio" name="label-62" value="bad_link"> bad_link</label><label><input type="radio" name="label-62" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-62" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">63</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>26091</code><br>→ <code>34261, 26833</code></td>
+              <td>t=77<br>z,y,x=(54.000, 184.000, 34.000)</td>
+              <td>4.022, 4.022, 8.043</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 8.0433, &quot;frames&quot;: [76, 77, 78], &quot;incoming_step_um&quot;: 4.0217, &quot;outgoing_step_um&quot;: 4.0217, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 34261}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-63" value="real_division"> real_division</label><label><input type="radio" name="label-63" value="false_division"> false_division</label><label><input type="radio" name="label-63" value="real_gap"> real_gap</label><label><input type="radio" name="label-63" value="false_gap"> false_gap</label><label><input type="radio" name="label-63" value="good_link"> good_link</label><label><input type="radio" name="label-63" value="bad_link"> bad_link</label><label><input type="radio" name="label-63" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-63" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">64</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>2163</code><br>→ <code>33497, 2905</code></td>
+              <td>t=6<br>z,y,x=(5.000, 191.000, 90.000)</td>
+              <td>3.723, 4.241, 7.930</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 7.9297, &quot;frames&quot;: [5, 6, 7], &quot;incoming_step_um&quot;: 3.7233, &quot;outgoing_step_um&quot;: 4.2414, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 33497}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-64" value="real_division"> real_division</label><label><input type="radio" name="label-64" value="false_division"> false_division</label><label><input type="radio" name="label-64" value="real_gap"> real_gap</label><label><input type="radio" name="label-64" value="false_gap"> false_gap</label><label><input type="radio" name="label-64" value="good_link"> good_link</label><label><input type="radio" name="label-64" value="bad_link"> bad_link</label><label><input type="radio" name="label-64" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-64" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">65</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>14847</code><br>→ <code>33879, 15377</code></td>
+              <td>t=43<br>z,y,x=(15.000, 197.000, 213.000)</td>
+              <td>3.833, 4.143, 7.930</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 7.9297, &quot;frames&quot;: [42, 43, 44], &quot;incoming_step_um&quot;: 3.8326, &quot;outgoing_step_um&quot;: 4.143, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 33879}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-65" value="real_division"> real_division</label><label><input type="radio" name="label-65" value="false_division"> false_division</label><label><input type="radio" name="label-65" value="real_gap"> real_gap</label><label><input type="radio" name="label-65" value="false_gap"> false_gap</label><label><input type="radio" name="label-65" value="good_link"> good_link</label><label><input type="radio" name="label-65" value="bad_link"> bad_link</label><label><input type="radio" name="label-65" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-65" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">66</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>554</code><br>→ <code>33436, 1381</code></td>
+              <td>t=2<br>z,y,x=(11.000, 199.000, 188.000)</td>
+              <td>5.025, 2.873, 7.888</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 7.8879, &quot;frames&quot;: [1, 2, 3], &quot;incoming_step_um&quot;: 5.025, &quot;outgoing_step_um&quot;: 2.8726, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 33436}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-66" value="real_division"> real_division</label><label><input type="radio" name="label-66" value="false_division"> false_division</label><label><input type="radio" name="label-66" value="real_gap"> real_gap</label><label><input type="radio" name="label-66" value="false_gap"> false_gap</label><label><input type="radio" name="label-66" value="good_link"> good_link</label><label><input type="radio" name="label-66" value="bad_link"> bad_link</label><label><input type="radio" name="label-66" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-66" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">67</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>9224</code><br>→ <code>33708, 9859</code></td>
+              <td>t=25<br>z,y,x=(12.000, 120.000, 64.000)</td>
+              <td>4.450, 3.634, 7.877</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 7.8775, &quot;frames&quot;: [24, 25, 26], &quot;incoming_step_um&quot;: 4.4502, &quot;outgoing_step_um&quot;: 3.6336, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 33708}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-67" value="real_division"> real_division</label><label><input type="radio" name="label-67" value="false_division"> false_division</label><label><input type="radio" name="label-67" value="real_gap"> real_gap</label><label><input type="radio" name="label-67" value="false_gap"> false_gap</label><label><input type="radio" name="label-67" value="good_link"> good_link</label><label><input type="radio" name="label-67" value="bad_link"> bad_link</label><label><input type="radio" name="label-67" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-67" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">68</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>5242</code><br>→ <code>33599, 5979</code></td>
+              <td>t=13<br>z,y,x=(51.000, 179.000, 135.000)</td>
+              <td>4.083, 4.183, 7.846</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 7.846, &quot;frames&quot;: [12, 13, 14], &quot;incoming_step_um&quot;: 4.0828, &quot;outgoing_step_um&quot;: 4.1826, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 33599}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-68" value="real_division"> real_division</label><label><input type="radio" name="label-68" value="false_division"> false_division</label><label><input type="radio" name="label-68" value="real_gap"> real_gap</label><label><input type="radio" name="label-68" value="false_gap"> false_gap</label><label><input type="radio" name="label-68" value="good_link"> good_link</label><label><input type="radio" name="label-68" value="bad_link"> bad_link</label><label><input type="radio" name="label-68" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-68" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">69</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>24544</code><br>→ <code>34199, 25046</code></td>
+              <td>t=72<br>z,y,x=(44.000, 124.000, 79.000)</td>
+              <td>4.022, 3.833, 7.846</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 7.846, &quot;frames&quot;: [71, 72, 73], &quot;incoming_step_um&quot;: 4.0217, &quot;outgoing_step_um&quot;: 3.8326, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 34199}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-69" value="real_division"> real_division</label><label><input type="radio" name="label-69" value="false_division"> false_division</label><label><input type="radio" name="label-69" value="real_gap"> real_gap</label><label><input type="radio" name="label-69" value="false_gap"> false_gap</label><label><input type="radio" name="label-69" value="good_link"> good_link</label><label><input type="radio" name="label-69" value="bad_link"> bad_link</label><label><input type="radio" name="label-69" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-69" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="gap_insertion" data-dataset="44b6_0b24845f">
+              <td class="ordinal">70</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">gap_insertion</span></td>
+              <td><code>1865</code><br>→ <code>33488, 2645</code></td>
+              <td>t=5<br>z,y,x=(22.000, 119.000, 187.000)</td>
+              <td>4.487, 3.495, 7.835</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;absent_from_raw_geff&quot;: true, &quot;bridge_endpoint_distance_um&quot;: 7.8355, &quot;frames&quot;: [4, 5, 6], &quot;incoming_step_um&quot;: 4.4872, &quot;outgoing_step_um&quot;: 3.4947, &quot;priority_dataset&quot;: true, &quot;synthetic_node_id&quot;: 33488}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-70" value="real_division"> real_division</label><label><input type="radio" name="label-70" value="false_division"> false_division</label><label><input type="radio" name="label-70" value="real_gap"> real_gap</label><label><input type="radio" name="label-70" value="false_gap"> false_gap</label><label><input type="radio" name="label-70" value="good_link"> good_link</label><label><input type="radio" name="label-70" value="bad_link"> bad_link</label><label><input type="radio" name="label-70" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-70" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="relaxed_motion_proxy" data-dataset="44b6_0b24845f">
+              <td class="ordinal">71</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">relaxed_motion_proxy</span></td>
+              <td><code>19508</code><br>→ <code>19833</code></td>
+              <td>t=56<br>z,y,x=(48.000, 185.000, 150.000)</td>
+              <td>6.551</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.5506, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: false, &quot;raw_edge_probability&quot;: null, &quot;selection_note&quot;: &quot;Highest-distance non-gap/non-division link after excluding the 10 longest; proxy only because Exp111 retained relaxed-pass counts per dataset, not per edge.&quot;}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-71" value="real_division"> real_division</label><label><input type="radio" name="label-71" value="false_division"> false_division</label><label><input type="radio" name="label-71" value="real_gap"> real_gap</label><label><input type="radio" name="label-71" value="false_gap"> false_gap</label><label><input type="radio" name="label-71" value="good_link"> good_link</label><label><input type="radio" name="label-71" value="bad_link"> bad_link</label><label><input type="radio" name="label-71" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-71" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="relaxed_motion_proxy" data-dataset="44b6_0b24845f">
+              <td class="ordinal">72</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">relaxed_motion_proxy</span></td>
+              <td><code>4288</code><br>→ <code>4681</code></td>
+              <td>t=10<br>z,y,x=(26.000, 115.000, 155.000)</td>
+              <td>6.346</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.3458, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: true, &quot;raw_edge_probability&quot;: 0.84164, &quot;selection_note&quot;: &quot;Highest-distance non-gap/non-division link after excluding the 10 longest; proxy only because Exp111 retained relaxed-pass counts per dataset, not per edge.&quot;}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-72" value="real_division"> real_division</label><label><input type="radio" name="label-72" value="false_division"> false_division</label><label><input type="radio" name="label-72" value="real_gap"> real_gap</label><label><input type="radio" name="label-72" value="false_gap"> false_gap</label><label><input type="radio" name="label-72" value="good_link"> good_link</label><label><input type="radio" name="label-72" value="bad_link"> bad_link</label><label><input type="radio" name="label-72" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-72" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="relaxed_motion_proxy" data-dataset="44b6_0b24845f">
+              <td class="ordinal">73</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">relaxed_motion_proxy</span></td>
+              <td><code>23624</code><br>→ <code>23940</code></td>
+              <td>t=68<br>z,y,x=(57.000, 166.000, 40.000)</td>
+              <td>6.346</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.3458, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: true, &quot;raw_edge_probability&quot;: 0.55728, &quot;selection_note&quot;: &quot;Highest-distance non-gap/non-division link after excluding the 10 longest; proxy only because Exp111 retained relaxed-pass counts per dataset, not per edge.&quot;}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-73" value="real_division"> real_division</label><label><input type="radio" name="label-73" value="false_division"> false_division</label><label><input type="radio" name="label-73" value="real_gap"> real_gap</label><label><input type="radio" name="label-73" value="false_gap"> false_gap</label><label><input type="radio" name="label-73" value="good_link"> good_link</label><label><input type="radio" name="label-73" value="bad_link"> bad_link</label><label><input type="radio" name="label-73" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-73" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="relaxed_motion_proxy" data-dataset="44b6_0b24845f">
+              <td class="ordinal">74</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">relaxed_motion_proxy</span></td>
+              <td><code>312</code><br>→ <code>728</code></td>
+              <td>t=0<br>z,y,x=(39.000, 109.000, 51.000)</td>
+              <td>6.320</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.3198, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: true, &quot;raw_edge_probability&quot;: 0.84042, &quot;selection_note&quot;: &quot;Highest-distance non-gap/non-division link after excluding the 10 longest; proxy only because Exp111 retained relaxed-pass counts per dataset, not per edge.&quot;}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-74" value="real_division"> real_division</label><label><input type="radio" name="label-74" value="false_division"> false_division</label><label><input type="radio" name="label-74" value="real_gap"> real_gap</label><label><input type="radio" name="label-74" value="false_gap"> false_gap</label><label><input type="radio" name="label-74" value="good_link"> good_link</label><label><input type="radio" name="label-74" value="bad_link"> bad_link</label><label><input type="radio" name="label-74" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-74" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="relaxed_motion_proxy" data-dataset="44b6_0113de3b">
+              <td class="ordinal">75</td>
+              <td><strong>44b6_0113de3b</strong><br><span class="tag">relaxed_motion_proxy</span></td>
+              <td><code>11245</code><br>→ <code>11524</code></td>
+              <td>t=47<br>z,y,x=(1.000, 71.000, 92.000)</td>
+              <td>6.307</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.3067, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: true, &quot;raw_edge_probability&quot;: 0.8998, &quot;selection_note&quot;: &quot;Highest-distance non-gap/non-division link after excluding the 10 longest; proxy only because Exp111 retained relaxed-pass counts per dataset, not per edge.&quot;}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-75" value="real_division"> real_division</label><label><input type="radio" name="label-75" value="false_division"> false_division</label><label><input type="radio" name="label-75" value="real_gap"> real_gap</label><label><input type="radio" name="label-75" value="false_gap"> false_gap</label><label><input type="radio" name="label-75" value="good_link"> good_link</label><label><input type="radio" name="label-75" value="bad_link"> bad_link</label><label><input type="radio" name="label-75" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-75" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="relaxed_motion_proxy" data-dataset="44b6_0b24845f">
+              <td class="ordinal">76</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">relaxed_motion_proxy</span></td>
+              <td><code>4444</code><br>→ <code>4861</code></td>
+              <td>t=10<br>z,y,x=(54.000, 221.000, 30.000)</td>
+              <td>6.214</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.2144, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: true, &quot;raw_edge_probability&quot;: 0.68858, &quot;selection_note&quot;: &quot;Highest-distance non-gap/non-division link after excluding the 10 longest; proxy only because Exp111 retained relaxed-pass counts per dataset, not per edge.&quot;}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-76" value="real_division"> real_division</label><label><input type="radio" name="label-76" value="false_division"> false_division</label><label><input type="radio" name="label-76" value="real_gap"> real_gap</label><label><input type="radio" name="label-76" value="false_gap"> false_gap</label><label><input type="radio" name="label-76" value="good_link"> good_link</label><label><input type="radio" name="label-76" value="bad_link"> bad_link</label><label><input type="radio" name="label-76" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-76" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="relaxed_motion_proxy" data-dataset="44b6_0b24845f">
+              <td class="ordinal">77</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">relaxed_motion_proxy</span></td>
+              <td><code>91</code><br>→ <code>526</code></td>
+              <td>t=0<br>z,y,x=(8.000, 205.000, 93.000)</td>
+              <td>6.148</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.1477, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: true, &quot;raw_edge_probability&quot;: 0.79717, &quot;selection_note&quot;: &quot;Highest-distance non-gap/non-division link after excluding the 10 longest; proxy only because Exp111 retained relaxed-pass counts per dataset, not per edge.&quot;}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-77" value="real_division"> real_division</label><label><input type="radio" name="label-77" value="false_division"> false_division</label><label><input type="radio" name="label-77" value="real_gap"> real_gap</label><label><input type="radio" name="label-77" value="false_gap"> false_gap</label><label><input type="radio" name="label-77" value="good_link"> good_link</label><label><input type="radio" name="label-77" value="bad_link"> bad_link</label><label><input type="radio" name="label-77" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-77" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="relaxed_motion_proxy" data-dataset="44b6_0b24845f">
+              <td class="ordinal">78</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">relaxed_motion_proxy</span></td>
+              <td><code>1500</code><br>→ <code>1896</code></td>
+              <td>t=3<br>z,y,x=(30.000, 76.000, 138.000)</td>
+              <td>6.148</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.1477, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: true, &quot;raw_edge_probability&quot;: 0.66027, &quot;selection_note&quot;: &quot;Highest-distance non-gap/non-division link after excluding the 10 longest; proxy only because Exp111 retained relaxed-pass counts per dataset, not per edge.&quot;}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-78" value="real_division"> real_division</label><label><input type="radio" name="label-78" value="false_division"> false_division</label><label><input type="radio" name="label-78" value="real_gap"> real_gap</label><label><input type="radio" name="label-78" value="false_gap"> false_gap</label><label><input type="radio" name="label-78" value="good_link"> good_link</label><label><input type="radio" name="label-78" value="bad_link"> bad_link</label><label><input type="radio" name="label-78" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-78" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="relaxed_motion_proxy" data-dataset="44b6_0b24845f">
+              <td class="ordinal">79</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">relaxed_motion_proxy</span></td>
+              <td><code>18314</code><br>→ <code>18680</code></td>
+              <td>t=53<br>z,y,x=(37.000, 71.000, 32.000)</td>
+              <td>6.148</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.1477, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: false, &quot;raw_edge_probability&quot;: null, &quot;selection_note&quot;: &quot;Highest-distance non-gap/non-division link after excluding the 10 longest; proxy only because Exp111 retained relaxed-pass counts per dataset, not per edge.&quot;}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-79" value="real_division"> real_division</label><label><input type="radio" name="label-79" value="false_division"> false_division</label><label><input type="radio" name="label-79" value="real_gap"> real_gap</label><label><input type="radio" name="label-79" value="false_gap"> false_gap</label><label><input type="radio" name="label-79" value="good_link"> good_link</label><label><input type="radio" name="label-79" value="bad_link"> bad_link</label><label><input type="radio" name="label-79" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-79" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="relaxed_motion_proxy" data-dataset="44b6_0b24845f">
+              <td class="ordinal">80</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">relaxed_motion_proxy</span></td>
+              <td><code>99</code><br>→ <code>532</code></td>
+              <td>t=0<br>z,y,x=(9.000, 109.000, 199.000)</td>
+              <td>6.107</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.1073, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: true, &quot;raw_edge_probability&quot;: 0.81503, &quot;selection_note&quot;: &quot;Highest-distance non-gap/non-division link after excluding the 10 longest; proxy only because Exp111 retained relaxed-pass counts per dataset, not per edge.&quot;}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-80" value="real_division"> real_division</label><label><input type="radio" name="label-80" value="false_division"> false_division</label><label><input type="radio" name="label-80" value="real_gap"> real_gap</label><label><input type="radio" name="label-80" value="false_gap"> false_gap</label><label><input type="radio" name="label-80" value="good_link"> good_link</label><label><input type="radio" name="label-80" value="bad_link"> bad_link</label><label><input type="radio" name="label-80" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-80" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="relaxed_motion_proxy" data-dataset="44b6_0b24845f">
+              <td class="ordinal">81</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">relaxed_motion_proxy</span></td>
+              <td><code>4229</code><br>→ <code>4629</code></td>
+              <td>t=10<br>z,y,x=(16.000, 125.000, 187.000)</td>
+              <td>6.107</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.1073, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: true, &quot;raw_edge_probability&quot;: 0.75142, &quot;selection_note&quot;: &quot;Highest-distance non-gap/non-division link after excluding the 10 longest; proxy only because Exp111 retained relaxed-pass counts per dataset, not per edge.&quot;}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-81" value="real_division"> real_division</label><label><input type="radio" name="label-81" value="false_division"> false_division</label><label><input type="radio" name="label-81" value="real_gap"> real_gap</label><label><input type="radio" name="label-81" value="false_gap"> false_gap</label><label><input type="radio" name="label-81" value="good_link"> good_link</label><label><input type="radio" name="label-81" value="bad_link"> bad_link</label><label><input type="radio" name="label-81" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-81" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="relaxed_motion_proxy" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">82</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">relaxed_motion_proxy</span></td>
+              <td><code>30706</code><br>→ <code>31520</code></td>
+              <td>t=38<br>z,y,x=(7.000, 13.000, 0.000)</td>
+              <td>6.107</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.1073, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: true, &quot;raw_edge_probability&quot;: 0.6423, &quot;selection_note&quot;: &quot;Highest-distance non-gap/non-division link after excluding the 10 longest; proxy only because Exp111 retained relaxed-pass counts per dataset, not per edge.&quot;}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-82" value="real_division"> real_division</label><label><input type="radio" name="label-82" value="false_division"> false_division</label><label><input type="radio" name="label-82" value="real_gap"> real_gap</label><label><input type="radio" name="label-82" value="false_gap"> false_gap</label><label><input type="radio" name="label-82" value="good_link"> good_link</label><label><input type="radio" name="label-82" value="bad_link"> bad_link</label><label><input type="radio" name="label-82" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-82" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="relaxed_motion_proxy" data-dataset="44b6_0b24845f">
+              <td class="ordinal">83</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">relaxed_motion_proxy</span></td>
+              <td><code>3128</code><br>→ <code>3529</code></td>
+              <td>t=7<br>z,y,x=(47.000, 100.000, 109.000)</td>
+              <td>6.080</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.0802, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: false, &quot;raw_edge_probability&quot;: null, &quot;selection_note&quot;: &quot;Highest-distance non-gap/non-division link after excluding the 10 longest; proxy only because Exp111 retained relaxed-pass counts per dataset, not per edge.&quot;}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-83" value="real_division"> real_division</label><label><input type="radio" name="label-83" value="false_division"> false_division</label><label><input type="radio" name="label-83" value="real_gap"> real_gap</label><label><input type="radio" name="label-83" value="false_gap"> false_gap</label><label><input type="radio" name="label-83" value="good_link"> good_link</label><label><input type="radio" name="label-83" value="bad_link"> bad_link</label><label><input type="radio" name="label-83" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-83" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="relaxed_motion_proxy" data-dataset="44b6_0113de3b">
+              <td class="ordinal">84</td>
+              <td><strong>44b6_0113de3b</strong><br><span class="tag">relaxed_motion_proxy</span></td>
+              <td><code>11402</code><br>→ <code>11675</code></td>
+              <td>t=47<br>z,y,x=(36.000, 49.000, 205.000)</td>
+              <td>6.039</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.0393, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: false, &quot;raw_edge_probability&quot;: null, &quot;selection_note&quot;: &quot;Highest-distance non-gap/non-division link after excluding the 10 longest; proxy only because Exp111 retained relaxed-pass counts per dataset, not per edge.&quot;}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-84" value="real_division"> real_division</label><label><input type="radio" name="label-84" value="false_division"> false_division</label><label><input type="radio" name="label-84" value="real_gap"> real_gap</label><label><input type="radio" name="label-84" value="false_gap"> false_gap</label><label><input type="radio" name="label-84" value="good_link"> good_link</label><label><input type="radio" name="label-84" value="bad_link"> bad_link</label><label><input type="radio" name="label-84" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-84" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="relaxed_motion_proxy" data-dataset="44b6_0b24845f">
+              <td class="ordinal">85</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">relaxed_motion_proxy</span></td>
+              <td><code>16428</code><br>→ <code>16748</code></td>
+              <td>t=47<br>z,y,x=(46.000, 198.000, 76.000)</td>
+              <td>6.039</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.0393, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: true, &quot;raw_edge_probability&quot;: 0.5149, &quot;selection_note&quot;: &quot;Highest-distance non-gap/non-division link after excluding the 10 longest; proxy only because Exp111 retained relaxed-pass counts per dataset, not per edge.&quot;}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-85" value="real_division"> real_division</label><label><input type="radio" name="label-85" value="false_division"> false_division</label><label><input type="radio" name="label-85" value="real_gap"> real_gap</label><label><input type="radio" name="label-85" value="false_gap"> false_gap</label><label><input type="radio" name="label-85" value="good_link"> good_link</label><label><input type="radio" name="label-85" value="bad_link"> bad_link</label><label><input type="radio" name="label-85" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-85" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="relaxed_motion_proxy" data-dataset="44b6_0113de3b">
+              <td class="ordinal">86</td>
+              <td><strong>44b6_0113de3b</strong><br><span class="tag">relaxed_motion_proxy</span></td>
+              <td><code>11371</code><br>→ <code>11654</code></td>
+              <td>t=47<br>z,y,x=(30.000, 163.000, 195.000)</td>
+              <td>5.929</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: false, &quot;distance_um&quot;: 5.929, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: false, &quot;raw_edge_probability&quot;: null, &quot;selection_note&quot;: &quot;Highest-distance non-gap/non-division link after excluding the 10 longest; proxy only because Exp111 retained relaxed-pass counts per dataset, not per edge.&quot;}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-86" value="real_division"> real_division</label><label><input type="radio" name="label-86" value="false_division"> false_division</label><label><input type="radio" name="label-86" value="real_gap"> real_gap</label><label><input type="radio" name="label-86" value="false_gap"> false_gap</label><label><input type="radio" name="label-86" value="good_link"> good_link</label><label><input type="radio" name="label-86" value="bad_link"> bad_link</label><label><input type="radio" name="label-86" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-86" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="relaxed_motion_proxy" data-dataset="44b6_0113de3b">
+              <td class="ordinal">87</td>
+              <td><strong>44b6_0113de3b</strong><br><span class="tag">relaxed_motion_proxy</span></td>
+              <td><code>11083</code><br>→ <code>11333</code></td>
+              <td>t=46<br>z,y,x=(26.000, 86.000, 111.000)</td>
+              <td>5.915</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: false, &quot;distance_um&quot;: 5.9151, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: false, &quot;raw_edge_probability&quot;: null, &quot;selection_note&quot;: &quot;Highest-distance non-gap/non-division link after excluding the 10 longest; proxy only because Exp111 retained relaxed-pass counts per dataset, not per edge.&quot;}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-87" value="real_division"> real_division</label><label><input type="radio" name="label-87" value="false_division"> false_division</label><label><input type="radio" name="label-87" value="real_gap"> real_gap</label><label><input type="radio" name="label-87" value="false_gap"> false_gap</label><label><input type="radio" name="label-87" value="good_link"> good_link</label><label><input type="radio" name="label-87" value="bad_link"> bad_link</label><label><input type="radio" name="label-87" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-87" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="relaxed_motion_proxy" data-dataset="44b6_0b24845f">
+              <td class="ordinal">88</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">relaxed_motion_proxy</span></td>
+              <td><code>22406</code><br>→ <code>22778</code></td>
+              <td>t=65<br>z,y,x=(14.000, 181.000, 203.000)</td>
+              <td>5.915</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: false, &quot;distance_um&quot;: 5.9151, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: true, &quot;raw_edge_probability&quot;: 0.66564, &quot;selection_note&quot;: &quot;Highest-distance non-gap/non-division link after excluding the 10 longest; proxy only because Exp111 retained relaxed-pass counts per dataset, not per edge.&quot;}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-88" value="real_division"> real_division</label><label><input type="radio" name="label-88" value="false_division"> false_division</label><label><input type="radio" name="label-88" value="real_gap"> real_gap</label><label><input type="radio" name="label-88" value="false_gap"> false_gap</label><label><input type="radio" name="label-88" value="good_link"> good_link</label><label><input type="radio" name="label-88" value="bad_link"> bad_link</label><label><input type="radio" name="label-88" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-88" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="relaxed_motion_proxy" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">89</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">relaxed_motion_proxy</span></td>
+              <td><code>20281</code><br>→ <code>21040</code></td>
+              <td>t=25<br>z,y,x=(24.000, 223.000, 143.000)</td>
+              <td>5.915</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: false, &quot;distance_um&quot;: 5.9151, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: false, &quot;raw_edge_probability&quot;: null, &quot;selection_note&quot;: &quot;Highest-distance non-gap/non-division link after excluding the 10 longest; proxy only because Exp111 retained relaxed-pass counts per dataset, not per edge.&quot;}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-89" value="real_division"> real_division</label><label><input type="radio" name="label-89" value="false_division"> false_division</label><label><input type="radio" name="label-89" value="real_gap"> real_gap</label><label><input type="radio" name="label-89" value="false_gap"> false_gap</label><label><input type="radio" name="label-89" value="good_link"> good_link</label><label><input type="radio" name="label-89" value="bad_link"> bad_link</label><label><input type="radio" name="label-89" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-89" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="relaxed_motion_proxy" data-dataset="44b6_0113de3b">
+              <td class="ordinal">90</td>
+              <td><strong>44b6_0113de3b</strong><br><span class="tag">relaxed_motion_proxy</span></td>
+              <td><code>11168</code><br>→ <code>11451</code></td>
+              <td>t=46<br>z,y,x=(46.000, 72.000, 228.000)</td>
+              <td>5.873</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: false, &quot;distance_um&quot;: 5.8731, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: true, &quot;raw_edge_probability&quot;: 0.98549, &quot;selection_note&quot;: &quot;Highest-distance non-gap/non-division link after excluding the 10 longest; proxy only because Exp111 retained relaxed-pass counts per dataset, not per edge.&quot;}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-90" value="real_division"> real_division</label><label><input type="radio" name="label-90" value="false_division"> false_division</label><label><input type="radio" name="label-90" value="real_gap"> real_gap</label><label><input type="radio" name="label-90" value="false_gap"> false_gap</label><label><input type="radio" name="label-90" value="good_link"> good_link</label><label><input type="radio" name="label-90" value="bad_link"> bad_link</label><label><input type="radio" name="label-90" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-90" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="longest_final_edge" data-dataset="44b6_0b24845f">
+              <td class="ordinal">91</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">longest_final_edge</span></td>
+              <td><code>3080</code><br>→ <code>3471</code></td>
+              <td>t=7<br>z,y,x=(37.000, 175.000, 167.000)</td>
+              <td>7.358</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 7.3575, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: true, &quot;raw_edge_probability&quot;: 0.7778}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-91" value="real_division"> real_division</label><label><input type="radio" name="label-91" value="false_division"> false_division</label><label><input type="radio" name="label-91" value="real_gap"> real_gap</label><label><input type="radio" name="label-91" value="false_gap"> false_gap</label><label><input type="radio" name="label-91" value="good_link"> good_link</label><label><input type="radio" name="label-91" value="bad_link"> bad_link</label><label><input type="radio" name="label-91" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-91" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="longest_final_edge" data-dataset="44b6_0b24845f">
+              <td class="ordinal">92</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">longest_final_edge</span></td>
+              <td><code>3588</code><br>→ <code>3995</code></td>
+              <td>t=8<br>z,y,x=(53.000, 165.000, 5.000)</td>
+              <td>6.989</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.9894, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: true, &quot;raw_edge_probability&quot;: 0.53911}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-92" value="real_division"> real_division</label><label><input type="radio" name="label-92" value="false_division"> false_division</label><label><input type="radio" name="label-92" value="real_gap"> real_gap</label><label><input type="radio" name="label-92" value="false_gap"> false_gap</label><label><input type="radio" name="label-92" value="good_link"> good_link</label><label><input type="radio" name="label-92" value="bad_link"> bad_link</label><label><input type="radio" name="label-92" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-92" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="longest_final_edge" data-dataset="44b6_0b24845f">
+              <td class="ordinal">93</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">longest_final_edge</span></td>
+              <td><code>4225</code><br>→ <code>4633</code></td>
+              <td>t=10<br>z,y,x=(16.000, 60.000, 29.000)</td>
+              <td>6.942</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.942, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: true, &quot;raw_edge_probability&quot;: 0.50987}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-93" value="real_division"> real_division</label><label><input type="radio" name="label-93" value="false_division"> false_division</label><label><input type="radio" name="label-93" value="real_gap"> real_gap</label><label><input type="radio" name="label-93" value="false_gap"> false_gap</label><label><input type="radio" name="label-93" value="good_link"> good_link</label><label><input type="radio" name="label-93" value="bad_link"> bad_link</label><label><input type="radio" name="label-93" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-93" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="longest_final_edge" data-dataset="44b6_0b24845f">
+              <td class="ordinal">94</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">longest_final_edge</span></td>
+              <td><code>15510</code><br>→ <code>15810</code></td>
+              <td>t=44<br>z,y,x=(50.000, 155.000, 193.000)</td>
+              <td>6.894</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.8943, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: true, &quot;raw_edge_probability&quot;: 0.72646}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-94" value="real_division"> real_division</label><label><input type="radio" name="label-94" value="false_division"> false_division</label><label><input type="radio" name="label-94" value="real_gap"> real_gap</label><label><input type="radio" name="label-94" value="false_gap"> false_gap</label><label><input type="radio" name="label-94" value="good_link"> good_link</label><label><input type="radio" name="label-94" value="bad_link"> bad_link</label><label><input type="radio" name="label-94" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-94" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="longest_final_edge" data-dataset="44b6_0b24845f">
+              <td class="ordinal">95</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">longest_final_edge</span></td>
+              <td><code>3842</code><br>→ <code>4234</code></td>
+              <td>t=9<br>z,y,x=(20.000, 88.000, 124.000)</td>
+              <td>6.700</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.7, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: true, &quot;raw_edge_probability&quot;: 0.87803}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-95" value="real_division"> real_division</label><label><input type="radio" name="label-95" value="false_division"> false_division</label><label><input type="radio" name="label-95" value="real_gap"> real_gap</label><label><input type="radio" name="label-95" value="false_gap"> false_gap</label><label><input type="radio" name="label-95" value="good_link"> good_link</label><label><input type="radio" name="label-95" value="bad_link"> bad_link</label><label><input type="radio" name="label-95" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-95" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="longest_final_edge" data-dataset="44b6_0b24845f">
+              <td class="ordinal">96</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">longest_final_edge</span></td>
+              <td><code>4426</code><br>→ <code>4831</code></td>
+              <td>t=10<br>z,y,x=(52.000, 197.000, 30.000)</td>
+              <td>6.700</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.7, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: false, &quot;raw_edge_probability&quot;: null}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-96" value="real_division"> real_division</label><label><input type="radio" name="label-96" value="false_division"> false_division</label><label><input type="radio" name="label-96" value="real_gap"> real_gap</label><label><input type="radio" name="label-96" value="false_gap"> false_gap</label><label><input type="radio" name="label-96" value="good_link"> good_link</label><label><input type="radio" name="label-96" value="bad_link"> bad_link</label><label><input type="radio" name="label-96" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-96" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="longest_final_edge" data-dataset="44b6_0b24845f">
+              <td class="ordinal">97</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">longest_final_edge</span></td>
+              <td><code>3977</code><br>→ <code>4366</code></td>
+              <td>t=9<br>z,y,x=(45.000, 191.000, 153.000)</td>
+              <td>6.663</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.663, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: false, &quot;raw_edge_probability&quot;: null}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-97" value="real_division"> real_division</label><label><input type="radio" name="label-97" value="false_division"> false_division</label><label><input type="radio" name="label-97" value="real_gap"> real_gap</label><label><input type="radio" name="label-97" value="false_gap"> false_gap</label><label><input type="radio" name="label-97" value="good_link"> good_link</label><label><input type="radio" name="label-97" value="bad_link"> bad_link</label><label><input type="radio" name="label-97" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-97" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="longest_final_edge" data-dataset="6bba_05db0fb1">
+              <td class="ordinal">98</td>
+              <td><strong>6bba_05db0fb1</strong><br><span class="tag">longest_final_edge</span></td>
+              <td><code>30833</code><br>→ <code>31718</code></td>
+              <td>t=38<br>z,y,x=(18.000, 3.000, 185.000)</td>
+              <td>6.663</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.663, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: false, &quot;raw_edge_probability&quot;: null}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-98" value="real_division"> real_division</label><label><input type="radio" name="label-98" value="false_division"> false_division</label><label><input type="radio" name="label-98" value="real_gap"> real_gap</label><label><input type="radio" name="label-98" value="false_gap"> false_gap</label><label><input type="radio" name="label-98" value="good_link"> good_link</label><label><input type="radio" name="label-98" value="bad_link"> bad_link</label><label><input type="radio" name="label-98" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-98" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="longest_final_edge" data-dataset="44b6_0b24845f">
+              <td class="ordinal">99</td>
+              <td><strong>44b6_0b24845f</strong><br><span class="tag">longest_final_edge</span></td>
+              <td><code>189</code><br>→ <code>611</code></td>
+              <td>t=0<br>z,y,x=(21.000, 137.000, 124.000)</td>
+              <td>6.613</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.6133, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: true, &quot;raw_edge_probability&quot;: 0.72619}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-99" value="real_division"> real_division</label><label><input type="radio" name="label-99" value="false_division"> false_division</label><label><input type="radio" name="label-99" value="real_gap"> real_gap</label><label><input type="radio" name="label-99" value="false_gap"> false_gap</label><label><input type="radio" name="label-99" value="good_link"> good_link</label><label><input type="radio" name="label-99" value="bad_link"> bad_link</label><label><input type="radio" name="label-99" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-99" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            
+            <tr data-event-type="longest_final_edge" data-dataset="44b6_0113de3b">
+              <td class="ordinal">100</td>
+              <td><strong>44b6_0113de3b</strong><br><span class="tag">longest_final_edge</span></td>
+              <td><code>12176</code><br>→ <code>12469</code></td>
+              <td>t=50<br>z,y,x=(29.000, 38.000, 160.000)</td>
+              <td>6.551</td>
+              <td><details><summary>flags/features</summary><code class="feature-json">{&quot;above_tight_6um_gate&quot;: true, &quot;distance_um&quot;: 6.5506, &quot;dt&quot;: 1, &quot;per_edge_motion_pass_retained&quot;: false, &quot;present_in_raw_geff&quot;: false, &quot;raw_edge_probability&quot;: null}</code></details></td>
+              <td><div class="placeholder">XY max projection unavailable<br><small>Expected frames t−1, t, t+1, t+2</small></div></td>
+              <td><fieldset><legend>Manual label (not saved)</legend><label><input type="radio" name="label-100" value="real_division"> real_division</label><label><input type="radio" name="label-100" value="false_division"> false_division</label><label><input type="radio" name="label-100" value="real_gap"> real_gap</label><label><input type="radio" name="label-100" value="false_gap"> false_gap</label><label><input type="radio" name="label-100" value="good_link"> good_link</label><label><input type="radio" name="label-100" value="bad_link"> bad_link</label><label><input type="radio" name="label-100" value="ambiguous"> ambiguous</label><label><input type="radio" name="label-100" value="cannot_judge"> cannot_judge</label></fieldset></td>
+            </tr>
+            </tbody>
+  </table>
+</main>
+</body>
+</html>

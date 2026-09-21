@@ -1,0 +1,1 @@
+{"edge_tp": 713, "edge_fp": 76, "edge_fn": 132, "division_tp": 0, "division_fp": 0, "division_fn": 0, "num_pred_nodes": 6658, "node_recall": 0.9140534262485482, "total_node_ratio": 0.04652624960704181, "edge_jaccard": 0.7741585233441911, "adj_edge_jaccard": 0.770556654074938, "estimated_nodes": 6362.0}

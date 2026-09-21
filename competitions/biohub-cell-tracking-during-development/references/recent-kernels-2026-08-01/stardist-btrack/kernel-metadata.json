@@ -1,0 +1,25 @@
+{
+  "id": "aaaa1597/s1-06-stardist-btrack-pipeline",
+  "id_no": 128779175,
+  "title": "s1_06_stardist_btrack_pipeline",
+  "code_file": "s1-06-stardist-btrack-pipeline.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [],
+  "dataset_sources": [
+    "",
+    "aaaa1597/tracksdata-offline-installation-wheels",
+    "aaaa1597/zarr-offline-installation-wheels"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "model_sources": [],
+  "docker_image": "gcr.io/kaggle-images/python@sha256:dafd4ce5668bbf1ad422e4c109e0f18c9623c3a7c7f48b0235f13142755c40b9",
+  "machine_shape": "None"
+}

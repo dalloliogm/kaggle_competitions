@@ -1,0 +1,52 @@
+{
+  "created_utc": "2026-08-02T08:35:28.729988+00:00",
+  "code_version": "lateral-self-align-mask-v1",
+  "s4000_public_reference": 6.435,
+  "selected_wells": 60,
+  "eligible_mode": "deterministic_screen",
+  "mask_fractions": [
+    0.5,
+    0.65,
+    0.75
+  ],
+  "strict_overall_gain": 0.02589710549028723,
+  "strict_negative_gain": 0.29465523698338814,
+  "strict_fraction_gains": {
+    "0.5": 0.0,
+    "0.65": -0.408959957277208,
+    "0.75": 0.8639711458414823
+  },
+  "bootstrap": {
+    "strict": {
+      "draws": 2000,
+      "mean": 0.026724225904227312,
+      "ci_low": -0.19949708850037756,
+      "ci_high": 0.2700085423013863
+    },
+    "corr_gate": {
+      "draws": 2000,
+      "mean": -48.78979123869231,
+      "ci_low": -62.451529445217325,
+      "ci_high": -34.84361119327966
+    }
+  },
+  "gates": {
+    "screen_is_all_eligible": false,
+    "strict_overall_gain_at_least_0_10": false,
+    "strict_negative_gain_at_least_0_25": true,
+    "strict_improves_at_least_two_fractions": false,
+    "strict_bootstrap_ci_low_positive": false,
+    "predictions_finite": true
+  },
+  "promising_for_s4000_integration": false,
+  "limitations": [
+    "This standalone validation does not reproduce the full GS1.30/s4000 prediction path.",
+    "True tail direction is used only for diagnostic slices, never for prediction or gating.",
+    "A passing screen requires an all-773-well confirmation and then a paired s4000 integration test."
+  ],
+  "versions": {
+    "python": "3.14.3",
+    "numpy": "2.4.4",
+    "pandas": "3.0.2"
+  }
+}

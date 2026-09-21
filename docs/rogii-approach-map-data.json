@@ -1,0 +1,148 @@
+{
+  "title": "ROGII Wellbore Geology Prediction — approach map",
+  "as_of": "2026-08-14",
+  "competition": {
+    "description": "Predict true vertical thickness/depth (TVT) along horizontal wellbores; Kaggle evaluates row-weighted RMSE, so long hidden tails carry more weight.",
+    "prediction_target": "Submit id,tvt predictions for the hidden tails of horizontal wellbores, conditioning on drilling/log data, typewell curves, and each well's visible TVT prefix.",
+    "models": "Target-free geosteering stack: particle-filter, beam-search, and DTW geological anchors; LightGBM/CatBoost/Ridge residual learners; model-package predictions and visible-prefix calibration.",
+    "url": "https://www.kaggle.com/competitions/rogii-wellbore-geology-prediction",
+    "started": "Not recorded",
+    "entered": "Not recorded (entry confirmed)",
+    "finished": "2026-08-05",
+    "standing": "Finished. Best recorded public draw: 6.435 (submission 55170737). Private score: Not recorded. Final rank: 753 / 6,063 recorded teams.",
+    "lesson": "A grouped-by-well and masked-prefix screen is essential: a near-perfect visible-prefix overlap shortcut scored 9.565 on hidden data, while a clean GS1.30 particle-filter draw reached 6.435. Scores are empirical draws because grading re-executes unseeded PF features."
+  },
+  "lanes": [
+    {"id": "backbone", "title": "Backbone evolution"},
+    {"id": "ablations", "title": "Submitted ablations and reliability"},
+    {"id": "offline", "title": "Offline screens and rejected directions"}
+  ],
+  "nodes": [
+    {
+      "id": "early-baseline",
+      "lane": "backbone",
+      "title": "Early neural / dual-PF baseline",
+      "summary": "PyTorch NN starter scored 15.744; the later triple-signal beam-search + dual PF + LightGBM baseline scored 11.107.",
+      "score": "Public 15.744 and 11.107",
+      "status": "submitted",
+      "parents": []
+    },
+    {
+      "id": "target-free-geosteering",
+      "lane": "backbone",
+      "title": "Target-free geosteering rebuild",
+      "summary": "Adopted the public PF/beam/DTW anchor plus residual-learner lineage. The contact-gated overlap override was initially enabled.",
+      "score": "Public 9.565 with override",
+      "status": "submitted",
+      "parents": ["early-baseline"]
+    },
+    {
+      "id": "no-override",
+      "lane": "backbone",
+      "title": "Disable contact override",
+      "summary": "One-line no-override ablation exposed that near-perfect reconstruction of placeholder prefixes overfit the hidden grading data.",
+      "score": "Public 7.102",
+      "status": "submitted",
+      "parents": ["target-free-geosteering"]
+    },
+    {
+      "id": "gs130",
+      "lane": "backbone",
+      "title": "GS1.30 PF likelihood widening",
+      "summary": "Multiplied the PF gamma-ray likelihood sigma by 1.3 on the vp_balanced_modelpkg_005 stack; three reproducibility draws formed a tight band.",
+      "score": "Public 6.474 / 6.562 / 6.558 (mean about 6.53)",
+      "status": "submitted",
+      "parents": ["no-override"]
+    },
+    {
+      "id": "clean-gs130",
+      "lane": "backbone",
+      "title": "Clean GS1.30 fork",
+      "summary": "Removed the Q0522 hard-coded placeholder-data mutation, retaining the otherwise successful GS1.30 lineage.",
+      "score": "Public 6.558",
+      "status": "submitted",
+      "parents": ["gs130"]
+    },
+    {
+      "id": "s4000",
+      "lane": "backbone",
+      "title": "Clean GS1.30 seeded offset +4000 (s4000)",
+      "summary": "Best recorded account draw. It is a preserved final-submission candidate, not proof that +4000 is intrinsically superior under PF randomness.",
+      "score": "Best public 6.435 (submission 55170737)",
+      "status": "best",
+      "parents": ["clean-gs130"]
+    },
+    {
+      "id": "model-package",
+      "lane": "ablations",
+      "title": "Model-package-only prediction",
+      "summary": "Pure pretrained model-package/TabICL output initially beat the sweep, but identical kernel/version reruns later produced 20.067 and an exception.",
+      "score": "Public 7.097; later 20.067; then grading exception",
+      "status": "submitted",
+      "parents": ["target-free-geosteering"]
+    },
+    {
+      "id": "component-sweep",
+      "lane": "ablations",
+      "title": "Component sweep: learned branch and PF anchor",
+      "summary": "The pure LightGBM/CatBoost learned branch was weaker; the pure PF/ridge anchor twice failed at grading despite valid interactive outputs.",
+      "score": "Learned branch public 7.856; PF anchor: platform grading exception twice",
+      "status": "rejected",
+      "parents": ["no-override"]
+    },
+    {
+      "id": "ensemble",
+      "lane": "ablations",
+      "title": "Model-package + no-override ensemble",
+      "summary": "Averaged two near-tied but row-wise different candidates. The merge was verified by id, yet the one scored draw regressed badly.",
+      "score": "Public 11.736",
+      "status": "rejected",
+      "parents": ["model-package", "no-override"]
+    },
+    {
+      "id": "denoising",
+      "lane": "ablations",
+      "title": "GR denoising: median-7 and FFT-notch",
+      "summary": "Both isolated tracker-path probes regressed: centered rolling-median (window 7) and dominant-frequency FFT notch.",
+      "score": "Public 9.325 (median-7); 10.819 (FFT-notch)",
+      "status": "rejected",
+      "parents": ["gs130"]
+    },
+    {
+      "id": "neighbor-transfer",
+      "lane": "ablations",
+      "title": "Neighbor-well curve transfer",
+      "summary": "A locally validated detrended-wiggle transfer found close neighbours, but v1 twice failed at grading and defensive v2 also failed; a stacked seed hedge scored 13.011.",
+      "score": "Platform grading exceptions; stacked branch-hedge public 13.011",
+      "status": "rejected",
+      "parents": ["no-override"]
+    },
+    {
+      "id": "physics-audit",
+      "lane": "offline",
+      "title": "Physics-notebook ensemble candidate audit",
+      "summary": "Static source comparison found the apparent 6.505 alternative was not independent: it matched clean GS1.30 functions and retained the hard-coded Q0522 mutation.",
+      "score": "Not submitted; source fork had public 6.505",
+      "status": "rejected",
+      "parents": ["clean-gs130"]
+    },
+    {
+      "id": "azimuth",
+      "lane": "offline",
+      "title": "Azimuth-conditioned learned model",
+      "summary": "Paired 196-feature control versus 200-feature conditioned models on five whole-well folds showed no credible improvement.",
+      "score": "Not submitted; OOF worsened 11.408466 to 11.408850",
+      "status": "not-submitted",
+      "parents": ["gs130"]
+    },
+    {
+      "id": "self-alignment",
+      "lane": "offline",
+      "title": "Direction-gated lateral self-alignment",
+      "summary": "Masked-prefix screen over 60 wells and three fractions failed integration gates; permissive correlation gating caused severe regression.",
+      "score": "Not submitted; strict pooled gain +0.0259 ft, bootstrap CI [-0.1995, +0.2700]",
+      "status": "not-submitted",
+      "parents": ["s4000"]
+    }
+  ]
+}

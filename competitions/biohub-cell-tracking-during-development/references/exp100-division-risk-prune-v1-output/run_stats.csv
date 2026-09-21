@@ -1,0 +1,2 @@
+experiment_tag,input_path,input_rows,output_rows,input_nodes,output_nodes,input_edges,output_edges,input_division_like_sources,pruned_division_edges,output_division_like_sources,prune_frac,risk_min_pruned,risk_max_pruned
+exp100_division_risk_prune_top5pct,/kaggle/input/notebooks/dalloliogm/biohub-exp073-gap-5-8-public/submission.csv,251900,251879,128217,128217,123683,123662,418,21,397,0.05,4.37254627116212,5.454097702465155

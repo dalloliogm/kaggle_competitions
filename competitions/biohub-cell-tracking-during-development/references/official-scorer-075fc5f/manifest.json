@@ -1,0 +1,9 @@
+{
+  "repository": "https://github.com/royerlab/kaggle-cell-tracking-competition",
+  "revision": "075fc5f5a52d11077f9dc2b074644618f26939e2",
+  "files": {
+    "tracking_cellmot/metrics.py": "cfdd596e3f8909cca14db0682889738b19ff75c3808b3773175aba9367ca7444",
+    "tracking_cellmot/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tracking_cellmot/division_metrics.py": "0635c38621a38f1eb4b55a302b4a817a88e9094930dfc2dab16faeeee60f4dc9"
+  }
+}

@@ -1,0 +1,243 @@
+[{"stream_name":"stderr","time":6.369208923,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":6.369281473,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":6.369302737,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":6.369307411,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":6.97495385,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":6.974990203,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":6.974995972,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":6.975000738,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":12.944877052,"data":"Competition: /kaggle/input/competitions/biohub-cell-tracking-during-development\n"}
+,{"stream_name":"stdout","time":12.944944196,"data":"CUDA available: True\n"}
+,{"stream_name":"stdout","time":12.944951719,"data":"GPU: Tesla P100-PCIE-16GB\n"}
+,{"stream_name":"stderr","time":12.94609092,"data":"/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:435: UserWarning: \n"}
+,{"stream_name":"stderr","time":12.946115997,"data":"    Found GPU0 Tesla P100-PCIE-16GB which is of cuda capability 6.0.\n"}
+,{"stream_name":"stderr","time":12.94612168,"data":"    Minimum and Maximum cuda capability supported by this version of PyTorch is\n"}
+,{"stream_name":"stderr","time":12.946126583,"data":"    (7.0) - (12.0)\n"}
+,{"stream_name":"stderr","time":12.946131256,"data":"    \n"}
+,{"stream_name":"stderr","time":12.946136217,"data":"  queued_call()\n"}
+,{"stream_name":"stderr","time":12.946140613,"data":"/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:435: UserWarning: \n"}
+,{"stream_name":"stderr","time":12.94614562,"data":"    Please install PyTorch with a following CUDA\n"}
+,{"stream_name":"stderr","time":12.946150013,"data":"    configurations:  12.6 following instructions at\n"}
+,{"stream_name":"stderr","time":12.946155537,"data":"    https://pytorch.org/get-started/locally/\n"}
+,{"stream_name":"stderr","time":12.946160747,"data":"    \n"}
+,{"stream_name":"stderr","time":12.94616521,"data":"  queued_call()\n"}
+,{"stream_name":"stderr","time":12.946169696,"data":"/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:435: UserWarning: \n"}
+,{"stream_name":"stderr","time":12.946175041,"data":"Tesla P100-PCIE-16GB with CUDA capability sm_60 is not compatible with the current PyTorch installation.\n"}
+,{"stream_name":"stderr","time":12.946179845,"data":"The current PyTorch install supports CUDA capabilities sm_70 sm_75 sm_80 sm_86 sm_90 sm_100 sm_120.\n"}
+,{"stream_name":"stderr","time":12.946184661,"data":"If you want to use the Tesla P100-PCIE-16GB GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/\n"}
+,{"stream_name":"stderr","time":12.94618932,"data":"\n"}
+,{"stream_name":"stderr","time":12.946211121,"data":"  queued_call()\n"}
+,{"stream_name":"stderr","time":12.946217368,"data":"\n"}
+,{"stream_name":"stderr","time":12.946221801,"data":"/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:435: UserWarning: \n"}
+,{"stream_name":"stderr","time":12.946227235,"data":"    Found GPU0 Tesla P100-PCIE-16GB which is of cuda capability 6.0.\n"}
+,{"stream_name":"stderr","time":12.946232023,"data":"    Minimum and Maximum cuda capability supported by this version of PyTorch is\n"}
+,{"stream_name":"stderr","time":12.946250844,"data":"    (7.0) - (12.0)\n"}
+,{"stream_name":"stderr","time":12.946255507,"data":"    \n"}
+,{"stream_name":"stderr","time":12.946258891,"data":"  queued_call()\n"}
+,{"stream_name":"stderr","time":12.946262244,"data":"/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:435: UserWarning: \n"}
+,{"stream_name":"stderr","time":12.946265789,"data":"    Please install PyTorch with a following CUDA\n"}
+,{"stream_name":"stderr","time":12.946270238,"data":"    configurations:  12.6 following instructions at\n"}
+,{"stream_name":"stderr","time":12.94627361,"data":"    https://pytorch.org/get-started/locally/\n"}
+,{"stream_name":"stderr","time":12.946277272,"data":"    \n"}
+,{"stream_name":"stderr","time":12.946280731,"data":"  queued_call()\n"}
+,{"stream_name":"stderr","time":12.946284508,"data":"/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:435: UserWarning: \n"}
+,{"stream_name":"stderr","time":12.946288255,"data":"Tesla P100-PCIE-16GB with CUDA capability sm_60 is not compatible with the current PyTorch installation.\n"}
+,{"stream_name":"stderr","time":12.946291682,"data":"The current PyTorch install supports CUDA capabilities sm_70 sm_75 sm_80 sm_86 sm_90 sm_100 sm_120.\n"}
+,{"stream_name":"stderr","time":12.946295308,"data":"If you want to use the Tesla P100-PCIE-16GB GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/\n"}
+,{"stream_name":"stderr","time":12.946299225,"data":"\n"}
+,{"stream_name":"stderr","time":12.946302388,"data":"  queued_call()\n"}
+,{"stream_name":"stderr","time":56.230616514,"data":"ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n"}
+,{"stream_name":"stderr","time":56.230655099,"data":"bigframes 2.39.0 requires google-cloud-bigquery-storage\u003c3.0.0,\u003e=2.30.0, which is not installed.\n"}
+,{"stream_name":"stderr","time":56.230663102,"data":"google-adk 1.29.0 requires google-cloud-bigquery-storage\u003e=2.0.0, which is not installed.\n"}
+,{"stream_name":"stderr","time":56.230668818,"data":"datasets 5.0.0 requires fsspec[http]\u003c=2026.4.0,\u003e=2023.1.0, but you have fsspec 2026.6.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.230673928,"data":"ydata-profiling 4.18.4 requires numba\u003c0.63,\u003e=0.60, but you have numba 0.65.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.230688289,"data":"ydata-profiling 4.18.4 requires numpy\u003c2.4,\u003e=1.22, but you have numpy 2.4.6 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.230693403,"data":"ydata-profiling 4.18.4 requires scipy\u003c1.17,\u003e=1.8, but you have scipy 1.18.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.230698089,"data":"google-colab 1.0.0 requires jupyter-server==2.14.0, but you have jupyter-server 2.12.5 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.230702895,"data":"google-colab 1.0.0 requires pandas==2.2.2, but you have pandas 2.3.3 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.230707336,"data":"google-colab 1.0.0 requires requests==2.32.4, but you have requests 2.34.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.230711909,"data":"dopamine-rl 4.1.2 requires gym\u003c=0.25.2, but you have gym 0.26.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.230718046,"data":"ibis-framework 9.5.0 requires toolz\u003c1,\u003e=0.11, but you have toolz 1.1.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.23072563,"data":"moviepy 1.0.3 requires decorator\u003c5.0,\u003e=4.0.2, but you have decorator 5.3.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.230751609,"data":"bigframes 2.39.0 requires rich\u003c14,\u003e=12.4.4, but you have rich 15.0.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.230756633,"data":"cuml-cu12 26.2.0 requires numba\u003c0.62.0,\u003e=0.60.0, but you have numba 0.65.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.230761019,"data":"distributed 2026.1.1 requires dask\u003c2026.1.2,\u003e=2026.1.1, but you have dask 2026.6.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.230765579,"data":"cudf-cu12 26.2.1 requires numba\u003c0.62.0,\u003e=0.60.0, but you have numba 0.65.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.230769236,"data":"rapids-dask-dependency 26.2.0 requires dask==2026.1.1, but you have dask 2026.6.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.230772833,"data":"cucim-cu12 26.2.0 requires scikit-image\u003c0.26.0,\u003e=0.19.0, but you have scikit-image 0.26.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.230777843,"data":"pyiceberg 0.11.1 requires rich\u003c15.0.0,\u003e=10.11.0, but you have rich 15.0.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.230781515,"data":"cudf-polars-cu12 26.2.1 requires polars\u003c1.36,\u003e=1.30, but you have polars 1.42.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.230785102,"data":"gcsfs 2025.3.0 requires fsspec==2025.3.0, but you have fsspec 2026.6.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.230788599,"data":"gradio 5.50.0 requires pillow\u003c12.0,\u003e=8.0, but you have pillow 12.2.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.230792157,"data":"gradio 5.50.0 requires pydantic\u003c=2.12.3,\u003e=2.0, but you have pydantic 2.13.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438850653,"data":"ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n"}
+,{"stream_name":"stderr","time":56.438880536,"data":"bigframes 2.39.0 requires google-cloud-bigquery-storage\u003c3.0.0,\u003e=2.30.0, which is not installed.\n"}
+,{"stream_name":"stderr","time":56.438885648,"data":"google-adk 1.29.0 requires google-cloud-bigquery-storage\u003e=2.0.0, which is not installed.\n"}
+,{"stream_name":"stderr","time":56.438891493,"data":"datasets 5.0.0 requires fsspec[http]\u003c=2026.4.0,\u003e=2023.1.0, but you have fsspec 2026.6.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438898197,"data":"ydata-profiling 4.18.4 requires numba\u003c0.63,\u003e=0.60, but you have numba 0.65.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438900701,"data":"ydata-profiling 4.18.4 requires numpy\u003c2.4,\u003e=1.22, but you have numpy 2.4.6 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438903154,"data":"ydata-profiling 4.18.4 requires scipy\u003c1.17,\u003e=1.8, but you have scipy 1.18.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438905653,"data":"google-colab 1.0.0 requires jupyter-server==2.14.0, but you have jupyter-server 2.12.5 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438908196,"data":"google-colab 1.0.0 requires pandas==2.2.2, but you have pandas 2.3.3 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438910508,"data":"google-colab 1.0.0 requires requests==2.32.4, but you have requests 2.34.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438912991,"data":"dopamine-rl 4.1.2 requires gym\u003c=0.25.2, but you have gym 0.26.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438915369,"data":"ibis-framework 9.5.0 requires toolz\u003c1,\u003e=0.11, but you have toolz 1.1.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438925509,"data":"moviepy 1.0.3 requires decorator\u003c5.0,\u003e=4.0.2, but you have decorator 5.3.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438928259,"data":"bigframes 2.39.0 requires rich\u003c14,\u003e=12.4.4, but you have rich 15.0.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438930654,"data":"cuml-cu12 26.2.0 requires numba\u003c0.62.0,\u003e=0.60.0, but you have numba 0.65.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438933074,"data":"distributed 2026.1.1 requires dask\u003c2026.1.2,\u003e=2026.1.1, but you have dask 2026.6.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438935553,"data":"cudf-cu12 26.2.1 requires numba\u003c0.62.0,\u003e=0.60.0, but you have numba 0.65.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438937984,"data":"rapids-dask-dependency 26.2.0 requires dask==2026.1.1, but you have dask 2026.6.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438940321,"data":"cucim-cu12 26.2.0 requires scikit-image\u003c0.26.0,\u003e=0.19.0, but you have scikit-image 0.26.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438943975,"data":"pyiceberg 0.11.1 requires rich\u003c15.0.0,\u003e=10.11.0, but you have rich 15.0.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438946458,"data":"cudf-polars-cu12 26.2.1 requires polars\u003c1.36,\u003e=1.30, but you have polars 1.42.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438949143,"data":"gcsfs 2025.3.0 requires fsspec==2025.3.0, but you have fsspec 2026.6.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438951586,"data":"gradio 5.50.0 requires pillow\u003c12.0,\u003e=8.0, but you have pillow 12.2.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438954001,"data":"gradio 5.50.0 requires pydantic\u003c=2.12.3,\u003e=2.0, but you have pydantic 2.13.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438956439,"data":"\n"}
+,{"stream_name":"stderr","time":56.438958683,"data":"ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n"}
+,{"stream_name":"stderr","time":56.438961215,"data":"bigframes 2.39.0 requires google-cloud-bigquery-storage\u003c3.0.0,\u003e=2.30.0, which is not installed.\n"}
+,{"stream_name":"stderr","time":56.438963605,"data":"google-adk 1.29.0 requires google-cloud-bigquery-storage\u003e=2.0.0, which is not installed.\n"}
+,{"stream_name":"stderr","time":56.438965938,"data":"datasets 5.0.0 requires fsspec[http]\u003c=2026.4.0,\u003e=2023.1.0, but you have fsspec 2026.6.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438968451,"data":"ydata-profiling 4.18.4 requires numba\u003c0.63,\u003e=0.60, but you have numba 0.65.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438970805,"data":"ydata-profiling 4.18.4 requires numpy\u003c2.4,\u003e=1.22, but you have numpy 2.4.6 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438973263,"data":"ydata-profiling 4.18.4 requires scipy\u003c1.17,\u003e=1.8, but you have scipy 1.18.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438975614,"data":"google-colab 1.0.0 requires jupyter-server==2.14.0, but you have jupyter-server 2.12.5 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438977933,"data":"google-colab 1.0.0 requires pandas==2.2.2, but you have pandas 2.3.3 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438980199,"data":"google-colab 1.0.0 requires requests==2.32.4, but you have requests 2.34.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438984469,"data":"dopamine-rl 4.1.2 requires gym\u003c=0.25.2, but you have gym 0.26.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438986944,"data":"ibis-framework 9.5.0 requires toolz\u003c1,\u003e=0.11, but you have toolz 1.1.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438989423,"data":"moviepy 1.0.3 requires decorator\u003c5.0,\u003e=4.0.2, but you have decorator 5.3.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438991776,"data":"bigframes 2.39.0 requires rich\u003c14,\u003e=12.4.4, but you have rich 15.0.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438994106,"data":"cuml-cu12 26.2.0 requires numba\u003c0.62.0,\u003e=0.60.0, but you have numba 0.65.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438996582,"data":"distributed 2026.1.1 requires dask\u003c2026.1.2,\u003e=2026.1.1, but you have dask 2026.6.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.438999223,"data":"cudf-cu12 26.2.1 requires numba\u003c0.62.0,\u003e=0.60.0, but you have numba 0.65.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.439001609,"data":"rapids-dask-dependency 26.2.0 requires dask==2026.1.1, but you have dask 2026.6.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.439003926,"data":"cucim-cu12 26.2.0 requires scikit-image\u003c0.26.0,\u003e=0.19.0, but you have scikit-image 0.26.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.43900629,"data":"pyiceberg 0.11.1 requires rich\u003c15.0.0,\u003e=10.11.0, but you have rich 15.0.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.439008636,"data":"cudf-polars-cu12 26.2.1 requires polars\u003c1.36,\u003e=1.30, but you have polars 1.42.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.439011008,"data":"gcsfs 2025.3.0 requires fsspec==2025.3.0, but you have fsspec 2026.6.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.439013351,"data":"gradio 5.50.0 requires pillow\u003c12.0,\u003e=8.0, but you have pillow 12.2.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":56.439015699,"data":"gradio 5.50.0 requires pydantic\u003c=2.12.3,\u003e=2.0, but you have pydantic 2.13.4 which is incompatible.\n"}
+,{"stream_name":"stdout","time":67.548212715,"data":"Artifacts: /kaggle/input/datasets/thibautgoldsborough/cellmot-baseline-artifacts/cellmot-baseline-artifacts\n"}
+,{"stream_name":"stdout","time":67.548262779,"data":"Available splits: ['split_0']\n"}
+,{"stream_name":"stdout","time":67.548271163,"data":"Selected checkpoint: weights/unet_transformer/split_0/edge_predictor_best.pth\n"}
+,{"stream_name":"stdout","time":67.548277151,"data":"Isolated environment: 2.4.6 2.10.0+cu128 True\n"}
+,{"stream_name":"stdout","time":67.567301424,"data":"Exact GEFF evaluator ready\n"}
+,{"stream_name":"stdout","time":67.596370209,"data":"Validation samples: ['44b6_0113de3b', '6bba_05b6850b']\n"}
+,{"stream_name":"stdout","time":67.618100772,"data":"Prediction command configured for split_0\n"}
+,{"stream_name":"stderr","time":75.995277365,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":75.995307264,"data":"  File \"\u003cstring\u003e\", line 1, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":75.995313039,"data":"  File \"/usr/local/lib/python3.12/dist-packages/papermill/execute.py\", line 131, in execute_notebook\n"}
+,{"stream_name":"stderr","time":75.995435373,"data":"    raise_for_execution_errors(nb, output_path)\n"}
+,{"stream_name":"stderr","time":75.995500809,"data":"  File \"/usr/local/lib/python3.12/dist-packages/papermill/execute.py\", line 251, in raise_for_execution_errors\n"}
+,{"stream_name":"stderr","time":75.995681937,"data":"    raise error\n"}
+,{"stream_name":"stderr","time":75.995887839,"data":"papermill.exceptions.PapermillExecutionError: \n"}
+,{"stream_name":"stderr","time":75.995896293,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":75.995900599,"data":"Exception encountered at \"In [6]\":\n"}
+,{"stream_name":"stderr","time":75.995904335,"data":"---------------------------------------------------------------------------\n"}
+,{"stream_name":"stderr","time":75.995908757,"data":"RuntimeError                              Traceback (most recent call last)\n"}
+,{"stream_name":"stderr","time":75.995912376,"data":"/tmp/ipykernel_23/2694574852.py in \u003ccell line: 0\u003e()\n"}
+,{"stream_name":"stderr","time":75.995916214,"data":"----\u003e 1 prediction_paths, prediction_runtime = run_learned_prediction(validation_samples)\n"}
+,{"stream_name":"stderr","time":75.995919874,"data":"      2 \n"}
+,{"stream_name":"stderr","time":75.995923244,"data":"      3 validation_rows = []\n"}
+,{"stream_name":"stderr","time":75.995926594,"data":"      4 for index, (name, prediction_path) in enumerate(zip(validation_samples, prediction_paths), start=1):\n"}
+,{"stream_name":"stderr","time":75.995930178,"data":"      5     started = time.time()\n"}
+,{"stream_name":"stderr","time":75.995933594,"data":"\n"}
+,{"stream_name":"stderr","time":75.995936851,"data":"/tmp/ipykernel_23/2643715519.py in run_learned_prediction(sample_names)\n"}
+,{"stream_name":"stderr","time":75.995940263,"data":"     30     (WORKING / \"learned_predict.stderr.log\").write_text(result.stderr)\n"}
+,{"stream_name":"stderr","time":75.995943831,"data":"     31     if result.returncode != 0:\n"}
+,{"stream_name":"stderr","time":75.995947196,"data":"---\u003e 32         raise RuntimeError(\n"}
+,{"stream_name":"stderr","time":75.995950559,"data":"     33             f\"Learned prediction failed with code {result.returncode}:\\n\"\n"}
+,{"stream_name":"stderr","time":75.995954219,"data":"     34             + result.stderr[-5000:]\n"}
+,{"stream_name":"stderr","time":75.995957591,"data":"\n"}
+,{"stream_name":"stderr","time":75.995960781,"data":"RuntimeError: Learned prediction failed with code 1:\n"}
+,{"stream_name":"stderr","time":75.99596787,"data":"orking/cellmot_learned_site/dask/array/image.py:7: FutureWarning: `find_available_plugins` is deprecated since version 0.25 and will be removed in version 0.27. The plugin infrastructure of `skimage.io` is deprecated. Instead, use `imageio` or other I/O packages directly.\n"}
+,{"stream_name":"stderr","time":75.995974824,"data":"  from skimage.io import imread as sk_imread\n"}
+,{"stream_name":"stderr","time":75.995979302,"data":"/usr/lib/python3.12/importlib/__init__.py:90: FutureWarning: `reset_plugins` is deprecated since version 0.25 and will be removed in version 0.27. The plugin infrastructure of `skimage.io` is deprecated. Instead, use `imageio` or other I/O packages directly.\n"}
+,{"stream_name":"stderr","time":75.995984223,"data":"  return _bootstrap._gcd_import(name[level:], package, level)\n"}
+,{"stream_name":"stderr","time":75.995988058,"data":"/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:435: UserWarning: \n"}
+,{"stream_name":"stderr","time":75.995992373,"data":"    Found GPU0 Tesla P100-PCIE-16GB which is of cuda capability 6.0.\n"}
+,{"stream_name":"stderr","time":75.995996319,"data":"    Minimum and Maximum cuda capability supported by this version of PyTorch is\n"}
+,{"stream_name":"stderr","time":75.995999924,"data":"    (7.0) - (12.0)\n"}
+,{"stream_name":"stderr","time":75.996003254,"data":"    \n"}
+,{"stream_name":"stderr","time":75.996014358,"data":"  queued_call()\n"}
+,{"stream_name":"stderr","time":75.996017823,"data":"/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:435: UserWarning: \n"}
+,{"stream_name":"stderr","time":75.996022035,"data":"    Please install PyTorch with a following CUDA\n"}
+,{"stream_name":"stderr","time":75.996025424,"data":"    configurations:  12.6 following instructions at\n"}
+,{"stream_name":"stderr","time":75.99602883,"data":"    https://pytorch.org/get-started/locally/\n"}
+,{"stream_name":"stderr","time":75.996032217,"data":"    \n"}
+,{"stream_name":"stderr","time":75.996035403,"data":"  queued_call()\n"}
+,{"stream_name":"stderr","time":75.996038648,"data":"/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:435: UserWarning: \n"}
+,{"stream_name":"stderr","time":75.996042163,"data":"Tesla P100-PCIE-16GB with CUDA capability sm_60 is not compatible with the current PyTorch installation.\n"}
+,{"stream_name":"stderr","time":75.996045686,"data":"The current PyTorch install supports CUDA capabilities sm_70 sm_75 sm_80 sm_86 sm_90 sm_100 sm_120.\n"}
+,{"stream_name":"stderr","time":75.996049363,"data":"If you want to use the Tesla P100-PCIE-16GB GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/\n"}
+,{"stream_name":"stderr","time":75.996058947,"data":"\n"}
+,{"stream_name":"stderr","time":75.996073979,"data":"  queued_call()\n"}
+,{"stream_name":"stderr","time":75.996078258,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":75.99608199,"data":"  File \"/kaggle/working/cellmot_repo/scripts/predict_unet_transformer.py\", line 677, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":75.996086638,"data":"    main()\n"}
+,{"stream_name":"stderr","time":75.996090587,"data":"  File \"/kaggle/working/cellmot_repo/scripts/predict_unet_transformer.py\", line 662, in main\n"}
+,{"stream_name":"stderr","time":75.996094464,"data":"    predict(\n"}
+,{"stream_name":"stderr","time":75.996097813,"data":"  File \"/kaggle/working/cellmot_repo/scripts/predict_unet_transformer.py\", line 547, in predict\n"}
+,{"stream_name":"stderr","time":75.996101425,"data":"    coords, edges = predict_video(\n"}
+,{"stream_name":"stderr","time":75.996104742,"data":"                    ^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":75.996108068,"data":"  File \"/usr/local/lib/python3.12/dist-packages/torch/utils/_contextlib.py\", line 124, in decorate_context\n"}
+,{"stream_name":"stderr","time":75.996111678,"data":"    return func(*args, **kwargs)\n"}
+,{"stream_name":"stderr","time":75.996114991,"data":"           ^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":75.996118365,"data":"  File \"/kaggle/working/cellmot_repo/scripts/predict_unet_transformer.py\", line 372, in predict_video\n"}
+,{"stream_name":"stderr","time":75.996121933,"data":"    unet_out, det_logits = model.encode(imgs)\n"}
+,{"stream_name":"stderr","time":75.996125278,"data":"                           ^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":75.996128709,"data":"  File \"/kaggle/working/cellmot_repo/scripts/train_unet_transformer.py\", line 501, in encode\n"}
+,{"stream_name":"stderr","time":75.996132309,"data":"    unet_out = self.unet(window)  # (B, W, C_feat, *spatial)\n"}
+,{"stream_name":"stderr","time":75.996135773,"data":"               ^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":75.996139026,"data":"  File \"/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py\", line 1776, in _wrapped_call_impl\n"}
+,{"stream_name":"stderr","time":75.996142756,"data":"    return self._call_impl(*args, **kwargs)\n"}
+,{"stream_name":"stderr","time":75.996165595,"data":"           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":75.996169875,"data":"  File \"/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py\", line 1787, in _call_impl\n"}
+,{"stream_name":"stderr","time":75.996174279,"data":"    return forward_call(*args, **kwargs)\n"}
+,{"stream_name":"stderr","time":75.996177834,"data":"           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":75.996181883,"data":"  File \"/kaggle/working/cellmot_repo/src/tracking_cellmot/models/temporal_unet.py\", line 128, in forward\n"}
+,{"stream_name":"stderr","time":75.996186267,"data":"    x = self._run(block, x)\n"}
+,{"stream_name":"stderr","time":75.996189739,"data":"        ^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":75.996193322,"data":"  File \"/kaggle/working/cellmot_repo/src/tracking_cellmot/models/temporal_unet.py\", line 117, in _run\n"}
+,{"stream_name":"stderr","time":75.996197537,"data":"    return block(x)\n"}
+,{"stream_name":"stderr","time":75.996214942,"data":"           ^^^^^^^^\n"}
+,{"stream_name":"stderr","time":75.996219126,"data":"  File \"/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py\", line 1776, in _wrapped_call_impl\n"}
+,{"stream_name":"stderr","time":75.996226848,"data":"    return self._call_impl(*args, **kwargs)\n"}
+,{"stream_name":"stderr","time":75.996230265,"data":"           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":75.99623365,"data":"  File \"/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py\", line 1787, in _call_impl\n"}
+,{"stream_name":"stderr","time":75.996237284,"data":"    return forward_call(*args, **kwargs)\n"}
+,{"stream_name":"stderr","time":75.996240717,"data":"           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":75.996244063,"data":"  File \"/usr/local/lib/python3.12/dist-packages/torch/nn/modules/container.py\", line 253, in forward\n"}
+,{"stream_name":"stderr","time":75.996247669,"data":"    input = module(input)\n"}
+,{"stream_name":"stderr","time":75.996251015,"data":"            ^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":75.996254245,"data":"  File \"/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py\", line 1776, in _wrapped_call_impl\n"}
+,{"stream_name":"stderr","time":75.996257849,"data":"    return self._call_impl(*args, **kwargs)\n"}
+,{"stream_name":"stderr","time":75.996261128,"data":"           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":75.996264449,"data":"  File \"/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py\", line 1787, in _call_impl\n"}
+,{"stream_name":"stderr","time":75.996268207,"data":"    return forward_call(*args, **kwargs)\n"}
+,{"stream_name":"stderr","time":75.99627336,"data":"           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":75.996279579,"data":"  File \"/usr/local/lib/python3.12/dist-packages/torch/nn/modules/activation.py\", line 143, in forward\n"}
+,{"stream_name":"stderr","time":75.996294891,"data":"    return F.relu(input, inplace=self.inplace)\n"}
+,{"stream_name":"stderr","time":75.996298985,"data":"           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":75.99630294,"data":"  File \"/usr/local/lib/python3.12/dist-packages/torch/nn/functional.py\", line 1719, in relu\n"}
+,{"stream_name":"stderr","time":75.996307104,"data":"    result = torch.relu_(input)\n"}
+,{"stream_name":"stderr","time":75.996310972,"data":"             ^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":75.996314186,"data":"torch.AcceleratorError: CUDA error: no kernel image is available for execution on the device\n"}
+,{"stream_name":"stderr","time":75.996321435,"data":"Search for `cudaErrorNoKernelImageForDevice' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.\n"}
+,{"stream_name":"stderr","time":75.996325277,"data":"CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.\n"}
+,{"stream_name":"stderr","time":75.996328907,"data":"For debugging consider passing CUDA_LAUNCH_BLOCKING=1\n"}
+,{"stream_name":"stderr","time":75.996332285,"data":"Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.\n"}
+,{"stream_name":"stderr","time":75.996335703,"data":"\n"}
+,{"stream_name":"stderr","time":75.996338831,"data":"\n"}
+,{"stream_name":"stderr","time":75.99634202,"data":"\n"}
+,{"stream_name":"stderr","time":78.219267256,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":78.219307731,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":78.363395727,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":78.363437036,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":79.021203439,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":79.330794783,"data":"[NbConvertApp] Writing 45675 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":81.758977842,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":82.614292301,"data":"[NbConvertApp] Writing 349601 bytes to __results__.html\n"}
+]
