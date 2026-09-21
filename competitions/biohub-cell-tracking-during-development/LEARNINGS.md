@@ -1524,3 +1524,44 @@ Measured with the OFFICIAL metric on 5 labelled train movies. Evidence:
 - Private Kaggle notebook outputs are mounted under
   `/kaggle/input/notebooks/<owner>/<slug>/`. For composition kernels, discover
   expected files defensively and verify source identity before merging.
+
+## Division recall is an upstream property, not a gate setting (2026-09-21)
+
+The 2026-09-20 trace showed 15 of 34 ground-truth divisions refused with
+`P2_daughter_already_claimed` — the second daughter already had an incoming
+edge before any gate ran — and I put the ceiling for converting them at
+`+0.031`. Both the ceiling and the direction were wrong, and the targeted
+steal run measured exactly why. Full evidence:
+`references/targeted-steal-2026-09-21.md`.
+
+- **The claims are not weak.** Across all 15, the node already holding the
+  daughter is `0.21-3.06 um` away (median `1.68`) while the dividing parent is
+  `6.42-13.13 um` away (median `10.22`). The gain is negative in **15 of 15**.
+  No probability threshold or distance-gain rule fires on a single real
+  division, including a geometry-only arm requiring no gain at all. The
+  claiming edge came from motion-relink in 14 of 15 cases and carries a
+  learned probability above `0.5` in 11 of 15.
+- **The ceiling was 3x too high.** `10 of the 15` have parent-daughter
+  distance above `SAFE_DIV_MAX_UM = 9.0`, so the existing G4 gate rejects them
+  regardless of the claim. Reachable is at most 5 divisions (`~+0.010`), not
+  15. **Before quoting a ceiling from a blocked-reason tally, check the
+  blocked items against the gates they would face next** — counting a blocked
+  candidate as a recoverable one is the same error as crediting an aggregate
+  delta over samples the change does not move.
+- **All four arms lost.** Division Jaccard `0.1042 -> 0.0930`, div tp `5 -> 4`,
+  adjusted edge Jaccard down `0.0004-0.0008`. The steal fired only on nodes
+  that were not real daughters, destroying a true fork. The sweep kept `base`
+  and emitted sha `fe6f0a6f`, byte-identical to the banked 0.947 artifact.
+- **No paired test was required.** The restricted paired test exists to stop
+  us **accepting** a change that moves few samples; an arm that loses on the
+  aggregate *and* on the division term directly needs no further defence.
+- **Consequence.** Post-hoc division repair is exhausted: gates (six
+  configurations, recall pinned at 5), density (low/middle/high all
+  `0.946-0.947`), and now claim reclamation. Division recall of `5/34` is a
+  detection-and-linking property. Any further division work must change
+  detection or the relink stage, not the safe-division thresholds.
+- **Control discipline that made the result readable.** With the flag off the
+  patched function was verified behaviourally identical to the original on 120
+  random graphs before the kernel was pushed, so `base` was a genuine control;
+  with the flag on, the one-parent and out-degree<=2 invariants held on all
+  120. Verify a feature flag is inert *before* spending GPU hours on its arms.
