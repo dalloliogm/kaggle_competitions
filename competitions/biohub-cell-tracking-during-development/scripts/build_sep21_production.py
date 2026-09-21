@@ -8,6 +8,7 @@ knobs vary:
 
     PROD_DENSITY_ARM   a key of build_sep18_density_adaptive.ARMS
     PROD_GAP_CLOSE_UM  the gap-close base radius
+    PROD_MOTION_BONUS  the learned motion-relink bonus
     PROD_TAG           short slug suffix, so each config gets its own kernel
 
 Usage:
@@ -50,6 +51,8 @@ TAG = os.environ.get("PROD_TAG", "gap45")
 DENSITY_ARM = os.environ.get("PROD_DENSITY_ARM", "biohub-sep18-density-full")
 GAP_CLOSE_UM = os.environ.get("PROD_GAP_CLOSE_UM", "4.5")
 BASE_GAP_UM = "5.0"
+MOTION_BONUS = os.environ.get("PROD_MOTION_BONUS", "1.0")
+BASE_MOTION_BONUS = "1.0"
 
 OUT_DIR = WORKSPACE / "notebooks" / f"sep21-prod-{TAG}"
 TITLE = f"Biohub Sep21 Prod {TAG.replace('-', ' ').title()}"
@@ -89,6 +92,13 @@ GAP_NEW = f'os.environ["BIOHUB_GAP_CLOSE_UM"] = "{GAP_CLOSE_UM}"'
 GUARD_EXPECT_ANCHOR = f'    "BIOHUB_GAP_CLOSE_UM": {BASE_GAP_UM},'
 GUARD_EXPECT_NEW = f'    "BIOHUB_GAP_CLOSE_UM": {GAP_CLOSE_UM},'
 
+# Note the single quotes: this is how the source cell writes it. The drift
+# guard does NOT pin this key, so unlike GAP_CLOSE_UM there is no second
+# place to update - which is exactly why the builder checks rather than
+# assuming the same shape for every constant.
+BONUS_ANCHOR = f'os.environ["BIOHUB_MOTION_RELINK_LEARNED_BONUS"] = {BASE_MOTION_BONUS!r}'
+BONUS_NEW = f'os.environ["BIOHUB_MOTION_RELINK_LEARNED_BONUS"] = {MOTION_BONUS!r}'
+
 
 def main() -> None:
     notebook_path = next(SOURCE.glob("*.ipynb"))
@@ -121,6 +131,13 @@ def main() -> None:
     if gap_changes:
         edits["gap"] = (GAP_ANCHOR, GAP_NEW)
         edits["guard_expect"] = (GUARD_EXPECT_ANCHOR, GUARD_EXPECT_NEW)
+    bonus_changes = MOTION_BONUS != BASE_MOTION_BONUS
+    if bonus_changes:
+        if BONUS_ANCHOR not in before[0]:
+            raise RuntimeError(f"motion-bonus anchor not found: {BONUS_ANCHOR}")
+        if '"BIOHUB_MOTION_RELINK_LEARNED_BONUS"' in before[1]:
+            raise RuntimeError("the drift guard pins the motion bonus too; update it as well")
+        edits["bonus"] = (BONUS_ANCHOR, BONUS_NEW)
 
     counts = {k: 0 for k in edits}
     for cell in nb["cells"]:
@@ -162,6 +179,11 @@ def main() -> None:
             f"config sets {set_to.group(1)}, drift guard expects {expects.group(1)}, "
             f"intended {GAP_CLOSE_UM}")
 
+    if bonus_changes:
+        got = re.search(r'os\.environ\["BIOHUB_MOTION_RELINK_LEARNED_BONUS"\] = .([\d.]+).', after[0])
+        if not got or float(got.group(1)) != float(MOTION_BONUS):
+            raise RuntimeError(f"motion bonus did not land: {got.group(1) if got else None}")
+
     # Every density constant the arm names must actually appear in the cell.
     for key, value in ARM_ENV:
         if f'os.environ["{key}"] = "{value}"' not in after[0]:
@@ -181,6 +203,7 @@ def main() -> None:
     print(f"  kernel      dalloliogm/{SLUG}")
     print(f"  density arm {DENSITY_ARM}")
     print(f"  gap close   {GAP_CLOSE_UM} (base {BASE_GAP_UM})")
+    print(f"  relink bonus {MOTION_BONUS} (base {BASE_MOTION_BONUS})")
     print(f"  PASS: sha must DIFFER from arm F {ARM_F_SHA[:16]}...")
 
 
