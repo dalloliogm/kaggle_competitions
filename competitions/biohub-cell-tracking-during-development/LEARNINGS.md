@@ -1620,3 +1620,31 @@ the builder had changed only the config cell.
   stage; the test for that is that the output sha DIFFERS from arm F, with
   fewer gap edges. Confirmed: `eace787d` vs `fe6f0a6f`, gap edges 1280 ->
   1258, with relink (119,267) and division (95) counts unchanged.
+
+## An unattributed duplicate submission consumed a slot (2026-09-21)
+
+At 17:00 UTC, `ref=56438988` was submitted with the description
+`"SEP14 DCTTA det099; structurally validated; SHA 60f14085ca06"`. That sha was
+already submitted on 2026-09-14 as SEP14-3 (`ref=56240254`) and **is recorded
+in `references/submitted_shas.txt`**, so whatever sent it did not consult the
+dedup ledger.
+
+It did not come from the working session. Checked and ruled out: crontab,
+`/etc/cron.d`, `at` queue, running submitter processes, any script in the repo
+referencing that sha or `det099`, and other Claude sessions (none has touched
+this repo since 2026-09-10). **The source is unidentified.** A leftover job
+outside the container is the best hypothesis - this is the second occurrence
+of the pattern, after the stale background pusher that re-pushed dlow800 as v2
+and pushed a dhigh600 arm that had been dropped - but it is not confirmed.
+
+- **The dedup guard only protects the path that calls it.** `already_submitted()`
+  was hardened on 2026-09-14 after exactly this artifact was re-sent, and it
+  still holds for `await_validate_submit.py`. It cannot stop a submitter that
+  does not go through that function. A guard inside one code path is not a
+  guarantee about the account.
+- **Slot accounting must be read from Kaggle, not from a local tally.** The
+  session count said 3 used; the account said 4. Before promising a slot,
+  re-read `kaggle competitions submissions` and count entries inside the
+  current UTC day rather than trusting what this session remembers sending.
+- Practical effect: the remaining budget for the day was one slot, not two,
+  and that had to be corrected to the user after having been stated wrongly.
