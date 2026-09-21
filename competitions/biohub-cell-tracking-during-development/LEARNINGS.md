@@ -1565,3 +1565,58 @@ steal run measured exactly why. Full evidence:
   random graphs before the kernel was pushed, so `base` was a genuine control;
   with the flag on, the one-parent and out-degree<=2 invariants held on all
   120. Verify a feature flag is inert *before* spending GPU hours on its arms.
+
+## The restricted paired test was never applied to the baseline candidates (2026-09-21)
+
+`gap45` (`GAP_CLOSE_UM` 5.0 -> 4.5) has been in the post-process sweep's
+candidate list since the beginning and was never examined, because it never
+topped the aggregate table. Reading the archived per-sample results back
+through `paired_sweep_analysis.py`, it is SUPPORTED in **all four runs** that
+measured it:
+
+| run | weighted | n_aff | W/L | 95% CI |
+| --- | --- | --- | --- | --- |
+| sep19 density sweep | +0.00020 | 16 | 16/0 | [+0.00003, +0.00089] |
+| densval | +0.00020 | 16 | 16/0 | [+0.00003, +0.00089] |
+| autopsy2 / trace | +0.00014 | 17 | 15/2 | [+0.00003, +0.00058] |
+| sep21 targeted steal | +0.00014 | 17 | 15/2 | [+0.00003, +0.00058] |
+
+`bonus125` tops the aggregate every time (+0.00062 today) but is **7/12** on
+the videos it moves - the same signature that predicted `dmid700`'s
+leaderboard loss.
+
+- **When you fix an instrument, re-read the old measurements with it.** The
+  restricted paired test was built on 2026-09-19 and applied only to the arms
+  being added that day. The seven baseline candidates had been carried in
+  every sweep for weeks and were never re-read. The per-sample CSVs were all
+  still on disk; recovering the finding cost one script invocation and no GPU.
+- **Reading a sweep by what the auto-selector picked inherits the selector's
+  metric.** The selector ranks on aggregate proxy, which is precisely the
+  statistic we established over-credits narrow changes. Anything the selector
+  passes over is unexamined, not rejected.
+- Submitted as SEP21-1, ref `56427646`, sha `eace787d`. Predicted public
+  outcome is **0.947 unchanged** - at +0.00014 the effect is an order of
+  magnitude below the board's 0.001 quantisation, so an unchanged score
+  confirms rather than refutes. The gain is banked for the private rerun.
+
+## Declare an intended constant change everywhere the notebook pins it (2026-09-21)
+
+The gap45 kernel v1 died three minutes in with `Configuration drift detected:
+{"BIOHUB_GAP_CLOSE_UM": {"actual": 4.5, "expected": 5.0}}`. Cell 1 is a
+configuration-drift guard listing the constants the pipeline may run with, and
+the builder had changed only the config cell.
+
+- The guard was working. A builder that changes a pinned constant must update
+  the pin in the same edit.
+- **Verification that checks one location thoroughly still misses a second
+  location entirely.** The config cell was asserted three ways - set exactly
+  once, read from the right environment variable, exactly one executable line
+  differing from the submitted kernel - and none of that could detect that
+  something else in the notebook had an opinion about the same constant.
+- The builder now reads the value back out of *both* cells and asserts they
+  agree, so the failure happens locally in a second instead of on Kaggle.
+- **Pair a "did it change" check with a "did it take effect" check.** The
+  drift guard being satisfied does not mean the constant reached the gap
+  stage; the test for that is that the output sha DIFFERS from arm F, with
+  fewer gap edges. Confirmed: `eace787d` vs `fe6f0a6f`, gap edges 1280 ->
+  1258, with relink (119,267) and division (95) counts unchanged.
