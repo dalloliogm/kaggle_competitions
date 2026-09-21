@@ -98,6 +98,13 @@ CONFIG_BLOCK = (
 GAP_ANCHOR = 'os.environ["BIOHUB_GAP_CLOSE_UM"] = "5.0"'
 GAP_NEW = f'os.environ["BIOHUB_GAP_CLOSE_UM"] = "{GAP_CLOSE_UM}"'
 
+# Cell 1 is a configuration-drift guard that pins the constants this pipeline
+# is allowed to run with, and it lists this one. Changing the config without
+# it raises at import - which is the guard working, not a bug in it. The
+# intended change has to be declared in both places.
+GUARD_EXPECT_ANCHOR = '    "BIOHUB_GAP_CLOSE_UM": 5.0,'
+GUARD_EXPECT_NEW = f'    "BIOHUB_GAP_CLOSE_UM": {GAP_CLOSE_UM},'
+
 
 def main() -> None:
     notebook_path = next(SOURCE.glob("*.ipynb"))
@@ -130,6 +137,7 @@ def main() -> None:
         "kdtree": (kdtree.OLD_LOOP, kdtree.NEW_LOOP),
         "hook": (hook_target, guard.DEGRADE_CHECK + hook_target + guard.STATS_EXTRA),
         "gap": (GAP_ANCHOR, GAP_NEW),
+        "guard_expect": (GUARD_EXPECT_ANCHOR, GUARD_EXPECT_NEW),
     }
     counts = {k: 0 for k in edits}
     for cell in nb["cells"]:
@@ -150,8 +158,20 @@ def main() -> None:
 
     after = ["".join(c["source"]) for c in nb["cells"] if c["cell_type"] == "code"]
     changed = [i for i, (a, b) in enumerate(zip(before, after)) if a != b]
-    if changed != [0, 2, 5]:
+    if changed != [0, 1, 2, 5]:
         raise RuntimeError(f"unexpected cells changed: {changed}")
+
+    # The config cell and the drift guard must state the same value, or the
+    # kernel dies three minutes in. Read both back out of the built notebook
+    # rather than trusting that both edits landed.
+    set_to = re.search(r'os\.environ\["BIOHUB_GAP_CLOSE_UM"\] = "([\d.]+)"', after[0])
+    expects = re.search(r'"BIOHUB_GAP_CLOSE_UM": ([\d.]+),', after[1])
+    if not set_to or not expects:
+        raise RuntimeError("could not read GAP_CLOSE_UM back from the config cell or the guard")
+    if float(set_to.group(1)) != float(expects.group(1)) != float(GAP_CLOSE_UM):
+        raise RuntimeError(
+            f"config sets {set_to.group(1)} but the drift guard expects "
+            f"{expects.group(1)} (intended {GAP_CLOSE_UM})")
     if "_deadline_degrade()" not in after[5]:
         raise RuntimeError("the guard is declared but never called")
     if "query_ball_point" not in after[5] or density.PASS_ANCHOR in after[5]:
