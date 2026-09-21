@@ -77,3 +77,4 @@ b98e5454279f74d3607ee342295b8a758737615d4452e5c2b96364c15b8c8b06  dalloliogm/bio
 fe6f0a6fe5c996b876cd40f85b9cef75421be5e959a5cd859c33fa339888a8d9  dalloliogm/biohub-sep19-deadline-guard-density-full v1  SEP20-1 DELIBERATE re-send of arm F's output from a DIFFERENT kernel: same bytes, but this kernel carries the KD-tree relink and the deadline guard. Private reruns the kernel, not the CSV.
 eace787d4b19b7cb5e8a1761d77292cc324df53c8447e47947b2758981ceda23  SEP21-1 gap45 (GAP_CLOSE_UM 4.5) ref=56427646 2026-09-21
 e494d6de1ee35688ded7239db168325c4406392be67feaf3665028dceaf529b4  SEP21-2 gap45+dlow800 ref=56437708 2026-09-21
+30e82e7ce5ffd66ff4289e4425168b2a185366d803a813f3ed4daef0f5cc4f5b  SEP21-3 triple gap45+dlow800+bonus125 ref=56441396 2026-09-21
