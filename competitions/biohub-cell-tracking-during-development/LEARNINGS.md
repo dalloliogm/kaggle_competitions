@@ -1662,3 +1662,41 @@ The durable lessons stand, and one is new:
   Five per day is per account, not per tool. Before planning a day around N
   slots, establish whether anything else is submitting.
 
+
+## The held-out weighted delta is not translating to the public board (2026-09-22)
+
+All five of 21 September's submissions scored, and the pattern is flat:
+
+| submission | held-out weighted | public |
+| --- | --- | --- |
+| SEP21-1 `gap45` | +0.00014 | 0.947 |
+| SEP21-2 `gap45+dlow800` | +0.00083 | 0.947 |
+| SEP21-3 triple | **+0.00141** | **0.947** |
+| SEP20-1 arm F (banked) | — | 0.947 |
+
+The triple was the one candidate measured above the public board's `0.001`
+quantisation, and it was submitted precisely because it could move the score.
+It did not. An unchanged score was the *predicted* outcome for the first two
+and would have confirmed them, but for the triple it is a miss.
+
+- **A weighted delta that clears the quantisation threshold on 24 held-out
+  videos does not predict a move on the 4-video public test.** The public
+  score depends on a different, much smaller sample whose composition we
+  already knew was skewed - 3 of 24 held-out videos are high-density against
+  57.2% of public weight, and only 1 of 4 public test videos is low-density,
+  where `dlow800` does most of its work. The held-out aggregate is not a
+  scaled-down public score and should not be used to forecast one.
+- **What the harness has actually earned is ordering, not magnitude.** It
+  correctly refused `dmid700` (which lost 0.947 -> 0.946) and has never
+  promoted a candidate that lost. Every candidate it supports lands at 0.947.
+  That is consistent with it selecting changes that are real but smaller than
+  the public test can resolve.
+- **Consequence for the remaining days.** Public submissions can no longer
+  discriminate between these candidates; they can only detect a regression.
+  Banking configurations for the private rerun is the only remaining value,
+  so prefer diversity of banked configurations over repeated confirmation
+  that a supported change still reads 0.947.
+- For contrast, the user's Codex-submitted `DCTTA det099` scored **0.943** -
+  the public test does still resolve differences of this size, which is
+  further evidence that our candidates are genuinely small rather than that
+  the board is insensitive.
