@@ -110,7 +110,9 @@ md(r"""
 
 `estimated_number_of_nodes` is an estimate of **every cell in the video**, not
 the number that were labelled. Comparing it with the labelled node count shows
-how much of each video is actually scored.
+how much of each video is actually scored. Across all 199 training
+videos this comes to **133,318 labelled nodes out of ~4.7M estimated cells -
+2.82%** - and the per-video fraction spans **0.13% to 20.21%**, a 155x range.
 """),
 
 code(r"""
@@ -145,7 +147,7 @@ fr = sorted(r[3] for r in rows)
 print(f"\nlabelled fraction: min {fr[0]*100:.2f}%  median {fr[len(fr)//2]*100:.2f}%  max {fr[-1]*100:.2f}%")
 print(f"total labelled {sum(r[1] for r in rows):,} of {sum(r[2] for r in rows):,.0f} estimated cells "
       f"({sum(r[1] for r in rows)/sum(r[2] for r in rows)*100:.2f}%)")
-print("\n=> the scored subset is tiny, and its size varies by an order of magnitude between videos.")
+print(f"\n=> the scored subset is tiny, and its size varies {fr[-1]/fr[0]:.0f}x between videos.")
 """),
 
 md(r"""
