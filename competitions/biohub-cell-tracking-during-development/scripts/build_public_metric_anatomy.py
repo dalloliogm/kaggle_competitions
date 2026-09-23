@@ -114,28 +114,38 @@ how much of each video is actually scored.
 """),
 
 code(r"""
-import numpy as np, zarr
+# No zarr needed: a zarr array records its own length in its metadata, so the
+# labelled node count is just the shape. Pure JSON keeps this notebook
+# dependency-free (Kaggle CPU images have no zarr, and internet is off).
+def labelled_nodes(geff):
+    meta = geff / "nodes/ids/zarr.json"
+    if not meta.exists():
+        meta = geff / "nodes/ids/.zarray"
+    if not meta.exists():
+        return None
+    shape = json.loads(meta.read_text()).get("shape")
+    return int(shape[0]) if shape else None
 
 rows = []
 for g in geffs:
-    n_target = estimated_nodes(g)
-    try:
-        labelled = len(np.asarray(zarr.open(str(g / "nodes/ids"), mode="r")[:]))
-    except Exception:
-        continue
-    if n_target:
+    n_target, labelled = estimated_nodes(g), labelled_nodes(g)
+    if n_target and labelled:
         rows.append((g.stem, labelled, n_target, labelled / n_target))
 
 rows.sort(key=lambda r: r[3])
+print(f"{len(rows)} videos with both counts\n")
 print(f"{'video':<20}{'labelled':>10}{'estimated total':>18}{'labelled %':>12}")
-for stem, lab, tot, frac in rows[:5] + [("...", 0, 0, 0)] + rows[-5:]:
-    if stem == "...":
-        print(f"{'...':<20}"); continue
+for stem, lab, tot, frac in rows[:5]:
+    print(f"{stem:<20}{lab:>10,}{tot:>18,.0f}{frac*100:>11.2f}%")
+print(f"{'...':<20}")
+for stem, lab, tot, frac in rows[-5:]:
     print(f"{stem:<20}{lab:>10,}{tot:>18,.0f}{frac*100:>11.2f}%")
 
-fr = [r[3] for r in rows]
-print(f"\nlabelled fraction: min {min(fr)*100:.2f}%  median {sorted(fr)[len(fr)//2]*100:.2f}%  max {max(fr)*100:.2f}%")
-print("=> annotation density varies by more than an order of magnitude between videos.")
+fr = sorted(r[3] for r in rows)
+print(f"\nlabelled fraction: min {fr[0]*100:.2f}%  median {fr[len(fr)//2]*100:.2f}%  max {fr[-1]*100:.2f}%")
+print(f"total labelled {sum(r[1] for r in rows):,} of {sum(r[2] for r in rows):,.0f} estimated cells "
+      f"({sum(r[1] for r in rows)/sum(r[2] for r in rows)*100:.2f}%)")
+print("\n=> the scored subset is tiny, and its size varies by an order of magnitude between videos.")
 """),
 
 md(r"""
