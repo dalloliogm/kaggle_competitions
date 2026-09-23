@@ -1749,3 +1749,48 @@ and drag `t_pred`.
   GT nodes). This is not a detection-recall problem. It reduces to: **can we
   predict which cells the annotators chose to label?** Systematic annotation (a
   sub-volume, a lineage) makes it learnable; arbitrary annotation closes it.
+
+## The node-count ceiling is real and unreachable (2026-09-23)
+
+Follow-up to the +0.1228 oracle. The question was whether "this cell is
+annotated" is predictable from anything visible at inference. It is - slightly -
+and not nearly enough. **Direction closed.**
+
+Run entirely locally, no GPU and no submission slot: the node-count kernel's
+output already carried the prediction graphs for all 24 held-out videos, and
+`scripts/fetch_gt_geff.py` pulls the ground-truth `.geff` files straight from
+the competition data. Local matching reproduced the kernel's count to within
+0.1% (14,930 matched vs 14,912), which is what makes the rest trustworthy.
+
+Break-even is **422 nodes removed per TP edge lost**. Best rules found:
+
+| rule | nodes/TP |
+| --- | --- |
+| `degree<=1 & tracklen<10` | 362 |
+| `tracklen < 8` | 355 |
+| learned (HistGradientBoosting, 9 features, grouped CV) | **396** |
+
+The classifier reaches **AUC 0.7166**, so annotation is genuinely not random -
+but at its best operating point the arithmetic still loses:
+
+    drop lowest 5% by score: 23,925 nodes, ~60 TP edges
+      factor gain  +0.00370
+      TP-loss cost -0.00395
+      NET          -0.00025
+
+- **A ceiling and its exchange rate are different questions, and the second one
+  is usually the real one.** +0.1228 sat there for a day looking like the whole
+  competition. Every rule available - structural, and learned over track length,
+  degree, time, crowding, nearest-neighbour distance and position - lands on the
+  wrong side of 422. The gap is 6%, which is close enough to be tempting and
+  still a loss.
+- **Annotation density varies ~50x across videos** (0.38% of predicted nodes
+  matched on `44b6_706092f0`, 19.41% on `6bba_2819ca14`). A per-video rule would
+  need `t_true`, which is read from the GT `.geff` and does not exist for test
+  videos - so the one targeting signal that would help is unavailable exactly
+  where it would be used.
+- **What made this cheap:** the decisive experiment was an offline analysis of
+  artifacts already downloaded, not a new kernel. When GPU quota is the binding
+  constraint, check what previous runs already emitted before queuing another -
+  the prediction graphs had been sitting in `tracking_repo/predictions/` in
+  every kernel output all along.
