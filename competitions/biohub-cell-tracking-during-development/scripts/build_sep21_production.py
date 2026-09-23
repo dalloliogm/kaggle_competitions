@@ -53,6 +53,8 @@ GAP_CLOSE_UM = os.environ.get("PROD_GAP_CLOSE_UM", "4.5")
 BASE_GAP_UM = "5.0"
 MOTION_BONUS = os.environ.get("PROD_MOTION_BONUS", "1.0")
 BASE_MOTION_BONUS = "1.0"
+MIN_TRACK_LEN = os.environ.get("PROD_MIN_TRACK_LEN", "6")
+BASE_MIN_TRACK_LEN = "6"
 
 OUT_DIR = WORKSPACE / "notebooks" / f"sep21-prod-{TAG}"
 TITLE = f"Biohub Sep21 Prod {TAG.replace('-', ' ').title()}"
@@ -99,6 +101,12 @@ GUARD_EXPECT_NEW = f'    "BIOHUB_GAP_CLOSE_UM": {GAP_CLOSE_UM},'
 BONUS_ANCHOR = f'os.environ["BIOHUB_MOTION_RELINK_LEARNED_BONUS"] = {BASE_MOTION_BONUS!r}'
 BONUS_NEW = f'os.environ["BIOHUB_MOTION_RELINK_LEARNED_BONUS"] = {MOTION_BONUS!r}'
 
+# The drift guard DOES pin this one (as a float), so both places need it.
+MTL_ANCHOR = f'os.environ["BIOHUB_OUTPUT_MIN_TRACK_LEN"] = "{BASE_MIN_TRACK_LEN}"'
+MTL_NEW = f'os.environ["BIOHUB_OUTPUT_MIN_TRACK_LEN"] = "{MIN_TRACK_LEN}"'
+MTL_GUARD_ANCHOR = f'    "BIOHUB_OUTPUT_MIN_TRACK_LEN": {float(BASE_MIN_TRACK_LEN)},'
+MTL_GUARD_NEW = f'    "BIOHUB_OUTPUT_MIN_TRACK_LEN": {float(MIN_TRACK_LEN)},'
+
 
 def main() -> None:
     notebook_path = next(SOURCE.glob("*.ipynb"))
@@ -138,6 +146,14 @@ def main() -> None:
         if '"BIOHUB_MOTION_RELINK_LEARNED_BONUS"' in before[1]:
             raise RuntimeError("the drift guard pins the motion bonus too; update it as well")
         edits["bonus"] = (BONUS_ANCHOR, BONUS_NEW)
+    mtl_changes = MIN_TRACK_LEN != BASE_MIN_TRACK_LEN
+    if mtl_changes:
+        if MTL_ANCHOR not in before[0]:
+            raise RuntimeError(f"min-track-len anchor not found: {MTL_ANCHOR}")
+        if MTL_GUARD_ANCHOR not in before[1]:
+            raise RuntimeError(f"drift guard pin not found: {MTL_GUARD_ANCHOR}")
+        edits["mtl"] = (MTL_ANCHOR, MTL_NEW)
+        edits["mtl_guard"] = (MTL_GUARD_ANCHOR, MTL_GUARD_NEW)
 
     counts = {k: 0 for k in edits}
     for cell in nb["cells"]:
@@ -158,7 +174,7 @@ def main() -> None:
 
     after = ["".join(c["source"]) for c in nb["cells"] if c["cell_type"] == "code"]
     changed = [i for i, (a, b) in enumerate(zip(before, after)) if a != b]
-    want = [0, 1, 2, 5] if gap_changes else [0, 2, 5]
+    want = [0, 1, 2, 5] if (gap_changes or mtl_changes) else [0, 2, 5]
     if changed != want:
         raise RuntimeError(f"unexpected cells changed: {changed}, wanted {want}")
     if "_deadline_degrade()" not in after[5]:
@@ -184,6 +200,12 @@ def main() -> None:
         if not got or float(got.group(1)) != float(MOTION_BONUS):
             raise RuntimeError(f"motion bonus did not land: {got.group(1) if got else None}")
 
+    if mtl_changes:
+        g0 = re.search(r'os\.environ\["BIOHUB_OUTPUT_MIN_TRACK_LEN"\] = "([\d.]+)"', after[0])
+        g1 = re.search(r'"BIOHUB_OUTPUT_MIN_TRACK_LEN": ([\d.]+),', after[1])
+        if not g0 or not g1 or float(g0.group(1)) != float(g1.group(1)) != float(MIN_TRACK_LEN):
+            raise RuntimeError("min track len disagrees between config and drift guard")
+
     # Every density constant the arm names must actually appear in the cell.
     for key, value in ARM_ENV:
         if f'os.environ["{key}"] = "{value}"' not in after[0]:
@@ -204,6 +226,7 @@ def main() -> None:
     print(f"  density arm {DENSITY_ARM}")
     print(f"  gap close   {GAP_CLOSE_UM} (base {BASE_GAP_UM})")
     print(f"  relink bonus {MOTION_BONUS} (base {BASE_MOTION_BONUS})")
+    print(f"  min track len {MIN_TRACK_LEN} (base {BASE_MIN_TRACK_LEN})")
     print(f"  PASS: sha must DIFFER from arm F {ARM_F_SHA[:16]}...")
 
 
