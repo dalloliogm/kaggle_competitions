@@ -67,15 +67,20 @@ code(r"""
 import json, math
 from pathlib import Path
 
-ROOT = None
-for c in (Path("/kaggle/input/biohub-cell-tracking-during-development"),
-          Path("/kaggle/input")):
-    if (c / "train").exists():
-        ROOT = c; break
-    for sub in sorted(c.glob("*")):
-        if (sub / "train").exists():
-            ROOT = sub; break
-    if ROOT: break
+COMPETITION = "biohub-cell-tracking-during-development"
+# Kaggle mounts competition data under /kaggle/input/competitions/<slug> for
+# some kernels and /kaggle/input/<slug> for others, so check both and then
+# fall back to scanning for any directory that has a train/ beside it.
+CANDIDATES = [Path(f"/kaggle/input/competitions/{COMPETITION}"),
+              Path(f"/kaggle/input/{COMPETITION}")]
+CANDIDATES += sorted(Path("/kaggle/input").glob("*")) if Path("/kaggle/input").exists() else []
+CANDIDATES += sorted(Path("/kaggle/input/competitions").glob("*")) if Path("/kaggle/input/competitions").exists() else []
+ROOT = next((c for c in CANDIDATES if (c / "train").is_dir()), None)
+if ROOT is None:
+    raise SystemExit(
+        "Could not find the competition data. Attach it to this notebook "
+        f"(Add Data -> {COMPETITION}). Looked in: "
+        + ", ".join(str(c) for c in CANDIDATES[:4]))
 print("competition data:", ROOT)
 
 def estimated_nodes(geff: Path):
