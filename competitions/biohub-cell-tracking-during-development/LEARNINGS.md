@@ -1700,3 +1700,52 @@ and would have confirmed them, but for the triple it is a miss.
   the public test does still resolve differences of this size, which is
   further evidence that our candidates are genuinely small rather than that
   the board is insensitive.
+
+## The node-count factor is ~100x every post-processing lever (2026-09-23)
+
+`compute_edge_confusion` counts a predicted edge as FP only when at least one
+endpoint matches a GT node that participates in GT edges. An edge between two
+**unmatched** nodes is neither TP nor FP - invisible to `J`. But every
+predicted node counts in `t_pred`, which scales the whole edge term:
+
+    J_adj = max(0, J * (1 - 0.1 * (t_pred - t_true) / t_true))
+
+**Verified against the official implementation**, not just ours: the repo's own
+tutorial states `J_adj = max(0, J·(1 − α·node_ratio))` with
+`node_ratio = (N_pred − N_target)/N_target`, and "unmatched predictions are not
+punished as FPs". The `max(0, ...)` clamps the result, not the ratio, so
+under-predicting gives a factor **above** 1. Our local `adjusted_jaccard` is
+equivalent character for character. This was checked precisely because the
+division metric turned out to be 2.12x loose in the same harness.
+
+Measured on 24 held-out videos at arm F:
+
+| | now | oracle (keep only GT-matching nodes) |
+| --- | --- | --- |
+| adjusted edge Jaccard | 0.91586 | **1.03866** |
+| edge tp | 13,967 | 13,967 |
+| edge fp | 655 | 15 |
+| edge fn | 684 | 684 |
+
+**Ceiling +0.1228, at zero cost in true positives.** Only 3.18% of our 468,572
+predicted nodes match any GT node; the other 453,660 contribute nothing to `J`
+and drag `t_pred`.
+
+- **The break-even exchange rate is 422 nodes removed per TP edge lost.**
+  Removing a node is worth `0.1*J/t_true = 1.55e-07`; losing a TP edge costs
+  `1/(tp+fp+fn) = 6.53e-05`.
+- Every handle we have falls short: track-length pruning achieves 281
+  (`mtl8`), 240 (`mtl10`), 125 (`mtl14`), 69 (`mtl30`). Selectivity **degrades**
+  the harder you prune, because the shortest tracks are the most prunable.
+  This is why `mtl14` scored -0.020 on the harness and `det099` scored 0.943 on
+  the real board. Random selectivity would be ~15-30, so track length is
+  already ~10x better than chance and still 1.5x short.
+- **Quote a lever's ceiling and its exchange rate together.** The ceiling alone
+  (+0.1228) says "drop everything"; the rate says no available rule can. Either
+  number alone is misleading, and this is the same error as the division
+  ceiling that was 3x overstated on 2026-09-20 - a ceiling computed without the
+  constraint the work would actually face.
+- We already detect ~93% of labelled GT nodes (14,912 matched against ~15-16k
+  GT nodes). This is not a detection-recall problem. It reduces to: **can we
+  predict which cells the annotators chose to label?** Systematic annotation (a
+  sub-volume, a lineage) makes it learnable; arbitrary annotation closes it.
