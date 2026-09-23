@@ -1794,3 +1794,44 @@ but at its best operating point the arithmetic still loses:
   constraint, check what previous runs already emitted before queuing another -
   the prediction graphs had been sitting in `tracking_repo/predictions/` in
   every kernel output all along.
+
+## The deadline guard's degraded path works - verified without GPU (2026-09-23)
+
+The wall-clock guard had only ever been verified **inert** (`deadline_degraded=0`,
+output byte-identical to arm F). Its degraded branch - disabling
+`OUTPUT_MOTION_RELINK`, `OUTPUT_GAP_CLOSE` and `OUTPUT_GAP2_RECOVERY` - had
+never executed. If it fired during the private rerun and produced a malformed
+graph, the result would be **zero**, not merely lower, taking every banked
+0.947 with it.
+
+With the weekly GPU quota exhausted this looked unverifiable until Friday.
+It was not: the degraded branch is pure post-processing, and the prediction
+graphs for all 4 public test videos were already on disk inside an earlier
+kernel's output. `scripts/test_deadline_guard_degraded.py` runs both branches
+locally against them.
+
+| stem | mode | nodes | edges | div | indeg<=1 | outdeg<=2 | t+1 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 44b6_0113de3b | normal | 25,619 | 24,878 | 64 | ok | ok | ok |
+| 44b6_0113de3b | DEGRADED | 25,500 | 24,814 | 66 | ok | ok | ok |
+| 44b6_0b24845f | normal | 20,889 | 19,644 | 59 | ok | ok | ok |
+| 44b6_0b24845f | DEGRADED | 19,246 | 17,701 | 69 | ok | ok | ok |
+| 6bba_05b6850b | normal | 6,168 | 5,983 | 8 | ok | ok | ok |
+| 6bba_05b6850b | DEGRADED | 6,036 | 5,813 | 10 | ok | ok | ok |
+| 6bba_05db0fb1 | normal | 70,407 | 68,389 | 76 | ok | ok | ok |
+| 6bba_05db0fb1 | DEGRADED | 68,538 | 65,664 | 101 | ok | ok | ok |
+
+The degraded graph is smaller and carries more divisions (fewer repairs means
+fewer merged tracks), which is the intended trade: lower quality, still a
+valid submission. **The zero-score risk is cleared.**
+
+- **"Needs GPU" is often a property of how an experiment was framed, not of the
+  question.** The question was whether three booleans flipping to `False`
+  yields a valid graph. That needs cached graphs and CPU. Two of the last three
+  experiments - this and the node-count separability test - turned out to be
+  answerable from artifacts already downloaded, after the quota had run out.
+- Running a notebook cell outside its notebook needs two accommodations worth
+  remembering: `torch` can be stubbed when only an optional component imports
+  it, and a trailing module-level call (`write_test_submission('base')`) has to
+  be filtered out by parsing the cell and dropping top-level `Expr` calls, so
+  the definitions execute without the script body.
