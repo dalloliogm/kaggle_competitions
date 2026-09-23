@@ -1,0 +1,17 @@
+{
+  "id": "dalloliogm/biohub-metric-anatomy-where-the-score-comes-from",
+  "title": "Biohub Metric Anatomy: Where The Score Comes From",
+  "code_file": "biohub-metric-anatomy-where-the-score-comes-from.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": [],
+  "kernel_sources": [],
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "model_sources": []
+}
