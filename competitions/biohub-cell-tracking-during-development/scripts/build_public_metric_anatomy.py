@@ -300,7 +300,11 @@ OUT.mkdir(parents=True, exist_ok=True)
 (OUT / "kernel-metadata.json").write_text(json.dumps({
     "id": f"dalloliogm/{SLUG}", "title": TITLE, "code_file": f"{SLUG}.ipynb",
     "language": "python", "kernel_type": "notebook",
-    "is_private": True,          # flipped to public deliberately, after review
+    # Kaggle refuses to make a notebook public while it has the competition
+    # attached as a source: "Notebooks with competition ... as a source may not
+    # be made public until after the competition ends". So this stays private
+    # until the 2026-09-29 23:59 UTC deadline passes, then flips to False.
+    "is_private": True,
     "enable_gpu": False, "enable_tpu": False, "enable_internet": False,
     "dataset_sources": [], "kernel_sources": [],
     "competition_sources": ["biohub-cell-tracking-during-development"],
