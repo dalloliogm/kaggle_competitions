@@ -1835,3 +1835,36 @@ valid submission. **The zero-score risk is cleared.**
   it, and a trailing module-level call (`write_test_submission('base')`) has to
   be filtered out by parsing the cell and dropping top-level `Expr` calls, so
   the definitions execute without the script body.
+
+## 2026-09-28: own post-process sweep on the 0.953 base - only gap45 survives
+
+`dalloliogm/biohub-sep28-0953-own-sweep` v1, 24 held-out videos, 10 single-constant
+arms paired against `base` (`references/sep28-0953-own-sweep-output/`):
+
+| arm | weighted | n_aff | W/L | 95% CI (affected) | verdict |
+| --- | --- | --- | --- | --- | --- |
+| flow65 | +0.00065 | 18 | 13/5 | [-0.00160, +0.00328] | noise |
+| readmit090 | +0.00009 | 24 | 5/19 | [-0.00071, +0.00125] | noise |
+| gap45 | +0.00001 | 16 | 16/0 | [+0.00001, +0.00004] | SUPPORTED |
+| divmax95 | -0.00000 | 1 | 0/1 | - | negative (1 video) |
+| gapfill04 | -0.00000 | 3 | 0/3 | [-0.00004, -0.00001] | NEGATIVE |
+| diverge15 | -0.00011 | 13 | 2/11 | [-0.00102, +0.00042] | noise; div fp 8 -> 13 |
+| bonus125 | -0.00019 | 12 | 4/8 | [-0.00160, +0.00001] | noise |
+| readmit5 | -0.00022 | 24 | 5/19 | [-0.00139, +0.00071] | noise |
+| readmit3 | -0.00054 | 24 | 18/6 | [-0.00173, +0.00040] | noise |
+| flow75 | -0.00228 | 21 | 10/11 | [-0.00545, -0.00012] | NEGATIVE |
+
+- The public notebook's constants for the three new stages (readmission 4.0 um /
+  0.965, gap fill 0.5, flow gate 7.0 um) sit at or near a local optimum on this
+  base: neither direction of readmission helps, and gapfill04 is strictly worse.
+- flow65 has the largest aggregate but is carried by 44b6_12dfb391 and
+  6bba_07e24132 (+0.00080 of the +0.00065) against a -0.0404 on 6bba_0e7c0d07.
+  Tightening helps, loosening (flow75) is clearly negative - a direction, not
+  evidence.
+- bonus125 flipped sign from the old base (top aggregate there, 7/12) to
+  -0.00019, 4/8 here, driven by 44b6_12dfb391. Old-base evidence for a relink
+  constant did not transfer to the new coordinate head.
+- The strict rule (keep SUPPORTED only) leaves gap45 alone, which is already
+  submitted as SEP26-4 (ref 56589561, SHA 50a1653a). The SEP28-1 bet
+  (gap45 + bonus125, ref 56650920) was pushed before this result and contains
+  an arm the test now leans against; it is an unmeasured combination.
