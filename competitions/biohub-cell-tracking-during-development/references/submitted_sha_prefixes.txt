@@ -5,3 +5,6 @@ d3453380  ref 56189965  2026-09-12  score 0.947  SEP12 LF DCTTA V020 0947; struc
 1c6f89d9  ref 56202058  2026-09-13  score 0.945  SEP13 LF DCTTA V3 SECW060; structurally validated; SHA 1c6f89d9
 925d65e3  ref 56202064  2026-09-13  score 0.947  SEP13 LF DCTTA SISTER16 0947; structurally validated; SHA 925d65e3
 22ef93cf  ref 56211128  2026-09-13  score 0.946  SEP13 Lineage Forge 0946; structurally validated; SHA 22ef93cf
+d52a5da2
+50a1653a
+458a9e0a
