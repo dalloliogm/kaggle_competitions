@@ -1,0 +1,4 @@
+config,adjusted_edge_jaccard,division_jaccard,proxy_score,div_tp,div_fp,div_fn,missed_gt_nodes,spurious_pred_nodes,edges_recovered,edges_fragmented,edges_lost_to_detection,wrong_association_edges,n_samples,seconds,overrides
+mtl5,0.9238082601328138,0.16666666666666666,0.9404749267994805,7,8,27,215,455325,14046,352,253,19,24,892.0908894538879,"{""OUTPUT_MIN_TRACK_LEN"": 5}"
+gap45,0.9237170185520068,0.16666666666666666,0.9403836852186735,7,8,27,229,449009,14035,349,267,19,24,835.2210807800293,"{""GAP_CLOSE_UM"": 4.5}"
+base,0.9237038771519548,0.16666666666666666,0.9403705438186215,7,8,27,229,449134,14035,349,267,19,24,891.2886848449707,{}
