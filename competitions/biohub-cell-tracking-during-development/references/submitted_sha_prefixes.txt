@@ -9,3 +9,4 @@ d52a5da2
 50a1653a
 458a9e0a
 3a3f2686  ref 56650920  2026-09-28  score 0.953  SEP28-1 gap45+bonus125 unmeasured bet
+a139de81  ref 56663910  2026-09-29  score pending  SEP29-1 gap45+flow65 unmeasured bet
