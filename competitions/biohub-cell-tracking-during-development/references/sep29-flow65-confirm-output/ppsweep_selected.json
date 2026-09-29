@@ -1,0 +1,35 @@
+{
+  "base_proxy": 0.8976853394849968,
+  "held_out_stems": [
+    "44b6_aaf8b0ea",
+    "44b6_c50204e0",
+    "44b6_c8e2a523",
+    "44b6_d2f34f90",
+    "44b6_d5e7d891",
+    "44b6_d754aa59",
+    "44b6_deabac95",
+    "44b6_e28840c6",
+    "44b6_eb2880fc",
+    "44b6_0c582fdc",
+    "44b6_0db75fae",
+    "44b6_144b256d",
+    "6bba_32db13fc",
+    "6bba_337b1b3a",
+    "6bba_3abfe10a",
+    "6bba_3c5691b6",
+    "6bba_3db54e20",
+    "6bba_3fda6b25",
+    "6bba_474be664",
+    "6bba_48816121",
+    "6bba_4f99ce20",
+    "6bba_4ffd3da3",
+    "6bba_55b7eebe",
+    "6bba_57b7cc1e"
+  ],
+  "overrides": {
+    "GAP_CLOSE_UM": 4.5,
+    "MOTION_RELINK_FLOW_TIGHT_UM": 6.5
+  },
+  "selected": "gap45flow65",
+  "selected_proxy": 0.9003113553979912
+}

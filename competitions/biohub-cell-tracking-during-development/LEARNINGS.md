@@ -1869,3 +1869,26 @@ arms paired against `base` (`references/sep28-0953-own-sweep-output/`):
   (gap45 + bonus125, ref 56650920) was pushed before this result and contains
   an arm the test now leans against; it is an unmeasured combination.
   Public score 0.953, the same as every other 0.953-base variant.
+
+## 2026-09-29: gap45+flow65 confirmed on a fresh held-out set
+
+`dalloliogm/biohub-sep29-flow65-confirm` v1 used validator offset 12: the next 12
+TRAIN videos per embryo type, no overlap with the sep28 sweep's 24, and 21 of them
+contain a GT division. The results are in `references/sep29-flow65-confirm-output/`.
+
+| vs base | weighted | n_aff | W/L | 95% CI (affected) | verdict |
+| --- | --- | --- | --- | --- | --- |
+| gap45flow65 | +0.00232 | 21 | 13/8 | [+0.00013, +0.00522] | SUPPORTED |
+| flow65 | +0.00225 | 21 | 12/9 | [+0.00000, +0.00522] | SUPPORTED (borderline) |
+| gap45 | +0.00007 | 17 | 17/0 | [+0.00001, +0.00031] | SUPPORTED |
+
+- flow65 is now positive on two independent held-out sets (+0.00065 on sep28,
+  +0.00225 here), and flow75 was negative. Tightening the flow-relink gate from
+  the public 7.0 um helps on this base.
+- gap45flow65 is concentrated: 6bba_32db13fc and 6bba_57b7cc1e give +0.00169 of
+  the +0.00232. Without them it is still +0.00062.
+- Division terms are identical across arms (tp/fp/fn 7/14/29): the flow gate
+  moves edges only.
+- gap45 replicates (17/0), so its sep28 support was not a set artefact.
+- The combination was measured directly, so SEP29-1 (ref 56663910) is a
+  held-out-supported configuration, not only a bet.
