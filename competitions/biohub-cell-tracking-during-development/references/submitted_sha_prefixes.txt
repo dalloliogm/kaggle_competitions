@@ -12,5 +12,5 @@ d52a5da2
 a139de81  ref 56663910  2026-09-29  score 0.953  SEP29-1 gap45+flow65 (submitted as bet; held-out SUPPORTED after, +0.00232)
 046cd5ef  ref 56668670  2026-09-29  score 0.953  SEP29-2 gap45+flow60 unmeasured bet
 e58974a7  ref 56669200  2026-09-29  score 0.953  SEP29-3 gap45+flow55 unmeasured bet
-2c5315fa  ref 56672956  2026-09-29  score pending  SEP29-4 gap45+flow625 unmeasured bet
-ebd2bdb4  ref 56672959  2026-09-29  score pending  SEP29-5 gap45+flow675 unmeasured bet
+2c5315fa  ref 56672956  2026-09-29  score 0.953  SEP29-4 gap45+flow625 unmeasured bet
+ebd2bdb4  ref 56672959  2026-09-29  score 0.953  SEP29-5 gap45+flow675 unmeasured bet
