@@ -63,6 +63,15 @@ Personal Kaggle competition notebooks for [dalloliogm](https://www.kaggle.com/da
   Run it via `uvx --index-url https://pypi.org/simple --from kaggle python3 -c "..."` in this repo's env. This returns a submission `ref` immediately (still scores asynchronously — poll `kaggle competitions submissions -c <slug> --format json` and compare `ref` as an `int`, not a string).
 - A kernel can produce many candidate output files, but Kaggle only ever grades whichever one is passed as `file_name` (almost always `submission.csv`) — to submit a *different* candidate file as the graded one, the kernel itself must write it out under that name (e.g. append a final cell that overwrites `submission.csv` from the desired file), not just have it sitting alongside as another output.
 
+## Submission slots — never let them expire unused
+
+Daily submission slots reset at 00:00 UTC and unused ones are lost. Once the user has authorised submitting, an unused slot is waste: extra submissions cost nothing, because only the final selection counts.
+
+- **Before each reset, use every remaining slot** on the best distinct candidates available, even when they are marginal bets. Plan this in advance, and keep candidate kernels built and running so something is ready before 00:00 UTC.
+- **Do not hold a slot while waiting for the user to answer a question.** If a decision rule (e.g. "submit only held-out-supported arms") yields nothing new, submit the best unsupported candidates as labelled bets rather than leaving the slots empty. Put the question to the user alongside the submission, not instead of it.
+- **Using slots never relaxes honesty or checks.** Every submission still gets the structural validation, the duplicate-SHA check and the override-applied check. Label an unmeasured or unsupported configuration as a bet in the submission message, and never report it as validated. A bet does not enter the final selection without evidence.
+- **Scoring can lag by hours** (about 6 h seen on notebook-only competitions). Submit early on the last day, so scores arrive before the final selection has to be set.
+
 ## Running notebooks
 
 Notebooks are designed to run on Kaggle kernels, not locally. Input data paths are `/kaggle/input/<competition-name>/`. There is no local test runner or CI.

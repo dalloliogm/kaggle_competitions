@@ -21,6 +21,11 @@ Competition-specific instructions for `competitions/biohub-cell-tracking-during-
 - Prepare independent candidates while public scores are pending, but do not
   auto-submit based on structural validity alone. Follow
   `references/validation_protocol.md` and require artifact-level authorization.
+- Once the user has authorised submitting, never let daily slots expire unused
+  (see "Submission slots" in the repo-root `AGENTS.md`). On 2026-09-28, 4 slots
+  were lost while waiting for an answer about flow65 after the sweep supported
+  only an already-submitted arm. Submit such candidates as labelled bets
+  before 00:00 UTC, and ask the question alongside the submission.
 - Submission tooling defaults to audit-only. Never bypass its promotion packet,
   scorer provenance, independent holdout, version or duplicate checks to use slots.
 - Treat historical "closed" modeling directions as scoped to the tested pipeline.
