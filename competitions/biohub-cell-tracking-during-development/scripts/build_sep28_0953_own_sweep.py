@@ -95,7 +95,7 @@ def main() -> None:
             src = src[:start] + CANDIDATES_NEW + src[end:]
             replaced_candidates += 1
         cell["source"] = src.splitlines(keepends=True)
-    assert counts == [1, 1, 1], counts
+    assert counts == [1] * len(REPLACEMENTS), counts
     assert replaced_candidates == 1, replaced_candidates
 
     nb["cells"].append({"cell_type": "code", "execution_count": None, "metadata": {},
