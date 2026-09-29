@@ -1868,3 +1868,4 @@ arms paired against `base` (`references/sep28-0953-own-sweep-output/`):
   submitted as SEP26-4 (ref 56589561, SHA 50a1653a). The SEP28-1 bet
   (gap45 + bonus125, ref 56650920) was pushed before this result and contains
   an arm the test now leans against; it is an unmeasured combination.
+  Public score 0.953, the same as every other 0.953-base variant.
