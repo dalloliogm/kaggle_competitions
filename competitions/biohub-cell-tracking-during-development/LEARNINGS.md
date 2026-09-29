@@ -1892,3 +1892,21 @@ contain a GT division. The results are in `references/sep29-flow65-confirm-outpu
 - gap45 replicates (17/0), so its sep28 support was not a set artefact.
 - The combination was measured directly, so SEP29-1 (ref 56663910) is a
   held-out-supported configuration, not only a bet.
+
+## 2026-09-29: the flow-relink gate peaks at 6.5 um
+
+`dalloliogm/biohub-sep29-flow-tight` v1 used the same fresh 24 videos as the
+confirmation run (validator offset 12). Results are in
+`references/sep29-flow-tight-output/`. Every arm includes gap45.
+
+| gate (um) | vs base | W/L | vs gap45flow65 | verdict vs base |
+| --- | --- | --- | --- | --- |
+| 7.0 (public) | 0 | - | -0.00230 (8/13, NEGATIVE) | - |
+| 6.5 | +0.00232 | 13/8 | 0 | SUPPORTED (reproduced exactly) |
+| 6.0 | +0.00160 | 13/9 | -0.00071 (9/9) | noise |
+| 5.5 | +0.00082 | 11/10 | -0.00149 (6/14) | noise |
+
+With 7.5 negative on the sep28 set, the response is single-peaked near 6.5, so
+6.5 is the setting to keep. The pre-built gap45+flow50 kernel was not
+submitted: the measured trend says it is worse. The last two slots went to
+6.25 and 6.75, the unmeasured points either side of the peak, labelled as bets.
