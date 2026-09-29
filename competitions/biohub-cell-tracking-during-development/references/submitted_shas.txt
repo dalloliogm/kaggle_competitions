@@ -87,3 +87,5 @@ d52a5da2ae5cb0d1b22499f6ca51a00838a6c32ae9a1986ec756ea72e7909e03  SEP26-3 exact 
 a139de814c528ae5d1bf4a2dd61cefe61bf8bab6980a6bdcd93b884af13a8580 SEP29-1 0.953 base + gap45 + flow65 (unmeasured combo bet) ref=56663910 2026-09-29
 046cd5efb54ae5b5dfbf34e68c252cb4d924bbf344ac0dbdd6d7913c73beedd3 SEP29-2 0.953 base + gap45 + flow60 (unmeasured bet) ref=56668670 2026-09-29
 e58974a73852bdddafe859e27ef668e49e3d3354043ca4dd004891f3eb323bd9 SEP29-3 0.953 base + gap45 + flow55 (unmeasured bet) ref=56669200 2026-09-29
+2c5315fa6101aad79392fe521bbf3ed091d762966adbf2cf459f08c47b8ff463 SEP29-4 0.953 base + gap45 + flow625 (unmeasured bet) ref=56672956 2026-09-29
+ebd2bdb4a0faa81ffc0edf838ae2ad16ceeee7d28ccc9dc41c254823f2011224 SEP29-5 0.953 base + gap45 + flow675 (unmeasured bet) ref=56672959 2026-09-29
