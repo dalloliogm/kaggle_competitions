@@ -1910,3 +1910,30 @@ With 7.5 negative on the sep28 set, the response is single-peaked near 6.5, so
 6.5 is the setting to keep. The pre-built gap45+flow50 kernel was not
 submitted: the measured trend says it is worse. The last two slots went to
 6.25 and 6.75, the unmeasured points either side of the peak, labelled as bets.
+
+## 2026-09-30: final private results
+
+The private leaderboard gives the team **0.917, rank about 1062 of about 4020**,
+among a large tie at 0.917. The private winner scored 0.977, and the top 200 all
+scored 0.923 or more.
+
+| Submissions | Public | Private |
+| --- | --- | --- |
+| Exact copy of public 0.953; gap45; gap45+flow 6.5 / 6.0 / 5.5 / 6.25 / 6.75 | 0.953 | 0.917 |
+| mtl5 (56589836); gap45+bonus125 bet (56650920) | 0.953 | 0.918 |
+| DCTTA / Lineage Forge lineage (e.g. 56240250, 56202064) | 0.945-0.947 | 0.916 |
+| Own 0.947 pipeline: gap45+dlow800 (56437708), triple (56441396) | 0.947 | 0.913 |
+
+- **The public board was a poor guide.** It had four movies, two of which
+  dominated. The 0.953 base lost 0.036 going to private. Its 0.006 public lead over
+  our pipeline became a 0.004 private lead, so the base swap was still the
+  right direction.
+- **The held-out post-processing work did not show at 3 decimals.** gap45 and
+  gap45+flow65 (held-out +0.00232, supported on a fresh set) both scored 0.917.
+  mtl5 and bonus125, which the held-out test rated noise or slightly negative,
+  scored 0.918. All of this is inside one rounding step. Post-processing gains
+  of about 0.002 on the proxy are too small to steer a final rank.
+- **Rank was decided by the model.** Teams at 0.96-0.977 private had better
+  detection and linking, not better constants. Next time, weight effort toward
+  model-level work earlier, and treat post-process tuning as the last few days
+  only.
