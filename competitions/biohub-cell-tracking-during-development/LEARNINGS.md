@@ -1937,3 +1937,65 @@ scored 0.923 or more.
   detection and linking, not better constants. Next time, weight effort toward
   model-level work earlier, and treat post-process tuning as the last few days
   only.
+
+## 2026-09-30: post-mortem - what the published solutions did that we did not
+
+These sources were read on 2026-09-30, the day after the close. The top-place
+write-ups were not public yet. Check the competition discussion forum for them.
+
+**[egoring/kaggle_Biohub](https://github.com/egoring/kaggle_Biohub): same base
+as ours, private 0.925, rank 156 of 4,020.** They started from the same public
+pipeline (TemporalUNet3D with 8-way TTA, NodeTransformer, tracksdata ILP,
+motion relink, gap fill, safe divisions) and got our exact numbers: 0.953
+public, 0.917 private. Their additions:
+- **A learned division gate:** a small 3D-CNN on 4-frame x 16x32x32 crops
+  centred on the parent. It was trained on 1,564 pipeline candidates (183
+  positive) matched to the sparse GT at 7 um, and averaged over 5 seeds with a
+  threshold of 0.55. It gave **+0.005 public and +0.006 private (0.917 ->
+  0.923)**.
+- They report that the pipeline's built-in DivNet classifier was never called.
+  Our copy of the notebook contains no DivNet at all, so this is unconfirmed for
+  our version.
+- Edge improvements (+0.006) and ensemble calibration (+0.002) added up
+  independently. Their three improvements kept the same rank order on public and
+  private.
+- **Their diagnosis of the gap:** public was one embryo (medium density) and
+  private another, sparser one. Their validation mixed both training embryos,
+  so it could not measure transfer to an unseen embryo.
+
+**[Gabriel-notme/biohub-cell-tracking-journey](https://github.com/Gabriel-notme/biohub-cell-tracking-journey):
+public #2 (0.976), private #36 (0.937).** They ran a learned lineage base plus a
+frozen post-lineage correction stage that uses the pre-ILP candidate graph and
+fork-head predictions.
+- **Division recovery carried most of the private gain.** Start-type completion
+  gave +0.005 public / +0.007 private. Dropped-sister recovery gave +0.004
+  private but -0.002 public, so they removed it, which cost them.
+- Edge repairs worth +0.003-0.004 locally transferred at only +0.001.
+- Local held-out validation correlated 0.88 with private, against 0.63 for
+  public. The two boards correlated 0.29 across 28 submissions. Their two final
+  picks were near-duplicates, and a better one (0.939 private) went unselected.
+
+**What this means for our three months:**
+1. **We optimised the wrong term.** Divisions carry weight 0.1, and ours were
+   the weakest part of the pipeline: 7 tp / 8 fp / 27 fn on held-out, division
+   Jaccard 0.14-0.17. On 2026-09-21 we correctly found that geometric gates and
+   claim-stealing were exhausted, then wrongly concluded that division work
+   meant retraining detection. The cheaper lever was an **image-based
+   classifier on the division candidates the pipeline already produces**. We
+   had started in that direction (Sep 17 division ranker, Exp204/209 synthetic
+   second-child) but never promoted it. On egoring's numbers, that one
+   component would have moved us from about rank 1062 to about 156.
+2. **Our validation could not see the real shift.** The validator took 12
+   videos per embryo-type prefix and mixed both embryos. It never held out a
+   whole embryo, which is exactly what private tested.
+3. **The discipline was right; the target was not.** The restricted paired test
+   and held-out-first selection are vindicated: Gabriel's 0.88 against 0.63
+   correlation, and our own public-board noise. But we spent that discipline on
+   post-process constants worth about 0.002, which were invisible at 3 decimals
+   on private.
+4. **The final picks did not matter here** (0.917 against a best of 0.918). In
+   general, though, near-duplicate picks waste the second slot. Gabriel lost
+   0.002 that way.
+
+The general checklist derived from this is in
+`docs/kaggle-competition-postmortem-checklist.md`.

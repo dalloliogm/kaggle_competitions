@@ -88,6 +88,8 @@ For ongoing competitions, create a focused workspace with:
 
 Each workspace should contain `COMPETITION.md`, `TASKS.md`, `NOTES.md`, `APPROACHES.md`, `LEARNINGS.md`, `AGENTS.md`, `notebooks/`, `submissions/`, and `references/`. Use the workspace markdown files to capture competition-specific context and instructions.
 
+At the start of every competition, and again at mid-point, read `docs/kaggle-competition-postmortem-checklist.md`: measure metric headroom per term, build validation that mimics the public/private split, and make the final picks genuinely different.
+
 Before proposing or implementing a new modeling direction in an existing workspace, read `APPROACHES.md` and `LEARNINGS.md` so previous experiments and durable insights are not lost.
 
 When listing, searching, or choosing competitions, use `./scripts/list_kaggle_competitions.py`. It caches identical queries under `.kaggle_cache/competition_lists/`; use `--refresh` when current Kaggle results matter.

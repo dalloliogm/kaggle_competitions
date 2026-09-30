@@ -16,3 +16,4 @@ Use `AGENTS.md` as the shared source of truth for repository conventions. Key ru
 - Prefer `scripts/kaggle_push_notebook.sh`, `scripts/kaggle_status.sh`, and `scripts/kaggle_output.sh` for Kaggle execution.
 - Do not commit generated submissions, downloaded outputs, model weights, secrets, `.env`, or local working data unless explicitly requested.
 - Once submitting is authorised, never let daily submission slots (reset 00:00 UTC) expire unused: submit the best remaining candidates as clearly labelled bets rather than waiting on a question. Keep every validation check, and never call a bet validated (see "Submission slots" in `AGENTS.md`).
+- At the start of every competition, read `docs/kaggle-competition-postmortem-checklist.md`: metric headroom per term, validation that mimics the public/private split, and genuinely different final picks.
