@@ -1835,3 +1835,60 @@ valid submission. **The zero-score risk is cleared.**
   it, and a trailing module-level call (`write_test_submission('base')`) has to
   be filtered out by parsing the cell and dropping top-level `Expr` calls, so
   the definitions execute without the script body.
+
+## Private scores: the harness ranking was inverted (2026-09-30)
+
+The competition closed and private scores are visible. Final: best public
+**0.953**, private **0.918**, rank **671 / 4020**.
+
+### The selection recommendation was wrong
+
+Fifteen submissions scored public `0.947`. Their private scores spread
+`0.913` to `0.916`:
+
+| config | held-out weighted | public | **private** |
+| --- | --- | --- | --- |
+| SEP12/13/14 DCTTA lineages | not measured | 0.947 | **0.916** |
+| arm F (withdrawn as hedge) | 0 (reference) | 0.947 | 0.914 |
+| gap45 | +0.00014 | 0.947 | 0.914 |
+| gap45+bonus125 | +0.00076 | 0.947 | 0.914 |
+| **gap45+dlow800 (SELECTED)** | +0.00083 | 0.947 | **0.913** |
+| **triple (SELECTED)** | +0.00138 | 0.947 | **0.913** |
+
+**The two configurations the harness ranked highest scored lowest.** The
+ranking was inverted. The baseline they were measured against beat them, and
+the older public-notebook-derived DCTTA lineages - which this line of work
+ignored because they were not "ours" - beat everything by `0.002`.
+
+Worse, arm F was explicitly **withdrawn** on 2026-09-24 on the reasoning that a
+pick which cannot beat the other one is a wasted slot. It beat both picks.
+
+### What the harness was and was not good for
+
+- It never promoted a candidate that lost on the public board, and it correctly
+  rejected `dmid700`, which then lost. At coarse resolution it worked.
+- Across all 49 scored submissions, public and private correlate at
+  **r = 0.863** - strong in the large, useless at the `0.001` resolution being
+  optimised at.
+- The held-out gains were real on held-out *training* videos. They did not
+  survive the change of distribution to the test set.
+
+**The rule this establishes: below some effect size, stop ranking and start
+diversifying.** Weeks went into separating candidates whose true spread
+(`0.913-0.916`) was smaller than the uncertainty in how any of them would
+transfer. Two picks chosen for *dissimilarity* would have been strictly better
+than two chosen as first and second by a metric with no resolving power at that
+scale - which is exactly the argument that was raised for arm F and then
+reasoned away.
+
+### The falsification test: sign right, magnitude wrong by 4x
+
+`mtl14` (prune tracks shorter than 14) was submitted specifically because the
+harness said it should lose, at `-0.020`. It scored public **0.942**, a drop of
+`-0.005`. The direction transferred; the magnitude was overstated fourfold.
+
+So the exchange-rate arithmetic in the node-count analysis is usable as a reason
+a direction is closed, and not as a predictor of how far anything moves. Same
+shape of error as the division ceiling (3x overstated) and the runtime
+projection (2x overstated). **Three separate quantitative predictions in this
+project were directionally right and numerically 2-4x off.**
