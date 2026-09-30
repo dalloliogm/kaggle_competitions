@@ -268,6 +268,25 @@ check, including one case where the aggregate had inverted the answer.
 
 **If a change only moves a subset of your samples, measure it on that subset.**
 Ties do not carry information, but they do shrink your error bars.
+
+### ...and the limit of that fix, now that private scores are out
+
+The restricted test earned its keep at coarse resolution: it rejected a
+candidate that then lost on the public board, and it never promoted one that
+lost. But its **ranking did not transfer**. Fifteen of our submissions scored
+public `0.947`; their private scores spread `0.913` to `0.916`, and the two
+configurations the harness ranked *highest* on held-out data scored `0.913` -
+the bottom of that group. The baseline it measured them against scored `0.914`.
+
+Across all 49 of our scored submissions, public and private correlate at
+**r = 0.863** - strong in the large, and useless at the `0.001` resolution we
+were trying to optimise at. The held-out gains were real on held-out *training*
+videos and simply did not carry to a different test distribution.
+
+So the honest version of the lesson is narrower than it first looked:
+restricting to affected samples fixes a real statistical error, but it cannot
+manufacture signal that is smaller than the gap between your validation set and
+the test set. **Below some effect size, stop ranking and start diversifying.**
 """),
 
 md(r"""
@@ -288,6 +307,26 @@ md(r"""
 
 If you find a node filter that clears 422, please say so in the comments - we
 would genuinely like to know we were wrong about this one.
+"""),
+
+md(r"""
+## Postscript: how this actually turned out
+
+Written up after the competition closed, with the private scores visible.
+
+- Best public we reached: **0.953**, private **0.918**, rank **671 / 4020**.
+- The node-count direction stayed closed. We never found a filter beating 422.
+- The one deliberately-losing submission we made as a test of section 4's
+  arithmetic - pruning tracks shorter than 14 frames - did lose, which is the
+  right direction. But the harness predicted `-0.020` and the board gave
+  `-0.005`. **Sign right, magnitude wrong by 4x.** If you take one thing from
+  this notebook, take the arithmetic in section 4 as a reason a direction is
+  closed, and not as a way to predict how much anything will move.
+- The configurations that did best on private were not the ones our offline
+  harness preferred. See the caveat in section 5.
+
+None of which changes sections 1-3: the metric's structure is what it is, and
+97% of your predicted nodes really are invisible to the edge Jaccard.
 """)]
 
 nb = {"cells": CELLS, "metadata": {
@@ -300,11 +339,9 @@ OUT.mkdir(parents=True, exist_ok=True)
 (OUT / "kernel-metadata.json").write_text(json.dumps({
     "id": f"dalloliogm/{SLUG}", "title": TITLE, "code_file": f"{SLUG}.ipynb",
     "language": "python", "kernel_type": "notebook",
-    # Kaggle refuses to make a notebook public while it has the competition
-    # attached as a source: "Notebooks with competition ... as a source may not
-    # be made public until after the competition ends". So this stays private
-    # until the 2026-09-29 23:59 UTC deadline passes, then flips to False.
-    "is_private": True,
+    # Public from 2026-09-30, once the competition closed. Kaggle refuses to
+    # publish a notebook while it has the competition attached as a source.
+    "is_private": False,
     "enable_gpu": False, "enable_tpu": False, "enable_internet": False,
     "dataset_sources": [], "kernel_sources": [],
     "competition_sources": ["biohub-cell-tracking-during-development"],
