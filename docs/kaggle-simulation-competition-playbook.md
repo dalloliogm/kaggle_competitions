@@ -126,3 +126,35 @@ In a competition workspace, create or update:
 
 Do not submit an ML agent only because behavior cloning trains locally. First
 validate runtime packaging, inference speed, and live ladder behavior.
+
+## Lessons added from Kaggriculture (2026-10)
+
+1. **Run the first-pass checklist before tuning, not after.** Five days went
+   into heuristic tuning that plateaued at ~600 ladder rating; submitting a
+   public agent moved it to ~1600 in a day. The checklist above would have
+   surfaced that on day one.
+
+2. **A public-agent survey is itself a first-pass step.** In a mature
+   simulation competition the public notebooks carry a collaborative lineage
+   (Apache-2.0, month-long attribution chains) far beyond what a fresh
+   hand-built agent reaches. Extract them, benchmark them head-to-head, and
+   treat the best as the baseline to beat. `competitions/kaggriculture/tools/
+   extract_notebook_agent.py` recovers an agent from a notebook without
+   executing it (base85/base64 tar.gz, gzip or lzma, often in
+   implicitly-concatenated chunks, sometimes with a published SHA-256).
+
+3. **Score against the built-in baseline does not rank agents.** Repeatedly:
+   the highest scorer against `starter` lost every head-to-head game. Only
+   position-balanced head-to-head counts, and ties deflate win counts for
+   near-identical agents, so compare means too.
+
+4. **Mining gives hypotheses, not parameters.** A strong cohort's behaviour
+   profile (livestock mix, land timing, seed and sale volumes, hiring curve)
+   is cheap to extract and validated one of our choices exactly. But porting
+   their volumes into a different architecture measured *worse* in every
+   combination: their numbers depend on machinery we do not have. Mine for the
+   mechanism, then test it.
+
+5. **Verify the submission state by submitting.** A competition can disable
+   submissions while still showing a later deadline; the CLI reports a bare
+   400, and the real message is in `e.response.text`.

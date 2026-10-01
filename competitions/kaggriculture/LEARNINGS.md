@@ -194,3 +194,55 @@ starts. By day 16 the big farm holds 22 animals, zero wheat, 22 of them unfed,
 and spends 87% of its turns walking because there is nothing it can afford to
 do. The labour budget then makes it worse: `crop_capacity` charges 7 actions a
 day per animal, so a big herd caps the crop plan at ~27 tiles by construction.
+
+## Replay mining, first pass (2026-10-01)
+
+`tools/mine_replay_corpus.py` implements step 3 of the repo's simulation
+playbook against `vijaikm/kaggriculture-match-replay-corpus` (537 matches).
+Strength comes from each team's mean final score in `matches_meta.csv`, so no
+rating table is needed. Cohort: four teams averaging $82k-87k, 184 games.
+
+Median per game for the strong cohort, against what our v6 does:
+
+| decision | strong cohort | our v6 |
+| --- | --- | --- |
+| cows / sheep / geese | 8 / 4 / 0 | 8 / 4 / 0 |
+| extra land quadrants | 2 (first on day 6) | 3 |
+| wheat seeds planted | 141 | few (wheat is discounted) |
+| wheat bought / sold | 487 / 479 | ~150 / ~0 |
+| strawberry sold | 276 | similar |
+| fertilizer sold | 302 | 170-300 |
+| carrot / tomato sold | 4 / 0 | 10-15 carrot tiles planted |
+| hires per 6-day block | 23, 58, 62, 72, 62 | comparable (ramp to 13/day) |
+
+**The herd is independently confirmed.** Four strong agents converged on exactly
+8 cows, 4 sheep and no geese - the configuration we arrived at by sweeping. That
+is the most reassuring result of the week: the egg economy really is worthless
+and the dairy herd really is the right size.
+
+**Porting their surface numbers does not work.** Measured both-sides against v6:
+
+| mined change | result |
+| --- | --- |
+| 2 quadrants instead of 3 | 10/20 - neutral |
+| wheat as a cash crop (`wheat_crop_bias` 1.6) | 5/20 - worse |
+| both together | 3/20 - worse |
+| both plus `min_crop_value` 40 | 3/20 - worse |
+
+So mining tells you *what* strong agents do but not the *mechanism* that makes
+it pay. They run ~28 tiles of wheat continuously and sell 479 units; our hands
+cannot service that many one-action tiles (65% of our unit-turns are already
+walking), so the same volume costs us more than it earns. A behaviour profile is
+a hypothesis generator, not a parameter set to copy.
+
+## Submissions close before the stated deadline
+
+The competition page showed a deadline of 2026-10-14 while
+`CreateSubmission` returned, behind the CLI's bare 400:
+
+    "Submission not allowed: Submissions have been disabled for this competition."
+
+The Sep 30 date was the final *submission* deadline; the later date is the
+evaluation window during which existing submissions keep playing episodes (ours
+climbed from 600 to 1600 inside it). Read the submission state from a real
+submit attempt, not from the deadline column.
