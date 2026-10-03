@@ -1,0 +1,14 @@
+{
+  "id": "dalloliogm/casmi26-candidates-fp-v2",
+  "title": "casmi26 candidates fp v2",
+  "code_file": "casmi26-candidates-fp-v2.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": ["metric/rdkit-2026-3-3-wheel", "dmitriigluzdov/casmi26-pubchem-popularity-prior", "dmitriigluzdov/casmi26-natural-product-knowledge-table"],
+  "competition_sources": ["enveda-casmi26-molecule-id-mass-spectra"],
+  "kernel_sources": ["dalloliogm/casmi26-fp-model-train"]
+}
