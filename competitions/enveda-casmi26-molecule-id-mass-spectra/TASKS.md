@@ -14,7 +14,7 @@
 ## Done
 
 - Workspace initialised; official pages saved to `references/`.
-- Built `notebooks/casmi26-library-retrieval-baseline.ipynb` (class-1 library retrieval, mass shortlist + binned cosine, local holdout validation). Verified only on synthetic data; real-data run/timing and LB score still pending.
+- Built `notebooks/casmi26-library-retrieval-baseline.ipynb` (class-1 library retrieval, mass shortlist + binned cosine, local holdout validation). Ran on Kaggle (kernel `dalloliogm/casmi26-library-retrieval-baseline` v3, CPU, ~6 min total): local class-1 holdout MRR@25 = 0.917 (100 mols, top1 0.87). LB score pending (not submitted yet).
 
 ## Questions
 

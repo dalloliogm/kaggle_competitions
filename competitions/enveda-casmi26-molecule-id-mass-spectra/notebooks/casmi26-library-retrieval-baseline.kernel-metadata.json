@@ -1,0 +1,14 @@
+{
+  "id": "dalloliogm/casmi26-library-retrieval-baseline",
+  "title": "casmi26 library retrieval baseline",
+  "code_file": "casmi26-library-retrieval-baseline.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": [],
+  "competition_sources": ["enveda-casmi26-molecule-id-mass-spectra"],
+  "kernel_sources": []
+}
