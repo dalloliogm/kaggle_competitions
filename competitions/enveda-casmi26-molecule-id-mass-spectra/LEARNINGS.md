@@ -47,3 +47,6 @@ Capture durable information learned while working on this competition. This is f
 - Library cosine must be thresholded (relu(cos-0.7)): raw cosine of weak matches penalises true structures that have no library spectra (class 2). This alone took LB 0.162 -> 0.191.
 - FP model (MLP, 1 Da frag+neutral-loss bins, 8 epochs, ~1M spectra) trains in ~5 min on a T4; held-out-structure MRR@25 0.54 inside a small (~110 cand) pool.
 - Kernel `kernel_sources` lets an inference notebook read another kernel's /kaggle/working outputs (fpmodel.pt) — no dataset upload needed.
+
+- Adding the PubChem tier (4000 most popular per window) lowered LB 0.191 -> 0.175: the weak FP model (class-2 proxy MRR 0.15 once the answer must come from the tier) can't discriminate among thousands of extra isomers, so extra candidates just push true pool answers down. A better FP model (pretrained public ones / ensembles) and/or a learned ranker must come *before* widening the pool; consider tier candidates only as a lower-priority slot (e.g. fill ranks after top-N from the pool).
+- Local validation is only trustworthy for class 2 when the answer is removed from the candidate pool (see v3); v2's 0.577 class-2 proxy was far too optimistic.
