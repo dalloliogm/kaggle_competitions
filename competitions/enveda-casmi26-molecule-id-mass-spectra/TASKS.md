@@ -13,6 +13,8 @@
 
 ## Done
 
+- v3 (`casmi26-candidates-pubchem-v3`): adds ±10 ppm window of the 105.9M PubChem tier (top 4000 by popularity) to the candidates. Honest local class-2 proxy (val structures removed from pool, tier-only) = 0.151, mix 0.368; **LB 0.175 < v2's 0.191** -> still best submission is v2. Runtime ~25 min.
+
 - v2 pipeline (notebooks `casmi26-fp-model-train` [GPU, ~10 min] -> `casmi26-candidates-fp-v2` [CPU, ~12 min]): mass-window candidates from pool_popularity (710k) + NP table, spectrum->Morgan-FP MLP, lib cosine (thresholded), blend weights tuned on local mix. LB: 0.162 (first blend) -> **0.191** (lib threshold 0.7, kernel v2). Local mix 0.657 (class1 0.846 / class2-proxy 0.577) is optimistic: class-2 proxy candidates are always in the pool.
 
 - Workspace initialised; official pages saved to `references/`.
