@@ -41,3 +41,9 @@ Capture durable information learned while working on this competition. This is f
 
 - Library-retrieval baseline: local class-1 holdout 0.917 but public LB 0.140, so the hidden test is dominated by molecules without public spectra (classes 2/3). Biggest gains need candidate retrieval (PubChem/COCONUT) + spectrum->structure models, not better cosine.
 - Submit code competitions via `KaggleApi().competition_submit_code(file_name='submission.csv', kernel='owner/slug', kernel_version=N)`; scoring reruns the notebook (~10 min).
+
+- Offline RDKit: Kaggle image has no rdkit; attach `metric/rdkit-2026-3-3-wheel` (official, has cp313) and pip install --no-index from /kaggle/input.
+- Useful public datasets: `dmitriigluzdov/casmi26-pubchem-popularity-prior` (`pool_popularity.csv`: 710k structures w/ smiles, mass, pop, NP flags), `dmitriigluzdov/casmi26-natural-product-knowledge-table`, pubchem tier / pretrained FP models listed in TASKS.md.
+- Library cosine must be thresholded (relu(cos-0.7)): raw cosine of weak matches penalises true structures that have no library spectra (class 2). This alone took LB 0.162 -> 0.191.
+- FP model (MLP, 1 Da frag+neutral-loss bins, 8 epochs, ~1M spectra) trains in ~5 min on a T4; held-out-structure MRR@25 0.54 inside a small (~110 cand) pool.
+- Kernel `kernel_sources` lets an inference notebook read another kernel's /kaggle/working outputs (fpmodel.pt) — no dataset upload needed.
