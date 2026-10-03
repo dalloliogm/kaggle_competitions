@@ -14,7 +14,7 @@
 ## Done
 
 - Workspace initialised; official pages saved to `references/`.
-- Built `notebooks/casmi26-library-retrieval-baseline.ipynb` (class-1 library retrieval, mass shortlist + binned cosine, local holdout validation). Ran on Kaggle (kernel `dalloliogm/casmi26-library-retrieval-baseline` v3, CPU, ~6 min total): local class-1 holdout MRR@25 = 0.917 (100 mols, top1 0.87). LB score pending (not submitted yet).
+- Built `notebooks/casmi26-library-retrieval-baseline.ipynb` (class-1 library retrieval, mass shortlist + binned cosine, local holdout validation). Ran on Kaggle (kernel `dalloliogm/casmi26-library-retrieval-baseline` v3, CPU, ~6 min total): local class-1 holdout MRR@25 = 0.917 (100 mols, top1 0.87). Submitted (ref 56796436): public LB MRR@25 = 0.140 (vs 0.917 local class-1 holdout -> most hidden molecules are class 2/3).
 
 ## Questions
 

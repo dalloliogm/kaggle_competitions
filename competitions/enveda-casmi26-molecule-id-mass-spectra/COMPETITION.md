@@ -46,5 +46,5 @@ Test: ~1,500 spectra / ~400 molecules, all Bruker timsTOF, monoisotopic mass 157
 ## Current Baseline
 
 - Local CV: TBD
-- Public LB: TBD
-- Notebook/kernel: TBD
+- Public LB: 0.140 (library retrieval baseline, kernel v3)
+- Notebook/kernel: dalloliogm/casmi26-library-retrieval-baseline (v3)
