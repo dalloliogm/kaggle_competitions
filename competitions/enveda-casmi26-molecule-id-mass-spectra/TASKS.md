@@ -14,6 +14,7 @@
 ## Done
 
 - Workspace initialised; official pages saved to `references/`.
+- Built `notebooks/casmi26-library-retrieval-baseline.ipynb` (class-1 library retrieval, mass shortlist + binned cosine, local holdout validation). Verified only on synthetic data; real-data run/timing and LB score still pending.
 
 ## Questions
 
