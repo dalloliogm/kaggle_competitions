@@ -13,6 +13,8 @@
 
 ## Done
 
+- v6 (`casmi26-candidates-fpnet-ensemble-v6`): 4 FPNet checkpoints (v3 fpnet_0/1 + v4b fe_A/fe_B) averaged, polarity-merged + per-spectrum views, ce_n fix, fp-only blend. Fold0 val unchanged (0.863 vs 0.865); **LB 0.290 ~ v4 0.292** -> more FPNets of the same family add nothing. Best stays v4 (0.292).
+
 - v5 (`casmi26-candidates-fpnet-v5-np`): blend re-tuned on NP panel (258 held-out NP structures) + general + class1 with narrow NP flag; chosen pop=0.25, nn=0.5, lib=0. Local NP panel MRR 0.518 -> 0.748, but **LB 0.255 < v4's 0.292**. The NP panel (famous compounds, median pop ~13) is NOT representative of the hidden test; the popularity prior hurts there. Keep v4 (fp-only) as best. Leaderboard (2026-10-04): v4 0.292 = rank 1404/2440, median 0.328, top 0.471.
 
 - v4 (`casmi26-candidates-fpnet-v4`, GPU T4, ~10 min): replaced my MLP with the public pretrained FPNet transformer (`ahmedberatozer/casmi26-v3-models` fpnet_0+fpnet_1 for test; fold-safe `fpnet_fold0.pt` for honest validation), candidate fingerprints from `casmi26-v2-pool/pool_fp.npy`. Local mix 0.865 (c1 0.967 inflated / c2 0.821); **LB 0.292** (v2 0.191, v3 0.175, baseline 0.140). Best submission so far. Blend chose fp only (lib=0,pop=0,np=0) on val.
