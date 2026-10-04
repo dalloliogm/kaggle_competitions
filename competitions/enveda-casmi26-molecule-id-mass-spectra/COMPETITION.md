@@ -46,5 +46,5 @@ Test: ~1,500 spectra / ~400 molecules, all Bruker timsTOF, monoisotopic mass 157
 ## Current Baseline
 
 - Local CV: TBD
-- Public LB: 0.191 (v2 blend: candidates + FP model + library cosine; baseline lib-only was 0.140)
-- Notebook/kernel: dalloliogm/casmi26-candidates-fp-v2 (v2), needs kernel output of dalloliogm/casmi26-fp-model-train
+- Public LB: 0.292 (v4: public FPNet + pool candidates; v2 0.191, baseline lib-only 0.140)
+- Notebook/kernel: dalloliogm/casmi26-candidates-fpnet-v4 (v1, GPU)
