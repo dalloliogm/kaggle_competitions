@@ -16,7 +16,8 @@
     "dmitriigluzdov/casmi26-open-model-and-candidate-resources",
     "dmitriigluzdov/casmi26-pubchem-popularity-prior",
     "ahmedberatozer/casmi26-glacier",
-    "prvsiyan/chebi-lipidmaps-casmi26"
+    "prvsiyan/chebi-lipidmaps-casmi26",
+    "metric/rdkit-2026-3-3-wheel"
   ],
   "kernel_sources": [],
   "competition_sources": [
