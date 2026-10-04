@@ -1,0 +1,26 @@
+{
+  "id": "dalloliogm/casmi26-public-pipeline-fork",
+  "title": "casmi26 public pipeline fork",
+  "code_file": "casmi26-public-pipeline-fork.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": [
+    "dmitriigluzdov/casmi26-attributed-v4g-reproduction-assets",
+    "dmitriigluzdov/casmi26-identity-disjoint-validation-folds",
+    "dmitriigluzdov/casmi26-natural-product-knowledge-table",
+    "dmitriigluzdov/casmi26-natural-product-panel-benchmark",
+    "dmitriigluzdov/casmi26-open-model-and-candidate-resources",
+    "dmitriigluzdov/casmi26-pubchem-popularity-prior",
+    "ahmedberatozer/casmi26-glacier",
+    "prvsiyan/chebi-lipidmaps-casmi26"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [
+    "enveda-casmi26-molecule-id-mass-spectra"
+  ],
+  "model_sources": []
+}
