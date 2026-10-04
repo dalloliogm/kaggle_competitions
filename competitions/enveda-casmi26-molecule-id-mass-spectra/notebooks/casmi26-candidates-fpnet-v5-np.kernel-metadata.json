@@ -1,0 +1,14 @@
+{
+  "id": "dalloliogm/casmi26-candidates-fpnet-v5-np",
+  "title": "casmi26 candidates fpnet v5 np",
+  "code_file": "casmi26-candidates-fpnet-v5-np.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": ["metric/rdkit-2026-3-3-wheel", "dmitriigluzdov/casmi26-pubchem-popularity-prior", "dmitriigluzdov/casmi26-natural-product-knowledge-table", "ahmedberatozer/casmi26-v3-models", "ahmedberatozer/casmi26-v2-pool", "dmitriigluzdov/casmi26-fold-safe-fpnet"],
+  "competition_sources": ["enveda-casmi26-molecule-id-mass-spectra"],
+  "kernel_sources": []
+}
