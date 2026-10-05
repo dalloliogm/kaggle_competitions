@@ -63,3 +63,5 @@ Capture durable information learned while working on this competition. This is f
 
 - Running the attributed public pipeline (FPNet + LightGBM rankers + PubChem tier channel + ICEBERG/GLACIER + engine fusion) gives LB 0.367 vs our best own 0.292 (+0.075) -> rank ~771/2466. Each submission costs ~6-7 h of scoring rerun, so iterate offline (cached candidate scores) and submit sparingly.
 - When forking public notebooks: datasets mount under /kaggle/input/datasets/<owner>/<name>/, so hard-coded /kaggle/input/<name> paths break (patch with recursive glob); attach the official rdkit wheel for cp313.
+
+- Panel replay (README of the NP benchmark): popularity prior is worth +0.44 MRR on the panel's PubChem channel (0.51 -> 0.95) because panel answers are famous; the same dataset cautions it will overstate the benefit for rarely studied compounds. Our LB evidence (v5: -0.04) agrees. Treat panel numbers as a ceiling, not a tuning target.

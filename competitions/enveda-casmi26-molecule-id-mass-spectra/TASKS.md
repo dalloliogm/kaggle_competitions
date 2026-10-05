@@ -13,6 +13,8 @@
 
 ## Done
 
+- Reviewed the NP panel benchmark replay (`casmi26-natural-product-panel-benchmark`): the forked pipeline already uses its best merge rule (promote best PubChem proposal when S>6 and pop>=5; prior 0.25). The dataset itself warns the panel is a famous-compound proxy (249/250 in COCONUT, optimistic pool scenarios), and our own v5 showed panel-tuned popularity hurting LB. No further replay-based changes made. Decision (2026-10-05): stop experimenting; best submission = public-pipeline fork, LB 0.367. Further submissions cost ~7h of scoring each.
+
 - **Fork of public pipeline** (`casmi26-public-pipeline-fork` v3, attributed copy of dmitriigluzdov's notebook; builds on ahmedberatozer v4g-v4m, Apache 2.0): **LB 0.367** (rank ~771/2466, median 0.328, top 0.471). Needed `metric/rdkit-2026-3-3-wheel` + glob for the asset path (datasets mount under /kaggle/input/datasets/...). Notebook run ~5 h on T4, scoring rerun ~6-7 h each submission.
 
 - v6 (`casmi26-candidates-fpnet-ensemble-v6`): 4 FPNet checkpoints (v3 fpnet_0/1 + v4b fe_A/fe_B) averaged, polarity-merged + per-spectrum views, ce_n fix, fp-only blend. Fold0 val unchanged (0.863 vs 0.865); **LB 0.290 ~ v4 0.292** -> more FPNets of the same family add nothing. Best stays v4 (0.292).
