@@ -13,6 +13,8 @@
 
 ## Done
 
+- Phase 1 (PLAN.md) started 2026-10-05: forked public notebooks `lehau007/casmi26-sota-v30-extlib-provenance-0418` (-> `dalloliogm/casmi26-fork-v30-extlib` v1, commit run 35 min smoke on 24 molecules, no errors) and `...v28-golden-tailfill-0416` (-> `casmi26-fork-v28-tailfill` v1). Submitted both (refs 56862043 v30, 56862278 v28); awaiting scores (~7 h each). Code reviewed before running: no network calls, Apache-2.0 lineage (seyitkaangunes), v30 additionally uses dataset `takumuhata/casmi26-extlib` (200k reference spectra, public). Commit runs only smoke-test (SMOKE_N molecules); the scoring rerun runs everything.
+
 - Reviewed the NP panel benchmark replay (`casmi26-natural-product-panel-benchmark`): the forked pipeline already uses its best merge rule (promote best PubChem proposal when S>6 and pop>=5; prior 0.25). The dataset itself warns the panel is a famous-compound proxy (249/250 in COCONUT, optimistic pool scenarios), and our own v5 showed panel-tuned popularity hurting LB. No further replay-based changes made. Decision (2026-10-05): stop experimenting; best submission = public-pipeline fork, LB 0.367. Further submissions cost ~7h of scoring each.
 
 - **Fork of public pipeline** (`casmi26-public-pipeline-fork` v3, attributed copy of dmitriigluzdov's notebook; builds on ahmedberatozer v4g-v4m, Apache 2.0): **LB 0.367** (rank ~771/2466, median 0.328, top 0.471). Needed `metric/rdkit-2026-3-3-wheel` + glob for the asset path (datasets mount under /kaggle/input/datasets/...). Notebook run ~5 h on T4, scoring rerun ~6-7 h each submission.
