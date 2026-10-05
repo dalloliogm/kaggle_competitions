@@ -13,6 +13,8 @@
 
 ## Done
 
+- **Fork of public pipeline** (`casmi26-public-pipeline-fork` v3, attributed copy of dmitriigluzdov's notebook; builds on ahmedberatozer v4g-v4m, Apache 2.0): **LB 0.367** (rank ~771/2466, median 0.328, top 0.471). Needed `metric/rdkit-2026-3-3-wheel` + glob for the asset path (datasets mount under /kaggle/input/datasets/...). Notebook run ~5 h on T4, scoring rerun ~6-7 h each submission.
+
 - v6 (`casmi26-candidates-fpnet-ensemble-v6`): 4 FPNet checkpoints (v3 fpnet_0/1 + v4b fe_A/fe_B) averaged, polarity-merged + per-spectrum views, ce_n fix, fp-only blend. Fold0 val unchanged (0.863 vs 0.865); **LB 0.290 ~ v4 0.292** -> more FPNets of the same family add nothing. Best stays v4 (0.292).
 
 - v5 (`casmi26-candidates-fpnet-v5-np`): blend re-tuned on NP panel (258 held-out NP structures) + general + class1 with narrow NP flag; chosen pop=0.25, nn=0.5, lib=0. Local NP panel MRR 0.518 -> 0.748, but **LB 0.255 < v4's 0.292**. The NP panel (famous compounds, median pop ~13) is NOT representative of the hidden test; the popularity prior hurts there. Keep v4 (fp-only) as best. Leaderboard (2026-10-04): v4 0.292 = rank 1404/2440, median 0.328, top 0.471.

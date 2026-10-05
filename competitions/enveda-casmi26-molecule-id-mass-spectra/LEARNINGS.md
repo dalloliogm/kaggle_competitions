@@ -60,3 +60,6 @@ Capture durable information learned while working on this competition. This is f
 
 - Averaging 4 public FPNet checkpoints + merged-polarity view gave no gain (LB 0.290 vs 0.292). The remaining gap to the 0.33-0.47 field is not encoder averaging: public top pipelines add a LightGBM ranker over many candidate features (analog/derivation/fragment-coverage/FragNet/ICEBERG/DreaMS) and/or different candidate generation (PubChem tier with popularity). Next real step is either reproducing/adapting that public pipeline (`dmitriigluzdov/casmi-26-from-spectra-to-structures`, needs v4b models, glacier, iceberg etc.) or building our own ranker on honest held-out data.
 - Workflow note: user wants commits pushed directly to `main` (PR #3 had already merged the session branch).
+
+- Running the attributed public pipeline (FPNet + LightGBM rankers + PubChem tier channel + ICEBERG/GLACIER + engine fusion) gives LB 0.367 vs our best own 0.292 (+0.075) -> rank ~771/2466. Each submission costs ~6-7 h of scoring rerun, so iterate offline (cached candidate scores) and submit sparingly.
+- When forking public notebooks: datasets mount under /kaggle/input/datasets/<owner>/<name>/, so hard-coded /kaggle/input/<name> paths break (patch with recursive glob); attach the official rdkit wheel for cp313.

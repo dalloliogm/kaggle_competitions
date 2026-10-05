@@ -46,5 +46,5 @@ Test: ~1,500 spectra / ~400 molecules, all Bruker timsTOF, monoisotopic mass 157
 ## Current Baseline
 
 - Local CV: TBD
-- Public LB: 0.292 (v4: public FPNet + pool candidates; v2 0.191, baseline lib-only 0.140)
-- Notebook/kernel: dalloliogm/casmi26-candidates-fpnet-v4 (v1, GPU)
+- Public LB: 0.367 (fork of public pipeline; our own v4 0.292, v2 0.191, baseline 0.140)
+- Notebook/kernel: dalloliogm/casmi26-public-pipeline-fork (v3, GPU, ~5h run)
