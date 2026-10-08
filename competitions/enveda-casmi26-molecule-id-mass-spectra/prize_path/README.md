@@ -22,3 +22,7 @@ Hosts' rules (forum, 2026-10): solutions built on non-commercial data/tools are 
 2. Continue training (resume from own output via `kernel_sources`) for more steps; add spectrum merging and collision-energy augmentation.
 3. Add candidates beyond the pool (PubChem structures, public domain) and a popularity prior once licences are confirmed; own LightGBM ranker.
 4. Compare to the public-pipeline fork (0.37 LB); keep the fork as non-prize fallback for the 2nd final submission.
+
+## Run log
+- **Run 1** (`casmi26-own-fpnet-train` v1, 2026-10-08, T4, 7.7 h): pool 729,387 structures (275,809 train + 453,581 COCONUT-only), 6,901 bits, 2.53 M spectra, 27 M-param model. **Only ~1,069 optimiser steps** because of two bugs: (a) `np.load(...npz)` returns a lazy NpzFile that re-reads the 2 GB array on every access (about 1.7 s/step), (b) the 30-min evaluation took >30 min so it re-triggered every step. Even so, held-out-identity MRR@25 inside the +-10 ppm pool window = **0.40** (1.5k structures; 0.369 on a different 1.5k subset at the end) - public FPNet A reaches ~0.79 after 83k steps, so there is a lot of headroom.
+- **Run 2** (`casmi26-own-fpnet-train2`, fixed: arrays loaded once, eval every 30 min with 400 structures, cached pool/spectra/ckpt reused from run 1 via kernel_sources, LR cosine by elapsed time, 7.5 h budget): started 2026-10-08.
