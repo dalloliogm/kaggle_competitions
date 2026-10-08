@@ -26,7 +26,7 @@ def find(name, env):
     assert p, f"{name} not found"; return p
 TRAIN = find("train.parquet", "CASMI_TRAIN"); COCO = find("coconut_structures.parquet", "COCONUT_PQ")
 OUT = os.environ.get("OUT", "/kaggle/working" if os.path.isdir("/kaggle/working") else "."); os.makedirs(OUT, exist_ok=True)
-SMOKE = os.environ.get("SMOKE") == "1"; HOURS = float(os.environ.get("HOURS", 6.5))
+SMOKE = os.environ.get("SMOKE") == "1"; HOURS = float(os.environ.get("HOURS", 7.5))
 D = int(os.environ.get("D_MODEL", 384)); L = int(os.environ.get("LAYERS", 6)); BATCH = int(os.environ.get("BATCH", 256))
 MAXP = 128; NNEG = 63; PPM = 10.0
 dev = "cuda" if torch.cuda.is_available() else "cpu"
@@ -65,9 +65,15 @@ def _fp_chunk(smis):
         if r is not None: out[i] = r; ok[i] = True
     return np.packbits(out, axis=1), ok
 
+def load_npz(p):
+    z = np.load(p, allow_pickle=True); return {k: z[k] for k in z.files}      # NpzFile re-reads the whole array on every access: load once
+def cached(name):
+    for p in [f"{OUT}/{name}"] + glob.glob(f"/kaggle/input/**/{name}", recursive=True):
+        if os.path.exists(p): return p
 def build_pool():
+    p = cached("pool.npz")
+    if p: log("using cached", p); return load_npz(p)
     p = f"{OUT}/pool.npz"
-    if os.path.exists(p): return np.load(p, allow_pickle=True)
     tr = pq.read_table(TRAIN, columns=["inchikey14", "normalized_smiles", "molecular_formula"]).to_pandas().drop_duplicates("inchikey14")
     tr["mass"] = tr.molecular_formula.map(fmass); tr = tr.dropna(subset=["mass"])
     co = pd.read_parquet(COCO, columns=["inchikey", "canonical_smiles", "exact_mass"])
@@ -86,7 +92,7 @@ def build_pool():
     order = np.argsort(pool.mass.to_numpy(), kind="stable"); pool = pool.iloc[order].reset_index(drop=True); fp = fp[order]
     fp_sel = np.packbits(np.unpackbits(fp, axis=1)[:, :RAW_BITS][:, bits], axis=1)
     np.savez(p, keys=pool.inchikey14.to_numpy(object), smiles=pool.normalized_smiles.to_numpy(object), mass=pool.mass.to_numpy(np.float64), fp=fp_sel, bits=bits)
-    log("pool saved", len(pool), "selected bits", len(bits)); return np.load(p, allow_pickle=True)
+    log("pool saved", len(pool), "selected bits", len(bits)); return load_npz(p)
 
 # ----------------------------------------------------------------------------------------------- spectra
 def prep_peaks(mz, it, prec):
@@ -99,8 +105,9 @@ def prep_peaks(mz, it, prec):
     o = np.argsort(mz); return mz[o].astype(np.float32), np.sqrt(it[o]).astype(np.float16)
 
 def build_spectra():
+    p = cached("spectra.npz")
+    if p: log("using cached", p); return load_npz(p)
     p = f"{OUT}/spectra.npz"
-    if os.path.exists(p): return np.load(p, allow_pickle=True)
     cols = ["inchikey14", "ms2_mzs", "ms2_normalized_intensities", "precursor_mz", "adduct", "ionization_mode", "collision_energy_ev"]
     mz, it, nv, meta = [], [], [], []
     for b in pq.ParquetFile(TRAIN).iter_batches(batch_size=50000, columns=cols):
@@ -118,7 +125,7 @@ def build_spectra():
     m = pd.DataFrame(meta, columns=["key", "prec", "adduct", "mode", "ce", "ce_known", "n_merged"])
     np.savez(p, mz=np.stack(mz), it=np.stack(it), nv=np.array(nv, np.int16), key=m.key.to_numpy(object), prec=m.prec.to_numpy(np.float32), adduct=m.adduct.to_numpy(np.int16),
              mode=m["mode"].to_numpy(np.float32), ce=m.ce.to_numpy(np.float32), ce_known=m.ce_known.to_numpy(np.float32), n_merged=m.n_merged.to_numpy(np.int16))
-    return np.load(p, allow_pickle=True)
+    return load_npz(p)
 
 # ----------------------------------------------------------------------------------------------- model
 class SinEmb(nn.Module):
@@ -181,9 +188,9 @@ def main():
             c = torch.load(cand, map_location=dev); net.load_state_dict(c["model"]); opt.load_state_dict(c["opt"]); step = c["step"]; log("resumed", cand, "step", step); break
     use_amp = dev == "cuda"; amp_dt = torch.bfloat16 if use_amp and torch.cuda.get_device_capability()[0] >= 8 else torch.float16
     scaler = torch.amp.GradScaler(enabled=use_amp and amp_dt == torch.float16)
-    total = int(os.environ.get("STEPS", 400 if SMOKE else 120000)); warm = 200 if SMOKE else 2000
-    lr_at = lambda s: 3e-4 * min(1, (s + 1) / warm) * (0.5 * (1 + math.cos(math.pi * min(1, s / total))))
-    rng = np.random.RandomState(step)
+    total = int(os.environ.get("STEPS", 400 if SMOKE else 150000)); warm = 200 if SMOKE else 2000
+    lr_at = lambda s: 3e-4 * min(1, (s + 1) / warm) * (0.5 * (1 + math.cos(math.pi * min(1, max(s / total, (time.time() - tstart) / (HOURS * 3600))))))
+    rng = np.random.RandomState(step); tstart = time.time()
     def evaluate(max_struct=1500):
         net.eval(); rr = []; vs = pd.Series(va_idx).groupby(sp_pool[va_idx]).apply(np.array)
         with torch.no_grad():
@@ -193,7 +200,7 @@ def main():
                 m = S["prec"][ix[0]]; lo, hi = np.searchsorted(pmass, [pmass[sid] * (1 - PPM * 1e-6), pmass[sid] * (1 + PPM * 1e-6)])
                 sc = (unpack(pfp[lo:hi], nb) @ z); r = int((sc > sc[sid - lo]).sum()) + 1; rr.append(1 / r if r <= 25 else 0.0)
         net.train(); return float(np.mean(rr)) if rr else float("nan")
-    net.train(); tl = 0.0; tstart = time.time(); last_eval = time.time()
+    net.train(); tl = 0.0; last_eval = time.time()
     while step < total and (time.time() - tstart) < HOURS * 3600:
         half = BATCH // 2
         idx = np.concatenate([rng.choice(tr_idx, half), np.array([s_lists[j][rng.randint(len(s_lists[j]))] for j in rng.randint(len(s_lists), size=BATCH - half)])])
@@ -211,8 +218,8 @@ def main():
         nn.utils.clip_grad_norm_(net.parameters(), 1.0); scaler.step(opt); scaler.update(); step += 1; tl += loss.item()
         if step % 200 == 0: log(f"step {step} loss {tl/200:.3f} (rank {loss_rank.item():.3f} bce {loss_bce.item():.4f})"); tl = 0.0
         if time.time() - last_eval > 1800 or step == total:
-            last_eval = time.time(); log(f"step {step} held-out-identity MRR@25 (pool window) = {evaluate():.3f}")
-            torch.save(dict(model=net.state_dict(), opt=opt.state_dict(), step=step, nbits=nb, d=D, layers=L), ck)
+            log(f"step {step} held-out-identity MRR@25 (pool window) = {evaluate(400):.3f}")
+            torch.save(dict(model=net.state_dict(), opt=opt.state_dict(), step=step, nbits=nb, d=D, layers=L), ck); last_eval = time.time()
     torch.save(dict(model=net.state_dict(), opt=opt.state_dict(), step=step, nbits=nb, d=D, layers=L), ck)
-    log(f"final step {step} held-out-identity MRR@25 = {evaluate(3000):.3f}")
+    log(f"final step {step} held-out-identity MRR@25 = {evaluate(1500):.3f}")
 main()
