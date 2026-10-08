@@ -1,0 +1,14 @@
+{
+  "id": "dalloliogm/casmi26-own-fpnet-train",
+  "title": "casmi26 own fpnet train",
+  "code_file": "own_fpnet_train.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": ["metric/rdkit-2026-3-3-wheel", "aidensong123/casmi26-coconut-202609"],
+  "competition_sources": ["enveda-casmi26-molecule-id-mass-spectra"],
+  "kernel_sources": []
+}
