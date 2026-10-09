@@ -13,6 +13,8 @@
 
 ## Done
 
+- **Prize path v1** (2026-10-09): own transformer trained on train.parquet (+COCONUT pool), 100k steps / 7.5 h on a T4; held-out-identity MRR@25 0.70 (hardest-400 plateau 0.60); **LB 0.261** with fp-only ranking, no third-party weights. See prize_path/README.md for the gap list and roadmap.
+
 - Validation-mode run of the v30 fork (`casmi26-v30-validation`, 250 NP-panel molecules, all their spectra purged, ~2.1 h incl. ICE/GLACIER): **MRR@25 0.477, top-1 0.156, hit@25 1.000**. Hit@25=1.0 with top-1 only 0.16 says the answer is always in the lists but ranked low; ICE stats show 0 molecules changed. Caveats: panel = famous NPs; `full1` FPNet was trained on the panel and extlib may contain these structures, so this is a smoke-level baseline for relative comparisons only (single-knob variants), not an estimate of LB. Pop-0.15 variant (ref 56877131) pending.
 
 - 2026-10-06 results: forks of public v28 and v30 both scored **LB 0.370** (not the 0.416/0.418 claimed), ~= our 0.367 fork. Cause (discussion thread 745715): the 0.41x claims come from notebooks (e.g. imranarif536 v44 "PairTail", lehau007 "pairtail" variants) that hard-code the 400 *visible* molecule_id -> SMILES pairs and force them to rank 1; the hidden rerun apparently reuses the visible ids, so this leaks class-1 answers. We do NOT use this (unfair, hosts may remap ids/disqualify). Our v28/v30 forks do not use it and land at 0.370.
