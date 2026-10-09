@@ -1,0 +1,14 @@
+{
+  "id": "dalloliogm/casmi26-own-fpnet-infer",
+  "title": "casmi26 own fpnet infer",
+  "code_file": "own-fpnet-infer.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": ["metric/rdkit-2026-3-3-wheel"],
+  "competition_sources": ["enveda-casmi26-molecule-id-mass-spectra"],
+  "kernel_sources": ["dalloliogm/casmi26-own-fpnet-train", "dalloliogm/casmi26-own-fpnet-train2"]
+}
