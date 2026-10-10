@@ -13,6 +13,8 @@
 
 ## Done
 
+- Prize path status 2026-10-10: own regularised FPNet (train3) + pool: **LB 0.274** (prize-eligible best); PubChem own-tier channel did not help (0.209). Dataset `dalloliogm/casmi26-pubchem-own-tier` is private - make public only if it ends up in a final submission.
+
 - **Prize path v1** (2026-10-09): own transformer trained on train.parquet (+COCONUT pool), 100k steps / 7.5 h on a T4; held-out-identity MRR@25 0.70 (hardest-400 plateau 0.60); **LB 0.261** with fp-only ranking, no third-party weights. See prize_path/README.md for the gap list and roadmap.
 
 - Validation-mode run of the v30 fork (`casmi26-v30-validation`, 250 NP-panel molecules, all their spectra purged, ~2.1 h incl. ICE/GLACIER): **MRR@25 0.477, top-1 0.156, hit@25 1.000**. Hit@25=1.0 with top-1 only 0.16 says the answer is always in the lists but ranked low; ICE stats show 0 molecules changed. Caveats: panel = famous NPs; `full1` FPNet was trained on the panel and extlib may contain these structures, so this is a smoke-level baseline for relative comparisons only (single-knob variants), not an estimate of LB. Pop-0.15 variant (ref 56877131) pending.
