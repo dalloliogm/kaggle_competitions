@@ -8,7 +8,15 @@
   "enable_gpu": true,
   "enable_tpu": false,
   "enable_internet": false,
-  "dataset_sources": ["metric/rdkit-2026-3-3-wheel", "dalloliogm/casmi26-pubchem-own-tier"],
-  "competition_sources": ["enveda-casmi26-molecule-id-mass-spectra"],
-  "kernel_sources": ["dalloliogm/casmi26-own-fpnet-train", "dalloliogm/casmi26-own-fpnet-train2"]
+  "dataset_sources": [
+    "metric/rdkit-2026-3-3-wheel",
+    "dalloliogm/casmi26-pubchem-own-tier"
+  ],
+  "competition_sources": [
+    "enveda-casmi26-molecule-id-mass-spectra"
+  ],
+  "kernel_sources": [
+    "dalloliogm/casmi26-own-fpnet-train",
+    "dalloliogm/casmi26-own-fpnet-train3"
+  ]
 }
