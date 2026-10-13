@@ -1,0 +1,12 @@
+{
+  "candidate": "salemali7-kaggriculture-2900",
+  "downloaded_latest_on": "2026-09-07",
+  "expected_notebook_hash": null,
+  "extraction": "literal decode only; notebook code was not executed",
+  "score_status": "not independently verified; title/author claims are secondary evidence",
+  "sha256": "3b1cb91feb451b44d075d853f9211be216aea7f85df09d91fa232e4e9dff8fe9",
+  "source_cell_index": 13,
+  "source_notebook": "references/public-notebooks/salemali7__kaggriculture-2900/kaggriculture-2900.ipynb",
+  "source_url": "https://www.kaggle.com/code/salemali7/kaggriculture-2900",
+  "votes_at_ingest": 76
+}

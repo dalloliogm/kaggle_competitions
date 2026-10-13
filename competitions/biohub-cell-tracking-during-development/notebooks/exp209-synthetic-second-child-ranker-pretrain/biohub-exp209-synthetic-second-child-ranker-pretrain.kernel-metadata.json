@@ -1,0 +1,16 @@
+{
+  "id": "dalloliogm/biohub-exp209-synthetic-second-child-ranker-pretrain",
+  "title": "Biohub Exp209 Synthetic Second Child Ranker Pretrain",
+  "code_file": "biohub-exp209-synthetic-second-child-ranker-pretrain.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": false,
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "kernel_sources": [
+    "dalloliogm/biohub-exp204-capped-synthetic-lineage-builder"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "candidate_id": "oracle_0618_risk_aware_wave_control_producer",
+  "source_notebooks": "orbit-wars-producer (1).ipynb; best-orbit-wars-notebook (1).ipynb",
+  "aliases": "Producer V2 / Best Orbit Wars Notebook duplicate",
+  "claimed_score": "1267-ish / current high PB reference",
+  "priority": "primary_oracle",
+  "notes": "Byte-identical MAIN_PY between producer and best notebooks; conservative safe_drain wave controller with reinforcement risk and regroup.",
+  "main_sha256": "d6d4aaa963b65df2b2da30fb51e1e5b06244471f3c932dedc8cfe19931d47745",
+  "built_from_orbit_lite_archive": "submit_candidates/0617_producer_reset/submission_0617_PRODUCER_V2_BASE_1267_control.tar.gz",
+  "build_date": "2026-06-18"
+}

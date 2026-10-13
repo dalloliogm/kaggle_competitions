@@ -1,0 +1,18 @@
+{
+  "id": "dalloliogm/exp207-three-model-ensemble-with-gap-snap-only-v2",
+  "title": "exp207-three-model-ensemble-with-gap-snap-only-v2",
+  "code_file": "exp207-three-model-gap-only.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": false,
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "dataset_sources": [
+    "xiaoleilian/biohub-unet3d-weights",
+    "xiaoleilian/biohub-unet3d-weights-v2models"
+  ],
+  "machine_shape": "NvidiaTeslaT4"
+}

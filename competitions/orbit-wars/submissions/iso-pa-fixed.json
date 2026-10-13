@@ -1,0 +1,227 @@
+{
+  "config": {
+    "candidates": {
+      "pa-fixed": "submissions/candidates/pa-fixed/main.py"
+    },
+    "opponents": {
+      "i-m-stronger": "submissions/candidates/i-m-stronger/main.py",
+      "current-anchor": "submissions/candidates/meta0622-anchor-producer-wave-control/unpacked/main.py",
+      "apex": "submissions/candidates/apex-hybrid/main.py"
+    },
+    "seeds": [
+      911,
+      1012,
+      1113
+    ],
+    "modes": [
+      4
+    ],
+    "mixed": true,
+    "output": "submissions/iso-pa-fixed.json"
+  },
+  "summary": {
+    "pa-fixed|4P|MIXED": {
+      "games": 12,
+      "wins": 1,
+      "win_rate": 0.083,
+      "early_eliminations": 7,
+      "survival_rate": 0.417,
+      "avg_survival_frac": 0.848,
+      "avg_elim_step": 163.9,
+      "avg_final_share": 0.0833,
+      "errors": 0
+    }
+  },
+  "aggregate": {
+    "pa-fixed": {
+      "games": 12,
+      "win_rate": 0.083,
+      "survival_rate": 0.417,
+      "avg_survival_frac": 0.848,
+      "avg_final_share": 0.0833,
+      "errors": 0
+    }
+  },
+  "games": [
+    {
+      "candidate": "pa-fixed",
+      "opponent": "MIXED",
+      "mode": 4,
+      "seed": 911,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE",
+      "early_elim": true,
+      "elim_step": 133,
+      "n_steps": 185,
+      "survival_frac": 0.723,
+      "final_ships": 0,
+      "final_share": 0.0
+    },
+    {
+      "candidate": "pa-fixed",
+      "opponent": "MIXED",
+      "mode": 4,
+      "seed": 911,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE",
+      "early_elim": false,
+      "elim_step": null,
+      "n_steps": 259,
+      "survival_frac": 1.0,
+      "final_ships": 1510,
+      "final_share": 1.0
+    },
+    {
+      "candidate": "pa-fixed",
+      "opponent": "MIXED",
+      "mode": 4,
+      "seed": 911,
+      "seat": 2,
+      "reward": -1,
+      "status": "DONE",
+      "early_elim": true,
+      "elim_step": 118,
+      "n_steps": 204,
+      "survival_frac": 0.581,
+      "final_ships": 0,
+      "final_share": 0.0
+    },
+    {
+      "candidate": "pa-fixed",
+      "opponent": "MIXED",
+      "mode": 4,
+      "seed": 911,
+      "seat": 3,
+      "reward": -1,
+      "status": "DONE",
+      "early_elim": true,
+      "elim_step": 396,
+      "n_steps": 399,
+      "survival_frac": 0.995,
+      "final_ships": 0,
+      "final_share": 0.0
+    },
+    {
+      "candidate": "pa-fixed",
+      "opponent": "MIXED",
+      "mode": 4,
+      "seed": 1012,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE",
+      "early_elim": true,
+      "elim_step": 151,
+      "n_steps": 211,
+      "survival_frac": 0.719,
+      "final_ships": 0,
+      "final_share": 0.0
+    },
+    {
+      "candidate": "pa-fixed",
+      "opponent": "MIXED",
+      "mode": 4,
+      "seed": 1012,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE",
+      "early_elim": true,
+      "elim_step": 168,
+      "n_steps": 171,
+      "survival_frac": 0.988,
+      "final_ships": 0,
+      "final_share": 0.0
+    },
+    {
+      "candidate": "pa-fixed",
+      "opponent": "MIXED",
+      "mode": 4,
+      "seed": 1012,
+      "seat": 2,
+      "reward": -1,
+      "status": "DONE",
+      "early_elim": true,
+      "elim_step": 96,
+      "n_steps": 178,
+      "survival_frac": 0.542,
+      "final_ships": 0,
+      "final_share": 0.0
+    },
+    {
+      "candidate": "pa-fixed",
+      "opponent": "MIXED",
+      "mode": 4,
+      "seed": 1012,
+      "seat": 3,
+      "reward": -1,
+      "status": "DONE",
+      "early_elim": true,
+      "elim_step": 85,
+      "n_steps": 136,
+      "survival_frac": 0.63,
+      "final_ships": 0,
+      "final_share": 0.0
+    },
+    {
+      "candidate": "pa-fixed",
+      "opponent": "MIXED",
+      "mode": 4,
+      "seed": 1113,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE",
+      "early_elim": false,
+      "elim_step": 157,
+      "n_steps": 158,
+      "survival_frac": 1.0,
+      "final_ships": 0,
+      "final_share": 0.0
+    },
+    {
+      "candidate": "pa-fixed",
+      "opponent": "MIXED",
+      "mode": 4,
+      "seed": 1113,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE",
+      "early_elim": false,
+      "elim_step": 203,
+      "n_steps": 204,
+      "survival_frac": 1.0,
+      "final_ships": 0,
+      "final_share": 0.0
+    },
+    {
+      "candidate": "pa-fixed",
+      "opponent": "MIXED",
+      "mode": 4,
+      "seed": 1113,
+      "seat": 2,
+      "reward": -1,
+      "status": "DONE",
+      "early_elim": false,
+      "elim_step": 176,
+      "n_steps": 177,
+      "survival_frac": 1.0,
+      "final_ships": 0,
+      "final_share": 0.0
+    },
+    {
+      "candidate": "pa-fixed",
+      "opponent": "MIXED",
+      "mode": 4,
+      "seed": 1113,
+      "seat": 3,
+      "reward": -1,
+      "status": "DONE",
+      "early_elim": false,
+      "elim_step": 154,
+      "n_steps": 155,
+      "survival_frac": 1.0,
+      "final_ships": 0,
+      "final_share": 0.0
+    }
+  ]
+}

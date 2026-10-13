@@ -1,0 +1,12 @@
+{
+  "candidate": "tetsutani-shape-shop-pasture",
+  "downloaded_latest_on": "2026-09-07",
+  "expected_notebook_hash": "2b97e2c653018ac4aeffb8463ec91c8f26b097b4cef81289acc25ccdbc68f916",
+  "extraction": "literal decode only; notebook code was not executed",
+  "score_status": "not independently verified; title/author claims are secondary evidence",
+  "sha256": "2b97e2c653018ac4aeffb8463ec91c8f26b097b4cef81289acc25ccdbc68f916",
+  "source_cell_index": 9,
+  "source_notebook": "references/public-notebooks/tetsutani__shape-the-shop-work-the-pasture-kaggriculture/shape-the-shop-work-the-pasture-kaggriculture.ipynb",
+  "source_url": "https://www.kaggle.com/code/tetsutani/shape-the-shop-work-the-pasture-kaggriculture",
+  "votes_at_ingest": 118
+}

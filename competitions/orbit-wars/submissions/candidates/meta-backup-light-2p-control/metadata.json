@@ -1,0 +1,8 @@
+{
+  "variant": "BACKUP_LIGHT_2P_CONTROL",
+  "role": "2P control backup",
+  "recommended_slot": "Backup/control",
+  "strategy": "Simple orbit-intruder profile with good 2P control behavior but weaker 4P coverage.",
+  "sha256": "f01ea3fd15f60f9724756ed4feb24fcc5a6eb41976b64be09325069fc0587a49",
+  "size": 55301
+}

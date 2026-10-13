@@ -4,6 +4,17 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 
 [Open the evidence-grounded approach map](../../docs/rogii-approach-map.html) for the compact visual lineage; this file remains the primary detailed record.
 
+## External provenance log
+
+This log records external inputs named in the workspace. It distinguishes adapted material from review context; it does not attribute an external author's score to any of our submissions. **External raw competition-data use:** no use beyond the official competition input is recorded; the public model/data assets below were declared Kaggle inputs.
+
+| When | Source | Type | Material / role | Affected experiments | Relationship |
+| --- | --- | --- | --- | --- | --- |
+| 2026-07-23 | `working-note-target-free-tvt-geosteering`, `rogii-eda-target-free-alignment-for-tvt`, `9-251-rogii-wellbore-geology-prediction-dwt-based`, `rogii-lb7295-public-rebuild`, `top-pf-config-branch-conservative-visuals` | Public Kaggle notebooks | Reviewed five top notebooks; the target-free geosteering lineage informed the PF/beam/DTW rebuild and validation boundaries. | Rebuild, no-override, component sweep, GS1.30 lineage | Adapted / evaluation context |
+| 2026-07-23 onward | `koolbox-offline`, `rogii-claude-models-pub`, `wellbore-geology-prediction-artifacts` | Public model/data assets | Declared Kaggle inputs for the shared public pipeline, including model-package artifacts. | Rebuild and downstream pipeline forks | Used as declared public assets |
+| 2026-07-24 to 2026-08-02 | Kaggle discussions 704663, 707695, 703883, 711878, 726465, 728712, 698825 | Official competition discussions | Evidence on PF randomness, grading instability, bimodal ambiguity, neighbour transfer, GS1.30, and lateral self-alignment. | Reliability tests, bimodal hedge, neighbour transfer, GS1.30, self-alignment screen | Inspiration / evaluation context |
+| 2026-08-01 | `ROGII Physics LB 7.872 v48` and timestamp-matched likely v65 | Public Kaggle notebook | Archived and compared statically to test whether it was an independent ensemble partner. | Physics-notebook audit only | Copied for review only; rejected as non-independent |
+
 ## Current Best
 
 | Date | Approach | Local CV | Public LB | Private LB | Notebook/commit | Notes |

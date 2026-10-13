@@ -1,0 +1,13 @@
+{
+  "candidate_id": "cand_0614_R_K_mid_sizes_wave6",
+  "parent": "cand_0615_K_L0014_2p_producer_style",
+  "family": "0614_k_mid_size_probe",
+  "created_for": "0614_deep_producer_v2_counter",
+  "changed_axes": [
+    "2p_size_multipliers_0.5_1.0",
+    "preserve_k_wave6",
+    "preserve_k_4p"
+  ],
+  "notes": "K base with one small 2P launch tier added; avoids P's broad regroup increase.",
+  "params_file": "params.json"
+}

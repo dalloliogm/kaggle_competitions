@@ -1,0 +1,12 @@
+{
+  "candidate": "lynnsakurai-farming-score-mathematical",
+  "downloaded_latest_on": "2026-09-07",
+  "expected_notebook_hash": "1dc166ae2bf0c56a44fac4482f469b8812968c4cb32459cb9860f5077897a7d4",
+  "extraction": "literal decode only; notebook code was not executed",
+  "score_status": "not independently verified; title/author claims are secondary evidence",
+  "sha256": "1dc166ae2bf0c56a44fac4482f469b8812968c4cb32459cb9860f5077897a7d4",
+  "source_cell_index": 4,
+  "source_notebook": "references/public-notebooks/lynnsakurai__farming-score-mathematical/farming-score-a-mathematical-approach.ipynb",
+  "source_url": "https://www.kaggle.com/code/lynnsakurai/farming-score-a-mathematical-approach",
+  "votes_at_ingest": 43
+}

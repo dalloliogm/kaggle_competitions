@@ -1,0 +1,2603 @@
+{
+  "summary": {
+    "challenger": {
+      "games": 24,
+      "wins": 12,
+      "losses": 12,
+      "by_players": {
+        "2": {
+          "games": 13,
+          "wins": 7,
+          "losses": 6,
+          "avg_ship_margin": -919.5384615384615,
+          "avg_production_margin": 6.076923076923077,
+          "seats": {
+            "1": 10,
+            "0": 3
+          }
+        },
+        "4": {
+          "games": 11,
+          "wins": 5,
+          "losses": 6,
+          "avg_ship_margin": -3170.090909090909,
+          "avg_production_margin": -8.636363636363637,
+          "seats": {
+            "1": 3,
+            "3": 3,
+            "2": 3,
+            "0": 2
+          }
+        }
+      }
+    },
+    "i-m-stronger": {
+      "games": 53,
+      "wins": 26,
+      "losses": 27,
+      "by_players": {
+        "2": {
+          "games": 34,
+          "wins": 20,
+          "losses": 14,
+          "avg_ship_margin": 418.4117647058824,
+          "avg_production_margin": 10.352941176470589,
+          "seats": {
+            "0": 14,
+            "1": 20
+          }
+        },
+        "4": {
+          "games": 19,
+          "wins": 6,
+          "losses": 13,
+          "avg_ship_margin": -2269.315789473684,
+          "avg_production_margin": -13.210526315789474,
+          "seats": {
+            "0": 6,
+            "2": 6,
+            "1": 4,
+            "3": 3
+          }
+        }
+      }
+    },
+    "primary": {
+      "games": 21,
+      "wins": 12,
+      "losses": 9,
+      "by_players": {
+        "2": {
+          "games": 12,
+          "wins": 11,
+          "losses": 1,
+          "avg_ship_margin": 2840.4166666666665,
+          "avg_production_margin": 51.0,
+          "seats": {
+            "1": 8,
+            "0": 4
+          }
+        },
+        "4": {
+          "games": 9,
+          "wins": 1,
+          "losses": 8,
+          "avg_ship_margin": -1371.6666666666667,
+          "avg_production_margin": -41.44444444444444,
+          "seats": {
+            "3": 5,
+            "2": 1,
+            "1": 2,
+            "0": 1
+          }
+        }
+      }
+    },
+    "producer-anchor": {
+      "games": 27,
+      "wins": 17,
+      "losses": 10,
+      "by_players": {
+        "2": {
+          "games": 17,
+          "wins": 13,
+          "losses": 4,
+          "avg_ship_margin": 661.2941176470588,
+          "avg_production_margin": 34.0,
+          "seats": {
+            "1": 9,
+            "0": 8
+          }
+        },
+        "4": {
+          "games": 10,
+          "wins": 4,
+          "losses": 6,
+          "avg_ship_margin": -3285.8,
+          "avg_production_margin": -9.4,
+          "seats": {
+            "3": 3,
+            "1": 4,
+            "2": 2,
+            "0": 1
+          }
+        }
+      }
+    }
+  },
+  "games": [
+    {
+      "episode": 81150446,
+      "role": "primary",
+      "players": 2,
+      "seat": 1,
+      "seed": 396013154,
+      "steps": 89,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1619,
+      "best_opponent_ships": 0,
+      "our_production": 52,
+      "best_opponent_production": 0,
+      "our_planets": 16,
+      "opponents": [
+        "Grems"
+      ],
+      "remaining_overage": 50.92354
+    },
+    {
+      "episode": 81151175,
+      "role": "primary",
+      "players": 4,
+      "seat": 3,
+      "seed": 978545559,
+      "steps": 109,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1974,
+      "best_opponent_ships": 0,
+      "our_production": 48,
+      "best_opponent_production": 0,
+      "our_planets": 18,
+      "opponents": [
+        "iangraham93",
+        "Yash Sharma",
+        "Vinit"
+      ],
+      "remaining_overage": 45.810924
+    },
+    {
+      "episode": 81151741,
+      "role": "primary",
+      "players": 2,
+      "seat": 1,
+      "seed": 81318903,
+      "steps": 152,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 3155,
+      "best_opponent_ships": 0,
+      "our_production": 47,
+      "best_opponent_production": 0,
+      "our_planets": 14,
+      "opponents": [
+        "Danila Lapokin"
+      ],
+      "remaining_overage": 51.384533
+    },
+    {
+      "episode": 81152477,
+      "role": "primary",
+      "players": 4,
+      "seat": 3,
+      "seed": 1716178770,
+      "steps": 110,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1800,
+      "our_production": 0,
+      "best_opponent_production": 72,
+      "our_planets": 0,
+      "opponents": [
+        "Chris Deotte",
+        "geeknik",
+        "GeniusYY"
+      ],
+      "remaining_overage": 45.060544
+    },
+    {
+      "episode": 81153052,
+      "role": "primary",
+      "players": 2,
+      "seat": 1,
+      "seed": 2138905751,
+      "steps": 109,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 2209,
+      "best_opponent_ships": 0,
+      "our_production": 61,
+      "best_opponent_production": 0,
+      "our_planets": 19,
+      "opponents": [
+        "jannchie"
+      ],
+      "remaining_overage": 50.492396
+    },
+    {
+      "episode": 81153797,
+      "role": "primary",
+      "players": 2,
+      "seat": 0,
+      "seed": 1803173544,
+      "steps": 152,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1030,
+      "our_production": 0,
+      "best_opponent_production": 42,
+      "our_planets": 0,
+      "opponents": [
+        "yuiop!"
+      ],
+      "remaining_overage": 50.429894000000004
+    },
+    {
+      "episode": 81153849,
+      "role": "primary",
+      "players": 2,
+      "seat": 1,
+      "seed": 1658321490,
+      "steps": 347,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 4497,
+      "best_opponent_ships": 0,
+      "our_production": 54,
+      "best_opponent_production": 0,
+      "our_planets": 22,
+      "opponents": [
+        "Borrun"
+      ],
+      "remaining_overage": 52.000298
+    },
+    {
+      "episode": 81154567,
+      "role": "primary",
+      "players": 2,
+      "seat": 1,
+      "seed": 819790413,
+      "steps": 108,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 594,
+      "best_opponent_ships": 0,
+      "our_production": 42,
+      "best_opponent_production": 0,
+      "our_planets": 10,
+      "opponents": [
+        "Kimi Duan"
+      ],
+      "remaining_overage": 53.023747
+    },
+    {
+      "episode": 81155317,
+      "role": "primary",
+      "players": 4,
+      "seat": 3,
+      "seed": 108604155,
+      "steps": 114,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1822,
+      "our_production": 0,
+      "best_opponent_production": 79,
+      "our_planets": 0,
+      "opponents": [
+        "Kazeneko",
+        "Katsuaki Tanabe",
+        "flamepurple"
+      ],
+      "remaining_overage": 46.348008
+    },
+    {
+      "episode": 81155887,
+      "role": "primary",
+      "players": 2,
+      "seat": 1,
+      "seed": 441967768,
+      "steps": 215,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 2521,
+      "best_opponent_ships": 0,
+      "our_production": 66,
+      "best_opponent_production": 0,
+      "our_planets": 34,
+      "opponents": [
+        "Pilkwang Kim"
+      ],
+      "remaining_overage": 50.37382
+    },
+    {
+      "episode": 81156648,
+      "role": "primary",
+      "players": 4,
+      "seat": 2,
+      "seed": 46858669,
+      "steps": 157,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1666,
+      "our_production": 0,
+      "best_opponent_production": 64,
+      "our_planets": 0,
+      "opponents": [
+        "Paul Kamau",
+        "InformaBook2",
+        "sohma"
+      ],
+      "remaining_overage": 45.723344
+    },
+    {
+      "episode": 81157223,
+      "role": "primary",
+      "players": 2,
+      "seat": 0,
+      "seed": 108764809,
+      "steps": 140,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 2667,
+      "best_opponent_ships": 0,
+      "our_production": 76,
+      "best_opponent_production": 0,
+      "our_planets": 24,
+      "opponents": [
+        "Shoroogh Ahmadi"
+      ],
+      "remaining_overage": 50.466882999999996
+    },
+    {
+      "episode": 81157972,
+      "role": "primary",
+      "players": 4,
+      "seat": 1,
+      "seed": 371296690,
+      "steps": 216,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1867,
+      "our_production": 0,
+      "best_opponent_production": 34,
+      "our_planets": 0,
+      "opponents": [
+        "tensor choko",
+        "Kenleung Leung",
+        "Szymon K\u0142api\u0144ski"
+      ],
+      "remaining_overage": 44.13742
+    },
+    {
+      "episode": 81158587,
+      "role": "primary",
+      "players": 4,
+      "seat": 0,
+      "seed": 362164876,
+      "steps": 172,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1530,
+      "our_production": 0,
+      "best_opponent_production": 28,
+      "our_planets": 0,
+      "opponents": [
+        "Ted K",
+        "Water Xiao",
+        "Mahog"
+      ],
+      "remaining_overage": 45.054431
+    },
+    {
+      "episode": 81159154,
+      "role": "primary",
+      "players": 4,
+      "seat": 3,
+      "seed": 1330979058,
+      "steps": 181,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 2956,
+      "our_production": 0,
+      "best_opponent_production": 60,
+      "our_planets": 0,
+      "opponents": [
+        "xj",
+        "Cho Royou",
+        "Nhat Minh"
+      ],
+      "remaining_overage": 48.713947
+    },
+    {
+      "episode": 81159721,
+      "role": "primary",
+      "players": 2,
+      "seat": 0,
+      "seed": 1670645688,
+      "steps": 115,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 2746,
+      "best_opponent_ships": 0,
+      "our_production": 112,
+      "best_opponent_production": 0,
+      "our_planets": 28,
+      "opponents": [
+        "Srishti Gauraha"
+      ],
+      "remaining_overage": 49.69167
+    },
+    {
+      "episode": 81160443,
+      "role": "primary",
+      "players": 2,
+      "seat": 1,
+      "seed": 854547914,
+      "steps": 500,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 12706,
+      "best_opponent_ships": 196,
+      "our_production": 44,
+      "best_opponent_production": 8,
+      "our_planets": 18,
+      "opponents": [
+        "YEBOI"
+      ],
+      "remaining_overage": 50.521547
+    },
+    {
+      "episode": 81161197,
+      "role": "primary",
+      "players": 4,
+      "seat": 3,
+      "seed": 468128215,
+      "steps": 144,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1774,
+      "our_production": 0,
+      "best_opponent_production": 52,
+      "our_planets": 0,
+      "opponents": [
+        "David Ernesto Sierra Serna",
+        "Seif Eddine Achour",
+        "My_Full_Name3"
+      ],
+      "remaining_overage": 44.258421999999996
+    },
+    {
+      "episode": 81161779,
+      "role": "primary",
+      "players": 2,
+      "seat": 1,
+      "seed": 923463010,
+      "steps": 157,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1236,
+      "best_opponent_ships": 0,
+      "our_production": 36,
+      "best_opponent_production": 0,
+      "our_planets": 12,
+      "opponents": [
+        "AI-Cat"
+      ],
+      "remaining_overage": 50.601818
+    },
+    {
+      "episode": 81162537,
+      "role": "primary",
+      "players": 4,
+      "seat": 1,
+      "seed": 933141434,
+      "steps": 219,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 904,
+      "our_production": 0,
+      "best_opponent_production": 32,
+      "our_planets": 0,
+      "opponents": [
+        "BeeMax",
+        "metrovoc",
+        "Flyfish666"
+      ],
+      "remaining_overage": 49.453133
+    },
+    {
+      "episode": 81163114,
+      "role": "primary",
+      "players": 2,
+      "seat": 0,
+      "seed": 1630317926,
+      "steps": 151,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1361,
+      "best_opponent_ships": 0,
+      "our_production": 72,
+      "best_opponent_production": 0,
+      "our_planets": 20,
+      "opponents": [
+        "Pim"
+      ],
+      "remaining_overage": 50.926077
+    },
+    {
+      "episode": 81150447,
+      "role": "challenger",
+      "players": 2,
+      "seat": 1,
+      "seed": 1739162891,
+      "steps": 113,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 2992,
+      "best_opponent_ships": 0,
+      "our_production": 84,
+      "best_opponent_production": 0,
+      "our_planets": 32,
+      "opponents": [
+        "sawasawasawa"
+      ],
+      "remaining_overage": 51.319724
+    },
+    {
+      "episode": 81151173,
+      "role": "challenger",
+      "players": 4,
+      "seat": 1,
+      "seed": 420509892,
+      "steps": 130,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1879,
+      "best_opponent_ships": 0,
+      "our_production": 71,
+      "best_opponent_production": 0,
+      "our_planets": 18,
+      "opponents": [
+        "Raj Gupta",
+        "orf527",
+        "sokilya"
+      ],
+      "remaining_overage": 47.624649
+    },
+    {
+      "episode": 81151742,
+      "role": "challenger",
+      "players": 2,
+      "seat": 0,
+      "seed": 1278354952,
+      "steps": 131,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 2612,
+      "best_opponent_ships": 0,
+      "our_production": 52,
+      "best_opponent_production": 0,
+      "our_planets": 19,
+      "opponents": [
+        "Shuntaro Tanaka"
+      ],
+      "remaining_overage": 50.466012
+    },
+    {
+      "episode": 81152474,
+      "role": "challenger",
+      "players": 4,
+      "seat": 1,
+      "seed": 1724745417,
+      "steps": 500,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 7235,
+      "best_opponent_ships": 284,
+      "our_production": 38,
+      "best_opponent_production": 14,
+      "our_planets": 11,
+      "opponents": [
+        "Purpel",
+        "LukasM1",
+        "HongchenDai"
+      ],
+      "remaining_overage": 44.050106
+    },
+    {
+      "episode": 81152566,
+      "role": "challenger",
+      "players": 4,
+      "seat": 3,
+      "seed": 1406387813,
+      "steps": 406,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 2397,
+      "best_opponent_ships": 0,
+      "our_production": 42,
+      "best_opponent_production": 0,
+      "our_planets": 13,
+      "opponents": [
+        "gguillard",
+        "Jin Niu",
+        "xcyycx"
+      ],
+      "remaining_overage": 46.619026
+    },
+    {
+      "episode": 81153041,
+      "role": "challenger",
+      "players": 2,
+      "seat": 1,
+      "seed": 875847292,
+      "steps": 137,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1752,
+      "best_opponent_ships": 0,
+      "our_production": 72,
+      "best_opponent_production": 0,
+      "our_planets": 28,
+      "opponents": [
+        "Thomas Smith"
+      ],
+      "remaining_overage": 50.492614
+    },
+    {
+      "episode": 81153172,
+      "role": "challenger",
+      "players": 2,
+      "seat": 1,
+      "seed": 2115076679,
+      "steps": 164,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 2106,
+      "our_production": 0,
+      "best_opponent_production": 64,
+      "our_planets": 0,
+      "opponents": [
+        "lmao3322"
+      ],
+      "remaining_overage": 51.154626
+    },
+    {
+      "episode": 81153793,
+      "role": "challenger",
+      "players": 2,
+      "seat": 1,
+      "seed": 301005819,
+      "steps": 143,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1984,
+      "best_opponent_ships": 0,
+      "our_production": 86,
+      "best_opponent_production": 0,
+      "our_planets": 22,
+      "opponents": [
+        "kumaram_vipinam"
+      ],
+      "remaining_overage": 50.405798000000004
+    },
+    {
+      "episode": 81154544,
+      "role": "challenger",
+      "players": 2,
+      "seat": 0,
+      "seed": 616097347,
+      "steps": 176,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1126,
+      "best_opponent_ships": 0,
+      "our_production": 50,
+      "best_opponent_production": 0,
+      "our_planets": 22,
+      "opponents": [
+        "kk.sky.9k"
+      ],
+      "remaining_overage": 51.597515
+    },
+    {
+      "episode": 81155306,
+      "role": "challenger",
+      "players": 4,
+      "seat": 2,
+      "seed": 1028198587,
+      "steps": 225,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 3622,
+      "best_opponent_ships": 0,
+      "our_production": 48,
+      "best_opponent_production": 0,
+      "our_planets": 16,
+      "opponents": [
+        "Moroz Roman",
+        "Filip Strza\u0142ka",
+        "late night snack"
+      ],
+      "remaining_overage": 48.771214
+    },
+    {
+      "episode": 81155878,
+      "role": "challenger",
+      "players": 2,
+      "seat": 1,
+      "seed": 1451525403,
+      "steps": 263,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 6764,
+      "best_opponent_ships": 0,
+      "our_production": 50,
+      "best_opponent_production": 0,
+      "our_planets": 18,
+      "opponents": [
+        "Maruichi01"
+      ],
+      "remaining_overage": 49.066067000000004
+    },
+    {
+      "episode": 81156626,
+      "role": "challenger",
+      "players": 4,
+      "seat": 2,
+      "seed": 1825235342,
+      "steps": 158,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1721,
+      "our_production": 0,
+      "best_opponent_production": 47,
+      "our_planets": 0,
+      "opponents": [
+        "Harm Buisman",
+        "Guanshuo Xu",
+        "F\u00e9lix Truong"
+      ],
+      "remaining_overage": 46.984689
+    },
+    {
+      "episode": 81157210,
+      "role": "challenger",
+      "players": 2,
+      "seat": 1,
+      "seed": 368653844,
+      "steps": 500,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 44,
+      "best_opponent_ships": 24186,
+      "our_production": 2,
+      "best_opponent_production": 82,
+      "our_planets": 2,
+      "opponents": [
+        "draven"
+      ],
+      "remaining_overage": 51.643247
+    },
+    {
+      "episode": 81157953,
+      "role": "challenger",
+      "players": 4,
+      "seat": 1,
+      "seed": 1926266982,
+      "steps": 248,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 9315,
+      "our_production": 0,
+      "best_opponent_production": 96,
+      "our_planets": 0,
+      "opponents": [
+        "Radek Osmulski",
+        "Katasonov Eugene",
+        "unosss"
+      ],
+      "remaining_overage": 47.62554
+    },
+    {
+      "episode": 81158579,
+      "role": "challenger",
+      "players": 4,
+      "seat": 2,
+      "seed": 1520845738,
+      "steps": 500,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 20339,
+      "our_production": 0,
+      "best_opponent_production": 65,
+      "our_planets": 0,
+      "opponents": [
+        "213tubo",
+        "sash",
+        "cununn"
+      ],
+      "remaining_overage": 49.283804
+    },
+    {
+      "episode": 81158636,
+      "role": "challenger",
+      "players": 4,
+      "seat": 0,
+      "seed": 1864272156,
+      "steps": 500,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 16308,
+      "our_production": 0,
+      "best_opponent_production": 47,
+      "our_planets": 0,
+      "opponents": [
+        "Giorgio Ottoboni",
+        "Mendrika",
+        "mtmr_s1"
+      ],
+      "remaining_overage": 47.760208
+    },
+    {
+      "episode": 81159114,
+      "role": "challenger",
+      "players": 4,
+      "seat": 0,
+      "seed": 1807553670,
+      "steps": 235,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1777,
+      "our_production": 0,
+      "best_opponent_production": 49,
+      "our_planets": 0,
+      "opponents": [
+        "DONJYARAHOI",
+        "Anjana mohan",
+        "Illedan"
+      ],
+      "remaining_overage": 46.958465000000004
+    },
+    {
+      "episode": 81159675,
+      "role": "challenger",
+      "players": 2,
+      "seat": 1,
+      "seed": 205201128,
+      "steps": 107,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1753,
+      "our_production": 0,
+      "best_opponent_production": 75,
+      "our_planets": 0,
+      "opponents": [
+        "cununn"
+      ],
+      "remaining_overage": 51.025382
+    },
+    {
+      "episode": 81159696,
+      "role": "challenger",
+      "players": 2,
+      "seat": 1,
+      "seed": 459852426,
+      "steps": 82,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1006,
+      "our_production": 0,
+      "best_opponent_production": 42,
+      "our_planets": 0,
+      "opponents": [
+        "Ender"
+      ],
+      "remaining_overage": 52.378861
+    },
+    {
+      "episode": 81160442,
+      "role": "challenger",
+      "players": 2,
+      "seat": 0,
+      "seed": 587709114,
+      "steps": 208,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 3124,
+      "best_opponent_ships": 0,
+      "our_production": 80,
+      "best_opponent_production": 0,
+      "our_planets": 32,
+      "opponents": [
+        "Kyotaro Izumi"
+      ],
+      "remaining_overage": 50.881398000000004
+    },
+    {
+      "episode": 81161219,
+      "role": "challenger",
+      "players": 4,
+      "seat": 3,
+      "seed": 2007266030,
+      "steps": 158,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1642,
+      "best_opponent_ships": 0,
+      "our_production": 76,
+      "best_opponent_production": 0,
+      "our_planets": 20,
+      "opponents": [
+        "lllleeeo",
+        "Andrew Lee",
+        "\uff2d\uff2d\uff2d Abbie"
+      ],
+      "remaining_overage": 48.589689
+    },
+    {
+      "episode": 81161782,
+      "role": "challenger",
+      "players": 2,
+      "seat": 1,
+      "seed": 915737598,
+      "steps": 170,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1512,
+      "our_production": 0,
+      "best_opponent_production": 68,
+      "our_planets": 0,
+      "opponents": [
+        "mtmr_s1"
+      ],
+      "remaining_overage": 50.670078000000004
+    },
+    {
+      "episode": 81162530,
+      "role": "challenger",
+      "players": 4,
+      "seat": 3,
+      "seed": 2143765082,
+      "steps": 155,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1902,
+      "our_production": 0,
+      "best_opponent_production": 52,
+      "our_planets": 0,
+      "opponents": [
+        "Le Viet",
+        "\u00b2\u00b2n",
+        "Eda"
+      ],
+      "remaining_overage": 45.100136
+    },
+    {
+      "episode": 81163118,
+      "role": "challenger",
+      "players": 2,
+      "seat": 1,
+      "seed": 1422631113,
+      "steps": 172,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1789,
+      "our_production": 0,
+      "best_opponent_production": 66,
+      "our_planets": 0,
+      "opponents": [
+        "Yusuraume"
+      ],
+      "remaining_overage": 51.195178
+    },
+    {
+      "episode": 81389624,
+      "role": "producer-anchor",
+      "players": 2,
+      "seat": 1,
+      "seed": 1239254017,
+      "steps": 49,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 484,
+      "best_opponent_ships": 0,
+      "our_production": 28,
+      "best_opponent_production": 0,
+      "our_planets": 10,
+      "opponents": [
+        "avbdt"
+      ],
+      "remaining_overage": 51.080769000000004
+    },
+    {
+      "episode": 81391369,
+      "role": "producer-anchor",
+      "players": 2,
+      "seat": 1,
+      "seed": 1768002198,
+      "steps": 93,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1324,
+      "best_opponent_ships": 0,
+      "our_production": 50,
+      "best_opponent_production": 0,
+      "our_planets": 22,
+      "opponents": [
+        "Skallis Squad"
+      ],
+      "remaining_overage": 49.738599
+    },
+    {
+      "episode": 81391768,
+      "role": "producer-anchor",
+      "players": 4,
+      "seat": 3,
+      "seed": 95770905,
+      "steps": 107,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1649,
+      "best_opponent_ships": 0,
+      "our_production": 71,
+      "best_opponent_production": 0,
+      "our_planets": 21,
+      "opponents": [
+        "jerryv69",
+        "jmorales",
+        "pensukesan"
+      ],
+      "remaining_overage": 42.061620000000005
+    },
+    {
+      "episode": 81391990,
+      "role": "producer-anchor",
+      "players": 4,
+      "seat": 1,
+      "seed": 467435584,
+      "steps": 500,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 340,
+      "best_opponent_ships": 31125,
+      "our_production": 1,
+      "best_opponent_production": 85,
+      "our_planets": 1,
+      "opponents": [
+        "MarcusGunn",
+        "Idasi",
+        "Boblic"
+      ],
+      "remaining_overage": 44.165327000000005
+    },
+    {
+      "episode": 81392233,
+      "role": "producer-anchor",
+      "players": 2,
+      "seat": 1,
+      "seed": 1264281953,
+      "steps": 119,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 3558,
+      "best_opponent_ships": 0,
+      "our_production": 72,
+      "best_opponent_production": 0,
+      "our_planets": 24,
+      "opponents": [
+        "Howler One"
+      ],
+      "remaining_overage": 48.708946
+    },
+    {
+      "episode": 81393026,
+      "role": "producer-anchor",
+      "players": 2,
+      "seat": 0,
+      "seed": 1918583985,
+      "steps": 178,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 2874,
+      "best_opponent_ships": 0,
+      "our_production": 69,
+      "best_opponent_production": 0,
+      "our_planets": 24,
+      "opponents": [
+        "Vladislav Miheev"
+      ],
+      "remaining_overage": 49.807274
+    },
+    {
+      "episode": 81393152,
+      "role": "producer-anchor",
+      "players": 2,
+      "seat": 0,
+      "seed": 878336015,
+      "steps": 184,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1967,
+      "best_opponent_ships": 0,
+      "our_production": 55,
+      "best_opponent_production": 0,
+      "our_planets": 27,
+      "opponents": [
+        "Ilya #2"
+      ],
+      "remaining_overage": 50.945974
+    },
+    {
+      "episode": 81393466,
+      "role": "producer-anchor",
+      "players": 4,
+      "seat": 1,
+      "seed": 1106701194,
+      "steps": 153,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 2464,
+      "our_production": 0,
+      "best_opponent_production": 60,
+      "our_planets": 0,
+      "opponents": [
+        "s\u0279\u0250\u028d\u0287\u0131\u0323q\u0279o/\u0254s",
+        "COSMIC",
+        "Clawdy Huang (Andy's AI)"
+      ],
+      "remaining_overage": 39.322327
+    },
+    {
+      "episode": 81393815,
+      "role": "producer-anchor",
+      "players": 2,
+      "seat": 0,
+      "seed": 194593207,
+      "steps": 185,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 2112,
+      "our_production": 0,
+      "best_opponent_production": 62,
+      "our_planets": 0,
+      "opponents": [
+        "qi yun"
+      ],
+      "remaining_overage": 48.948621
+    },
+    {
+      "episode": 81394248,
+      "role": "producer-anchor",
+      "players": 4,
+      "seat": 2,
+      "seed": 521339659,
+      "steps": 157,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 949,
+      "our_production": 0,
+      "best_opponent_production": 41,
+      "our_planets": 0,
+      "opponents": [
+        "Kevin Cao",
+        "shuba",
+        "Amged Alfaqih"
+      ],
+      "remaining_overage": 48.532678000000004
+    },
+    {
+      "episode": 81394541,
+      "role": "producer-anchor",
+      "players": 2,
+      "seat": 1,
+      "seed": 979010026,
+      "steps": 174,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 5736,
+      "best_opponent_ships": 0,
+      "our_production": 77,
+      "best_opponent_production": 0,
+      "our_planets": 29,
+      "opponents": [
+        "redblackbst"
+      ],
+      "remaining_overage": 52.293958
+    },
+    {
+      "episode": 81394999,
+      "role": "producer-anchor",
+      "players": 2,
+      "seat": 0,
+      "seed": 321140933,
+      "steps": 166,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1146,
+      "our_production": 0,
+      "best_opponent_production": 44,
+      "our_planets": 0,
+      "opponents": [
+        "AbsoluterGeist"
+      ],
+      "remaining_overage": 50.953741
+    },
+    {
+      "episode": 81395433,
+      "role": "producer-anchor",
+      "players": 2,
+      "seat": 1,
+      "seed": 1157645848,
+      "steps": 113,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 2029,
+      "best_opponent_ships": 0,
+      "our_production": 74,
+      "best_opponent_production": 0,
+      "our_planets": 22,
+      "opponents": [
+        "PyJa"
+      ],
+      "remaining_overage": 52.593429
+    },
+    {
+      "episode": 81395912,
+      "role": "producer-anchor",
+      "players": 2,
+      "seat": 1,
+      "seed": 2113085931,
+      "steps": 149,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 2001,
+      "best_opponent_ships": 0,
+      "our_production": 67,
+      "best_opponent_production": 0,
+      "our_planets": 19,
+      "opponents": [
+        "Ivan Tretyakov"
+      ],
+      "remaining_overage": 50.998796999999996
+    },
+    {
+      "episode": 81396364,
+      "role": "producer-anchor",
+      "players": 2,
+      "seat": 1,
+      "seed": 1257859358,
+      "steps": 154,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1322,
+      "best_opponent_ships": 0,
+      "our_production": 52,
+      "best_opponent_production": 0,
+      "our_planets": 16,
+      "opponents": [
+        "Chromium c"
+      ],
+      "remaining_overage": 51.563806
+    },
+    {
+      "episode": 81396806,
+      "role": "producer-anchor",
+      "players": 2,
+      "seat": 0,
+      "seed": 981917431,
+      "steps": 500,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 512,
+      "best_opponent_ships": 11600,
+      "our_production": 4,
+      "best_opponent_production": 34,
+      "our_planets": 1,
+      "opponents": [
+        "HKmgikao"
+      ],
+      "remaining_overage": 52.400598
+    },
+    {
+      "episode": 81397573,
+      "role": "producer-anchor",
+      "players": 2,
+      "seat": 0,
+      "seed": 128851691,
+      "steps": 163,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 2034,
+      "best_opponent_ships": 0,
+      "our_production": 74,
+      "best_opponent_production": 0,
+      "our_planets": 26,
+      "opponents": [
+        "Nhat Minh"
+      ],
+      "remaining_overage": 49.4273
+    },
+    {
+      "episode": 81398027,
+      "role": "producer-anchor",
+      "players": 2,
+      "seat": 0,
+      "seed": 1137990823,
+      "steps": 115,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 2081,
+      "best_opponent_ships": 0,
+      "our_production": 84,
+      "best_opponent_production": 0,
+      "our_planets": 24,
+      "opponents": [
+        "hikarinosenshi"
+      ],
+      "remaining_overage": 50.836718
+    },
+    {
+      "episode": 81398471,
+      "role": "producer-anchor",
+      "players": 2,
+      "seat": 1,
+      "seed": 2064128938,
+      "steps": 500,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 262,
+      "best_opponent_ships": 262,
+      "our_production": 16,
+      "best_opponent_production": 16,
+      "our_planets": 6,
+      "opponents": [
+        "Yusuf Murtaza"
+      ],
+      "remaining_overage": 49.04601
+    },
+    {
+      "episode": 81398494,
+      "role": "producer-anchor",
+      "players": 2,
+      "seat": 0,
+      "seed": 1679756141,
+      "steps": 153,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1997,
+      "best_opponent_ships": 0,
+      "our_production": 72,
+      "best_opponent_production": 0,
+      "our_planets": 24,
+      "opponents": [
+        "Julio Contreras"
+      ],
+      "remaining_overage": 47.706011000000004
+    },
+    {
+      "episode": 81398919,
+      "role": "producer-anchor",
+      "players": 4,
+      "seat": 3,
+      "seed": 1511849047,
+      "steps": 130,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1923,
+      "our_production": 0,
+      "best_opponent_production": 83,
+      "our_planets": 0,
+      "opponents": [
+        "Neeraj",
+        "RicardoL\u00f3pez",
+        "Klgv Klgv"
+      ],
+      "remaining_overage": 45.280582
+    },
+    {
+      "episode": 81399224,
+      "role": "producer-anchor",
+      "players": 4,
+      "seat": 2,
+      "seed": 1361386897,
+      "steps": 153,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 2664,
+      "our_production": 0,
+      "best_opponent_production": 54,
+      "our_planets": 0,
+      "opponents": [
+        "NETRUNNERS",
+        "nynyny67",
+        "Ashutosh Yadav"
+      ],
+      "remaining_overage": 46.172089
+    },
+    {
+      "episode": 81399528,
+      "role": "producer-anchor",
+      "players": 4,
+      "seat": 1,
+      "seed": 1318331430,
+      "steps": 162,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1045,
+      "our_production": 0,
+      "best_opponent_production": 57,
+      "our_planets": 0,
+      "opponents": [
+        "Naoism",
+        "Kronki",
+        "deepblue123"
+      ],
+      "remaining_overage": 49.430967
+    },
+    {
+      "episode": 81399748,
+      "role": "producer-anchor",
+      "players": 4,
+      "seat": 0,
+      "seed": 1381461173,
+      "steps": 142,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1885,
+      "best_opponent_ships": 0,
+      "our_production": 82,
+      "best_opponent_production": 0,
+      "our_planets": 25,
+      "opponents": [
+        "TensorRT",
+        "NewTechMitch",
+        "Anhad Mahajan"
+      ],
+      "remaining_overage": 44.204108000000005
+    },
+    {
+      "episode": 81400088,
+      "role": "producer-anchor",
+      "players": 4,
+      "seat": 1,
+      "seed": 106994595,
+      "steps": 128,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1900,
+      "best_opponent_ships": 0,
+      "our_production": 52,
+      "best_opponent_production": 0,
+      "our_planets": 20,
+      "opponents": [
+        "Van-Phuc Huynh",
+        "Paddington",
+        "Amon Suzuki"
+      ],
+      "remaining_overage": 45.998287
+    },
+    {
+      "episode": 81400380,
+      "role": "producer-anchor",
+      "players": 4,
+      "seat": 3,
+      "seed": 1958746565,
+      "steps": 107,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1538,
+      "best_opponent_ships": 0,
+      "our_production": 80,
+      "best_opponent_production": 0,
+      "our_planets": 24,
+      "opponents": [
+        "Hikari_30",
+        "Mavuika",
+        "Pim"
+      ],
+      "remaining_overage": 44.80673
+    },
+    {
+      "episode": 81400796,
+      "role": "producer-anchor",
+      "players": 2,
+      "seat": 1,
+      "seed": 1132270982,
+      "steps": 195,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1819,
+      "our_production": 0,
+      "best_opponent_production": 60,
+      "our_planets": 0,
+      "opponents": [
+        "FOYSAL"
+      ],
+      "remaining_overage": 52.616172
+    },
+    {
+      "episode": 81307768,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 0,
+      "seed": 1435955009,
+      "steps": 101,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 3103,
+      "best_opponent_ships": 0,
+      "our_production": 79,
+      "best_opponent_production": 0,
+      "our_planets": 26,
+      "opponents": [
+        "GraphiteEdge"
+      ],
+      "remaining_overage": 50.521365
+    },
+    {
+      "episode": 81308513,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 1,
+      "seed": 411004087,
+      "steps": 99,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1968,
+      "best_opponent_ships": 0,
+      "our_production": 59,
+      "best_opponent_production": 0,
+      "our_planets": 26,
+      "opponents": [
+        "Pradeep P"
+      ],
+      "remaining_overage": 52.561766
+    },
+    {
+      "episode": 81309276,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 0,
+      "seed": 433782607,
+      "steps": 97,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1541,
+      "best_opponent_ships": 0,
+      "our_production": 54,
+      "best_opponent_production": 0,
+      "our_planets": 18,
+      "opponents": [
+        "Sulu"
+      ],
+      "remaining_overage": 49.778539
+    },
+    {
+      "episode": 81310041,
+      "role": "i-m-stronger",
+      "players": 4,
+      "seat": 0,
+      "seed": 212017959,
+      "steps": 125,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1813,
+      "best_opponent_ships": 0,
+      "our_production": 58,
+      "best_opponent_production": 0,
+      "our_planets": 16,
+      "opponents": [
+        "laughingmen",
+        "kplngyi",
+        "Mikhail Bovt"
+      ],
+      "remaining_overage": 48.490975
+    },
+    {
+      "episode": 81310629,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 0,
+      "seed": 407641775,
+      "steps": 120,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 2605,
+      "our_production": 0,
+      "best_opponent_production": 96,
+      "our_planets": 0,
+      "opponents": [
+        "Lemons"
+      ],
+      "remaining_overage": 49.242532
+    },
+    {
+      "episode": 81311405,
+      "role": "i-m-stronger",
+      "players": 4,
+      "seat": 0,
+      "seed": 244589928,
+      "steps": 500,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 23034,
+      "our_production": 0,
+      "best_opponent_production": 67,
+      "our_planets": 0,
+      "opponents": [
+        "Dmitry Belan",
+        "Hotaka Ueda",
+        "Hit Imai"
+      ],
+      "remaining_overage": 45.364984
+    },
+    {
+      "episode": 81312010,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 1,
+      "seed": 1163434135,
+      "steps": 107,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 2024,
+      "best_opponent_ships": 0,
+      "our_production": 72,
+      "best_opponent_production": 0,
+      "our_planets": 28,
+      "opponents": [
+        "Jack Yu"
+      ],
+      "remaining_overage": 49.996412
+    },
+    {
+      "episode": 81312784,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 0,
+      "seed": 992810675,
+      "steps": 500,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 414,
+      "best_opponent_ships": 414,
+      "our_production": 18,
+      "best_opponent_production": 18,
+      "our_planets": 6,
+      "opponents": [
+        "Sky kun"
+      ],
+      "remaining_overage": 48.699936
+    },
+    {
+      "episode": 81313549,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 1,
+      "seed": 903589323,
+      "steps": 186,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1592,
+      "best_opponent_ships": 0,
+      "our_production": 64,
+      "best_opponent_production": 0,
+      "our_planets": 18,
+      "opponents": [
+        "just need a silver medal"
+      ],
+      "remaining_overage": 48.43101
+    },
+    {
+      "episode": 81314328,
+      "role": "i-m-stronger",
+      "players": 4,
+      "seat": 2,
+      "seed": 1261784984,
+      "steps": 153,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 2296,
+      "our_production": 0,
+      "best_opponent_production": 49,
+      "our_planets": 0,
+      "opponents": [
+        "Michael Pershin",
+        "Restu Anggoro Kasih",
+        "Pasha Burnyshev"
+      ],
+      "remaining_overage": 44.579025
+    },
+    {
+      "episode": 81314932,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 1,
+      "seed": 802021657,
+      "steps": 155,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 2326,
+      "best_opponent_ships": 0,
+      "our_production": 88,
+      "best_opponent_production": 0,
+      "our_planets": 20,
+      "opponents": [
+        "SK Arin"
+      ],
+      "remaining_overage": 52.316506000000004
+    },
+    {
+      "episode": 81315690,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 1,
+      "seed": 270609422,
+      "steps": 272,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1966,
+      "our_production": 0,
+      "best_opponent_production": 60,
+      "our_planets": 0,
+      "opponents": [
+        "Md Khairul Islam"
+      ],
+      "remaining_overage": 49.641434000000004
+    },
+    {
+      "episode": 81315702,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 1,
+      "seed": 1338130362,
+      "steps": 157,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1294,
+      "our_production": 0,
+      "best_opponent_production": 50,
+      "our_planets": 0,
+      "opponents": [
+        "huhu hoho"
+      ],
+      "remaining_overage": 51.137631
+    },
+    {
+      "episode": 81316468,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 0,
+      "seed": 1248396297,
+      "steps": 185,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1646,
+      "best_opponent_ships": 0,
+      "our_production": 57,
+      "best_opponent_production": 0,
+      "our_planets": 25,
+      "opponents": [
+        "Tomas Diaz"
+      ],
+      "remaining_overage": 49.246257
+    },
+    {
+      "episode": 81317232,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 1,
+      "seed": 1968366793,
+      "steps": 197,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 2578,
+      "our_production": 0,
+      "best_opponent_production": 80,
+      "our_planets": 0,
+      "opponents": [
+        "LI YIYANG829"
+      ],
+      "remaining_overage": 48.809823
+    },
+    {
+      "episode": 81318007,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 0,
+      "seed": 1124096666,
+      "steps": 137,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1188,
+      "our_production": 0,
+      "best_opponent_production": 44,
+      "our_planets": 0,
+      "opponents": [
+        "Cho Royou"
+      ],
+      "remaining_overage": 49.199518
+    },
+    {
+      "episode": 81318793,
+      "role": "i-m-stronger",
+      "players": 4,
+      "seat": 1,
+      "seed": 596234493,
+      "steps": 175,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1912,
+      "best_opponent_ships": 0,
+      "our_production": 47,
+      "best_opponent_production": 0,
+      "our_planets": 15,
+      "opponents": [
+        "Nishant Raj",
+        "Karthik",
+        "Kendamarron"
+      ],
+      "remaining_overage": 48.00272
+    },
+    {
+      "episode": 81319358,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 1,
+      "seed": 1352539476,
+      "steps": 140,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1226,
+      "our_production": 0,
+      "best_opponent_production": 73,
+      "our_planets": 0,
+      "opponents": [
+        "vvhan"
+      ],
+      "remaining_overage": 51.231153
+    },
+    {
+      "episode": 81319494,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 1,
+      "seed": 2071135064,
+      "steps": 147,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1446,
+      "our_production": 0,
+      "best_opponent_production": 52,
+      "our_planets": 0,
+      "opponents": [
+        "shyjin"
+      ],
+      "remaining_overage": 50.471051
+    },
+    {
+      "episode": 81320137,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 0,
+      "seed": 1674342345,
+      "steps": 120,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1660,
+      "best_opponent_ships": 0,
+      "our_production": 70,
+      "best_opponent_production": 0,
+      "our_planets": 22,
+      "opponents": [
+        "Nozprod"
+      ],
+      "remaining_overage": 51.444873
+    },
+    {
+      "episode": 81320954,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 0,
+      "seed": 1903805402,
+      "steps": 112,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1415,
+      "best_opponent_ships": 0,
+      "our_production": 60,
+      "best_opponent_production": 0,
+      "our_planets": 20,
+      "opponents": [
+        "rererenore"
+      ],
+      "remaining_overage": 50.348545
+    },
+    {
+      "episode": 81321666,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 0,
+      "seed": 2072257004,
+      "steps": 207,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1220,
+      "our_production": 0,
+      "best_opponent_production": 36,
+      "our_planets": 0,
+      "opponents": [
+        "Mikael Marcondes"
+      ],
+      "remaining_overage": 48.809971000000004
+    },
+    {
+      "episode": 81322440,
+      "role": "i-m-stronger",
+      "players": 4,
+      "seat": 1,
+      "seed": 1152528510,
+      "steps": 500,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 5653,
+      "our_production": 0,
+      "best_opponent_production": 31,
+      "our_planets": 0,
+      "opponents": [
+        "amy",
+        "tesheran",
+        "COSMIC"
+      ],
+      "remaining_overage": 45.653728
+    },
+    {
+      "episode": 81323035,
+      "role": "i-m-stronger",
+      "players": 4,
+      "seat": 2,
+      "seed": 741727447,
+      "steps": 161,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 898,
+      "our_production": 0,
+      "best_opponent_production": 20,
+      "our_planets": 0,
+      "opponents": [
+        "IAI-RL-MT",
+        "atom0190",
+        "halca"
+      ],
+      "remaining_overage": 45.336346
+    },
+    {
+      "episode": 81323581,
+      "role": "i-m-stronger",
+      "players": 4,
+      "seat": 3,
+      "seed": 543170404,
+      "steps": 186,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1142,
+      "our_production": 0,
+      "best_opponent_production": 28,
+      "our_planets": 0,
+      "opponents": [
+        "Soham_bit",
+        "Pilkwang Kim",
+        "AndiArvy"
+      ],
+      "remaining_overage": 42.965902
+    },
+    {
+      "episode": 81324221,
+      "role": "i-m-stronger",
+      "players": 4,
+      "seat": 3,
+      "seed": 550366635,
+      "steps": 191,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1505,
+      "our_production": 0,
+      "best_opponent_production": 36,
+      "our_planets": 0,
+      "opponents": [
+        "ykuroka",
+        "Tony Li",
+        "Yo!"
+      ],
+      "remaining_overage": 43.983361
+    },
+    {
+      "episode": 81324821,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 1,
+      "seed": 680744274,
+      "steps": 214,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 2671,
+      "best_opponent_ships": 0,
+      "our_production": 72,
+      "best_opponent_production": 0,
+      "our_planets": 24,
+      "opponents": [
+        "Gromozeka 400 Drops"
+      ],
+      "remaining_overage": 49.523561
+    },
+    {
+      "episode": 81325598,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 0,
+      "seed": 804591431,
+      "steps": 152,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 2187,
+      "best_opponent_ships": 0,
+      "our_production": 88,
+      "best_opponent_production": 0,
+      "our_planets": 32,
+      "opponents": [
+        "Hadesgo"
+      ],
+      "remaining_overage": 45.752947
+    },
+    {
+      "episode": 81327001,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 1,
+      "seed": 343821234,
+      "steps": 149,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1529,
+      "best_opponent_ships": 0,
+      "our_production": 78,
+      "best_opponent_production": 0,
+      "our_planets": 21,
+      "opponents": [
+        "Arthurs Torres24"
+      ],
+      "remaining_overage": 45.57499
+    },
+    {
+      "episode": 81328922,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 1,
+      "seed": 1753630963,
+      "steps": 227,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 3548,
+      "best_opponent_ships": 0,
+      "our_production": 68,
+      "best_opponent_production": 0,
+      "our_planets": 26,
+      "opponents": [
+        "Tomas Diaz"
+      ],
+      "remaining_overage": 51.416641
+    },
+    {
+      "episode": 81329694,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 1,
+      "seed": 1692386482,
+      "steps": 101,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 568,
+      "best_opponent_ships": 0,
+      "our_production": 30,
+      "best_opponent_production": 0,
+      "our_planets": 10,
+      "opponents": [
+        "muyouqian4"
+      ],
+      "remaining_overage": 49.765581
+    },
+    {
+      "episode": 81330449,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 1,
+      "seed": 923050280,
+      "steps": 157,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1420,
+      "best_opponent_ships": 0,
+      "our_production": 48,
+      "best_opponent_production": 0,
+      "our_planets": 16,
+      "opponents": [
+        "SK Arin"
+      ],
+      "remaining_overage": 48.670427000000004
+    },
+    {
+      "episode": 81331824,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 0,
+      "seed": 555375482,
+      "steps": 500,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 454,
+      "best_opponent_ships": 268,
+      "our_production": 14,
+      "best_opponent_production": 14,
+      "our_planets": 5,
+      "opponents": [
+        "Iceberg"
+      ],
+      "remaining_overage": 49.504155
+    },
+    {
+      "episode": 81332582,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 1,
+      "seed": 679206269,
+      "steps": 137,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1306,
+      "our_production": 0,
+      "best_opponent_production": 42,
+      "our_planets": 0,
+      "opponents": [
+        "neibyr"
+      ],
+      "remaining_overage": 49.707053
+    },
+    {
+      "episode": 81335170,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 1,
+      "seed": 1038134441,
+      "steps": 291,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 2842,
+      "our_production": 0,
+      "best_opponent_production": 60,
+      "our_planets": 0,
+      "opponents": [
+        "EmirhanSAGIR"
+      ],
+      "remaining_overage": 50.65713
+    },
+    {
+      "episode": 81338163,
+      "role": "i-m-stronger",
+      "players": 4,
+      "seat": 2,
+      "seed": 1691657548,
+      "steps": 159,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1320,
+      "our_production": 0,
+      "best_opponent_production": 46,
+      "our_planets": 0,
+      "opponents": [
+        "Om Kharate",
+        "kota kambayashi",
+        "kwon yong deuk"
+      ],
+      "remaining_overage": 43.579808
+    },
+    {
+      "episode": 81338711,
+      "role": "i-m-stronger",
+      "players": 4,
+      "seat": 0,
+      "seed": 188909900,
+      "steps": 500,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 5094,
+      "best_opponent_ships": 411,
+      "our_production": 32,
+      "best_opponent_production": 17,
+      "our_planets": 12,
+      "opponents": [
+        "eric",
+        "Oshbocker",
+        "LvBingrong"
+      ],
+      "remaining_overage": 48.92152
+    },
+    {
+      "episode": 81340760,
+      "role": "i-m-stronger",
+      "players": 4,
+      "seat": 1,
+      "seed": 1576549002,
+      "steps": 169,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 2130,
+      "our_production": 0,
+      "best_opponent_production": 65,
+      "our_planets": 0,
+      "opponents": [
+        "Ryutogrrr",
+        "Star-Lord",
+        "Ted K"
+      ],
+      "remaining_overage": 44.548692
+    },
+    {
+      "episode": 81340828,
+      "role": "i-m-stronger",
+      "players": 4,
+      "seat": 3,
+      "seed": 802989114,
+      "steps": 216,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1572,
+      "our_production": 0,
+      "best_opponent_production": 26,
+      "our_planets": 0,
+      "opponents": [
+        "huangshanle",
+        "Fanghhhh",
+        "\u661f\u4e4b\u6d77"
+      ],
+      "remaining_overage": 45.002164
+    },
+    {
+      "episode": 81346174,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 0,
+      "seed": 1763150026,
+      "steps": 125,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1542,
+      "our_production": 0,
+      "best_opponent_production": 72,
+      "our_planets": 0,
+      "opponents": [
+        "muelsyse111"
+      ],
+      "remaining_overage": 49.622271
+    },
+    {
+      "episode": 81352049,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 0,
+      "seed": 46020715,
+      "steps": 146,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 4128,
+      "our_production": 0,
+      "best_opponent_production": 75,
+      "our_planets": 0,
+      "opponents": [
+        "Monster"
+      ],
+      "remaining_overage": 48.30736
+    },
+    {
+      "episode": 81357577,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 1,
+      "seed": 622534202,
+      "steps": 219,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1588,
+      "our_production": 0,
+      "best_opponent_production": 48,
+      "our_planets": 0,
+      "opponents": [
+        "PavelLiashkov"
+      ],
+      "remaining_overage": 49.532482
+    },
+    {
+      "episode": 81371692,
+      "role": "i-m-stronger",
+      "players": 4,
+      "seat": 2,
+      "seed": 384945955,
+      "steps": 198,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 3886,
+      "best_opponent_ships": 0,
+      "our_production": 76,
+      "best_opponent_production": 0,
+      "our_planets": 24,
+      "opponents": [
+        "Hafida Belayd",
+        "Egor Tkachenko",
+        "amy"
+      ],
+      "remaining_overage": 45.641681
+    },
+    {
+      "episode": 81372945,
+      "role": "i-m-stronger",
+      "players": 4,
+      "seat": 2,
+      "seed": 745997244,
+      "steps": 500,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 186,
+      "best_opponent_ships": 1905,
+      "our_production": 0,
+      "best_opponent_production": 21,
+      "our_planets": 0,
+      "opponents": [
+        "Andrew Volkov",
+        "\u65b0\u7c73\u30a8\u30f3\u30b8\u30cb\u30a2\u5341\u4e00\u53f7",
+        "Haruto Kuroda"
+      ],
+      "remaining_overage": 46.433997
+    },
+    {
+      "episode": 81373000,
+      "role": "i-m-stronger",
+      "players": 4,
+      "seat": 0,
+      "seed": 1430178024,
+      "steps": 199,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 995,
+      "best_opponent_ships": 0,
+      "our_production": 24,
+      "best_opponent_production": 0,
+      "our_planets": 11,
+      "opponents": [
+        "ola sadek",
+        "luckyappley",
+        "Jared Williams"
+      ],
+      "remaining_overage": 45.773831
+    },
+    {
+      "episode": 81382858,
+      "role": "i-m-stronger",
+      "players": 4,
+      "seat": 0,
+      "seed": 1400930434,
+      "steps": 268,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 3257,
+      "best_opponent_ships": 0,
+      "our_production": 43,
+      "best_opponent_production": 0,
+      "our_planets": 16,
+      "opponents": [
+        "JZ",
+        "Tzuchuan Yang",
+        "tttlll030713"
+      ],
+      "remaining_overage": 48.391766000000004
+    },
+    {
+      "episode": 81387065,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 1,
+      "seed": 1283068030,
+      "steps": 284,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 6660,
+      "best_opponent_ships": 0,
+      "our_production": 56,
+      "best_opponent_production": 0,
+      "our_planets": 16,
+      "opponents": [
+        "Ray"
+      ],
+      "remaining_overage": 49.614926
+    },
+    {
+      "episode": 81392085,
+      "role": "i-m-stronger",
+      "players": 4,
+      "seat": 2,
+      "seed": 233961145,
+      "steps": 500,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 15728,
+      "our_production": 0,
+      "best_opponent_production": 49,
+      "our_planets": 0,
+      "opponents": [
+        "N_noa21",
+        "Gordeev Max",
+        "onThoze"
+      ],
+      "remaining_overage": 44.512868
+    },
+    {
+      "episode": 81393375,
+      "role": "i-m-stronger",
+      "players": 4,
+      "seat": 1,
+      "seed": 1108481330,
+      "steps": 179,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1596,
+      "our_production": 0,
+      "best_opponent_production": 38,
+      "our_planets": 0,
+      "opponents": [
+        "saeNeko",
+        "planets conqueror",
+        "Sebastian Mateus"
+      ],
+      "remaining_overage": 48.576307
+    },
+    {
+      "episode": 81395009,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 1,
+      "seed": 356859342,
+      "steps": 123,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 2366,
+      "best_opponent_ships": 0,
+      "our_production": 69,
+      "best_opponent_production": 0,
+      "our_planets": 21,
+      "opponents": [
+        "GeniusYY"
+      ],
+      "remaining_overage": 51.183085
+    },
+    {
+      "episode": 81395109,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 1,
+      "seed": 1687476470,
+      "steps": 121,
+      "reward": 1,
+      "status": "DONE",
+      "our_ships": 1272,
+      "best_opponent_ships": 0,
+      "our_production": 50,
+      "best_opponent_production": 0,
+      "our_planets": 18,
+      "opponents": [
+        "Will"
+      ],
+      "remaining_overage": 51.686688000000004
+    },
+    {
+      "episode": 81395604,
+      "role": "i-m-stronger",
+      "players": 2,
+      "seat": 0,
+      "seed": 1529874557,
+      "steps": 124,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 527,
+      "our_production": 0,
+      "best_opponent_production": 22,
+      "our_planets": 0,
+      "opponents": [
+        "Andrej Orsula"
+      ],
+      "remaining_overage": 49.800764
+    },
+    {
+      "episode": 81397153,
+      "role": "i-m-stronger",
+      "players": 4,
+      "seat": 0,
+      "seed": 1131852814,
+      "steps": 144,
+      "reward": -1,
+      "status": "DONE",
+      "our_ships": 0,
+      "best_opponent_ships": 1070,
+      "our_production": 0,
+      "best_opponent_production": 38,
+      "our_planets": 0,
+      "opponents": [
+        "oh,no",
+        "Rares Barbantan",
+        "Egor Tkachenko"
+      ],
+      "remaining_overage": 48.004101
+    }
+  ]
+}

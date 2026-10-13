@@ -1,0 +1,18 @@
+{
+  "id": "dalloliogm/exp211-three-model-no-appearance-link-v1",
+  "title": "exp211-three-model-no-appearance-link-v1",
+  "code_file": "exp211-three-model-no-appearance-link.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": false,
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "dataset_sources": [
+    "xiaoleilian/biohub-unet3d-weights",
+    "xiaoleilian/biohub-unet3d-weights-v2models"
+  ],
+  "machine_shape": "NvidiaTeslaT4"
+}

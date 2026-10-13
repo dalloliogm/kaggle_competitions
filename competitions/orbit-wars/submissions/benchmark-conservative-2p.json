@@ -1,0 +1,64 @@
+{
+  "seeds": [
+    911,
+    1012,
+    1113
+  ],
+  "summary": {
+    "conservative|2P|current-anchor": {
+      "games": 6,
+      "wins": 3,
+      "errors": 0
+    }
+  },
+  "games": [
+    {
+      "opponent": "current-anchor",
+      "players": 2,
+      "seed": 911,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "current-anchor",
+      "players": 2,
+      "seed": 911,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "current-anchor",
+      "players": 2,
+      "seed": 1012,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "current-anchor",
+      "players": 2,
+      "seed": 1012,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "current-anchor",
+      "players": 2,
+      "seed": 1113,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "current-anchor",
+      "players": 2,
+      "seed": 1113,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    }
+  ]
+}

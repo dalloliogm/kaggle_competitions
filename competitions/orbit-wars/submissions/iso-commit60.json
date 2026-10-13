@@ -1,0 +1,166 @@
+{
+  "config": {
+    "candidates": {
+      "commit60": "submissions/candidates/pa-commit60/main.py"
+    },
+    "opponents": {
+      "i-m-stronger": "submissions/candidates/i-m-stronger/main.py",
+      "current-anchor": "submissions/candidates/meta0622-anchor-producer-wave-control/unpacked/main.py",
+      "apex": "submissions/candidates/apex-hybrid/main.py"
+    },
+    "seeds": [
+      911,
+      1012
+    ],
+    "modes": [
+      4
+    ],
+    "mixed": true,
+    "output": "submissions/iso-commit60.json"
+  },
+  "summary": {
+    "commit60|4P|MIXED": {
+      "games": 8,
+      "wins": 4,
+      "win_rate": 0.5,
+      "early_eliminations": 3,
+      "survival_rate": 0.625,
+      "avg_survival_frac": 0.832,
+      "avg_elim_step": 135.0,
+      "avg_final_share": 0.5,
+      "errors": 0
+    }
+  },
+  "aggregate": {
+    "commit60": {
+      "games": 8,
+      "win_rate": 0.5,
+      "survival_rate": 0.625,
+      "avg_survival_frac": 0.832,
+      "avg_final_share": 0.5,
+      "errors": 0
+    }
+  },
+  "games": [
+    {
+      "candidate": "commit60",
+      "opponent": "MIXED",
+      "mode": 4,
+      "seed": 911,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE",
+      "early_elim": false,
+      "elim_step": null,
+      "n_steps": 372,
+      "survival_frac": 1.0,
+      "final_ships": 1159,
+      "final_share": 1.0
+    },
+    {
+      "candidate": "commit60",
+      "opponent": "MIXED",
+      "mode": 4,
+      "seed": 911,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE",
+      "early_elim": true,
+      "elim_step": 161,
+      "n_steps": 235,
+      "survival_frac": 0.688,
+      "final_ships": 0,
+      "final_share": 0.0
+    },
+    {
+      "candidate": "commit60",
+      "opponent": "MIXED",
+      "mode": 4,
+      "seed": 911,
+      "seat": 2,
+      "reward": 1,
+      "status": "DONE",
+      "early_elim": false,
+      "elim_step": null,
+      "n_steps": 235,
+      "survival_frac": 1.0,
+      "final_ships": 540,
+      "final_share": 1.0
+    },
+    {
+      "candidate": "commit60",
+      "opponent": "MIXED",
+      "mode": 4,
+      "seed": 911,
+      "seat": 3,
+      "reward": 1,
+      "status": "DONE",
+      "early_elim": false,
+      "elim_step": null,
+      "n_steps": 237,
+      "survival_frac": 1.0,
+      "final_ships": 1247,
+      "final_share": 1.0
+    },
+    {
+      "candidate": "commit60",
+      "opponent": "MIXED",
+      "mode": 4,
+      "seed": 1012,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE",
+      "early_elim": true,
+      "elim_step": 92,
+      "n_steps": 189,
+      "survival_frac": 0.489,
+      "final_ships": 0,
+      "final_share": 0.0
+    },
+    {
+      "candidate": "commit60",
+      "opponent": "MIXED",
+      "mode": 4,
+      "seed": 1012,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE",
+      "early_elim": false,
+      "elim_step": null,
+      "n_steps": 222,
+      "survival_frac": 1.0,
+      "final_ships": 1653,
+      "final_share": 1.0
+    },
+    {
+      "candidate": "commit60",
+      "opponent": "MIXED",
+      "mode": 4,
+      "seed": 1012,
+      "seat": 2,
+      "reward": -1,
+      "status": "DONE",
+      "early_elim": false,
+      "elim_step": 221,
+      "n_steps": 222,
+      "survival_frac": 1.0,
+      "final_ships": 0,
+      "final_share": 0.0
+    },
+    {
+      "candidate": "commit60",
+      "opponent": "MIXED",
+      "mode": 4,
+      "seed": 1012,
+      "seat": 3,
+      "reward": -1,
+      "status": "DONE",
+      "early_elim": true,
+      "elim_step": 152,
+      "n_steps": 317,
+      "survival_frac": 0.481,
+      "final_ships": 0,
+      "final_share": 0.0
+    }
+  ]
+}

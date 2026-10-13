@@ -1,0 +1,8 @@
+{
+  "variant": "PRIMARY_PLAYERCOUNT_4P_FIX",
+  "role": "Primary high-ceiling candidate",
+  "recommended_slot": "Slot 1",
+  "strategy": "Player-count-aware flow candidate with the strongest current 4P seat profile while keeping acceptable 2P pressure.",
+  "sha256": "44468c4943a0e7806d5dcb9c9402af8cd3e642d6ea545938596a1588cc003690",
+  "size": 55125
+}

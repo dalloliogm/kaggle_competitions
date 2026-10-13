@@ -1,0 +1,13 @@
+{
+  "config_2p": {
+    "max_regroup_targets_per_source": 8,
+    "min_ships_to_launch": 3.0,
+    "regroup_pressure_delta_min": 0.22
+  },
+  "config_4p": {
+    "max_defensive_targets": 5,
+    "max_regroup_targets_per_source": 8,
+    "min_ships_to_launch": 3.0,
+    "regroup_pressure_delta_min": 0.22
+  }
+}

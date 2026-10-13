@@ -1,0 +1,8 @@
+{
+  "variant": "CHALLENGER_C3_4P_RETENTION",
+  "role": "4P retention challenger alternative",
+  "recommended_slot": "Alternative slot 2",
+  "strategy": "Four-player retention profile with shorter 4P horizon, wider defensive target coverage, and faster regroup recycling.",
+  "sha256": "20b14558d661f411c529443041ce01622e5ff78e3a4493e77d0054fa0029774f",
+  "size": 54662
+}

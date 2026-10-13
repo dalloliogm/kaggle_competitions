@@ -1,0 +1,8 @@
+{
+  "variant": "LOCAL_INCUMBENT_0621_PRIMARY",
+  "role": "Validated local incumbent / slot 1",
+  "recommended_slot": "Slot 1",
+  "strategy": "Player-count-aware ProducerLite candidate with the best local 4P validation profile and strong complementarity with C2.",
+  "sha256": "44468c4943a0e7806d5dcb9c9402af8cd3e642d6ea545938596a1588cc003690",
+  "size": 55125
+}

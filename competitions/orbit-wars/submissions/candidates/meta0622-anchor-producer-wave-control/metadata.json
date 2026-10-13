@@ -1,0 +1,8 @@
+{
+  "variant": "ANCHOR_PRODUCER_WAVE_CONTROL",
+  "role": "Public/meta producer anchor alternative",
+  "recommended_slot": "Alternative slot 1",
+  "strategy": "Risk-aware Producer-style wave controller with reinforcement-aware logistics and strong public-score prior.",
+  "sha256": "a0935e5198dee0fd7183b587812db99d23d1bc2263e7d7c77465e4fe79a57328",
+  "size": 55700
+}

@@ -1,0 +1,18 @@
+{
+  "id": "dalloliogm/exp205-two-model-detector-ablation-v2",
+  "title": "exp205-two-model-detector-ablation-v2",
+  "code_file": "exp205-two-model-full.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": false,
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "dataset_sources": [
+    "xiaoleilian/biohub-unet3d-weights",
+    "xiaoleilian/biohub-unet3d-weights-v2models"
+  ],
+  "machine_shape": "NvidiaTeslaT4"
+}
