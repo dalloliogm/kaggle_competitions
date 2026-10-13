@@ -1,0 +1,954 @@
+{
+  "seeds": [
+    701,
+    802
+  ],
+  "summary": {
+    "c2-frontier-flow|2P|primary": {
+      "games": 4,
+      "wins": 0,
+      "errors": 0
+    },
+    "c2-frontier-flow|4P|primary": {
+      "games": 8,
+      "wins": 0,
+      "errors": 0
+    },
+    "c2-frontier-flow|2P|challenger": {
+      "games": 4,
+      "wins": 0,
+      "errors": 0
+    },
+    "c2-frontier-flow|4P|challenger": {
+      "games": 8,
+      "wins": 0,
+      "errors": 0
+    },
+    "c3-4p-retention|2P|primary": {
+      "games": 4,
+      "wins": 0,
+      "errors": 0
+    },
+    "c3-4p-retention|4P|primary": {
+      "games": 8,
+      "wins": 0,
+      "errors": 0
+    },
+    "c3-4p-retention|2P|challenger": {
+      "games": 4,
+      "wins": 0,
+      "errors": 0
+    },
+    "c3-4p-retention|4P|challenger": {
+      "games": 8,
+      "wins": 0,
+      "errors": 0
+    },
+    "producer-anchor|2P|primary": {
+      "games": 4,
+      "wins": 2,
+      "errors": 0
+    },
+    "producer-anchor|4P|primary": {
+      "games": 8,
+      "wins": 8,
+      "errors": 0
+    },
+    "producer-anchor|2P|challenger": {
+      "games": 4,
+      "wins": 4,
+      "errors": 0
+    },
+    "producer-anchor|4P|challenger": {
+      "games": 8,
+      "wins": 4,
+      "errors": 0
+    },
+    "apex-hybrid|2P|primary": {
+      "games": 4,
+      "wins": 2,
+      "errors": 0
+    },
+    "apex-hybrid|4P|primary": {
+      "games": 8,
+      "wins": 0,
+      "errors": 0
+    },
+    "apex-hybrid|2P|challenger": {
+      "games": 4,
+      "wins": 4,
+      "errors": 0
+    },
+    "apex-hybrid|4P|challenger": {
+      "games": 8,
+      "wins": 5,
+      "errors": 0
+    }
+  },
+  "games": [
+    {
+      "mode": "2P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 2,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 3,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 2,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 3,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 2,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 3,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 2,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c2-frontier-flow",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 3,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "c3-4p-retention",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "c3-4p-retention",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c3-4p-retention",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c3-4p-retention",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c3-4p-retention",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 2,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c3-4p-retention",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 3,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "c3-4p-retention",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "c3-4p-retention",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c3-4p-retention",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c3-4p-retention",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c3-4p-retention",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 2,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c3-4p-retention",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 3,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "c3-4p-retention",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "c3-4p-retention",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c3-4p-retention",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c3-4p-retention",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c3-4p-retention",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 2,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c3-4p-retention",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 3,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "c3-4p-retention",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "c3-4p-retention",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c3-4p-retention",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c3-4p-retention",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c3-4p-retention",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 2,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "c3-4p-retention",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 3,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "producer-anchor",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "producer-anchor",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "producer-anchor",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "producer-anchor",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "producer-anchor",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 2,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "producer-anchor",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 3,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "producer-anchor",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "producer-anchor",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "producer-anchor",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "producer-anchor",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "producer-anchor",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 2,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "producer-anchor",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 3,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "producer-anchor",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "producer-anchor",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "producer-anchor",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "producer-anchor",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "producer-anchor",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 2,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "producer-anchor",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 3,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "producer-anchor",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "producer-anchor",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "producer-anchor",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "producer-anchor",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "producer-anchor",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 2,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "producer-anchor",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 3,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "apex-hybrid",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "apex-hybrid",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "apex-hybrid",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "apex-hybrid",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "apex-hybrid",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 2,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "apex-hybrid",
+      "opponent": "primary",
+      "seed": 701,
+      "seat": 3,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "apex-hybrid",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "apex-hybrid",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "apex-hybrid",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "apex-hybrid",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "apex-hybrid",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 2,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "apex-hybrid",
+      "opponent": "primary",
+      "seed": 802,
+      "seat": 3,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "apex-hybrid",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "apex-hybrid",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "apex-hybrid",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "apex-hybrid",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "apex-hybrid",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 2,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "apex-hybrid",
+      "opponent": "challenger",
+      "seed": 701,
+      "seat": 3,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "apex-hybrid",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "2P",
+      "candidate": "apex-hybrid",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "apex-hybrid",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "apex-hybrid",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "apex-hybrid",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 2,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "mode": "4P",
+      "candidate": "apex-hybrid",
+      "opponent": "challenger",
+      "seed": 802,
+      "seat": 3,
+      "reward": 1,
+      "status": "DONE"
+    }
+  ]
+}

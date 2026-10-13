@@ -1,0 +1,10 @@
+{
+  "candidate_id": "0620_ORACLE_light_ver_1200_simple_orbit_intruder_origin",
+  "main_sha16": "742e41fa832b0624",
+  "patched_player_count_cache": false,
+  "source_main_sha16": "742e41fa832b0624",
+  "source_notebook": "HighestPBNotebooks/260620_0728KR/light-ver-1200-simple-orbit-intruder.ipynb",
+  "source_slug": "light_ver_1200_simple_orbit_intruder",
+  "used_external_dataset": true,
+  "variant": "origin"
+}

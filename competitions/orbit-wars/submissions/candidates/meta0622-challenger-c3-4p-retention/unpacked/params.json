@@ -1,0 +1,10 @@
+{
+  "config_2p": {},
+  "config_4p": {
+    "horizon": 11,
+    "max_defensive_targets": 5,
+    "max_regroup_time": 8.0,
+    "max_sources_per_lane": 5,
+    "regroup_pressure_delta_min": 0.22
+  }
+}

@@ -1,0 +1,1642 @@
+{
+  "seeds": [
+    401,
+    502,
+    603
+  ],
+  "summary": {
+    "primary": {
+      "games": 12,
+      "wins": 0,
+      "errors": 0
+    },
+    "frontier": {
+      "games": 12,
+      "wins": 0,
+      "errors": 0
+    },
+    "i-the-orbit": {
+      "games": 12,
+      "wins": 2,
+      "errors": 0
+    },
+    "i-m-stronger": {
+      "games": 12,
+      "wins": 0,
+      "errors": 0
+    },
+    "exp50": {
+      "games": 12,
+      "wins": 0,
+      "errors": 0
+    },
+    "light-1200": {
+      "games": 12,
+      "wins": 0,
+      "errors": 0
+    },
+    "v2-gru": {
+      "games": 12,
+      "wins": 0,
+      "errors": 0
+    }
+  },
+  "games": [
+    {
+      "candidate": "primary",
+      "seed": 401,
+      "seat": 0,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "primary",
+      "seed": 401,
+      "seat": 1,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "primary",
+      "seed": 401,
+      "seat": 2,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "primary",
+      "seed": 401,
+      "seat": 3,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "primary",
+      "seed": 502,
+      "seat": 0,
+      "steps": 239,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "primary",
+      "seed": 502,
+      "seat": 1,
+      "steps": 239,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "primary",
+      "seed": 502,
+      "seat": 2,
+      "steps": 239,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "primary",
+      "seed": 502,
+      "seat": 3,
+      "steps": 239,
+      "candidate_reward": -1,
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "primary",
+      "seed": 603,
+      "seat": 0,
+      "steps": 185,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "primary",
+      "seed": 603,
+      "seat": 1,
+      "steps": 184,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "primary",
+      "seed": 603,
+      "seat": 2,
+      "steps": 180,
+      "candidate_reward": -1,
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "primary",
+      "seed": 603,
+      "seat": 3,
+      "steps": 184,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "frontier",
+      "seed": 401,
+      "seat": 0,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "frontier",
+      "seed": 401,
+      "seat": 1,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "frontier",
+      "seed": 401,
+      "seat": 2,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "frontier",
+      "seed": 401,
+      "seat": 3,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "frontier",
+      "seed": 502,
+      "seat": 0,
+      "steps": 124,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "frontier",
+      "seed": 502,
+      "seat": 1,
+      "steps": 124,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "frontier",
+      "seed": 502,
+      "seat": 2,
+      "steps": 124,
+      "candidate_reward": -1,
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "frontier",
+      "seed": 502,
+      "seat": 3,
+      "steps": 140,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "frontier",
+      "seed": 603,
+      "seat": 0,
+      "steps": 130,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "frontier",
+      "seed": 603,
+      "seat": 1,
+      "steps": 128,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "frontier",
+      "seed": 603,
+      "seat": 2,
+      "steps": 130,
+      "candidate_reward": -1,
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "frontier",
+      "seed": 603,
+      "seat": 3,
+      "steps": 128,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-the-orbit",
+      "seed": 401,
+      "seat": 0,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-the-orbit",
+      "seed": 401,
+      "seat": 1,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-the-orbit",
+      "seed": 401,
+      "seat": 2,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-the-orbit",
+      "seed": 401,
+      "seat": 3,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-the-orbit",
+      "seed": 502,
+      "seat": 0,
+      "steps": 116,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-the-orbit",
+      "seed": 502,
+      "seat": 1,
+      "steps": 116,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-the-orbit",
+      "seed": 502,
+      "seat": 2,
+      "steps": 116,
+      "candidate_reward": -1,
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-the-orbit",
+      "seed": 502,
+      "seat": 3,
+      "steps": 116,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-the-orbit",
+      "seed": 603,
+      "seat": 0,
+      "steps": 138,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-the-orbit",
+      "seed": 603,
+      "seat": 1,
+      "steps": 168,
+      "candidate_reward": 1,
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-the-orbit",
+      "seed": 603,
+      "seat": 2,
+      "steps": 138,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-the-orbit",
+      "seed": 603,
+      "seat": 3,
+      "steps": 168,
+      "candidate_reward": 1,
+      "rewards": [
+        -1,
+        -1,
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-m-stronger",
+      "seed": 401,
+      "seat": 0,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-m-stronger",
+      "seed": 401,
+      "seat": 1,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-m-stronger",
+      "seed": 401,
+      "seat": 2,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-m-stronger",
+      "seed": 401,
+      "seat": 3,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-m-stronger",
+      "seed": 502,
+      "seat": 0,
+      "steps": 102,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-m-stronger",
+      "seed": 502,
+      "seat": 1,
+      "steps": 102,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-m-stronger",
+      "seed": 502,
+      "seat": 2,
+      "steps": 102,
+      "candidate_reward": -1,
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-m-stronger",
+      "seed": 502,
+      "seat": 3,
+      "steps": 102,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-m-stronger",
+      "seed": 603,
+      "seat": 0,
+      "steps": 184,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-m-stronger",
+      "seed": 603,
+      "seat": 1,
+      "steps": 201,
+      "candidate_reward": -1,
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-m-stronger",
+      "seed": 603,
+      "seat": 2,
+      "steps": 138,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "i-m-stronger",
+      "seed": 603,
+      "seat": 3,
+      "steps": 172,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "exp50",
+      "seed": 401,
+      "seat": 0,
+      "steps": 106,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "exp50",
+      "seed": 401,
+      "seat": 1,
+      "steps": 106,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "exp50",
+      "seed": 401,
+      "seat": 2,
+      "steps": 106,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "exp50",
+      "seed": 401,
+      "seat": 3,
+      "steps": 106,
+      "candidate_reward": -1,
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "exp50",
+      "seed": 502,
+      "seat": 0,
+      "steps": 218,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "exp50",
+      "seed": 502,
+      "seat": 1,
+      "steps": 218,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "exp50",
+      "seed": 502,
+      "seat": 2,
+      "steps": 228,
+      "candidate_reward": -1,
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "exp50",
+      "seed": 502,
+      "seat": 3,
+      "steps": 228,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "exp50",
+      "seed": 603,
+      "seat": 0,
+      "steps": 148,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "exp50",
+      "seed": 603,
+      "seat": 1,
+      "steps": 148,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "exp50",
+      "seed": 603,
+      "seat": 2,
+      "steps": 148,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "exp50",
+      "seed": 603,
+      "seat": 3,
+      "steps": 148,
+      "candidate_reward": -1,
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "light-1200",
+      "seed": 401,
+      "seat": 0,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "light-1200",
+      "seed": 401,
+      "seat": 1,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "light-1200",
+      "seed": 401,
+      "seat": 2,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "light-1200",
+      "seed": 401,
+      "seat": 3,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "light-1200",
+      "seed": 502,
+      "seat": 0,
+      "steps": 239,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "light-1200",
+      "seed": 502,
+      "seat": 1,
+      "steps": 239,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "light-1200",
+      "seed": 502,
+      "seat": 2,
+      "steps": 239,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "light-1200",
+      "seed": 502,
+      "seat": 3,
+      "steps": 239,
+      "candidate_reward": -1,
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "light-1200",
+      "seed": 603,
+      "seat": 0,
+      "steps": 185,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "light-1200",
+      "seed": 603,
+      "seat": 1,
+      "steps": 184,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "light-1200",
+      "seed": 603,
+      "seat": 2,
+      "steps": 180,
+      "candidate_reward": -1,
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "light-1200",
+      "seed": 603,
+      "seat": 3,
+      "steps": 184,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "v2-gru",
+      "seed": 401,
+      "seat": 0,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "v2-gru",
+      "seed": 401,
+      "seat": 1,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "v2-gru",
+      "seed": 401,
+      "seat": 2,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "v2-gru",
+      "seed": 401,
+      "seat": 3,
+      "steps": 500,
+      "candidate_reward": -1,
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "v2-gru",
+      "seed": 502,
+      "seat": 0,
+      "steps": 218,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "v2-gru",
+      "seed": 502,
+      "seat": 1,
+      "steps": 218,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "v2-gru",
+      "seed": 502,
+      "seat": 2,
+      "steps": 228,
+      "candidate_reward": -1,
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "v2-gru",
+      "seed": 502,
+      "seat": 3,
+      "steps": 228,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "v2-gru",
+      "seed": 603,
+      "seat": 0,
+      "steps": 136,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "v2-gru",
+      "seed": 603,
+      "seat": 1,
+      "steps": 136,
+      "candidate_reward": -1,
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "v2-gru",
+      "seed": 603,
+      "seat": 2,
+      "steps": 141,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        -1,
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    },
+    {
+      "candidate": "v2-gru",
+      "seed": 603,
+      "seat": 3,
+      "steps": 141,
+      "candidate_reward": -1,
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ]
+    }
+  ]
+}

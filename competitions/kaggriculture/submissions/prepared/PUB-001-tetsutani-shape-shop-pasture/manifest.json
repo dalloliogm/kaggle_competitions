@@ -1,0 +1,32 @@
+{
+  "archive_members": [
+    "main.py"
+  ],
+  "archive_sha256": "ffaa5a43da5cf37c084c02a0c4e03eca9cb8ccb5766bbb9d2a4d3b0783e8017d",
+  "artifact": "submission.tar.gz",
+  "environment": "kaggle-environments==1.32.7",
+  "main_py_sha256": "2b97e2c653018ac4aeffb8463ec91c8f26b097b4cef81289acc25ccdbc68f916",
+  "score_checked_on": "2026-09-07",
+  "source_url": "https://www.kaggle.com/code/tetsutani/shape-the-shop-work-the-pasture-kaggriculture",
+  "source_version": "v11",
+  "submission": {
+    "description": "PUB-001 Tetsutani v11 exact public agent; local 1.32.7 validation; source score 2494.7",
+    "initial_status": "SubmissionStatus.PENDING",
+    "kaggle_ref": 56075091,
+    "submitted_at": "2026-09-07 10:43:18.933000",
+    "submitted_by": "dalloliogm"
+  },
+  "submission_status": "submitted; Kaggle validation pending",
+  "self_play_smoke_test": {
+    "candidate_reward": 99154.0,
+    "environment": "kaggle-environments==1.32.7",
+    "opponent_reward": 97374.0,
+    "seed": 910019,
+    "statuses": [
+      "DONE",
+      "DONE"
+    ],
+    "turns": 720
+  },
+  "verified_public_score": 2494.7
+}

@@ -1,0 +1,314 @@
+{
+  "seeds": [
+    911,
+    1012,
+    1113
+  ],
+  "summary": {
+    "conservative|4P|current-anchor": {
+      "games": 12,
+      "wins": 12,
+      "errors": 0
+    },
+    "conservative|4P|primary": {
+      "games": 12,
+      "wins": 12,
+      "errors": 0
+    },
+    "conservative|4P|i-m-stronger": {
+      "games": 12,
+      "wins": 4,
+      "errors": 0
+    }
+  },
+  "games": [
+    {
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 911,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 911,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 911,
+      "seat": 2,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 911,
+      "seat": 3,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1012,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1012,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1012,
+      "seat": 2,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1012,
+      "seat": 3,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1113,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1113,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1113,
+      "seat": 2,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1113,
+      "seat": 3,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "primary",
+      "players": 4,
+      "seed": 911,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "primary",
+      "players": 4,
+      "seed": 911,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "primary",
+      "players": 4,
+      "seed": 911,
+      "seat": 2,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "primary",
+      "players": 4,
+      "seed": 911,
+      "seat": 3,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "primary",
+      "players": 4,
+      "seed": 1012,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "primary",
+      "players": 4,
+      "seed": 1012,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "primary",
+      "players": 4,
+      "seed": 1012,
+      "seat": 2,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "primary",
+      "players": 4,
+      "seed": 1012,
+      "seat": 3,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "primary",
+      "players": 4,
+      "seed": 1113,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "primary",
+      "players": 4,
+      "seed": 1113,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "primary",
+      "players": 4,
+      "seed": 1113,
+      "seat": 2,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "primary",
+      "players": 4,
+      "seed": 1113,
+      "seat": 3,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 911,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 911,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 911,
+      "seat": 2,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 911,
+      "seat": 3,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 1012,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 1012,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 1012,
+      "seat": 2,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 1012,
+      "seat": 3,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 1113,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 1113,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 1113,
+      "seat": 2,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 1113,
+      "seat": 3,
+      "reward": -1,
+      "status": "DONE"
+    }
+  ]
+}

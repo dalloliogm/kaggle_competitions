@@ -17,6 +17,23 @@
     {"id": "ablations", "title": "Submitted ablations and reliability"},
     {"id": "offline", "title": "Offline screens and rejected directions"}
   ],
+  "system": {
+    "stages": [
+      "Inputs: trajectory, GR, typewell and visible TVT prefix",
+      "Geological anchor: particle filter, beam search and DTW",
+      "Residual/model package: LightGBM, CatBoost, Ridge and pretrained branch",
+      "Calibration/guardrails: prefix selection, contact override and corrections",
+      "Code submission: Kaggle grading re-executes the notebook"
+    ],
+    "controls": "Whole-well CV, masked-prefix validation, source-lineage audits, and overlap probes are controls/audits rather than production stages."
+  },
+  "provenance": [
+    {"when": "2026-07-23", "source": "Five top public ROGII notebooks", "type": "public notebooks", "role": "Target-free geosteering lineage for rebuild and validation", "relationship": "adapted / evaluation context"},
+    {"when": "2026-07-23 onward", "source": "koolbox-offline; rogii-claude-models-pub; wellbore-geology-prediction-artifacts", "type": "public model/data assets", "role": "Declared Kaggle inputs for shared pipeline forks", "relationship": "used as declared public assets"},
+    {"when": "2026-07-24 to 2026-08-02", "source": "Discussions 704663, 707695, 703883, 711878, 726465, 728712, 698825", "type": "official discussions", "role": "Hypotheses and evaluation context", "relationship": "inspiration / evaluation context"},
+    {"when": "2026-08-01", "source": "ROGII Physics LB 7.872 v48 and likely v65", "type": "public notebook", "role": "Static independence audit", "relationship": "copied for review only"}
+  ],
+  "external_raw_competition_data_use": "No use beyond official competition input is recorded.",
   "nodes": [
     {
       "id": "early-baseline",
@@ -143,6 +160,15 @@
       "score": "Not submitted; strict pooled gain +0.0259 ft, bootstrap CI [-0.1995, +0.2700]",
       "status": "not-submitted",
       "parents": ["s4000"]
+    },
+    {
+      "id": "dwt-ensemble",
+      "lane": "offline",
+      "title": "DWT-lineage ensemble with current best",
+      "summary": "Backlog proposed combining the independent DWT-based lineage with the current best, but no experiment or submission is recorded.",
+      "score": "Not tried",
+      "status": "untried",
+      "parents": ["gs130"]
     }
   ]
 }

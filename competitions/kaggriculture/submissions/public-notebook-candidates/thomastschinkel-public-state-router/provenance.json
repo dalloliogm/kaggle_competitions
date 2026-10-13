@@ -1,0 +1,12 @@
+{
+  "candidate": "thomastschinkel-public-state-router",
+  "downloaded_latest_on": "2026-09-07",
+  "expected_notebook_hash": null,
+  "extraction": "literal decode only; notebook code was not executed",
+  "score_status": "not independently verified; title/author claims are secondary evidence",
+  "sha256": "197b1ceef97d2ee20b833457ecbf06c0969832086c086ee6596bd0752e57a3c1",
+  "source_cell_index": 5,
+  "source_notebook": "references/public-notebooks/thomastschinkel__public-state-router/kaggriculture-public-state-router-74-5-win-rate.ipynb",
+  "source_url": "https://www.kaggle.com/code/thomastschinkel/kaggriculture-public-state-router-74-5-win-rate",
+  "votes_at_ingest": 98
+}

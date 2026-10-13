@@ -1,0 +1,355 @@
+{
+  "seeds": [
+    911,
+    1012,
+    1113
+  ],
+  "summary": {
+    "hybrid-conservative|2P|primary": {
+      "games": 6,
+      "wins": 3,
+      "errors": 0
+    },
+    "hybrid-conservative|4P|primary": {
+      "games": 12,
+      "wins": 12,
+      "errors": 0
+    },
+    "hybrid-conservative|2P|i-m-stronger": {
+      "games": 6,
+      "wins": 4,
+      "errors": 0
+    },
+    "hybrid-conservative|4P|i-m-stronger": {
+      "games": 12,
+      "wins": 4,
+      "errors": 0
+    }
+  },
+  "games": [
+    {
+      "variant": "conservative",
+      "opponent": "primary",
+      "players": 2,
+      "seed": 911,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "primary",
+      "players": 2,
+      "seed": 911,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "primary",
+      "players": 4,
+      "seed": 911,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "primary",
+      "players": 4,
+      "seed": 911,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "primary",
+      "players": 4,
+      "seed": 911,
+      "seat": 2,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "primary",
+      "players": 4,
+      "seed": 911,
+      "seat": 3,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "primary",
+      "players": 2,
+      "seed": 1012,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "primary",
+      "players": 2,
+      "seed": 1012,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "primary",
+      "players": 4,
+      "seed": 1012,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "primary",
+      "players": 4,
+      "seed": 1012,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "primary",
+      "players": 4,
+      "seed": 1012,
+      "seat": 2,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "primary",
+      "players": 4,
+      "seed": 1012,
+      "seat": 3,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "primary",
+      "players": 2,
+      "seed": 1113,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "primary",
+      "players": 2,
+      "seed": 1113,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "primary",
+      "players": 4,
+      "seed": 1113,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "primary",
+      "players": 4,
+      "seed": 1113,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "primary",
+      "players": 4,
+      "seed": 1113,
+      "seat": 2,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "primary",
+      "players": 4,
+      "seed": 1113,
+      "seat": 3,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "i-m-stronger",
+      "players": 2,
+      "seed": 911,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "i-m-stronger",
+      "players": 2,
+      "seed": 911,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 911,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 911,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 911,
+      "seat": 2,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 911,
+      "seat": 3,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "i-m-stronger",
+      "players": 2,
+      "seed": 1012,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "i-m-stronger",
+      "players": 2,
+      "seed": 1012,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 1012,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 1012,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 1012,
+      "seat": 2,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 1012,
+      "seat": 3,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "i-m-stronger",
+      "players": 2,
+      "seed": 1113,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "i-m-stronger",
+      "players": 2,
+      "seed": 1113,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 1113,
+      "seat": 0,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 1113,
+      "seat": 1,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 1113,
+      "seat": 2,
+      "reward": -1,
+      "status": "DONE"
+    },
+    {
+      "variant": "conservative",
+      "opponent": "i-m-stronger",
+      "players": 4,
+      "seed": 1113,
+      "seat": 3,
+      "reward": -1,
+      "status": "DONE"
+    }
+  ]
+}

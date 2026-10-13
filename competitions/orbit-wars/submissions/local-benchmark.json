@@ -1,0 +1,883 @@
+{
+  "seeds": [
+    101,
+    202,
+    303
+  ],
+  "summary": {
+    "primary": {
+      "games": 30,
+      "wins": 17,
+      "ties": 0,
+      "losses": 13,
+      "errors": 0,
+      "reward_sum": 4.0
+    },
+    "challenger": {
+      "games": 30,
+      "wins": 22,
+      "ties": 0,
+      "losses": 8,
+      "errors": 0,
+      "reward_sum": 14.0
+    },
+    "v8": {
+      "games": 30,
+      "wins": 0,
+      "ties": 0,
+      "losses": 30,
+      "errors": 0,
+      "reward_sum": -30.0
+    },
+    "frontier": {
+      "games": 30,
+      "wins": 9,
+      "ties": 0,
+      "losses": 21,
+      "errors": 0,
+      "reward_sum": -12.0
+    }
+  },
+  "games": [
+    {
+      "seed": 101,
+      "agents": [
+        "primary",
+        "challenger"
+      ],
+      "rewards": [
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 198
+    },
+    {
+      "seed": 101,
+      "agents": [
+        "challenger",
+        "primary"
+      ],
+      "rewards": [
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 206
+    },
+    {
+      "seed": 202,
+      "agents": [
+        "primary",
+        "challenger"
+      ],
+      "rewards": [
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 152
+    },
+    {
+      "seed": 202,
+      "agents": [
+        "challenger",
+        "primary"
+      ],
+      "rewards": [
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 170
+    },
+    {
+      "seed": 303,
+      "agents": [
+        "primary",
+        "challenger"
+      ],
+      "rewards": [
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 170
+    },
+    {
+      "seed": 303,
+      "agents": [
+        "challenger",
+        "primary"
+      ],
+      "rewards": [
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 176
+    },
+    {
+      "seed": 101,
+      "agents": [
+        "primary",
+        "v8"
+      ],
+      "rewards": [
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 109
+    },
+    {
+      "seed": 101,
+      "agents": [
+        "v8",
+        "primary"
+      ],
+      "rewards": [
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 109
+    },
+    {
+      "seed": 202,
+      "agents": [
+        "primary",
+        "v8"
+      ],
+      "rewards": [
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 104
+    },
+    {
+      "seed": 202,
+      "agents": [
+        "v8",
+        "primary"
+      ],
+      "rewards": [
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 104
+    },
+    {
+      "seed": 303,
+      "agents": [
+        "primary",
+        "v8"
+      ],
+      "rewards": [
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 108
+    },
+    {
+      "seed": 303,
+      "agents": [
+        "v8",
+        "primary"
+      ],
+      "rewards": [
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 108
+    },
+    {
+      "seed": 101,
+      "agents": [
+        "primary",
+        "frontier"
+      ],
+      "rewards": [
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 364
+    },
+    {
+      "seed": 101,
+      "agents": [
+        "frontier",
+        "primary"
+      ],
+      "rewards": [
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 364
+    },
+    {
+      "seed": 202,
+      "agents": [
+        "primary",
+        "frontier"
+      ],
+      "rewards": [
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 181
+    },
+    {
+      "seed": 202,
+      "agents": [
+        "frontier",
+        "primary"
+      ],
+      "rewards": [
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 181
+    },
+    {
+      "seed": 303,
+      "agents": [
+        "primary",
+        "frontier"
+      ],
+      "rewards": [
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 184
+    },
+    {
+      "seed": 303,
+      "agents": [
+        "frontier",
+        "primary"
+      ],
+      "rewards": [
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 184
+    },
+    {
+      "seed": 101,
+      "agents": [
+        "challenger",
+        "v8"
+      ],
+      "rewards": [
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 124
+    },
+    {
+      "seed": 101,
+      "agents": [
+        "v8",
+        "challenger"
+      ],
+      "rewards": [
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 123
+    },
+    {
+      "seed": 202,
+      "agents": [
+        "challenger",
+        "v8"
+      ],
+      "rewards": [
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 116
+    },
+    {
+      "seed": 202,
+      "agents": [
+        "v8",
+        "challenger"
+      ],
+      "rewards": [
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 116
+    },
+    {
+      "seed": 303,
+      "agents": [
+        "challenger",
+        "v8"
+      ],
+      "rewards": [
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 108
+    },
+    {
+      "seed": 303,
+      "agents": [
+        "v8",
+        "challenger"
+      ],
+      "rewards": [
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 108
+    },
+    {
+      "seed": 101,
+      "agents": [
+        "challenger",
+        "frontier"
+      ],
+      "rewards": [
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 206
+    },
+    {
+      "seed": 101,
+      "agents": [
+        "frontier",
+        "challenger"
+      ],
+      "rewards": [
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 198
+    },
+    {
+      "seed": 202,
+      "agents": [
+        "challenger",
+        "frontier"
+      ],
+      "rewards": [
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 170
+    },
+    {
+      "seed": 202,
+      "agents": [
+        "frontier",
+        "challenger"
+      ],
+      "rewards": [
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 152
+    },
+    {
+      "seed": 303,
+      "agents": [
+        "challenger",
+        "frontier"
+      ],
+      "rewards": [
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 176
+    },
+    {
+      "seed": 303,
+      "agents": [
+        "frontier",
+        "challenger"
+      ],
+      "rewards": [
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 170
+    },
+    {
+      "seed": 101,
+      "agents": [
+        "v8",
+        "frontier"
+      ],
+      "rewards": [
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 109
+    },
+    {
+      "seed": 101,
+      "agents": [
+        "frontier",
+        "v8"
+      ],
+      "rewards": [
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 109
+    },
+    {
+      "seed": 202,
+      "agents": [
+        "v8",
+        "frontier"
+      ],
+      "rewards": [
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 104
+    },
+    {
+      "seed": 202,
+      "agents": [
+        "frontier",
+        "v8"
+      ],
+      "rewards": [
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 104
+    },
+    {
+      "seed": 303,
+      "agents": [
+        "v8",
+        "frontier"
+      ],
+      "rewards": [
+        -1,
+        1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 108
+    },
+    {
+      "seed": 303,
+      "agents": [
+        "frontier",
+        "v8"
+      ],
+      "rewards": [
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE"
+      ],
+      "steps": 108
+    },
+    {
+      "seed": 101,
+      "agents": [
+        "primary",
+        "challenger",
+        "v8",
+        "frontier"
+      ],
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ],
+      "steps": 164
+    },
+    {
+      "seed": 101,
+      "agents": [
+        "challenger",
+        "v8",
+        "frontier",
+        "primary"
+      ],
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ],
+      "steps": 167
+    },
+    {
+      "seed": 101,
+      "agents": [
+        "v8",
+        "frontier",
+        "primary",
+        "challenger"
+      ],
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ],
+      "steps": 250
+    },
+    {
+      "seed": 101,
+      "agents": [
+        "frontier",
+        "primary",
+        "challenger",
+        "v8"
+      ],
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ],
+      "steps": 139
+    },
+    {
+      "seed": 202,
+      "agents": [
+        "primary",
+        "challenger",
+        "v8",
+        "frontier"
+      ],
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ],
+      "steps": 196
+    },
+    {
+      "seed": 202,
+      "agents": [
+        "challenger",
+        "v8",
+        "frontier",
+        "primary"
+      ],
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ],
+      "steps": 103
+    },
+    {
+      "seed": 202,
+      "agents": [
+        "v8",
+        "frontier",
+        "primary",
+        "challenger"
+      ],
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ],
+      "steps": 194
+    },
+    {
+      "seed": 202,
+      "agents": [
+        "frontier",
+        "primary",
+        "challenger",
+        "v8"
+      ],
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ],
+      "steps": 100
+    },
+    {
+      "seed": 303,
+      "agents": [
+        "primary",
+        "challenger",
+        "v8",
+        "frontier"
+      ],
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ],
+      "steps": 168
+    },
+    {
+      "seed": 303,
+      "agents": [
+        "challenger",
+        "v8",
+        "frontier",
+        "primary"
+      ],
+      "rewards": [
+        1,
+        -1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ],
+      "steps": 117
+    },
+    {
+      "seed": 303,
+      "agents": [
+        "v8",
+        "frontier",
+        "primary",
+        "challenger"
+      ],
+      "rewards": [
+        -1,
+        -1,
+        1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ],
+      "steps": 116
+    },
+    {
+      "seed": 303,
+      "agents": [
+        "frontier",
+        "primary",
+        "challenger",
+        "v8"
+      ],
+      "rewards": [
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "statuses": [
+        "DONE",
+        "DONE",
+        "DONE",
+        "DONE"
+      ],
+      "steps": 117
+    }
+  ]
+}

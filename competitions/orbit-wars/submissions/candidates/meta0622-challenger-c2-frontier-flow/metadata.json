@@ -1,0 +1,8 @@
+{
+  "variant": "CHALLENGER_C2_FRONTIER_FLOW",
+  "role": "Frontier-flow challenger / slot 2",
+  "recommended_slot": "Slot 2",
+  "strategy": "Wide defensive coverage, broader regroup targets, and lower small-launch floor to preserve t40-to-t80 frontier gains.",
+  "sha256": "77e251ff15ac2e2fbbc14c031436531e1a5eb3ee20892253145d5fc0f323f1d7",
+  "size": 54663
+}

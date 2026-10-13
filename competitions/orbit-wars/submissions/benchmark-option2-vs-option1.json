@@ -1,0 +1,237 @@
+{
+  "seeds": [
+    911,
+    1012,
+    1113
+  ],
+  "summary": {
+    "option1-conservative|4P|current-anchor": {
+      "games": 12,
+      "wins": 12,
+      "errors": 0
+    },
+    "option2-horizon24|4P|current-anchor": {
+      "games": 12,
+      "wins": 12,
+      "errors": 0
+    }
+  },
+  "games": [
+    {
+      "variant": "option1-conservative",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 911,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option1-conservative",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 911,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option1-conservative",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 911,
+      "seat": 2,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option1-conservative",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 911,
+      "seat": 3,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option1-conservative",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1012,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option1-conservative",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1012,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option1-conservative",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1012,
+      "seat": 2,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option1-conservative",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1012,
+      "seat": 3,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option1-conservative",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1113,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option1-conservative",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1113,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option1-conservative",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1113,
+      "seat": 2,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option1-conservative",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1113,
+      "seat": 3,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option2-horizon24",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 911,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option2-horizon24",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 911,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option2-horizon24",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 911,
+      "seat": 2,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option2-horizon24",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 911,
+      "seat": 3,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option2-horizon24",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1012,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option2-horizon24",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1012,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option2-horizon24",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1012,
+      "seat": 2,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option2-horizon24",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1012,
+      "seat": 3,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option2-horizon24",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1113,
+      "seat": 0,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option2-horizon24",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1113,
+      "seat": 1,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option2-horizon24",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1113,
+      "seat": 2,
+      "reward": 1,
+      "status": "DONE"
+    },
+    {
+      "variant": "option2-horizon24",
+      "opponent": "current-anchor",
+      "players": 4,
+      "seed": 1113,
+      "seat": 3,
+      "reward": 1,
+      "status": "DONE"
+    }
+  ]
+}

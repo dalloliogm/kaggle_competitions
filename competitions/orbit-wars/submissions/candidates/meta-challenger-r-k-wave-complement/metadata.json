@@ -1,0 +1,8 @@
+{
+  "variant": "CHALLENGER_R_K_WAVE_COMPLEMENT",
+  "role": "Portfolio complement",
+  "recommended_slot": "Slot 2",
+  "strategy": "Mid-size wave profile that complements the primary by winning different 2P games while preserving a strong 4P profile.",
+  "sha256": "c2aaf3c5b07606d0596909a81fdce8c427e01aeaa655e84a53d00d7ed10ebaf7",
+  "size": 54858
+}

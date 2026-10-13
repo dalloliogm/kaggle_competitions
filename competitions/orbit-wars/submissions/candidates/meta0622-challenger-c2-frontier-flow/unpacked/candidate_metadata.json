@@ -1,0 +1,37 @@
+{
+  "base_candidate": "/Users/pilkwang/Documents/VSDocs/Kaggle/26_OrbitWar/producer_lite_submit_candidates/exp59_4p_player_count_guard_v1",
+  "candidate_id": "cand_C_0002",
+  "changed_axes": [
+    "G",
+    "M"
+  ],
+  "delta_params": {
+    "config_2p": {
+      "max_regroup_targets_per_source": 8,
+      "min_ships_to_launch": 3.0,
+      "regroup_pressure_delta_min": 0.22
+    },
+    "config_4p": {
+      "max_defensive_targets": 5,
+      "max_regroup_targets_per_source": 8,
+      "min_ships_to_launch": 3.0,
+      "regroup_pressure_delta_min": 0.22
+    }
+  },
+  "family": "frontier_combo_wide_defense",
+  "generator": "search/generate_candidates.py",
+  "notes": "Keep base ROI but widen regroup/defensive breadth and small launch floor.",
+  "params": {
+    "config_2p": {
+      "max_regroup_targets_per_source": 8,
+      "min_ships_to_launch": 3.0,
+      "regroup_pressure_delta_min": 0.22
+    },
+    "config_4p": {
+      "max_defensive_targets": 5,
+      "max_regroup_targets_per_source": 8,
+      "min_ships_to_launch": 3.0,
+      "regroup_pressure_delta_min": 0.22
+    }
+  }
+}

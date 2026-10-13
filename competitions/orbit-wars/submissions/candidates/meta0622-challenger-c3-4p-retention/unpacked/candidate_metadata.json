@@ -1,0 +1,31 @@
+{
+  "base_candidate": "/Users/pilkwang/Documents/VSDocs/Kaggle/26_OrbitWar/producer_lite_submit_candidates/exp59_4p_player_count_guard_v1",
+  "candidate_id": "cand_C_0003",
+  "changed_axes": [
+    "O",
+    "G"
+  ],
+  "delta_params": {
+    "config_2p": {},
+    "config_4p": {
+      "horizon": 11,
+      "max_defensive_targets": 5,
+      "max_regroup_time": 8.0,
+      "max_sources_per_lane": 5,
+      "regroup_pressure_delta_min": 0.22
+    }
+  },
+  "family": "frontier_combo_4p_retention",
+  "generator": "search/generate_candidates.py",
+  "notes": "4P-focused retention: shorter horizon, wider defense, relaxed regroup.",
+  "params": {
+    "config_2p": {},
+    "config_4p": {
+      "horizon": 11,
+      "max_defensive_targets": 5,
+      "max_regroup_time": 8.0,
+      "max_sources_per_lane": 5,
+      "regroup_pressure_delta_min": 0.22
+    }
+  }
+}

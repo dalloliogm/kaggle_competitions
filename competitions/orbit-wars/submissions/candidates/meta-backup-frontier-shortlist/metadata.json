@@ -1,0 +1,8 @@
+{
+  "variant": "BACKUP_FRONTIER_SHORTLIST",
+  "role": "Balanced backup",
+  "recommended_slot": "Backup",
+  "strategy": "Frontier-shortlist derivative with solid all-around behavior; useful as a safer single-agent fallback.",
+  "sha256": "dea6f3b4094ed4e522f566aaa70540b2f0c5e1d6a97dbb0405a519db1820b3bc",
+  "size": 55929
+}
