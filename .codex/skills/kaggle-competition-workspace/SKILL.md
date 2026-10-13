@@ -91,6 +91,14 @@ Use workspace `AGENTS.md` for competition-specific instructions that should guid
 
 Before proposing or implementing a new modeling direction in an existing workspace, read `APPROACHES.md` and `LEARNINGS.md` so repeated failed experiments are avoided.
 
+At the start of every new competition, also read the repo-level
+`docs/kaggle-competition-lessons.md`. Treat targeted manual annotation as a
+first-class experiment when labels are sparse, noisy, or omit rare events:
+select uncertain and representative examples, preserve an untouched grouped
+validation set, and use the labels to seed active learning, hard-negative
+mining, or high-confidence pseudo-labeling. Record the selection policy and
+which examples were manually labelled in the competition workspace.
+
 ## Simulation / Agent Competitions
 
 For Kaggle Environments or other simulation competitions where submissions play
