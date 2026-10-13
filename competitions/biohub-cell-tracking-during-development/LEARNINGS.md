@@ -1,5 +1,81 @@
 # Learnings
 
+## Post-competition solution review: the missing axis was learned temporal identity (2026-10-13)
+
+The post-competition solution write-ups changed the interpretation of our
+plateau. Our 0.953 public result was a solid reproduction of the public
+artifact, but it remained inside the same detection-plus-association family.
+The winning approaches changed how a cell was represented across time rather
+than only adding another detector, threshold, or graph repair rule.
+
+### Winner: per-cell visual tracking
+
+The [1st-place write-up](https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/writeups/1st-place-solution)
+used a Cellpose-style 3D U-Net with foreground and centre-flow heads, MAE
+pretraining, manual masks, stamped GT nodes, and pseudo-label retraining. Its
+important new component was a per-cell temporal model (the "Soon Net") that
+read three frames around a queried detection and predicted:
+
+- interphase, soon-to-divide, or just-divided state;
+- continuation occupancy maps;
+- division occupancy maps for the parent and daughters.
+
+Those outputs were passed to a transformer linker with pair and fork heads.
+The fork head made the parent-level zero/one/two-child decision, followed by
+greedy lineage decoding. This is different from independently ranking edges
+using geometry, intensity, velocity, and detector confidence.
+
+The practical lesson is that a cell-conditioned temporal representation can
+provide identity and division evidence that post-processing cannot recover from
+static detections. For a future competition, once detector quality has
+plateaued, build a small temporal identity model before spending many more
+submissions on local graph knobs.
+
+### Third place: independent confirmation
+
+The [3rd-place write-up](https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/writeups/3rd-place-solution)
+reached public `0.977` and private `0.967` with a different implementation:
+2.5D U-Net plus 3D SegResNet detection ensembles, dense flow, learned
+matching, division models, joint lineage optimization, gap closing, and affine
+coordinate refinement. Its ablation showed that the substantial gain arrived
+when division evidence, calibrated matching, and joint graph optimization were
+combined; flow or matching alone was much smaller.
+
+This confirms that "detection is saturated" was too strong. The detector may be
+adequate for the ordinary links, while the system still lacks learned evidence
+for identity, division, and coordinate refinement.
+
+### Private-transfer lesson
+
+The [12th-place retrospective](https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/writeups/12th-place-solution)
+is the closest calibration to our own process. The authors reported public
+`0.970` versus private `0.946`, an in-sample validation overestimate of about
+`0.03`, and better private transfer from continuity repairs than from public-LB
+detector tuning. Their strongest general lesson was to build the OOF world
+early and judge changes on embryo/video-held-out predictions rather than on a
+model trained on the same videos it scores.
+
+### What we should do differently next time
+
+1. Define the temporal identity/division axis early: per-cell crops, flow or
+   occupancy targets, hard negatives, and a parent-level fork decision.
+2. Train or fine-tune at least one genuinely independent model family. An
+   ensemble of public artifacts is not the same as an ensemble of independent
+   failure modes.
+3. Generate OOF predictions before tuning post-processing. Do not use an
+   in-sample graph to select learned repair, recentering, or division rules.
+4. Keep a fixed ablation ladder: detector, flow, matcher, division model,
+   graph optimizer, gap repair, coordinate refinement. Change one stage at a
+   time and score the final artifact with the official metric.
+5. Treat public improvements of one or two displayed thousandths as weak
+   evidence. Require stability across video/embryo folds, multiple seeds or
+   perturbations where feasible, and a distinct output artifact.
+6. Prefer mechanisms that preserve continuity and identity over broad pruning,
+   count tuning, or late public-board calibration.
+
+The reusable version of these lessons is in
+`docs/kaggle-competition-lessons.md`.
+
 ## September 7 public notebook evidence
 
 The newly published edge-feature TTA notebook is a materially stronger lead than
