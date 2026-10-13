@@ -46,7 +46,34 @@ component metric. Keep the following separate in experiment records:
 An in-sample gain is a hypothesis. A public gain is evidence about a small,
 possibly biased test slice. Neither is private-transfer evidence by itself.
 
-## 3. Treat public-LB tuning as a noisy measurement
+## 3. Use small, targeted manual annotation when labels are weak
+
+Manual labels are often a high-leverage intervention, especially when the
+provided labels are sparse, biased toward easy cases, or contain too few rare
+events. A small set of carefully selected examples can teach the model a
+representation that the existing labels do not support.
+
+Use a baseline to select examples that are uncertain, visually ambiguous,
+rare, systematically missed, or representative of a new domain. For temporal
+or structured data, annotate the surrounding context rather than an isolated
+record: neighbouring frames, object identity, event state, or the full local
+structure may be what makes the label learnable.
+
+Treat manual annotation as a controlled data intervention:
+
+- keep the selection policy and annotation tool/process in the experiment log;
+- hold out a completely untouched grouped validation set;
+- inspect inter-annotator disagreements or re-review a sample when feasible;
+- use the manual set first for fine-tuning, active-learning queries, hard
+  negatives, or high-confidence pseudo-label generation;
+- do not claim generalization merely because the model fits the manually
+  selected examples.
+
+The right question is not whether manual annotation is scalable. It is whether
+a small manual seed exposes the missing signal, after which pseudo-labeling or
+active learning can expand coverage safely.
+
+## 4. Treat public-LB tuning as a noisy measurement
 
 Before the competition closes, public submissions are useful for detecting large
 regressions and testing genuinely orthogonal mechanisms. They are poor grounds
@@ -62,7 +89,7 @@ After the close, actively seek solution write-ups and private-score tables.
 They often reveal that detector tuning did not transfer while continuity,
 identity, or conservative repair did.
 
-## 4. Use controlled ablation ladders
+## 5. Use controlled ablation ladders
 
 Maintain a fixed base artifact and add stages in an interpretable order. For a
 structured prediction pipeline, a useful ladder is:
@@ -80,7 +107,7 @@ Do not attribute the entire gain to the last stage in a cumulative history. A
 stage can be valuable only in combination with another stage, but that claim
 needs a controlled comparison or a clearly labelled interaction experiment.
 
-## 5. Prefer robust mechanisms over public-board tricks
+## 6. Prefer robust mechanisms over public-board tricks
 
 The mechanisms most likely to transfer are those tied to the data-generating
 process: identity consistency, motion compensation, physically plausible
@@ -94,7 +121,7 @@ many true positives are lost in the process. A large oracle ceiling can be
 irrelevant when every available rule crosses the wrong side of that exchange
 rate.
 
-## 6. Make reproducibility part of the experiment
+## 7. Make reproducibility part of the experiment
 
 Every candidate should have:
 
@@ -109,7 +136,7 @@ Use cached outputs and previous artifacts before requesting new GPU time. Many
 questions about post-processing, runtime guards, graph validity, and count
 behaviour can be answered without rerunning the expensive model.
 
-## 7. Competition-close checklist
+## 8. Competition-close checklist
 
 Before submitting a candidate:
 

@@ -81,6 +81,12 @@ Each workspace should contain `COMPETITION.md`, `TASKS.md`, `NOTES.md`, `APPROAC
 
 Before proposing or implementing a new modeling direction in an existing workspace, read `APPROACHES.md` and `LEARNINGS.md` so previous experiments and durable insights are not lost.
 
+Also read `docs/kaggle-competition-lessons.md` at the start of a new
+competition. In particular, consider a small, deliberately selected manual
+annotation set when labels are sparse, noisy, or omit rare events. Use manual
+labels as a seed for active learning, hard-negative mining, or pseudo-labeling;
+keep an untouched grouped validation set and record the annotation policy.
+
 When listing, searching, or choosing competitions, use `./scripts/list_kaggle_competitions.py`. It caches identical queries under `.kaggle_cache/competition_lists/`; use `--refresh` when current Kaggle results matter.
 
 Reusable notebook templates live in `templates/notebooks/`; track them in `templates/notebooks/TEMPLATE_REGISTRY.md` and copy them into workspaces with `init_competition_workspace.py --template`.
