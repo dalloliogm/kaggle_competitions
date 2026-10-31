@@ -68,3 +68,10 @@ Capture durable information learned while working on this competition. This is f
 
 - Forum (2026-10-06): visible test molecule_ids are reused by the hidden rerun and the visible rows' structures are class-1 answers; public 0.41x notebooks exploit it. Genuine (non-leak) public pipelines are ~0.37 on LB. Expect the hosts may remap ids before the final rerun, which would collapse leak-based scores - another reason not to rely on it. The fork notebooks contain a VALIDATION mode (CFG VALIDATION=True on a commit run) that scores a held-out NP-panel subset in ~1-2 h instead of waiting ~7 h for a scoring rerun.
 - Licensing: hosts say non-commercial inputs make a solution ineligible to win; check datasets' licences before committing to a final pipeline (ahmedberatozer/* are 'Other: non-commercial'). Prize path would need our own weights trained on train.parquet (open-source models trained on it are fair game, per host) and permissively licensed assets (DreaMS CC BY 4.0 OK).
+
+## 2026-10-31 catch-up learnings
+- By 10-31 the public notebooks converged to one pipeline (v4g assets + Saner's neural scorer + consensus + fragment check) at 0.472-0.477; 231 teams share 0.477 exactly. Re-submitting public code can at best tie the crowd; leaderboard top (0.517) is private work.
+- Public LB has ~125 molecules (31%): 1 rank move = 0.004; knob sweeps <0.005 are noise. Judge changes offline (candidate recall, rank of truth) not on public LB.
+- Untrained fragment-coverage (<=2 bond cleavage) rescoring of top candidates adds ~+0.005; long-trained neural model and NX isomer reranker made things worse on the hidden test even though offline holdout was better (offline diagnostic did not transfer).
+- Hosts: CC-BY-NC data now allowed (750330); NIST and its derivatives are not; weights need public training code to be prize-eligible, and non-reproducible submissions may be removed from the leaderboard.
+- Forum scan tip: `kaggle competitions topics list <slug>` and `topics show <id>` work in the CLI; `kaggle kernels list --competition <slug> --sort-by dateRun|voteCount`.

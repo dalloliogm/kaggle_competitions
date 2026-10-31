@@ -6,13 +6,22 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 
 | Date | Approach | Local CV | Public LB | Private LB | Notebook/commit | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-| TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+| 2026-10-31 | Fork of public m1 (busyaprime, 0.477): v4g pipeline + neural RRF .25/.75 + fragment check | n/a | pending (public notebook shows 0.477) | - | dalloliogm/casmi26-fork-m1-0477 v1 | quick catch-up submission, unmodified |
 
 ## Tried
 
 | Date | Approach | Changes | Local CV | Public LB | Outcome | Follow-up |
 | --- | --- | --- | --- | --- | --- | --- |
-| TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+| 2026-10-03 | Library cosine retrieval | class-1 only | 0.917 (class-1 holdout) | 0.140 | Hidden test mostly class 2/3 | superseded |
+| 2026-10-03 | Own FP-MLP + pool candidates + thresholded lib | pool_popularity candidates | 0.657 (optimistic) | 0.191 | superseded | - |
+| 2026-10-03 | + PubChem tier (4000/window) | wider candidates | 0.368 honest | 0.175 | weak encoder cannot rank extra isomers | needs strong encoder first |
+| 2026-10-04 | Public FPNet (v4) | swap encoder | 0.865 | 0.292-0.297 | big jump | - |
+| 2026-10-04 | NP-panel tuned blend (v5) | pop .25, nn .5 | 0.748 NP panel | 0.255 | panel not representative | never tune on panel |
+| 2026-10-04 | FPNet x4 + merged views (v6) | ensemble | 0.863 | 0.290 | no gain | - |
+| 2026-10-04..06 | Fork public pipeline (FPNet+LGBM+tier+ICEBERG/GLACIER) | none | - | 0.363-0.379 | +0.08 | best old floor (POP_MU .15 = 0.379) |
+| 2026-10-09 | Prize path own FPNet (train.parquet+COCONUT) | 100k steps | 0.70 held-out | 0.261 | prize-eligible, weak | - |
+| 2026-10-10 | Prize path + own PubChem tier channel | delta=1 | - | 0.209 | hurt | - |
+| 2026-10-10 | Prize path train3 (merging+aug+EMA) + tier delta=4 | regularised | 0.706 | 0.274 | best prize-eligible | - |
 
 ## Backlog
 
