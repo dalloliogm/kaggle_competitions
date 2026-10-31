@@ -6,7 +6,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 
 | Date | Approach | Local CV | Public LB | Private LB | Notebook/commit | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-10-31 | Fork of public m1 (busyaprime, 0.477): v4g pipeline + neural RRF .25/.75 + fragment check | n/a | pending (public notebook shows 0.477) | - | dalloliogm/casmi26-fork-m1-0477 v1 | quick catch-up submission, unmodified |
+| 2026-10-31 | Fork of public m1 (busyaprime, 0.477): v4g pipeline + neural RRF .25/.75 + fragment check | n/a | pending (ref 57838262; notebook shows 0.477) | - | dalloliogm/casmi26-fork-m1-0477 v1 | quick catch-up submission, unmodified |
 
 ## Tried
 
