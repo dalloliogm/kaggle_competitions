@@ -75,3 +75,8 @@ Capture durable information learned while working on this competition. This is f
 - Untrained fragment-coverage (<=2 bond cleavage) rescoring of top candidates adds ~+0.005; long-trained neural model and NX isomer reranker made things worse on the hidden test even though offline holdout was better (offline diagnostic did not transfer).
 - Hosts: CC-BY-NC data now allowed (750330); NIST and its derivatives are not; weights need public training code to be prize-eligible, and non-reproducible submissions may be removed from the leaderboard.
 - Forum scan tip: `kaggle competitions topics list <slug>` and `topics show <id>` work in the CLI; `kaggle kernels list --competition <slug> --sort-by dateRun|voteCount`.
+
+## 2026-10-31 strategy brainstorm (summary; full text in STRATEGY_2026-10-31.md)
+- Plain forks of the public 0.477 notebook tie ~466 teams and lose tie-breaks; real gains must come from the rank-1 decision (learned arbiter), class-3 tail slots, or a different pipeline/team merger.
+- Rank-1 changes are high variance (+-0.5 per molecule): only move a leader when a calibrated model says P>0.55; never raise neural weight at rank 1.
+- Test cheaply: dump top-40 candidates with all scores on labelled held-out sets, then fit/evaluate rankers on CPU instead of paying ~7 h per rerun.
