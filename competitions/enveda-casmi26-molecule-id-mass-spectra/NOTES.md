@@ -7,7 +7,7 @@
 - Oct 4-6: forks of the public pipeline (FPNet + LightGBM rankers + PubChem tier + ICEBERG/GLACIER fusion) = **LB 0.363-0.379** (best 0.379, v30 fork with POP_MU 0.15). We declined the "visible-id pair" leak notebooks that claimed 0.41x.
 - Oct 9-10: "prize path" (own FPNet trained only on train.parquet+COCONUT, no third-party weights): LB 0.261 -> 0.274 (train3). Prize-eligible but ~0.1 below the public frontier.
 - Oct 10-31: no activity from us. Field moved from ~0.41 to **0.477 (public code) / 0.517 (leaderboard top)**.
-- Oct 31: forked the current public 0.477 notebook (busyaprime m1) as `dalloliogm/casmi26-fork-m1-0477` and submitted it.
+- Oct 31: forked the current public 0.477 notebook (busyaprime m1) as `dalloliogm/casmi26-fork-m1-0477` and submitted it (ref 57838262, commit run ~35 min, scoring rerun pending; expect ~7 h).
 
 ### State of the field (2026-10-31)
 - Leaderboard top 0.517 (Oleksandr Parfionov, Savko), then 0.504, 0.501, 0.495... ~4,300 teams. Gold line ~0.481 (rank 18 on 10-29). 231 teams sit at exactly 0.477, 175 at 0.472: **the public pipeline is saturated** - 122 of 133 public notebooks scoring >=0.46 attach the same `dmitriigluzdov/casmi26-attributed-v4g-reproduction-assets`.
