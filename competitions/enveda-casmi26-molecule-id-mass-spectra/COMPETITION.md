@@ -46,5 +46,5 @@ Test: ~1,500 spectra / ~400 molecules, all Bruker timsTOF, monoisotopic mass 157
 ## Current Baseline
 
 - Local CV: TBD
-- Public LB: 0.379 best earlier fork; 2026-10-31 fork of public 0.477 notebook submitted (pending). Own pipelines: v4 0.292, prize-path 0.274.
+- Public LB: 0.477 (2026-11-01, fork of public m1, ref 57838262). Own pipelines: v4 0.292, prize-path 0.274.
 - Notebook/kernel: dalloliogm/casmi26-public-pipeline-fork (v3, GPU, ~5h run)

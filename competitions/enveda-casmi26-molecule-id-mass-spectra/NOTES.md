@@ -35,3 +35,7 @@
 - Dump contents to save from /kaggle/working: frozen_candidate_evidence.parquet, outsider_evidence.parquet, neural_candidate_features.parquet, variants/*.csv, fragment-check report; add per-candidate score table + per-molecule MRR of each variant.
 - Caveats: held-out structures are still in the candidate pool/pretrained weights (optimistic; prefer fold-safe assets where possible); S2 = drug-like enveda-180 (not natural products); validation has no class-1 molecules by construction.
 - Status: design done, patched notebook NOT yet built or run. Submission 57838262 still PENDING at last check. Local kaggle CLI needs `uvx --with six` (missing dep in uv cache).
+
+### 2026-11-01 update
+- Submission 57838262 (unmodified fork of public m1) scored **public LB 0.477**: reproduces the public number, so the pipeline is deterministic enough. Ties ~466 teams at 0.477.
+- Validation dump kernel `dalloliogm/casmi26-m1-validation-dump` v1 pushed 2026-11-01 ~16:50 UTC; still running at 18:14 UTC.
