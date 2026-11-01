@@ -1,0 +1,13 @@
+{
+  "control_sha256": "7cf216a8145257d25a03d8e1e8641bab2107849cdc908c687b31e733caef66d8",
+  "submission_sha256": "e33ebdbbaebc8d8510eb63009f115118ec98affd51dcfc1b29e7ff513f122360",
+  "rows": 300,
+  "changed_rows": 124,
+  "top1_changed": 5,
+  "tail_changed": 0,
+  "adjacent_swaps": 189,
+  "time_budget_exceeded": false,
+  "elapsed_seconds": 17.09,
+  "outcome": "experimental_unvalidated",
+  "baseline": "V2_0.468_user_reported"
+}

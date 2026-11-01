@@ -1,0 +1,8 @@
+{
+  "source_sha256": "a589eee0bdad68aad3acc43a43003299ebe07ee07d4e44b2ad26cd34607c1be9",
+  "mode": "submission",
+  "source_adaptations": [],
+  "candidate_promotion_fix": true,
+  "is_full_run": true,
+  "processed_molecules": 300
+}

@@ -1,0 +1,30 @@
+{
+  "status": "applied",
+  "input_sha256": {
+    "physical_v2": "e33ebdbbaebc8d8510eb63009f115118ec98affd51dcfc1b29e7ff513f122360",
+    "v2": "7cf216a8145257d25a03d8e1e8641bab2107849cdc908c687b31e733caef66d8",
+    "custom": "4b566e40018d9f661484a59d94de3fbfa7dbca66978044a4fd29e4be06a4c655"
+  },
+  "overlay": {
+    "control_sha256": "7cf216a8145257d25a03d8e1e8641bab2107849cdc908c687b31e733caef66d8",
+    "submission_sha256": "e33ebdbbaebc8d8510eb63009f115118ec98affd51dcfc1b29e7ff513f122360",
+    "changed_rows": 124,
+    "top1_changed": 5,
+    "tail_changed": 0,
+    "adjacent_swaps": 189
+  },
+  "rows": 300,
+  "merged": 300,
+  "leader_moves": 5,
+  "skipped": {},
+  "skipped_leader_moves": 0,
+  "moved_ids": [
+    "m_a41602",
+    "m_c1cf67",
+    "m_a37a07",
+    "m_92a5c9",
+    "m_b55b3f"
+  ],
+  "output_sha256": "082b7609afb4abc1f2099ef7352b9579c1d77126148243aff58a3ab85bf9e27f",
+  "output_equals_custom": false
+}

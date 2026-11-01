@@ -39,3 +39,26 @@
 ### 2026-11-01 update
 - Submission 57838262 (unmodified fork of public m1) scored **public LB 0.477**: reproduces the public number, so the pipeline is deterministic enough. Ties ~466 teams at 0.477.
 - Validation dump kernel `dalloliogm/casmi26-m1-validation-dump` v1 pushed 2026-11-01 ~16:50 UTC; still running at 18:14 UTC.
+
+## 2026-11-01 validation dump RESULTS (kernel dalloliogm/casmi26-m1-validation-dump v1, ~4 h, COMPLETE)
+Files: `validation_dump_2026-11-01/` (scores, labels, per-molecule RR, candidate/neural tables, answer files). Big raw outputs (query spectra, held-out test, valcomp) stay in the Kaggle kernel output.
+Setup: 300 held-out molecules (200 S2 = enveda-180-only structures, 100 S1 = enveda-np-examples), all train rows of those structures purged, whole unchanged m1 pipeline run (`is_full_run: true`, 300 molecules).
+
+| answer file | ALL | S2 | S1 |
+|---|---|---|---|
+| final submission.csv (m1 incl. fragment check merge) | 0.789 | 0.736 | 0.896 |
+| CUSTOM (.25/.75 neural) | 0.795 | 0.737 | 0.911 |
+| V0 (0.465 baseline, no neural) | 0.792 | 0.730 | 0.916 |
+| V1 (neural .25) | 0.795 | 0.735 | 0.915 |
+| V2 (.25/.50) = V3 | 0.801 | 0.745 | 0.915 |
+| V4 (.25/1.0) | 0.789 | 0.732 | 0.903 |
+| e004/e006 controls | 0.801 | 0.743 | 0.918 |
+
+Rank distribution of the truth in the final list: rank 1 64.7% (S2 55.0%, S1 84.0%), ranks 2-6 33.3% (S2 43.5%), ranks 7-25 1.7%, miss 0.3%. hit@25 = 99.7%.
+
+Interpretation:
+- **Not representative of the hidden test in absolute terms**: MRR 0.79 vs LB 0.477 and hit@25 0.997. The held-out structures are still in the precomputed candidate pool (v2-pool / COCONUT / train-derived tiers) and in the pretrained FPNet/neural weights, so recall is ~100% and class 3 is entirely absent. Use only for *ordering among candidates present*; never as an LB predictor.
+- Within that scope the headroom is the rank-1 decision: 33% of molecules have the truth at ranks 2-6 (S2: 43.5%). An oracle arbiter would move MRR from 0.79 toward ~0.95; a realistic one capturing a few % of these is the +0.005-0.015 hypothesis.
+- All public knob variants differ by <=0.012 (V2 best) which is ~3-4 molecules at n=300; the fragment-check merge changed only 4 molecules, all for the worse here (-0.006 vs CUSTOM). Consistent with "knob differences are noise".
+- Contamination caveat for training an arbiter on this dump: neural scores for held-out structures are inflated (weights saw them). Features from the frozen FPNet/neural scorer are therefore biased towards the truth; prefer fold-safe checkpoints (`dmitriigluzdov/casmi26-fold-safe-fpnet`) or restrict the arbiter to features not trained on the structure (fragment coverage, formula, GLACIER/ICEBERG, popularity/doc counts).
+- Cost/housekeeping: the cleanup cell left `ice_site/`, `eng/`, etc. in the output (~1.3 GB); fine but slow to download (~15 min).
