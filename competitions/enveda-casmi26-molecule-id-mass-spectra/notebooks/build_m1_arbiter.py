@@ -35,9 +35,17 @@ if ARBITER:
             shutil.copy2(ROOT / 'submission_pre_arbiter.csv', ROOT / 'submission.csv')
         ARBITER_REPORT = {{'status': 'failed, restored'}}
 print('ARBITER', ARBITER_REPORT)
+import json as _json
+(ROOT / 'arbiter_report.json').write_text(_json.dumps(ARBITER_REPORT, default=str))
 '''
 cell = {'cell_type': 'code', 'metadata': {}, 'execution_count': None, 'outputs': [], 'source': code.splitlines(True)}
 cells.insert(16, cell)
+CLEAN = '''# ── Housekeeping: drop bulky intermediate folders so the saved output stays small (answer files and reports are kept) ──
+import shutil as _sh
+for _d in ('ice_site', 'eng', 'v43_v4code', 'work', 'numba_cache', 'smoke_comp', 'variants_check'):
+    _sh.rmtree(ROOT / _d, ignore_errors=True)
+'''
+cells.append({'cell_type': 'code', 'metadata': {}, 'execution_count': None, 'outputs': [], 'source': CLEAN.splitlines(True)})
 cells.insert(0, {'cell_type': 'markdown', 'metadata': {}, 'source': [
     "**Fork note (dalloliogm, 2026-11-05):** busyaprime's public `lb-0-477-two-0-472-fixes-merged-the-right-way` (credits below) plus ONE added cell "
     "after the final merge: a rank-1 arbiter (LightGBM on ICEBERG/GLACIER, fragment coverage and structure features, trained on 1500 validation pairs from "
