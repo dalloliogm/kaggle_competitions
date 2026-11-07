@@ -8,6 +8,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | --- | --- | --- | --- | --- | --- | --- |
 | 2026-10-31 | Fork of public m1 (busyaprime, 0.477): v4g pipeline + neural RRF .25/.75 + fragment check | n/a | 0.477 (ref 57838262, reproduced 2026-11-01) | - | dalloliogm/casmi26-fork-m1-0477 v1 | quick catch-up submission, unmodified |
 | 2026-11-05 | m1 + rank-1 arbiter (LightGBM on ICEBERG/GLACIER/fragment/structure, swap leader with rank 2-6 if P>0.8) | grouped CV +0.025 (clean features, validation dump; optimistic) | 0.477 (ref 58019927; = baseline, no measurable effect) | - | dalloliogm/casmi26-m1-arbiter v1 | expect +0.005-0.015 vs 0.477 |
+| 2026-11-07 | m1 + rank-1 arbiter, thr 0.7 (same model as thr 0.8 run) | grouped CV +0.036 (clean, lgbm, 0.7; ~27 swaps/300) | pending (ref 58101521) | - | dalloliogm/casmi26-m1-arbiter v2 | tests whether more swaps help; v1 (0.8) = 0.477 |
 
 ## Tried
 

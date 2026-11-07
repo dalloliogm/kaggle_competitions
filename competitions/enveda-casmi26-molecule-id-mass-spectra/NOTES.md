@@ -94,3 +94,6 @@ Read-outs:
 
 ## 2026-11-07 decision
 - User decision: **solo competitor, no team mergers, nothing posted or sent to other participants.** Team-merger direction closed (see TEAM_MERGER_PLAN.md, marked superseded). Remaining levers are our own: arbiter at a lower threshold with visible swap counts, class-3 tail slots, deduplication, final-selection discipline (2 finals by Dec 13; no new code in the last 72 h).
+
+### 2026-11-07 arbiter v2 submitted
+- `dalloliogm/casmi26-m1-arbiter` v2 (thr 0.7; adds arbiter_report.json and an output-cleanup cell). Commit run: `ARBITER ok, 12 scored, 0 swapped`; output download now works without 429 (no ice_site/eng dirs). Submitted as **ref 58101521** (rerun ~7 h). Compare with 0.477: >= 0.481 = signal transfers (a few molecules); flat = drop the arbiter; < 0.470 = swaps hurt.
