@@ -1,4 +1,7 @@
-# Team merger plan (2026-11-06) - nothing has been sent to anyone
+# Team merger plan (2026-11-06) - SUPERSEDED
+
+> **DECISION (2026-11-07, user): we stay a single competitor. No team mergers, no recruitment posts, no replies in the forum, no contact with other participants.** The material below is kept only as reference; do not post or send any of the drafts.
+
 
 ## Facts
 - Rules (rules.md 1b, foundational_rules 5c/5d/6a): max team size 5; merger is requested through the competition site by the team leader; deadline **2026-12-07 23:59 UTC**; combined submission count must not exceed (5/day x days of the competition) at the deadline (~84 days x 5 = ~420) - we have ~18 submissions, top teams ~220, so not binding; **no private sharing of code/data outside a team** (forum-public sharing only). So before a merger we can only talk about *ideas* and *results*, not exchange code.
