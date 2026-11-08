@@ -102,3 +102,8 @@ Read-outs:
 - Arbiter thr 0.7 (ref 58101521) scored **0.473** (-0.004 = about one rank-1->2 loss on the public ~125 molecules) vs 0.477 for thr 0.8 and for the plain fork. So: no transfer of the validation-trained rank-1 arbiter; more swaps (0.7) slightly hurt. **Arbiter dropped** (code kept in `arbiter/`).
 - Exact-identity dedup check on the 300 validation lists: 0 duplicate metric identities, 0 wasted slots (the pipeline already dedups) -> dedup-only submission would be a no-op, skipped.
 - Next submission: `dalloliogm/casmi26-m1-tail-rescue` (m1 + CUSTOM rescue=5, OUTSIDERS_PER_MOLECULE=40). Only ranks 21-25 can change; expected effect ~0 to +0.002 (an answer at rank 21-25 is worth 0.04-0.048, so the downside is tiny and any outsider hit adds that much).
+
+### 2026-11-08 tail-rescue v1 discarded, v2 post-merge
+- Checked the commit-run merge_report before submitting v1: with `CUSTOM rescue=5` all 12 processed molecules got outsiders, and m1's merge cell (`P holds the same candidates as C`) then skipped all of them (`skipped: {candidate_set_differs: 12}`, vs `skipped: {}` / merged 400 without rescue). That merge is what carries the fragment-check leader moves (0.472 -> 0.477), so v1 would have scored ~0.472 at best. NOT submitted.
+- Lesson: any change that alters candidate sets before m1's merge disables that merge; apply list edits AFTER it and assert ranks outside the edited slots are unchanged.
+- v2 (`build_m1_rescue.py`): CUSTOM rescue stays 0; a cell after the merge calls `consensus.rescue_tail` on the final lists with `outsider_neural_features.parquet` (40 outsiders/molecule), asserts ranks 1-20 unchanged, writes `tail_rescue_report.json`.
