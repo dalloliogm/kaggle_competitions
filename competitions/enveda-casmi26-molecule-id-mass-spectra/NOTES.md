@@ -97,3 +97,8 @@ Read-outs:
 
 ### 2026-11-07 arbiter v2 submitted
 - `dalloliogm/casmi26-m1-arbiter` v2 (thr 0.7; adds arbiter_report.json and an output-cleanup cell). Commit run: `ARBITER ok, 12 scored, 0 swapped`; output download now works without 429 (no ice_site/eng dirs). Submitted as **ref 58101521** (rerun ~7 h). Compare with 0.477: >= 0.481 = signal transfers (a few molecules); flat = drop the arbiter; < 0.470 = swaps hurt.
+
+### 2026-11-08 arbiter v2 result and next submission
+- Arbiter thr 0.7 (ref 58101521) scored **0.473** (-0.004 = about one rank-1->2 loss on the public ~125 molecules) vs 0.477 for thr 0.8 and for the plain fork. So: no transfer of the validation-trained rank-1 arbiter; more swaps (0.7) slightly hurt. **Arbiter dropped** (code kept in `arbiter/`).
+- Exact-identity dedup check on the 300 validation lists: 0 duplicate metric identities, 0 wasted slots (the pipeline already dedups) -> dedup-only submission would be a no-op, skipped.
+- Next submission: `dalloliogm/casmi26-m1-tail-rescue` (m1 + CUSTOM rescue=5, OUTSIDERS_PER_MOLECULE=40). Only ranks 21-25 can change; expected effect ~0 to +0.002 (an answer at rank 21-25 is worth 0.04-0.048, so the downside is tiny and any outsider hit adds that much).
