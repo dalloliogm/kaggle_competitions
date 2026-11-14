@@ -110,3 +110,6 @@ Read-outs:
 
 ### 2026-11-08 tail-rescue v2 submitted
 - v2 commit run: `TAIL_RESCUE ok, 5 slots, 12 molecules changed, 60 outsiders admitted`; merge intact (merged 400, skipped {}, 0 leader moves in smoke); ranks 1-20 identical in all lists; submission valid. Submitted as **ref 58136022**. Baseline to beat: 0.477 (any result within +-0.004 is noise at ~125 public molecules). Note: in the smoke run every one of the 12 processed lists had all 5 tail slots taken by outsiders (outsider neural scores exceed the current tail's), so expect most real lists to change in ranks 21-25 only.
+
+## 2026-11-14 status (see STATUS_2026-11-14.md for the full review)
+- Our best stays 0.477 (4 submissions); tail rescue post-merge also 0.477. Board: top 0.549, silver line 0.488 (rank 264), bronze 0.487 (rank 528), we are ~rank 1521-1694. Public 0.488 notebook (alex chilton / analyticaobscura "casmi-2026") = m1 lineage + neural ensemble + mass prior + external-library rank-1 overlay at TAU 0.80 (+0.006, the big step) + network rerank. Hosts: loading non-reproducible intermediate artifacts = not reproducible. Next decision: whether to fork the 0.488 notebook as the new floor.

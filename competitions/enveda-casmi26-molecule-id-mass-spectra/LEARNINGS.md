@@ -80,3 +80,8 @@ Capture durable information learned while working on this competition. This is f
 - Plain forks of the public 0.477 notebook tie ~466 teams and lose tie-breaks; real gains must come from the rank-1 decision (learned arbiter), class-3 tail slots, or a different pipeline/team merger.
 - Rank-1 changes are high variance (+-0.5 per molecule): only move a leader when a calibrated model says P>0.55; never raise neural weight at rank 1.
 - Test cheaply: dump top-40 candidates with all scores on labelled held-out sets, then fit/evaluate rankers on CPU instead of paying ~7 h per rerun.
+
+## 2026-11-14
+- The public stack's real gains after m1 came from (a) a rank-1 external reference-library overlay (TAU 0.80: 0.478 -> 0.484; TAU 0.85 gave nothing), (b) small ensemble/prior steps (+0.001 each). Everything we tried on top of m1 from our side (arbiter on ICEBERG/GLACIER/fragment features; tail rescue) was flat or negative on the board; offline validation (+0.036 CV) did not predict it - consistent with others (their network rerank was -0.003 offline, +0.001 board; retrained FPNet +26.5% offline, lost 7/7 on board).
+- Any pre-merge change to candidate sets disables m1's merge (we and alex chilton both found this); apply list edits after the merge.
+- Reruns of identical code differ by ~0.002 because time guards skip optional stages on slower machines; do not read single-submission differences below ~0.003 (and the public set is only ~125 molecules).
