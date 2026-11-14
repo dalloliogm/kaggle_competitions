@@ -10,6 +10,7 @@ Track modeling approaches, experiments, submissions, and outcomes here. Prefer s
 | 2026-11-05 | m1 + rank-1 arbiter (LightGBM on ICEBERG/GLACIER/fragment/structure, swap leader with rank 2-6 if P>0.8) | grouped CV +0.025 (clean features, validation dump; optimistic) | 0.477 (ref 58019927; = baseline, no measurable effect) | - | dalloliogm/casmi26-m1-arbiter v1 | expect +0.005-0.015 vs 0.477 |
 | 2026-11-07 | m1 + rank-1 arbiter, thr 0.7 (same model as thr 0.8 run) | grouped CV +0.036 (clean, lgbm, 0.7; ~27 swaps/300) | 0.473 (ref 58101521; -0.004 vs baseline) | - | dalloliogm/casmi26-m1-arbiter v2 | tests whether more swaps help; v1 (0.8) = 0.477 |
 | 2026-11-08 | m1 + tail rescue (outside candidates compete by neural score for ranks 21-25; 40 outsiders/molecule), no arbiter | n/a (validation has ~100% recall) | v1 DISCARDED; v2 = 0.477 (ref 58136022, flat vs baseline) | - | dalloliogm/casmi26-m1-tail-rescue v2 | v1 put rescue inside CUSTOM -> m1's merge skipped every molecule with a changed candidate set (candidate_set_differs 12/12 in the smoke run), which would drop the fragment-check rank-1 moves (+0.005). v2 applies the rescue after the merge |
+| 2026-11-14 | Fork of public 0.488 (alex chilton / analyticaobscura `casmi-2026`): m1 lineage + neural ensemble + mass prior + external-library rank-1 overlay (TAU 0.80) + network rerank | n/a | pending (ref 58350468; page 0.488) | - | dalloliogm/casmi26-fork-0488 v1 | unmodified, attributed; new floor if it reproduces ~0.486-0.488 |
 
 ## Tried
 

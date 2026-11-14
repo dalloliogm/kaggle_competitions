@@ -113,3 +113,6 @@ Read-outs:
 
 ## 2026-11-14 status (see STATUS_2026-11-14.md for the full review)
 - Our best stays 0.477 (4 submissions); tail rescue post-merge also 0.477. Board: top 0.549, silver line 0.488 (rank 264), bronze 0.487 (rank 528), we are ~rank 1521-1694. Public 0.488 notebook (alex chilton / analyticaobscura "casmi-2026") = m1 lineage + neural ensemble + mass prior + external-library rank-1 overlay at TAU 0.80 (+0.006, the big step) + network rerank. Hosts: loading non-reproducible intermediate artifacts = not reproducible. Next decision: whether to fork the 0.488 notebook as the new floor.
+
+### 2026-11-14 fork of public 0.488 submitted
+- `dalloliogm/casmi26-fork-0488` v1 (unmodified copy of alex chilton's `casmi26-lb-0-488-peaks-to-structures-network`; kernel_sources `popwenman/casmi26-scorer-train-v80` + datasets incl. `takumuhata/casmi26-extlib`, `samartalwar/casmi-2026-spectral-library-massbankharmonized`). Commit run = notebook's fast path (placeholder lists); it verified the scorer bundle loads, both external libraries load (200,724 + 124,160 = 324,884 reference spectra) and the overlay/network steps run without errors. Submitted as **ref 58350468**; scoring rerun ~7 h. Expect 0.486-0.488 (+-0.002 run-to-run). Eligibility risk: same shared-asset stack the hosts called non-reproducible when intermediates lack public generators.
